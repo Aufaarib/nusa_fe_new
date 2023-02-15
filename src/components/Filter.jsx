@@ -8,7 +8,7 @@ const Input = styled.input.attrs(props => ({
 `
   height: 32px;
   width: 200px;
-  margin-left: 54rem;
+  float: right;
   margin-bottom: 10px;
   border-radius: 3px;
   border-top-left-radius: 5px;
@@ -24,7 +24,7 @@ const FilterComponent = ({ filterText, onFilter}) => (
     <Input 
       id="search"
       type="text"
-      placeholder="Cari Nama Pemilik..."
+      placeholder="Pencarian..."
       value={filterText}
       onChange={onFilter}
     />

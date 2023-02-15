@@ -7,47 +7,50 @@ import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
 
-export default function ListTipeTransaksi() {
-const [items, setItems] = useState([]);
+export default function ListBiayaPendidikan() {
+const [data, setData] = useState([]);   
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
-const [deleteId, setDeleteId] = useState("");
-const [desc, setDesc] = useState("");
-const [filterText, setFilterText] = useState("");
-const [sts, setSts] = useState(undefined);
+// const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
+const [status, setStatus] = useState(undefined);
+const [deleteId, setDeleteId] = useState('');
+const [desc_nama, setDesc_nama] = useState('');
+// const [desc_status, setDesc_status] = useState('');
+const [filterText, setFilterText] = useState('');
 
 const filteredItems = 
-  items.filter(
-    item => item.description.toLowerCase().includes(filterText.toLowerCase())||
-    item.status.toLowerCase().includes(filterText.toLowerCase())
+  data.filter(
+    item => item.nama_pemilik.toLowerCase().includes(filterText.toLowerCase())||
+    item.nomor_rekening.toLowerCase().includes(filterText.toLowerCase())||
+    item.nama_bank.toLowerCase().includes(filterText.toLowerCase())
   );
 
 useEffect(() => {
-  axios.get("https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch")
-    .then((response) => {
-      setItems(response.data.data);
-      setSts({ type: 'success' });
+  axios
+    .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
+    .then((res) => {
+      setData(res.data);
+      setStatus({ type: 'success' });
     })
     .catch((error) => {
-      setSts({ type: 'error', error });
+      setStatus({ type: 'error', error });
     });
 }, []);
 
-
 const getData = () => {
-  axios.get(`https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch`)
-    .then((response) => {
-      setItems(response.data.data);
-      setSts({ type: 'success' });
-    })
-    .catch((error) => {
-      setSts({ type: 'error', error });
-    });
+  axios.get(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank`)
+      .then((getData) => {
+        setData(getData.data);
+        setStatus({ type: 'success' });
+      })
+      .catch((error) => {
+        setStatus({ type: 'error', error });
+      });
 }
 
-const openModalHapus = (id, description) => {
+const openModalHapus = (id, nama_pemilik) => {
   setisOpenDelete(true);
-  setDesc(description);
+  setDesc_nama(nama_pemilik);
   setDeleteId(id);
 }
 
@@ -55,22 +58,32 @@ const closeModalHapus = () => {
   setisOpenDelete(false);
 }
 
+// const openModalUbahStatus = (id, nama_pemilik) => {
+//   setisOpenUbahStatus(true);
+//   setDesc_nama(nama_pemilik);
+//   setDeleteId(id);
+// }
+
+// const closeModalUbahStatus = () => {
+//   setisOpenUbahStatus(false);
+// }
+
 const onDelete = () => {
-  axios.delete(`https://nusa.nuncorp.id/golang/api/v1/transaction-type/delete/${deleteId}`)
+  axios.delete(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank/${deleteId}`)
       .then(() => {
-        setSts({ type: 'success' });
+        setStatus({ type: 'success' });
         closeModalHapus();
         setisOpenStatus(true);
         getData();
         })
       .catch((error) => {
-          setSts({ type: 'error', error });
+          setStatus({ type: 'error', error });
       });
 }
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
-  setSts('');
+  setStatus('');
 }
 
 const columns = [
@@ -80,35 +93,43 @@ const columns = [
     width: "37px"  
   },
   {
-    name: "Deskripsi",
-    selector: (data) => data.description,
-    width: "387px" 
+    name: "Cost Center",
+    selector: (data) => data.nama_bank,
+    width: "83px"
   },
-  { 
-    name: "Status",
-    selector: (data) => data.status,
+  {
+    name: "Siswa",
+    selector: (data) => data.nomor_rekening,
+    width: "180px"
+  },
+  {
+    name: "Jenis Transaksi",
+    selector: (data) => data.nama_pemilik,
+    
+  },
+  {
+    name: "Bank",
+    selector: (data) => data.nama_pemilik,
+  },
+  {
+    name: "Jumlah",
+    selector: (data) => data.nama_pemilik,
+  },
+  {
+    name: "Catatan",
+    selector: (data) => data.nama_pemilik,
   },
   {
     name: "Aksi",
-    cell:(data) =>
+    cell:(data) => 
     <div>
-      {data?.status === 'Aktif' && 
-        <div>
-          <button className="btn-action-hijau ml-3 w-auto px-2"><i className="fa fa-play"></i> {data.status}</button>
-          <button onClick={() => openModalHapus(data.id, data.description)} className="btn-action-pink ml-3"><i class="fa fa-trash"></i> Hapus</button>
-        </div>
-      }
-      {data?.status === 'Tidak Aktif' && 
-        <div>
-          <button className="btn-action-pink ml-3 w-auto px-2"><i className="fa fa-pause"></i> {data.status}</button>
-          <button onClick={() => openModalHapus(data.id, data.description)} className="btn-action-pink ml-3"><i class="fa fa-trash"></i> Hapus</button>
-        </div>
-      }
+        <button className="btn-action-hijau ml-3"><i class="fa fa-play"></i> Aktif</button>
+        <button onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i class="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
     allowOverflow: true,
     button: true,
-    width: "360px" 
+    width: "194px",
   },
 ];
 
@@ -179,16 +200,16 @@ const navigate = useNavigate();
 
 const navigateTambahTipeTransaksi = () => {
   // 👇️ navigate to /contacts
-    navigate('/admin/tambah-tipe-transaksi');
+    navigate('/admin/tambah-tipe-bank');
 };
 
  return (
   <>
-    <Header category="Admin PMB" title="Tipe Transaksi" />
+    <Header category="Admin PMB" title="List Bank" />
 
     <article>
 
-    <button className="w-auto btn-ungu mb-5" onClick={navigateTambahTipeTransaksi}><i className="fa fa-plus-square-o mr-2 mt-1"></i> Tambah</button>
+      <button className="w-auto btn-ungu mb-5" onClick={navigateTambahTipeTransaksi}><i class="fa fa-plus-square-o mr-2 mt-1"></i> Tambah</button>
 
       <FilterComponent
           onFilter={e => setFilterText(e.target.value)}
@@ -214,13 +235,13 @@ const navigateTambahTipeTransaksi = () => {
           style={customStylesStatus}
           contentLabel="Modal Status"
           >
-          {sts?.type === 'success' && 
+          {status?.type === 'success' && 
           <div>
             <h2 className="ml-8">Berhasil</h2>
             <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
           </div>
           }
-          {sts?.type === 'error' && 
+          {status?.type === 'error' && 
           <div>
             <h2 className="ml-8">Gagal</h2>
             <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
@@ -235,11 +256,25 @@ const navigateTambahTipeTransaksi = () => {
           contentLabel="Modal Hapus"
         >
           <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
-          <h4 className='mb-3 text-merah ml-3'>{desc}?</h4>
-          <button className="btn-action-hijau w-20 ml-4" onClick={onDelete}>Hapus</button>
+          <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
+          <button className="btn-action-ungu w-20 ml-4" onClick={onDelete}>Hapus</button>
+          <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
+      </Modal>
+
+      {/* <Modal
+          isOpen={isOpenUbahStatus}
+          onRequestClose={closeModalUbahStatus}
+          style={customStylesModalHapus}
+          contentLabel="Modal Ubah Status"
+        >
+          <h2 className='mb-2 ml-3'>Ubah Status </h2>
+          <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
+          <h2 className='mb-2 ml-3'>Menjadi</h2>
+          <h4 className='mb-3 text-merah ml-3'>{desc_status}?</h4>
+          <button className="btn-action-ungu w-20 ml-4" onClick={onUbahStatus}>Ubah</button>
           <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
 
-      </Modal>
+      </Modal> */}
 
     </article>
    </>

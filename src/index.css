@@ -95,7 +95,7 @@ body{
         @apply font-medium;
         @apply leading-snug;
         @apply text-white;
-        @apply text-base;
+        /* @apply text-base; */
         @apply transition;
         @apply duration-150;
         @apply ease-in-out;

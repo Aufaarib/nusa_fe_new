@@ -7,43 +7,45 @@ import Modal from 'react-modal';
 
 export default function TambahTipeTransaksi() {
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [isOpenSuccess, setisOpenSuccess] = useState(false);
-    const [status, setStatus] = useState(undefined);
+    const [description, setDesc] = useState('');
+    const [status, setStatus] = useState('');
+    const [isOpenStatus, setisOpenStatus] = useState(false);
+    const [isOpenEmpty, setisOpenEmpty] = useState(false);
+    const [sts, setSts] = useState(undefined);
 
 
 
     const postData = (e) => {
         e.preventDefault();
 
-        if (firstName.trim().length === 0 || lastName.trim().length === 0) {
-            console.log('values cannot be empty');
+        if (description.trim().length === 0 || status.trim().length === 0) {
+            setisOpenEmpty(true);
         }
         else {
-            axios.post('https://63e1c25ff59c591411a61021.mockapi.io/nusa-keuangan',{
-            firstName,
-            lastName,
-        }).then(() => {
-            setStatus({ type: 'success' });
-          })
-          .catch((error) => {
-            setStatus({ type: 'error', error });
-          });
-
-        openModalSuccess();
-        }
+            axios.post('https://nusa.nuncorp.id/golang/api/v1/transaction-type/create',{
+            description,
+            status
+        })
+        .then(() => {
+            setSts({ type: 'success' });
+            setisOpenStatus(true);
+        })
+        .catch((error) => {
+            setSts({ type: 'error', error });
+        });
     }
+}
 
-    const openModalSuccess = () => {
-        setisOpenSuccess(true);
-    }
-    
-    const closeModalSuccess = () => {
-        setisOpenSuccess(false);
-    }
+const closeModalEmpty = () => {
+    setisOpenEmpty(false);
+}
 
-    const customStyles = {
+const closeModalStatus = () => {
+    setisOpenStatus(false);
+    setSts('');
+}
+
+    const customStylesStatus = {
         content: {
           width: '15%',
           top: '50%',
@@ -87,7 +89,7 @@ export default function TambahTipeTransaksi() {
                             label="Deskrisi"
                             type="text"
                             id="code"
-                            onChange={(e) => setFirstName(e.target.value)}
+                            onChange={(e) => setDesc(e.target.value)}
                             required={true}
                         />
                         <br />
@@ -95,7 +97,7 @@ export default function TambahTipeTransaksi() {
                             label="Status"
                             type="text"
                             id="group"
-                            onChange={(e) => setLastName(e.target.value)}
+                            onChange={(e) => setStatus(e.target.value)}
                             required={true}
                         />
                     </section>
@@ -113,14 +115,35 @@ export default function TambahTipeTransaksi() {
                 </section>
 
                 <Modal
-                    isOpen={isOpenSuccess}
-                    onRequestClose={closeModalSuccess}
-                    style={customStyles}
-                    contentLabel="Modal Hapus"
+                    isOpen={isOpenStatus}
+                    onRequestClose={closeModalStatus}
+                    style={customStylesStatus}
+                    contentLabel="Modal Status"
                     >
-                    {status?.type === 'success' && <h2>Success</h2>}
-                    {status?.type === 'error' && <h2>Failed</h2>}
+                    {sts?.type === 'success' && 
+                    <div>
+                        <h2 className="ml-8">Berhasil</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+                    </div>
+                    }
+                    {sts?.type === 'error' && 
+                    <div>
+                        <h2 className="ml-8">Gagal</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+                    </div>
+                    } 
+                </Modal>
 
+                <Modal
+                    isOpen={isOpenEmpty}
+                    onRequestClose={closeModalEmpty}
+                    style={customStylesStatus}
+                    contentLabel="Modal Status"
+                    >
+                    <div>
+                        <h2 className="ml-8 w-2">Data Tidak Lengkap</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalEmpty}>Tutup</button>
+                    </div>
                 </Modal>
 
             </article>

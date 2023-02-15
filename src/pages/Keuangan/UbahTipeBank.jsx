@@ -1,6 +1,6 @@
 import React from 'react'
 import TextInput from '../../components/TextInput'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import axios from '../../api/axios';
 import Modal from 'react-modal';
@@ -9,7 +9,8 @@ export default function UbahTipeBank() {
     const [nama_bank, setNamaBank] = useState('');
     const [nomor_rekening, setNomorRekening] = useState('');
     const [nama_pemilik, setNamaPemilik] = useState('');
-    const [isOpenSuccess, setisOpenSuccess] = useState(false);
+    const [isOpenStatus, setisOpenStatus] = useState(false);
+    const [isOpenEmpty, setisOpenEmpty] = useState(false);
     const [status, setStatus] = useState(undefined);
     const location = useLocation();
 
@@ -17,7 +18,7 @@ export default function UbahTipeBank() {
         e.preventDefault();
 
         if (nama_bank.trim().length === 0 || nomor_rekening.trim().length === 0 || nama_pemilik.trim().length === 0) {
-            console.log('values cannot be empty');
+            setisOpenEmpty(true);
         }
         else {
             axios.put(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank/${location.state.id}`, {
@@ -27,25 +28,24 @@ export default function UbahTipeBank() {
             })
             .then(() => {
                 setStatus({ type: 'success' });
+                setisOpenStatus(true);
             })
             .catch((error) => {
                 setStatus({ type: 'error', error });
             });
-
-        openModalSuccess();
         }
     }
 
-    const openModalSuccess = () => {
-        setisOpenSuccess(true);
-        setStatus('');
+    const closeModalEmpty = () => {
+        setisOpenEmpty(false);
     }
     
-    const closeModalSuccess = () => {
-        setisOpenSuccess(false);
+    const closeModalStatus = () => {
+        setisOpenStatus(false);
+        setStatus('');
     }
 
-    const customStyles = {
+    const customStylesStatus = {
         content: {
           width: '15%',
           top: '50%',
@@ -128,15 +128,35 @@ export default function UbahTipeBank() {
                 </section>
 
                 <Modal
-                    isOpen={isOpenSuccess}
-                    onRequestClose={closeModalSuccess}
-                    style={customStyles}
-                    contentLabel="Modal Ubah"
+                    isOpen={isOpenStatus}
+                    onRequestClose={closeModalStatus}
+                    style={customStylesStatus}
+                    contentLabel="Modal Status"
                     >
-                    {status?.type === 'success' && <h2>Success</h2>}
-                    {status?.type !== 'success' && <h2>Mengubah Data..</h2>}
-                    {status?.type === 'error' && <h2>Failed</h2>}
+                    {status?.type === 'success' && 
+                    <div>
+                        <h2 className="ml-8">Berhasil</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+                    </div>
+                    }
+                    {status?.type === 'error' && 
+                    <div>
+                        <h2 className="ml-8">Gagal</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+                    </div>
+                    } 
+                </Modal>
 
+                <Modal
+                    isOpen={isOpenEmpty}
+                    onRequestClose={closeModalEmpty}
+                    style={customStylesStatus}
+                    contentLabel="Modal Status"
+                    >
+                    <div>
+                        <h2 className="ml-8 w-2">Data Tidak Lengkap</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalEmpty}>Tutup</button>
+                    </div>
                 </Modal>
 
             </article>

@@ -11,20 +11,25 @@ export default function ListBank() {
 const [data, setData] = useState([]);   
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
-const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
+// const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
 const [status, setStatus] = useState(undefined);
 const [deleteId, setDeleteId] = useState('');
 const [desc_nama, setDesc_nama] = useState('');
-const [desc_status, setDesc_status] = useState('');
+// const [desc_status, setDesc_status] = useState('');
 const [filterText, setFilterText] = useState('');
-const filteredItems = data.filter(
-    item => item.nama_pemilik.toLowerCase().includes(filterText.toLowerCase()),
-);
+
+const filteredItems = 
+  data.filter(
+    item => item.nama_pemilik.toLowerCase().includes(filterText.toLowerCase())||
+    item.nomor_rekening.toLowerCase().includes(filterText.toLowerCase())||
+    item.nama_bank.toLowerCase().includes(filterText.toLowerCase())
+  );
 
 useEffect(() => {
   axios
     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
     .then((res) => {
+      console.log(res.data)
       setData(res.data);
       setStatus({ type: 'success' });
     })
@@ -71,7 +76,6 @@ const onDelete = () => {
         closeModalHapus();
         setisOpenStatus(true);
         getData();
-        setStatus('');
         })
       .catch((error) => {
           setStatus({ type: 'error', error });
@@ -80,15 +84,8 @@ const onDelete = () => {
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
+  setStatus('');
 }
-
-// const onUbahStatus = (status) => {
-//   if(status === "Aktif"){
-//     setDesc_status("Non-Aktif")
-//   }else {
-//     setDesc_status("Aktif")
-//   }
-// }
 
 const columns = [
   {
@@ -112,9 +109,9 @@ const columns = [
     name: "Aksi",
     cell:(data) => 
     <div>
-        <button onClick={() => navigateUbahTipeTransaksi(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu">Ubah</button>
-        <button className="btn-action-hijau ml-3">Aktif</button>
-        <button onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3">Hapus</button>
+        <button onClick={() => navigateUbahTipeTransaksi(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i class="fa fa-pencil"></i> Ubah</button>
+        <button className="btn-action-hijau ml-3"><i class="fa fa-play"></i> Aktif</button>
+        <button onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i class="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
     allowOverflow: true,
@@ -211,10 +208,7 @@ const navigateUbahTipeTransaksi = (id, nama_bank, nomor_rekening, nama_pemilik) 
 
     <article>
 
-      <button type="button" className="w-auto btn-ungu flex justify-center mb-5" 
-        onClick={navigateTambahTipeTransaksi}>
-        Tambah
-      </button>
+      <button className="w-auto btn-ungu mb-5" onClick={navigateTambahTipeTransaksi}><i class="fa fa-plus-square-o mr-2 mt-1"></i> Tambah</button>
 
       <FilterComponent
           onFilter={e => setFilterText(e.target.value)}
@@ -224,6 +218,10 @@ const navigateUbahTipeTransaksi = (id, nama_bank, nomor_rekening, nama_pemilik) 
       <Paper>
         <DataTable
           pagination
+          paginationComponentOptions={{
+            rowsPerPageText: 'Tampilkan',
+            rangeSeparatorText: 'dari',
+          }}
           columns={columns}
           customStyles={customStylestable}
           data={filteredItems}
@@ -236,9 +234,18 @@ const navigateUbahTipeTransaksi = (id, nama_bank, nomor_rekening, nama_pemilik) 
           style={customStylesStatus}
           contentLabel="Modal Status"
           >
-          {status?.type === 'success' && <h2>Success</h2>}
-          {status?.type !== 'success' && <h2>Mengubah Data..</h2>}
-          {status?.type === 'error' && <h2>Failed</h2>}
+          {status?.type === 'success' && 
+          <div>
+            <h2 className="ml-8">Berhasil</h2>
+            <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+          </div>
+          }
+          {status?.type === 'error' && 
+          <div>
+            <h2 className="ml-8">Gagal</h2>
+            <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+          </div>
+          } 
       </Modal>
 
       <Modal

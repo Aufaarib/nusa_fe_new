@@ -10,7 +10,8 @@ export default function TambahTipeBank() {
     const [nama_bank, setNamaBank] = useState('');
     const [nomor_rekening, setNomorRekening] = useState('');
     const [nama_pemilik, setNamaPemilik] = useState('');
-    const [isOpenSuccess, setisOpenSuccess] = useState(false);
+    const [isOpenStatus, setisOpenStatus] = useState(false);
+    const [isOpenEmpty, setisOpenEmpty] = useState(false);
     const [status, setStatus] = useState(undefined);
 
 
@@ -19,34 +20,34 @@ export default function TambahTipeBank() {
         e.preventDefault();
 
         if (nama_bank.trim().length === 0 || nomor_rekening.trim().length === 0 || nama_pemilik.trim().length === 0) {
-            console.log('values cannot be empty');
+            setisOpenEmpty(true);
         }
         else {
             axios.post('https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank',{
             nama_bank,
             nomor_rekening,
             nama_pemilik
-        }).then(() => {
+        })
+        .then(() => {
             setStatus({ type: 'success' });
-          })
-          .catch((error) => {
+            setisOpenStatus(true);
+        })
+        .catch((error) => {
             setStatus({ type: 'error', error });
-          });
-
-        openModalSuccess();
-        }
+        });
     }
+}
 
-    const openModalSuccess = () => {
-        setisOpenSuccess(true);
-        setStatus('');
-    }
-    
-    const closeModalSuccess = () => {
-        setisOpenSuccess(false);
-    }
+const closeModalEmpty = () => {
+    setisOpenEmpty(false);
+}
 
-    const customStyles = {
+const closeModalStatus = () => {
+    setisOpenStatus(false);
+    setStatus('');
+}
+
+    const customStylesStatus = {
         content: {
           width: '15%',
           top: '50%',
@@ -68,7 +69,6 @@ export default function TambahTipeBank() {
     const navigate = useNavigate();
 
     const navigateListBank = () => {
-      // 👇️ navigate to /contacts
       navigate('/admin/list-bank');
     };
 
@@ -79,7 +79,6 @@ export default function TambahTipeBank() {
             <article>
 
                 <form
-                    // onSubmit={handleSubmit} 
                     className='grid mt-3 xs:grid-cols-1 
                     md:grid-cols-2 lg:grid-cols-3 gap-7'
                     style={{ zIndex: -1 }}>
@@ -124,15 +123,35 @@ export default function TambahTipeBank() {
                 </section>
 
                 <Modal
-                    isOpen={isOpenSuccess}
-                    onRequestClose={closeModalSuccess}
-                    style={customStyles}
-                    contentLabel="Modal Hapus"
+                    isOpen={isOpenStatus}
+                    onRequestClose={closeModalStatus}
+                    style={customStylesStatus}
+                    contentLabel="Modal Status"
                     >
-                    {status?.type === 'success' && <h2>Success</h2>}
-                    {status?.type !== 'success' && <h2>Menambahkan Data...</h2>}
-                    {status?.type === 'error' && <h2>Failed</h2>}
+                    {status?.type === 'success' && 
+                    <div>
+                        <h2 className="ml-8">Berhasil</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+                    </div>
+                    }
+                    {status?.type === 'error' && 
+                    <div>
+                        <h2 className="ml-8">Gagal</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+                    </div>
+                    } 
+                </Modal>
 
+                <Modal
+                    isOpen={isOpenEmpty}
+                    onRequestClose={closeModalEmpty}
+                    style={customStylesStatus}
+                    contentLabel="Modal Status"
+                    >
+                    <div>
+                        <h2 className="ml-8 w-2">Data Tidak Lengkap</h2>
+                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalEmpty}>Tutup</button>
+                    </div>
                 </Modal>
 
             </article>

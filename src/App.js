@@ -4,6 +4,7 @@ import Login from './pages/Auth/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ListBank from './pages/Keuangan/ListBank';
 import ListTipeTransaksi from './pages/Keuangan/ListTipeTransaksi';
+import ListBiayaPendidikan from './pages/Keuangan/ListBiayaPendidikan';
 import TambahTipeTransaksi from './pages/Keuangan/TambahTipeTransaksi';
 import UbahTipeBank from './pages/Keuangan/UbahTipeBank';
 import TambahTipeBank from './pages/Keuangan/TambahTipeBank';
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="/admin/ubah-tipe-bank" element={(<UbahTipeBank />)} />
             <Route path="/admin/tipe-transaksi" element={(<ListTipeTransaksi />)} />
             <Route path="/admin/tambah-tipe-transaksi" element={(<TambahTipeTransaksi />)} />
+            <Route path="/admin/biaya-pendidikan" element={(<ListBiayaPendidikan />)} />
 
           </Route>
 

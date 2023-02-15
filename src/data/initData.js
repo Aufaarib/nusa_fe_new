@@ -224,8 +224,13 @@ export const sidebarMenusAdmin = [
         icon: <FaWpforms />,
       },
       {
-        name: 'List Bank',
+        name: 'Bank',
         path: `admin/list-bank`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Biaya Pendidikan',
+        path: `admin/biaya-pendidikan`,
         icon: <FaWpforms />,
       },
     ],
