@@ -30,11 +30,15 @@
     "react-router-dom": "^6.2.1",
     "react-script": "^2.0.5",
     "react-scripts": "5.0.0",
+    "react-select": "^5.7.0",
+    "react-widgets": "^5.8.4",
+    "select2": "^4.1.0-rc.0",
     "styled-components": "^5.3.6",
     "sweetpagination": "^1.0.15",
     "use-immer": "^0.8.1",
     "use-state-with-callback": "^3.0.2",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",

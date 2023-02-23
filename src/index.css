@@ -32,12 +32,23 @@ body{
     }
 
     a{
-        @apply text-merah;
+        @apply text-ungu;
+        @apply text-sm;
+    }
+
+    a:hover {
+        @apply text-pink;
     }
 
     ol{
         list-style: decimal;
         padding-left: 16px;
+    }
+
+    .btn-form {
+        display: flex;
+        margin-top: 5px;
+        margin-left: 523px;
     }
 
     .btn-merah {
@@ -88,21 +99,20 @@ body{
     .btn-ungu {
         @apply flex;
         @apply justify-center; 
-        @apply w-full;
-        @apply py-3;
-        @apply mt-6;
-        @apply mr-3;
+        width: 17%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
         @apply font-medium;
         @apply leading-snug;
         @apply text-white;
-        /* @apply text-base; */
         @apply transition;
         @apply duration-150;
         @apply ease-in-out;
         @apply rounded;
         @apply shadow-md;
         @apply bg-ungu;
-        @apply px-7;
     }
     .btn-ungu:hover{
         @apply bg-gelap;

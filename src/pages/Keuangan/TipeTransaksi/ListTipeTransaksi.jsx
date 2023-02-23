@@ -1,8 +1,8 @@
-import { Paper } from "@mui/material";
-import FilterComponent from "../../components/Filter";
-import DataTable from "react-data-table-component";
+import FilterComponent from "../../../components/Filter";
+import DataTables from "../../../components/DataTables";
+import { CustomStylesModalHapus, CustomStylesTable, CustomStylesStatus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
-import { Header } from '../../components';
+import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
@@ -93,17 +93,12 @@ const columns = [
     cell:(data) =>
     <div>
       {data?.status === 'Aktif' && 
-        <div>
           <button className="btn-action-hijau ml-3 w-auto px-2"><i className="fa fa-play"></i> {data.status}</button>
-          <button onClick={() => openModalHapus(data.id, data.description)} className="btn-action-pink ml-3"><i class="fa fa-trash"></i> Hapus</button>
-        </div>
       }
       {data?.status === 'Tidak Aktif' && 
-        <div>
           <button className="btn-action-pink ml-3 w-auto px-2"><i className="fa fa-pause"></i> {data.status}</button>
-          <button onClick={() => openModalHapus(data.id, data.description)} className="btn-action-pink ml-3"><i class="fa fa-trash"></i> Hapus</button>
-        </div>
       }
+      <button onClick={() => openModalHapus(data.id, data.description)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
     allowOverflow: true,
@@ -112,118 +107,47 @@ const columns = [
   },
 ];
 
-const customStylestable = {
-  rows: {
-      style: {
-          justifyContent: 'center',
-      },
-  },
-  headCells: {
-      style: {
-          paddingLeft: '8px', // override the cell padding for head cells
-          paddingRight: '8px',
-          justifyContent: 'center',
-          backgroundColor: '#8F0D1E',
-          color: 'rgb(243 241 241)',
-      },
-  },
-  cells: {
-      style: {
-          paddingLeft: '8px', // override the cell padding for head cells
-          paddingRight: '8px',
-          justifyContent: 'center',
-          fontWeight: 'bold'
-      },
-  },
-};
-
-const customStylesStatus = {
-  content: {
-    width: '15%',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: 'none',
-    cursor: 'auto',
-    padding: '30px'
-  },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.5)',
-    cursor: 'pointer'
-  }
-};
-
-const customStylesModalHapus = {
-  content: {
-    width: '17%',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: 'none',
-    cursor: 'auto',
-    padding: '18px'
-  },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.5)',
-    cursor: 'pointer'
-  }
-};
-
 const navigate = useNavigate();
 
 const navigateTambahTipeTransaksi = () => {
-  // 👇️ navigate to /contacts
     navigate('/admin/tambah-tipe-transaksi');
 };
 
  return (
   <>
-    <Header category="Admin PMB" title="Tipe Transaksi" />
+    <Header category="Admin Keuangan" title="Tipe Transaksi" />
 
     <article>
 
-    <button className="w-auto btn-ungu mb-5" onClick={navigateTambahTipeTransaksi}><i className="fa fa-plus-square-o mr-2 mt-1"></i> Tambah</button>
-
       <FilterComponent
+          onClick={navigateTambahTipeTransaksi}
           onFilter={e => setFilterText(e.target.value)}
           filterText={filterText}
         />
 
-      <Paper>
-        <DataTable
-          pagination
-          paginationComponentOptions={{
-            rowsPerPageText: 'Tampilkan',
-            rangeSeparatorText: 'dari',
-          }}
+      <DataTables 
           columns={columns}
-          customStyles={customStylestable}
           data={filteredItems}
-        />
-      </Paper>
+      
+      />
 
       <Modal
           isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
-          style={customStylesStatus}
+          style={CustomStylesStatus}
           contentLabel="Modal Status"
+          ariaHideApp={false}
           >
           {sts?.type === 'success' && 
           <div>
-            <h2 className="ml-8">Berhasil</h2>
-            <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+            <h2>Berhasil</h2>
+            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
           </div>
           }
           {sts?.type === 'error' && 
           <div>
-            <h2 className="ml-8">Gagal</h2>
-            <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+            <h2>Gagal</h2>
+            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
           </div>
           } 
       </Modal>
@@ -231,8 +155,9 @@ const navigateTambahTipeTransaksi = () => {
       <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
-          style={customStylesModalHapus}
+          style={CustomStylesModalHapus}
           contentLabel="Modal Hapus"
+          ariaHideApp={false}
         >
           <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
           <h4 className='mb-3 text-merah ml-3'>{desc}?</h4>

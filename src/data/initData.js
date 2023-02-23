@@ -219,8 +219,13 @@ export const sidebarMenusAdmin = [
     icon: <AiOutlineBarChart />,
     links: [
       {
+        name: 'Cost Center',
+        path: `admin/list-cost-center`,
+        icon: <FaWpforms />,
+      },
+      {
         name: 'Tipe Transaksi',
-        path: `admin/tipe-transaksi`,
+        path: `admin/list-tipe-transaksi`,
         icon: <FaWpforms />,
       },
       {
@@ -230,7 +235,12 @@ export const sidebarMenusAdmin = [
       },
       {
         name: 'Biaya Pendidikan',
-        path: `admin/biaya-pendidikan`,
+        path: `admin/list-biaya-pendidikan`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Biaya Operasional',
+        path: `admin/list-biaya-operasional`,
         icon: <FaWpforms />,
       },
     ],

@@ -2,12 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
-import ListBank from './pages/Keuangan/ListBank';
-import ListTipeTransaksi from './pages/Keuangan/ListTipeTransaksi';
-import ListBiayaPendidikan from './pages/Keuangan/ListBiayaPendidikan';
-import TambahTipeTransaksi from './pages/Keuangan/TambahTipeTransaksi';
-import UbahTipeBank from './pages/Keuangan/UbahTipeBank';
-import TambahTipeBank from './pages/Keuangan/TambahTipeBank';
 import TahapanPMB from './pages/PMB/TahapanPMB';
 import FormMurid from './pages/PMB/FormMurid';
 import FormOrangTua from './pages/PMB/FormOrangTua';
@@ -19,6 +13,20 @@ import HasilTes from './pages/AdminPMB/HasilTes';
 import Layout from './components/Layout';
 import RequireAuth from './components/RequireAuth';
 import RequireAuthAdmin from './components/RequireAuthAdmin';
+
+import UbahListBank from './pages/Keuangan/Bank/UbahListBank';
+
+import ListBank from './pages/Keuangan/Bank/ListBank';
+import ListCostCenter from './pages/Keuangan/CostCenter/ListCostCenter';
+import ListBiayaOperasional from './pages/Keuangan/BiayaOperasional/ListBiayaOperasional';
+import ListTipeTransaksi from './pages/Keuangan/TipeTransaksi/ListTipeTransaksi';
+import ListBiayaPendidikan from './pages/Keuangan/BiayaPendidikan/ListBiayaPendidikan';
+
+import TambahTipeTransaksi from './pages/Keuangan/TipeTransaksi/TambahTipeTransaksi';
+import TambahCostCenter from './pages/Keuangan/CostCenter/TambahCostCenter';
+import TambahBiayaOperasional from './pages/Keuangan/BiayaOperasional/TambahBiayaOperasional';
+import TambahBiayaPendidikan from './pages/Keuangan/BiayaPendidikan/TambahBiayaPendidikan';
+import TambahListBank from './pages/Keuangan/Bank/TambahListBank';
 
 import './App.css';
 
@@ -39,13 +47,21 @@ const App = () => {
             <Route path="/admin/setup-pmb" element={(<SetupPMB />)} />
             <Route path="/admin/konfirmasi-pembayaran" element={(<KonfirmasiPembayaran />)} />
             <Route path="/admin/hasil-tes" element={(<HasilTes />)} />
-            <Route path="/admin/list-bank" element={(<ListBank />)} />
-            <Route path="/admin/tambah-tipe-bank" element={(<TambahTipeBank />)} />
-            <Route path="/admin/ubah-tipe-bank" element={(<UbahTipeBank />)} />
-            <Route path="/admin/tipe-transaksi" element={(<ListTipeTransaksi />)} />
-            <Route path="/admin/tambah-tipe-transaksi" element={(<TambahTipeTransaksi />)} />
-            <Route path="/admin/biaya-pendidikan" element={(<ListBiayaPendidikan />)} />
 
+            <Route path="/admin/list-bank" element={(<ListBank />)} />
+            <Route path="/admin/list-cost-center" element={(<ListCostCenter />)}></Route>
+            <Route path="/admin/list-biaya-operasional" element={(<ListBiayaOperasional />)} />
+            <Route path="/admin/list-tipe-transaksi" element={(<ListTipeTransaksi />)} />
+            <Route path="/admin/list-biaya-pendidikan" element={(<ListBiayaPendidikan />)} />
+
+            <Route path="/admin/ubah-list-bank" element={(<UbahListBank />)} />
+
+            <Route path="/admin/tambah-list-bank" element={(<TambahListBank />)} />
+            <Route path="/admin/tambah-cost-center" element={(<TambahCostCenter />)} />
+            <Route path="/admin/tambah-biaya-pendidikan" element={(<TambahBiayaPendidikan />)} />
+            <Route path="/admin/tambah-biaya-operasional" element={(<TambahBiayaOperasional />)} />
+            <Route path="/admin/tambah-tipe-transaksi" element={(<TambahTipeTransaksi />)} />
+            
           </Route>
 
           {/* PROTECTED ROUTES */}

@@ -8,8 +8,7 @@ const Input = styled.input.attrs(props => ({
 `
   height: 32px;
   width: 200px;
-  float: right;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-radius: 3px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -19,11 +18,12 @@ const Input = styled.input.attrs(props => ({
   padding: 0 32px 0 16px;
 `;
 
-const FilterComponent = ({ filterText, onFilter}) => (
+const FilterComponent = ({ filterText, onFilter, onClick}) => (
   <>
+    <button className="btn-ungu float-right mb-5" onClick={onClick}><i className="fa fa-plus-square-o mr-2 mt-1"></i> Tambah</button>
+
     <Input 
       id="search"
-      type="text"
       placeholder="Pencarian..."
       value={filterText}
       onChange={onFilter}

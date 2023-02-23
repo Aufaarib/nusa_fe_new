@@ -1,8 +1,8 @@
-import { Paper } from "@mui/material";
-import FilterComponent from "../../components/Filter";
-import DataTable from "react-data-table-component";
+import FilterComponent from "../../../components/Filter";
+import { CustomStylesTable, CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
+import DataTables from "../../../components/DataTables";
 import { useState, useEffect } from "react";
-import { Header } from '../../components';
+import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
@@ -109,9 +109,9 @@ const columns = [
     name: "Aksi",
     cell:(data) => 
     <div>
-        <button onClick={() => navigateUbahTipeTransaksi(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i class="fa fa-pencil"></i> Ubah</button>
-        <button className="btn-action-hijau ml-3"><i class="fa fa-play"></i> Aktif</button>
-        <button onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i class="fa fa-trash"></i> Hapus</button>
+        <button onClick={() => navigateUbahListBank(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
+        <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
+        <button onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
     allowOverflow: true,
@@ -120,79 +120,14 @@ const columns = [
   },
 ];
 
-const customStylestable = {
-  rows: {
-      style: {
-          justifyContent: 'center',
-      },
-  },
-  headCells: {
-      style: {
-          paddingLeft: '8px', // override the cell padding for head cells
-          paddingRight: '8px',
-          justifyContent: 'center',
-          backgroundColor: '#8F0D1E',
-          color: 'rgb(243 241 241)',
-      },
-  },
-  cells: {
-      style: {
-          paddingLeft: '8px', // override the cell padding for head cells
-          paddingRight: '8px',
-          justifyContent: 'center',
-          fontWeight: 'bold'
-      },
-  },
-};
-
-const customStylesStatus = {
-  content: {
-    width: '15%',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: 'none',
-    cursor: 'auto',
-    padding: '30px'
-  },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.5)',
-    cursor: 'pointer'
-  }
-};
-
-const customStylesModalHapus = {
-  content: {
-    width: '17%',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: 'none',
-    cursor: 'auto',
-    padding: '18px'
-  },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.5)',
-    cursor: 'pointer'
-  }
-};
-
 const navigate = useNavigate();
 
-const navigateTambahTipeTransaksi = () => {
-  // 👇️ navigate to /contacts
-    navigate('/admin/tambah-tipe-bank');
+const navigateTambahListBank = () => {
+    navigate('/admin/tambah-list-bank');
 };
 
-const navigateUbahTipeTransaksi = (id, nama_bank, nomor_rekening, nama_pemilik) => {
-    // 👇️ navigate to /contacts
-      navigate('/admin/ubah-tipe-bank', { 
+const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
+      navigate('/admin/ubah-list-bank', { 
         state : {
             id : id,
             nama_bank : nama_bank,
@@ -204,46 +139,39 @@ const navigateUbahTipeTransaksi = (id, nama_bank, nomor_rekening, nama_pemilik) 
 
  return (
   <>
-    <Header category="Admin PMB" title="List Bank" />
+    <Header category="Admin Keuangan" title="List Bank" />
 
     <article>
 
-      <button className="w-auto btn-ungu mb-5" onClick={navigateTambahTipeTransaksi}><i class="fa fa-plus-square-o mr-2 mt-1"></i> Tambah</button>
-
       <FilterComponent
+          onClick={navigateTambahListBank}
           onFilter={e => setFilterText(e.target.value)}
           filterText={filterText}
         />
 
-      <Paper>
-        <DataTable
-          pagination
-          paginationComponentOptions={{
-            rowsPerPageText: 'Tampilkan',
-            rangeSeparatorText: 'dari',
-          }}
+      <DataTables
           columns={columns}
-          customStyles={customStylestable}
           data={filteredItems}
-        />
-      </Paper>
+      
+      />
 
       <Modal
           isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
-          style={customStylesStatus}
+          style={CustomStylesStatus}
           contentLabel="Modal Status"
+          ariaHideApp={false}
           >
           {status?.type === 'success' && 
           <div>
-            <h2 className="ml-8">Berhasil</h2>
-            <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+            <h2>Berhasil</h2>
+            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
           </div>
           }
           {status?.type === 'error' && 
           <div>
-            <h2 className="ml-8">Gagal</h2>
-            <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+            <h2>Gagal</h2>
+            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
           </div>
           } 
       </Modal>
@@ -251,8 +179,9 @@ const navigateUbahTipeTransaksi = (id, nama_bank, nomor_rekening, nama_pemilik) 
       <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
-          style={customStylesModalHapus}
+          style={CustomStylesModalHapus}
           contentLabel="Modal Hapus"
+          ariaHideApp={false}
         >
           <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
           <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>

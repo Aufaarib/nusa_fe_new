@@ -1,8 +1,8 @@
 import React from 'react'
-import TextInput from '../../components/TextInput'
+import TextInput from '../../../components/TextInput'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import axios from '../../api/axios';
+import axios from '../../../api/axios';
 import Modal from 'react-modal';
 
 export default function TambahTipeTransaksi() {
@@ -47,7 +47,7 @@ const closeModalStatus = () => {
 
     const customStylesStatus = {
         content: {
-          width: '15%',
+          width: 'auto',
           top: '50%',
           left: '50%',
           right: 'auto',
@@ -68,7 +68,7 @@ const closeModalStatus = () => {
 
     const navigateListTipeTransaksi = () => {
       // 👇️ navigate to /contacts
-      navigate('/admin/tipe-transaksi');
+      navigate('/admin/list-tipe-transaksi');
     };
 
     return (
@@ -77,34 +77,23 @@ const closeModalStatus = () => {
 
             <article>
 
-                <form
-                    // onSubmit={handleSubmit} 
-                    className='grid mt-3 xs:grid-cols-1 
-                    md:grid-cols-2 lg:grid-cols-3 gap-7'
-                    style={{ zIndex: -1 }}>
+                <TextInput
+                    label="Deskrisi"
+                    type="text"
+                    name="deskripsi"
+                    onChange={(e) => setDesc(e.target.value)}
+                    required={true}
+                />
+                <br/>
+                <TextInput
+                    label="Status"
+                    type="text"
+                    name="status"
+                    onChange={(e) => setStatus(e.target.value)}
+                    required={true}
+                />
 
-                    {/* COL 1 */}
-                    <section>
-                        <TextInput
-                            label="Deskrisi"
-                            type="text"
-                            id="code"
-                            onChange={(e) => setDesc(e.target.value)}
-                            required={true}
-                        />
-                        <br />
-                        <TextInput
-                            label="Status"
-                            type="text"
-                            id="group"
-                            onChange={(e) => setStatus(e.target.value)}
-                            required={true}
-                        />
-                    </section>
-
-                </form>
-
-                <section className='flex mt-12'>
+                <div className='btn-form'>
                     <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
                         Simpan
                     </button>
@@ -112,26 +101,27 @@ const closeModalStatus = () => {
                     onClick={navigateListTipeTransaksi}>
                         Batal
                     </button>
-                </section>
+                </div>
 
                 <Modal
                     isOpen={isOpenStatus}
                     onRequestClose={closeModalStatus}
                     style={customStylesStatus}
                     contentLabel="Modal Status"
+                    ariaHideApp={false}
                     >
                     {sts?.type === 'success' && 
                     <div>
-                        <h2 className="ml-8">Berhasil</h2>
-                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+                        <h2>Berhasil</h2>
+                        <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
                     </div>
                     }
                     {sts?.type === 'error' && 
                     <div>
-                        <h2 className="ml-8">Gagal</h2>
-                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+                        <h2>Gagal</h2>
+                        <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
                     </div>
-                    } 
+                        } 
                 </Modal>
 
                 <Modal
@@ -139,10 +129,11 @@ const closeModalStatus = () => {
                     onRequestClose={closeModalEmpty}
                     style={customStylesStatus}
                     contentLabel="Modal Status"
+                    ariaHideApp={false}
                     >
                     <div>
-                        <h2 className="ml-8 w-2">Data Tidak Lengkap</h2>
-                        <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalEmpty}>Tutup</button>
+                        <h2>Data Tidak Lengkap</h2>
+                        <button className="btn-action-pink w-20 mt-5" onClick={closeModalEmpty}>Tutup</button>
                     </div>
                 </Modal>
 

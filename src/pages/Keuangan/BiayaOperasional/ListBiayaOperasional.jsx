@@ -1,13 +1,14 @@
 import { Paper } from "@mui/material";
-import FilterComponent from "../../components/Filter";
-import DataTable from "react-data-table-component";
+import FilterComponent from "../../../components/Filter";
+import DataTables from "../../../components/DataTables";
+import { CustomStylesTable, CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
-import { Header } from '../../components';
+import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
 
-export default function ListBiayaPendidikan() {
+export default function ListBiayaOperasional    () {
 const [data, setData] = useState([]);   
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
@@ -18,16 +19,15 @@ const [desc_nama, setDesc_nama] = useState('');
 // const [desc_status, setDesc_status] = useState('');
 const [filterText, setFilterText] = useState('');
 
-const filteredItems = 
-  data.filter(
-    item => item.nama_pemilik.toLowerCase().includes(filterText.toLowerCase())||
-    item.nomor_rekening.toLowerCase().includes(filterText.toLowerCase())||
-    item.nama_bank.toLowerCase().includes(filterText.toLowerCase())
-  );
+// const filteredItems = 
+//   data.filter(
+//     item => item.siswa.toLowerCase().includes(filterText.toLowerCase())||
+//     item.jenis_transaksi.toLowerCase().includes(filterText.toLowerCase())
+//   );
 
 useEffect(() => {
   axios
-    .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
+    .get("https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional")
     .then((res) => {
       setData(res.data);
       setStatus({ type: 'success' });
@@ -38,7 +38,7 @@ useEffect(() => {
 }, []);
 
 const getData = () => {
-  axios.get(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank`)
+  axios.get(`https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional`)
       .then((getData) => {
         setData(getData.data);
         setStatus({ type: 'success' });
@@ -48,9 +48,9 @@ const getData = () => {
       });
 }
 
-const openModalHapus = (id, nama_pemilik) => {
+const openModalHapus = (id, siswa) => {
   setisOpenDelete(true);
-  setDesc_nama(nama_pemilik);
+  setDesc_nama(siswa);
   setDeleteId(id);
 }
 
@@ -69,7 +69,7 @@ const closeModalHapus = () => {
 // }
 
 const onDelete = () => {
-  axios.delete(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank/${deleteId}`)
+  axios.delete(`https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional/${deleteId}`)
       .then(() => {
         setStatus({ type: 'success' });
         closeModalHapus();
@@ -94,37 +94,31 @@ const columns = [
   },
   {
     name: "Cost Center",
-    selector: (data) => data.nama_bank,
-    width: "83px"
-  },
-  {
-    name: "Siswa",
-    selector: (data) => data.nomor_rekening,
-    width: "180px"
+    selector: (data) => data.cost_center,
   },
   {
     name: "Jenis Transaksi",
-    selector: (data) => data.nama_pemilik,
-    
+    selector: (data) => data.jenis_transaksi,
   },
   {
     name: "Bank",
-    selector: (data) => data.nama_pemilik,
+    selector: (data) => data.bank,
   },
   {
     name: "Jumlah",
-    selector: (data) => data.nama_pemilik,
+    selector: (data) => data.jumlah,
   },
   {
     name: "Catatan",
-    selector: (data) => data.nama_pemilik,
+    selector: (data) => data.catatan,
+    width: "247px"
   },
   {
     name: "Aksi",
     cell:(data) => 
     <div>
-        <button className="btn-action-hijau ml-3"><i class="fa fa-play"></i> Aktif</button>
-        <button onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i class="fa fa-trash"></i> Hapus</button>
+        <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
+        <button onClick={() => openModalHapus(data.id, data.siswa)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
     allowOverflow: true,
@@ -133,118 +127,47 @@ const columns = [
   },
 ];
 
-const customStylestable = {
-  rows: {
-      style: {
-          justifyContent: 'center',
-      },
-  },
-  headCells: {
-      style: {
-          paddingLeft: '8px', // override the cell padding for head cells
-          paddingRight: '8px',
-          justifyContent: 'center',
-          backgroundColor: '#8F0D1E',
-          color: 'rgb(243 241 241)',
-      },
-  },
-  cells: {
-      style: {
-          paddingLeft: '8px', // override the cell padding for head cells
-          paddingRight: '8px',
-          justifyContent: 'center',
-          fontWeight: 'bold'
-      },
-  },
-};
-
-const customStylesStatus = {
-  content: {
-    width: '15%',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: 'none',
-    cursor: 'auto',
-    padding: '30px'
-  },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.5)',
-    cursor: 'pointer'
-  }
-};
-
-const customStylesModalHapus = {
-  content: {
-    width: '17%',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: 'none',
-    cursor: 'auto',
-    padding: '18px'
-  },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.5)',
-    cursor: 'pointer'
-  }
-};
-
 const navigate = useNavigate();
 
-const navigateTambahTipeTransaksi = () => {
+const navigateTambahBiayaOperasional = () => {
   // 👇️ navigate to /contacts
-    navigate('/admin/tambah-tipe-bank');
+    navigate('/admin/tambah-biaya-operasional');
 };
 
  return (
   <>
-    <Header category="Admin PMB" title="List Bank" />
+    <Header category="Admin Keuangan" title="List Biaya Operasional" />
 
     <article>
 
-      <button className="w-auto btn-ungu mb-5" onClick={navigateTambahTipeTransaksi}><i class="fa fa-plus-square-o mr-2 mt-1"></i> Tambah</button>
-
       <FilterComponent
+          onClick={navigateTambahBiayaOperasional}
           onFilter={e => setFilterText(e.target.value)}
           filterText={filterText}
         />
 
-      <Paper>
-        <DataTable
-          pagination
-          paginationComponentOptions={{
-            rowsPerPageText: 'Tampilkan',
-            rangeSeparatorText: 'dari',
-          }}
+      <DataTables
           columns={columns}
-          customStyles={customStylestable}
-          data={filteredItems}
-        />
-      </Paper>
+          data={data}
+      />
 
       <Modal
           isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
-          style={customStylesStatus}
+          style={CustomStylesStatus}
           contentLabel="Modal Status"
+          ariaHideApp={false}
           >
           {status?.type === 'success' && 
           <div>
-            <h2 className="ml-8">Berhasil</h2>
-            <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+            <h2>Berhasil</h2>
+            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
           </div>
           }
           {status?.type === 'error' && 
           <div>
-            <h2 className="ml-8">Gagal</h2>
-            <button className="btn-action-pink w-20 mt-5 ml-10" onClick={closeModalStatus}>Tutup</button>
+            <h2>Gagal</h2>
+            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
           </div>
           } 
       </Modal>
@@ -252,8 +175,9 @@ const navigateTambahTipeTransaksi = () => {
       <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
-          style={customStylesModalHapus}
+          style={CustomStylesModalHapus}
           contentLabel="Modal Hapus"
+          ariaHideApp={false}
         >
           <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
           <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
