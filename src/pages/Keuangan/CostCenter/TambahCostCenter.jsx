@@ -1,7 +1,7 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState} from 'react';
 import axios from '../../../api/axios';
 import Modal from 'react-modal';
 import { DropdownDebitKredit } from '../../../components/Dropdown';
@@ -24,8 +24,8 @@ const postData = (e) => {
 
     const debit_kredit = debitKredit.value
 
-    if (code.trim().length === 0 || group.trim().length === 0 || sub_group.trim().length === 0
-    || item.trim().length === 0 || debit_kredit.trim().length === 0) {
+    if (code.length === 0 || group.length === 0 || sub_group.length === 0
+    || item.length === 0 || debit_kredit.length === 0) {
 
         setisOpenEmpty(true);
     }
@@ -44,7 +44,7 @@ const postData = (e) => {
     .catch((error) => {
         setStatus({ type: 'error', error });
     });
-}
+    }
 }
 
 const closeModalEmpty = () => {

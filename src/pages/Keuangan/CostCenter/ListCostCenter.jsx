@@ -2,13 +2,14 @@ import FilterComponent from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
 import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
+import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
 
 export default function ListCostCenter() {
-const [items, setItems] = useState([]);
+const [data, setData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
 const [deleteId, setDeleteId] = useState("");
@@ -17,7 +18,7 @@ const [filterText, setFilterText] = useState("");
 const [sts, setSts] = useState(undefined);
 
 const filteredItems = 
-  items.filter(
+  data.filter(
     item => item.item.toLowerCase().includes(filterText)||
     item.group.toLowerCase().includes(filterText.toLowerCase())
   );
@@ -25,7 +26,7 @@ const filteredItems =
 useEffect(() => {
   axios.get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center")
     .then((res) => {
-      setItems(res.data);
+      setData(res.data);
       setSts({ type: 'success' });
     })
     .catch((error) => {
@@ -37,7 +38,7 @@ useEffect(() => {
 const getData = () => {
   axios.get(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center`)
     .then((res) => {
-      setItems(res.data);
+      setData(res.data);
       setSts({ type: 'success' });
     })
     .catch((error) => {
@@ -72,11 +73,12 @@ const columns = [
   {
     name: 'No',
     selector: (_row, i) => i + 1,
-    width: "37px"  
+    width: "55px"  
   },
   {
     name: "Code",
     selector: (data) => data.code,
+    width: "55px"
   },
   { 
     name: "Group",
@@ -93,6 +95,7 @@ const columns = [
   { 
     name: "Kredit/Debit",
     selector: (data) => data.debit_kredit,
+    width: "99px"
   },
   {
     name: "Aksi",
@@ -119,7 +122,7 @@ const columns = [
     ignoreRowClick: true,
     allowOverflow: true,
     button: true,
-    width: "360px" 
+    width: "183px" 
   },
 ];
 
@@ -135,12 +138,20 @@ const navigateCostCenter = () => {
     navigate('/admin/tambah-cost-center');
 };
 
+const handleDownloadExcel = () => {
+  const ws = utils.json_to_sheet(data);
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, "test");
+  writeFileXLSX(wb, `coba.xlsx`);        
+};
+
  return (
   <>
     <Header category="Admin Keuangan" title="Cost Center" />
 
     <article>
       <FilterComponent
+          onDownloadExcel={handleDownloadExcel}
           onClick={navigateCostCenter}
           onFilter={e => setFilterText(e.target.value)}
           filterText={filterText}

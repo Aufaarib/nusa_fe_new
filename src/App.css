@@ -14,6 +14,12 @@
   z-index: 10000;
 }
 
+.btn-form {
+  display: flex;
+  margin-top: 5px;
+  margin-left: 523px;
+}
+
 .grid-container {
   display: grid;
   column-gap: 10px;
@@ -116,6 +122,15 @@ input[type=file]::file-selector-button:hover {
     width: 222px;
     padding: 10px;
   }
+  .grid-container {
+    display: block;
+  }
+
+  .btn-form {
+    display: flex;
+    margin-top: 5px;
+    margin-left: 92px;
+}
 }
 
 .e-dlg-center-center, .e-quick-popup-wrapper.e-device{

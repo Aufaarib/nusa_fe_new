@@ -1,14 +1,15 @@
 import FilterComponent from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
-import { CustomStylesTable, CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
+import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
+import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
 
 export default function ListBiayaPendidikan() {
-const [items, setItems] = useState([]);
+const [data, setData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
 // const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
@@ -19,7 +20,7 @@ const [desc_nama, setDesc_nama] = useState('');
 const [filterText, setFilterText] = useState('');
 
 const filteredItems = 
-  items.filter(
+  data.filter(
     item => item.siswa.toLowerCase().includes(filterText.toLowerCase()) ||
     item.jenis_transaksi.includes(filterText.toLowerCase())
   );
@@ -28,7 +29,7 @@ useEffect(() => {
   axios
     .get("https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-pendidikan")
     .then((res) => {
-      setItems(res.data);
+      setData(res.data);
       setStatus({ type: 'success' });
     })
     .catch((error) => {
@@ -39,7 +40,7 @@ useEffect(() => {
 const getData = () => {
   axios.get("https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-pendidikan")
       .then((getData) => {
-        setItems(getData.data);
+        setData(getData.data);
         setStatus({ type: 'success' });
       })
       .catch((error) => {
@@ -94,10 +95,12 @@ const columns = [
   {
     name: "Cost Center",
     selector: (data) => data.cost_center,
+    width: "100px" 
   },
   {
     name: "Siswa",
     selector: (data) => data.siswa,
+    width: "200px" 
   },
   {
     name: "Jenis Transaksi",
@@ -135,11 +138,20 @@ const navigateTambahBiayaPendidikan = () => {
     navigate('/admin/tambah-biaya-pendidikan');
 };
 
+const handleDownloadExcel = () => {
+  const ws = utils.json_to_sheet(data);
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, "test");
+  writeFileXLSX(wb, `coba.xlsx`);        
+};
+
  return (
   <>
     <Header category="Admin Keuangan" title="List Biaya Pendidikan" />
 
     <article>
+
+      <button className="btn-ungu float-right mb-5 ml-3" onClick={handleDownloadExcel}><i className="fa fa-plus-square-o mr-2 mt-1"></i>Download Excel</button>
 
       <FilterComponent
           onClick={navigateTambahBiayaPendidikan}

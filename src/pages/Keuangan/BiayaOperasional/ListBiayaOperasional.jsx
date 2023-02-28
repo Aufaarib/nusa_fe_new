@@ -1,15 +1,19 @@
-import { Paper } from "@mui/material";
 import FilterComponent from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
-import { CustomStylesTable, CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
+import { DateRangePicker } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
+import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
 
-export default function ListBiayaOperasional    () {
+export default function ListBiayaOperasional() {
 const [data, setData] = useState([]);   
+const [allData, setAllData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
 // const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
@@ -18,18 +22,20 @@ const [deleteId, setDeleteId] = useState('');
 const [desc_nama, setDesc_nama] = useState('');
 // const [desc_status, setDesc_status] = useState('');
 const [filterText, setFilterText] = useState('');
+const [startDate,setStartDate]= useState(new Date());
+const [endDate,setEndDate]= useState(new Date());
 
-// const filteredItems = 
-//   data.filter(
-//     item => item.siswa.toLowerCase().includes(filterText.toLowerCase())||
-//     item.jenis_transaksi.toLowerCase().includes(filterText.toLowerCase())
-//   );
+const filteredItems = 
+  data.filter(
+    item => item.jenis_transaksi.toLowerCase().includes(filterText.toLowerCase())
+  );
 
 useEffect(() => {
   axios
     .get("https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional")
     .then((res) => {
       setData(res.data);
+      setAllData(res.data);
       setStatus({ type: 'success' });
     })
     .catch((error) => {
@@ -41,6 +47,7 @@ const getData = () => {
   axios.get(`https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional`)
       .then((getData) => {
         setData(getData.data);
+        setAllData(getData.data);
         setStatus({ type: 'success' });
       })
       .catch((error) => {
@@ -48,9 +55,9 @@ const getData = () => {
       });
 }
 
-const openModalHapus = (id, siswa) => {
+const openModalHapus = (id, cost_center) => {
   setisOpenDelete(true);
-  setDesc_nama(siswa);
+  setDesc_nama(cost_center);
   setDeleteId(id);
 }
 
@@ -90,7 +97,7 @@ const columns = [
   {
     name: 'No',
     selector: (_row, i) => i + 1,
-    width: "37px"  
+    width: "55px"  
   },
   {
     name: "Cost Center",
@@ -118,7 +125,7 @@ const columns = [
     cell:(data) => 
     <div>
         <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
-        <button onClick={() => openModalHapus(data.id, data.siswa)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
+        <button onClick={() => openModalHapus(data.id, data.cost_center)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
     allowOverflow: true,
@@ -134,11 +141,20 @@ const navigateTambahBiayaOperasional = () => {
     navigate('/admin/tambah-biaya-operasional');
 };
 
+const handleDownloadExcel = () => {
+  const ws = utils.json_to_sheet(data);
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, "test");
+  writeFileXLSX(wb, `coba.xlsx`);        
+};
+
  return (
   <>
     <Header category="Admin Keuangan" title="List Biaya Operasional" />
 
     <article>
+
+      <button className="btn-ungu float-right mb-5 ml-3" onClick={handleDownloadExcel}><i className="fa fa-plus-square-o mr-2 mt-1"></i>Download Excel</button>
 
       <FilterComponent
           onClick={navigateTambahBiayaOperasional}
@@ -148,7 +164,7 @@ const navigateTambahBiayaOperasional = () => {
 
       <DataTables
           columns={columns}
-          data={data}
+          data={filteredItems}
       />
 
       <Modal

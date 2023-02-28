@@ -1,14 +1,15 @@
 import FilterComponent from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
-import { CustomStylesModalHapus, CustomStylesTable, CustomStylesStatus } from "../../../components/CustomStyles";
+import { CustomStylesModalHapus, CustomStylesStatus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
+import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
 
 export default function ListTipeTransaksi() {
-const [items, setItems] = useState([]);
+const [data, setData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
 const [deleteId, setDeleteId] = useState("");
@@ -17,7 +18,7 @@ const [filterText, setFilterText] = useState("");
 const [sts, setSts] = useState(undefined);
 
 const filteredItems = 
-  items.filter(
+  data.filter(
     item => item.description.toLowerCase().includes(filterText.toLowerCase())||
     item.status.toLowerCase().includes(filterText.toLowerCase())
   );
@@ -25,7 +26,7 @@ const filteredItems =
 useEffect(() => {
   axios.get("https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch")
     .then((response) => {
-      setItems(response.data.data);
+      setData(response.data.data);
       setSts({ type: 'success' });
     })
     .catch((error) => {
@@ -37,7 +38,7 @@ useEffect(() => {
 const getData = () => {
   axios.get(`https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch`)
     .then((response) => {
-      setItems(response.data.data);
+      setData(response.data.data);
       setSts({ type: 'success' });
     })
     .catch((error) => {
@@ -113,6 +114,13 @@ const navigateTambahTipeTransaksi = () => {
     navigate('/admin/tambah-tipe-transaksi');
 };
 
+const handleDownloadExcel = () => {
+  const ws = utils.json_to_sheet(data);
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, "test");
+  writeFileXLSX(wb, `coba.xlsx`);        
+};
+
  return (
   <>
     <Header category="Admin Keuangan" title="Tipe Transaksi" />
@@ -120,6 +128,7 @@ const navigateTambahTipeTransaksi = () => {
     <article>
 
       <FilterComponent
+          onDownloadExcel={handleDownloadExcel}
           onClick={navigateTambahTipeTransaksi}
           onFilter={e => setFilterText(e.target.value)}
           filterText={filterText}

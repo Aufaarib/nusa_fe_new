@@ -12,7 +12,6 @@ export default function TambahBiayaOperasional() {
 
 const [data, setData] = useState([]);
 const [costCenter, setCostCenter] = useState('');
-const [student, setSiswa] = useState('');
 const [jenisTransaksi, setJenisTransaksi] = useState('');
 const [bank, setBank] = useState('');
 const [jumlah, setJumlah] = useState('');
@@ -35,35 +34,47 @@ useEffect(() => {
     }, []);
 
 
-const postData = (e) => {
-    e.preventDefault();
-
-    const cost_center = costCenter.value;
-    const siswa = student.value;
-    const jenis_transaksi = jenisTransaksi.value;
-
-    if (siswa.length === 0 || jenis_transaksi.length === 0
-    || bank.trim().length === 0 || jumlah.trim().length === 0 || file_name.trim().length === 0) {
-        setisOpenEmpty(true);
+    const postData = (e) => {
+        e.preventDefault();
+    
+        const cost_center = costCenter.value;
+        const jenis_transaksi = jenisTransaksi.value;
+    
+        const post = () => {
+            axios.post('https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional',{
+                cost_center,
+                jenis_transaksi,
+                bank,
+                jumlah,
+                catatan
+            })
+            .then(() => {
+                setStatus({ type: 'success' });
+                setisOpenStatus(true);
+            })
+            .catch((error) => {
+                setStatus({ type: 'error', error });
+            });
+        }
+    
+        if (jenisTransaksi.value === 'Transfer') {
+            if (costCenter.length === 0 || jenisTransaksi.length === 0|| bank.length === 0 || jumlah.length === 0 || file_name.length === 0) {
+                setisOpenEmpty(true);
+            }
+            else {
+                post()
+            }
+        }else if (jenisTransaksi.value === 'Cash') {
+            if (costCenter.length === 0 || jenisTransaksi.length === 0|| jumlah.length === 0 || file_name.length === 0) {
+                setisOpenEmpty(true);
+            }
+            else {
+                post()
+            }
+        }else {
+            setisOpenEmpty(true);
+        }
     }
-    else {
-        axios.post('https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional',{
-        cost_center,
-        siswa,
-        jenis_transaksi,
-        bank,
-        jumlah,
-        catatan
-    })
-    .then(() => {
-        setStatus({ type: 'success' });
-        setisOpenStatus(true);
-    })
-    .catch((error) => {
-        setStatus({ type: 'error', error });
-    });
-}
-}
 
 const closeModalEmpty = () => {
 setisOpenEmpty(false);
@@ -106,16 +117,18 @@ return (
                 label="Jenis Transaksi"
                 required={true}
                 defaultValue={jenisTransaksi}
-                isClearable={true}
+                isClearable={false}
                 isSearchable={false}
                 onChange={setJenisTransaksi}
             />
-            <TextInput
+            {jenisTransaksi.value === 'Transfer' && 
+                <TextInput
                 label="Bank"
                 type="text"
                 required={true}
                 onChange={(e) => setBank(e.target.value)}
-            />
+                />
+            }
             <TextInput
                 label="Jumlah"
                 required={true}

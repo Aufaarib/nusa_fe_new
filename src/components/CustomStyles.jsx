@@ -18,7 +18,8 @@ export const CustomStylesTable = {
             paddingLeft: '8px', // override the cell padding for head cells
             paddingRight: '8px',
             justifyContent: 'center',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            width: 'auto'
         },
     },
   };

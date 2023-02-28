@@ -1,6 +1,7 @@
 import FilterComponent from "../../../components/Filter";
-import { CustomStylesTable, CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
+import {CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import DataTables from "../../../components/DataTables";
+import { utils, writeFileXLSX } from 'xlsx';
 import { useState, useEffect } from "react";
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
@@ -140,7 +141,7 @@ const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
  return (
   <>
     <Header category="Admin Keuangan" title="List Bank" />
-
+    
     <article>
 
       <FilterComponent
@@ -152,7 +153,6 @@ const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
       <DataTables
           columns={columns}
           data={filteredItems}
-      
       />
 
       <Modal

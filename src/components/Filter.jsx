@@ -20,7 +20,7 @@ const Input = styled.input.attrs(props => ({
 
 const FilterComponent = ({ filterText, onFilter, onClick}) => (
   <>
-    <button className="btn-ungu float-right mb-5" onClick={onClick}><i className="fa fa-plus-square-o mr-2 mt-1"></i> Tambah</button>
+    <button className="btn-ungu float-right mb-5" onClick={onClick}><i className="fa fa-plus-square-o mr-2 mt-1"></i>Tambah</button>
 
     <Input 
       id="search"

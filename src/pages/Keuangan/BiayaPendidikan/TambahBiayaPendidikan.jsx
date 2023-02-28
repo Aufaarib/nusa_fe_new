@@ -10,9 +10,15 @@ import { FileUpload } from '../../../components/FileUpload';
 
 export default function TambahBiayaPendidikan() {
 
+const [code, setCode] = useState('');
+const [group, setGroup] = useState('');
+const [sub_group, setSubGroup] = useState('');
+const [item, setItem] = useState('');
+const [debitKredit, setDebitKredit] = useState('');
+
 const [data, setData] = useState([]);
 const [costCenter, setCostCenter] = useState('');
-const [student, setSiswa] = useState('');
+const [siswa, setSiswa] = useState('');
 const [jenisTransaksi, setJenisTransaksi] = useState('');
 const [bank, setBank] = useState('');
 const [jumlah, setJumlah] = useState('');
@@ -21,6 +27,13 @@ const [file_name, setFileName] = useState('');
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
+
+// console.log(code);
+// console.log(group);
+// console.log(sub_group);
+// console.log(item);
+// console.log(debitKredit);
+
 
 useEffect(() => {
     axios
@@ -38,21 +51,62 @@ const postData = (e) => {
     e.preventDefault();
 
     const cost_center = costCenter.value;
-    const siswa = student.value;
     const jenis_transaksi = jenisTransaksi.value;
 
-    if (cost_center.trim().length === 0 || siswa.trim().length === 0 || jenis_transaksi.trim().length === 0
-    || bank.trim().length === 0 || jumlah.trim().length === 0 || file_name.trim().length === 0) {
+    const post = () => {
+        axios.post('https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-pendidikan',{
+            cost_center,
+            siswa,
+            jenis_transaksi,
+            bank,
+            jumlah,
+            catatan
+        })
+        .then(() => {
+            setStatus({ type: 'success' });
+            setisOpenStatus(true);
+        })
+        .catch((error) => {
+            setStatus({ type: 'error', error });
+        });
+    }
+
+    if (jenisTransaksi.value === 'Transfer') {
+        if (costCenter.length === 0 || siswa.length === 0 || jenisTransaksi.length === 0|| bank.length === 0 || jumlah.length === 0 || file_name.length === 0) {
+            setisOpenEmpty(true);
+        }
+        else {
+            post()
+        }
+    }else if (jenisTransaksi.value === 'Cash') {
+        if (costCenter.length === 0 || siswa.length === 0 || jenisTransaksi.length === 0|| jumlah.length === 0 || file_name.length === 0) {
+            setisOpenEmpty(true);
+        }
+        else {
+            post()
+        }
+    }else {
+        setisOpenEmpty(true);
+    }
+}
+
+const postDataCostCenter = (e) => {
+    e.preventDefault();
+
+    const debit_kredit = debitKredit.value
+
+    if (code.length === 0 || group.length === 0 || sub_group.length === 0
+    || item.length === 0 || debitKredit.length === 0) {
+
         setisOpenEmpty(true);
     }
     else {
-        axios.post('https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-pendidikan',{
-        cost_center,
-        siswa,
-        jenis_transaksi,
-        bank,
-        jumlah,
-        catatan
+        axios.post('https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center',{
+        code,
+        group,
+        sub_group,
+        item,
+        debit_kredit
     })
     .then(() => {
         setStatus({ type: 'success' });
@@ -61,7 +115,7 @@ const postData = (e) => {
     .catch((error) => {
         setStatus({ type: 'error', error });
     });
-}
+    }
 }
 
 const closeModalEmpty = () => {
@@ -91,9 +145,16 @@ const options = data.map((c) => (
 return (  
     <div>
         <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Form Tambah Biaya Pendidikan</p>
-
+        
         <article>
             <DropdownCostCenter
+                setCode={(e) => setCode(e.target.value)}
+                setGroup={(e) => setGroup(e.target.value)}
+                setSubGroup={(e) => setSubGroup(e.target.value)}
+                setItem={(e) => setItem(e.target.value)}
+                setDebitKredit={setDebitKredit}
+                defaultValueDK={debitKredit}
+                post={postDataCostCenter}
                 label="Cost Center"
                 required={true}
                 defaultValue={costCenter}
@@ -101,27 +162,33 @@ return (
                 options={options}
                 onChange={setCostCenter}
             />
-            <DropdownJenisTransaksi 
+            <TextInput
                 label="Siswa"
                 required={true}
-                defaultValue={student}
-                isClearable={true}
-                options={options}
-                onChange={setSiswa}
+                type="text"
+                onChange={(e) => setSiswa(e.target.value)}
             />
             <DropdownJenisTransaksi
                 label="Jenis Transaksi"
                 required={true}
                 defaultValue={jenisTransaksi}
-                isClearable={true}
+                isClearable={false}
                 isSearchable={false}
                 onChange={setJenisTransaksi}
             />
-            <TextInput
+            {jenisTransaksi.value === 'Transfer' && 
+                <TextInput
                 label="Bank"
                 type="text"
                 required={true}
                 onChange={(e) => setBank(e.target.value)}
+                />
+            }
+            <TextInput
+                label="Jumlah"
+                required={true}
+                onInput={handleChange}
+                value={jumlah}
             />
             <TextArea
                 label="Catatan"
@@ -129,14 +196,12 @@ return (
                 onChange={(e) => setCatatan(e.target.value)}
                 required={false}
             />
-
             <FileUpload 
                 required={true}
                 onChange={(e) => setFileName(e.target.value)}
                 label="Tarik File Kesini"
                 type="file"
             />
-
             <div className='btn-form'>
                 <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
                     Simpan
