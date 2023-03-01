@@ -24,7 +24,7 @@ const postData = (e) => {
         setisOpenEmpty(true);
     }
     else {
-        axios.post('https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank',{
+        axios.post('https://nusa.nuncorp.id/golang/api/v1/bank/create',{
         nama_bank,
         nomor_rekening,
         nama_pemilik

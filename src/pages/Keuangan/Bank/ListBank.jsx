@@ -1,4 +1,4 @@
-import FilterComponent from "../../../components/Filter";
+import {FilterComponent} from "../../../components/Filter";
 import {CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import DataTables from "../../../components/DataTables";
 import { utils, writeFileXLSX } from 'xlsx';
@@ -28,10 +28,10 @@ const filteredItems =
 
 useEffect(() => {
   axios
-    .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
+    .get("https://nusa.nuncorp.id/golang/api/v1/bank/fetch")
     .then((res) => {
-      console.log(res.data)
-      setData(res.data);
+      console.log(res.data.data)
+      setData(res.data.data);
       setStatus({ type: 'success' });
     })
     .catch((error) => {
@@ -40,9 +40,10 @@ useEffect(() => {
 }, []);
 
 const getData = () => {
-  axios.get(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank`)
-      .then((getData) => {
-        setData(getData.data);
+  axios.get("https://nusa.nuncorp.id/golang/api/v1/bank/fetch")
+      .then((res) => {
+        console.log(res.data.data)
+        setData(res.data.data);
         setStatus({ type: 'success' });
       })
       .catch((error) => {
@@ -71,7 +72,7 @@ const closeModalHapus = () => {
 // }
 
 const onDelete = () => {
-  axios.delete(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank/${deleteId}`)
+  axios.delete(`https://nusa.nuncorp.id/golang/api/v1/bank/delete/${deleteId}`)
       .then(() => {
         setStatus({ type: 'success' });
         closeModalHapus();

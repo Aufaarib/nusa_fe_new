@@ -47,6 +47,7 @@ module.exports = {
       },
       width: {
         40: '40px',
+        45: '45px',
         60: '60px',
         80: '80px',
         120: '120px',
@@ -71,6 +72,7 @@ module.exports = {
       },
       height: {
         40: '40px',
+        45: '45px',
         60: '60px',
         80: '80px',
         120: '120px',

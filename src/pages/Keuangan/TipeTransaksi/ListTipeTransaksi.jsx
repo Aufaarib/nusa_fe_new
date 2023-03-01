@@ -1,4 +1,4 @@
-import FilterComponent from "../../../components/Filter";
+import { FilterComponent } from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
 import { CustomStylesModalHapus, CustomStylesStatus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";

@@ -1,6 +1,6 @@
-import FilterComponent from "../../../components/Filter";
+import { FilterComponent, FilterDate } from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker } from "react-date-range";
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
@@ -10,6 +10,7 @@ import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
+import moment from "moment";
 
 export default function ListBiayaOperasional() {
 const [data, setData] = useState([]);   
@@ -26,9 +27,12 @@ const [startDate,setStartDate]= useState(new Date());
 const [endDate,setEndDate]= useState(new Date());
 
 const filteredItems = 
-  data.filter(
-    item => item.jenis_transaksi.toLowerCase().includes(filterText.toLowerCase())
-  );
+    data.filter(
+      data => 
+      // new Date(moment(data.created_at).format('DD/MM/YYYY')) >= new Date(startDate) 
+      // && new Date(moment(data.created_at).format('DD/MM/YYYY')) <= new Date(endDate) &&
+      data.bank.toLowerCase().includes(filterText.toLowerCase())
+      ) 
 
 useEffect(() => {
   axios
@@ -151,6 +155,15 @@ const handleDownloadExcel = () => {
  return (
   <>
     <Header category="Admin Keuangan" title="List Biaya Operasional" />
+
+    {/* <FilterDate
+      selectedStart={startDate}
+      onChangeStart={(date) => setStartDate(date)}
+      selectedEnd={endDate}
+      onChangeEnd={(date) => setEndDate(date)}
+      />
+    <br/>
+    <br/> */}
 
     <article>
 

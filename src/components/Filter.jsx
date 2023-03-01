@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const Input = styled.input.attrs(props => ({
   type: "text",
   size: props.small ? 5 : undefined
 }))
+
 `
   height: 32px;
   width: 200px;
@@ -18,17 +22,36 @@ const Input = styled.input.attrs(props => ({
   padding: 0 32px 0 16px;
 `;
 
-const FilterComponent = ({ filterText, onFilter, onClick}) => (
-  <>
-    <button className="btn-ungu float-right mb-5" onClick={onClick}><i className="fa fa-plus-square-o mr-2 mt-1"></i>Tambah</button>
+export const FilterComponent = ({ filterText, onFilter, onClick}) =>
+{
+  return(
+    <>
+      <button className="btn-ungu float-right mb-5" onClick={onClick}><i className="fa fa-plus-square-o mr-2 mt-1"></i>Tambah</button>
+  
+      <Input 
+        id="search"
+        placeholder="Pencarian..."
+        value={filterText}
+        onChange={onFilter}
+      />
+    </>
+  );
+} 
 
-    <Input 
-      id="search"
-      placeholder="Pencarian..."
-      value={filterText}
-      onChange={onFilter}
-    />
-  </>
-);
-
-export default FilterComponent;
+export const FilterDate = ({ selectedStart, onChangeStart, selectedEnd, onChangeEnd}) =>
+{
+  return(
+    <div>
+      <DatePicker
+        dateFormat="dd/MM/yyyy"
+        selected={selectedStart}
+        onChange={onChangeStart}
+      />
+      <DatePicker
+        dateFormat="dd/MM/yyyy"
+        selected={selectedEnd}
+        onChange={onChangeEnd}
+      />
+    </div>
+  );
+} 

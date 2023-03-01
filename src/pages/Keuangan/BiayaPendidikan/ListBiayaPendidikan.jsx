@@ -1,4 +1,4 @@
-import FilterComponent from "../../../components/Filter";
+import { FilterComponent, FilterDate } from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
 import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
@@ -7,6 +7,7 @@ import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
+import moment from "moment";
 
 export default function ListBiayaPendidikan() {
 const [data, setData] = useState([]);
@@ -18,12 +19,16 @@ const [deleteId, setDeleteId] = useState('');
 const [desc_nama, setDesc_nama] = useState('');
 // const [desc_status, setDesc_status] = useState('');
 const [filterText, setFilterText] = useState('');
+const [startDate,setStartDate]= useState(new Date());
+const [endDate,setEndDate]= useState(new Date());
 
 const filteredItems = 
-  data.filter(
-    item => item.siswa.toLowerCase().includes(filterText.toLowerCase()) ||
-    item.jenis_transaksi.includes(filterText.toLowerCase())
-  );
+    data.filter(
+      data => 
+      // new Date(moment(data.created_at).format('DD/MM/YYYY')) >= new Date(startDate) 
+      // && new Date(moment(data.created_at).format('DD/MM/YYYY')) <= new Date(endDate) &&
+      data.bank.toLowerCase().includes(filterText.toLowerCase())
+      )
 
 useEffect(() => {
   axios
@@ -148,6 +153,16 @@ const handleDownloadExcel = () => {
  return (
   <>
     <Header category="Admin Keuangan" title="List Biaya Pendidikan" />
+
+    {/* <FilterDate
+      selectedStart={startDate}
+      onChangeStart={(date) => setStartDate(date)}
+      selectedEnd={endDate}
+      onChangeEnd={(date) => setEndDate(date)}
+      />
+    <br/>
+    <br/> */}
+
 
     <article>
 
