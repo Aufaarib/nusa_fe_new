@@ -83,7 +83,7 @@ const Login = () => {
             // setSuccess(true);
             // navigate(from, { replace: true});
             if(role === "Admin PMB"){
-              navigate("/admin/setup-pmb", { replace: true });
+              navigate("/dashboard", { replace: true });
             }else{
               navigate("/pmb/tahapan-pmb", { replace: true });
             }

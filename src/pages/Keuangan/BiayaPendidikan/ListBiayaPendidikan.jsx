@@ -166,7 +166,7 @@ const handleDownloadExcel = () => {
 
     <article>
 
-      <button className="btn-ungu float-right mb-5 ml-3" onClick={handleDownloadExcel}><i className="fa fa-plus-square-o mr-2 mt-1"></i>Download Excel</button>
+      <button className="btn-mrh float-right mb-5 ml-3" onClick={handleDownloadExcel}><i className="fa fa fa-file-text-o mr-2 mt-1"></i>Download Excel</button>
 
       <FilterComponent
           onClick={navigateTambahBiayaPendidikan}

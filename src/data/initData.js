@@ -3,7 +3,7 @@ import { MdOutlineDashboard } from 'react-icons/md';
 import { FaWpforms, FaChild, FaFileSignature } from 'react-icons/fa'
 import { AiOutlineBarChart, AiFillFileText, AiOutlineSchedule } from 'react-icons/ai'
 import { CgUserList } from 'react-icons/cg'
-import { BsCardText } from 'react-icons/bs'
+import { BsCardText, BsMailbox, BsPerson } from 'react-icons/bs'
 import { RiParentFill } from 'react-icons/ri'
 import { BsCurrencyDollar, BsShield, BsBarChartSteps } from 'react-icons/bs';
 import product1 from './product1.jpg';
@@ -282,14 +282,14 @@ export const themeColors = [
 
 export const userProfileData = [
   {
-    icon: <BsCurrencyDollar />,
+    icon: <BsPerson />,
     title: 'Profil Saya',
     desc: 'Administrator',
     iconColor: '#03C9D7',
     iconBg: '#E5FAFB',
   },
   {
-    icon: <BsShield />,
+    icon: <BsMailbox />,
     title: 'Pesan',
     desc: 'Pesan & Email',
     iconColor: 'rgb(0, 194, 146)',

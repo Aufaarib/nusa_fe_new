@@ -11,4 +11,3 @@ const Header = ({ category, title, icon }) => (
 );
 
 export default Header;
-// 

@@ -63,10 +63,10 @@ const Navbar = () => {
   return (
     <div className="relative flex justify-between p-4 pr-7 ">
       <NavButton title="Menu" customFunc={handleActiveMenu} color={currentColor} icon={<AiOutlineMenu />} />
-      {/* <div className='flex items-center w-full px-4 ml-3 mr-3 bg-white rounded-md'>
+      <div className='flex items-center w-full px-4 ml-3 mr-3 bg-white rounded-md'>
         <BsSearch className='mr-3' />
         <input type={"search"} placeholder="Pencarian..." className='w-full text-base text-black bg-transparent focus:outline-none' />
-      </div> */}
+      </div>
 
       <div className="flex">
         {role !== "Admin PMB" && (<NavButton title="Notifikasi" dotColor={notifDotColor} customFunc={() => handleClick('notification')} color={currentColor} icon={<RiNotification3Line />} />)}
@@ -81,7 +81,7 @@ const Navbar = () => {
               alt="user-profile"
             />
             <p className='w-full font-bold text-black capitalize xs:hidden lg:block bloxk text-14 whitespace-nowrap'><span className='text-merah'>Ahlan, </span> {auth.nama}</p>
-            {/* <MdKeyboardArrowDown className="text-gray-400 text-14" /> */}
+            <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
         </TooltipComponent>
 

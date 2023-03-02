@@ -51,7 +51,7 @@ const UserProfile = () => {
           </p>
         </div>
       </div>
-      {/* <div>
+      <div>
         {userProfileData.map((item, index) => (
           <div key={index} className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]">
             <button
@@ -68,7 +68,7 @@ const UserProfile = () => {
             </div>
           </div>
         ))}
-      </div> */}
+      </div>
       <Link onClick={handleLogout} className="mt-5 btn-merah">
         Log Out
       </Link>

@@ -24,9 +24,9 @@ const filteredItems =
   );
 
 useEffect(() => {
-  axios.get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center")
+  axios.get("https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch")
     .then((res) => {
-      setData(res.data);
+      setData(res.data.data);
       setSts({ type: 'success' });
     })
     .catch((error) => {
@@ -36,9 +36,9 @@ useEffect(() => {
 
 
 const getData = () => {
-  axios.get(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center`)
+  axios.get(`https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch`)
     .then((res) => {
-      setData(res.data);
+      setData(res.data.data);
       setSts({ type: 'success' });
     })
     .catch((error) => {
@@ -57,7 +57,7 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  axios.delete(`https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center/${deleteId}`)
+  axios.delete(`https://nusa.nuncorp.id/golang/api/v1/cost-center/delete/${deleteId}`)
       .then(() => {
         setSts({ type: 'success' });
         closeModalHapus();
@@ -94,7 +94,7 @@ const columns = [
   },
   { 
     name: "Kredit/Debit",
-    selector: (data) => data.debit_kredit,
+    selector: (data) => data.payment_type,
     width: "99px"
   },
   {
@@ -102,8 +102,8 @@ const columns = [
     cell:(data) =>
     <div>
         <div>
-            <button className="btn-action-hijau ml-3 w-auto px-2"><i className="fa fa-play"></i> Aktif</button>
-            <button onClick={() => openModalHapus(data.id, data.code)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
+            <button style={{ fontSize : "14px" }} className="btn-action-hijau ml-3 w-auto px-2"><i className="fa fa-play"></i> Aktif</button>
+            <button style={{ fontSize : "14px" }} onClick={() => openModalHapus(data.id, data.code)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
         </div>
 
       {/* {data?.status === 'Aktif' && 

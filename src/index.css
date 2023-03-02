@@ -90,7 +90,7 @@ body{
     .btn-hijau:hover{
         @apply bg-gelap;
     }
-    .btn-ungu {
+    .btn-mrh {
         @apply flex;
         @apply justify-center; 
         width: auto;
@@ -106,9 +106,9 @@ body{
         @apply ease-in-out;
         @apply rounded;
         @apply shadow-md;
-        @apply bg-ungu;
+        @apply bg-merah;
     }
-    .btn-ungu:hover{
+    .btn-mrh:hover{
         @apply bg-gelap;
     }
 

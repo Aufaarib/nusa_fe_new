@@ -22,20 +22,20 @@ const [status, setStatus] = useState(undefined);
 const postData = (e) => {
     e.preventDefault();
 
-    const debit_kredit = debitKredit.value
+    const payment_type = debitKredit.value
 
     if (code.length === 0 || group.length === 0 || sub_group.length === 0
-    || item.length === 0 || debit_kredit.length === 0) {
+    || item.length === 0 || payment_type.length === 0) {
 
         setisOpenEmpty(true);
     }
     else {
-        axios.post('https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center',{
+        axios.post('https://nusa.nuncorp.id/golang/api/v1/cost-center/create',{
         code,
         group,
         sub_group,
         item,
-        debit_kredit
+        payment_type
     })
     .then(() => {
         setStatus({ type: 'success' });

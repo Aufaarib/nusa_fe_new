@@ -24,16 +24,16 @@ const Notification = ({ notificationData, unreadTotal, newNotif }) => {
       <div className="mt-5 ">
         {notificationData?.map((item, index) => (
           <div key={index} className="flex items-center gap-3 p-3 leading-8 border-b-1 border-color">
-            {/* <img className="w-12 h-12 rounded-full" src={item.image} alt={item.message} /> */}
+            <img className="w-12 h-12 rounded-full" src={item.image} alt={item.message} />
             <div>
               <p className={`text-sm ${item.read_at === null ? 'font-bold' : ''} dark:text-gray-200`}>{item.data.title}</p>
-              {/* <p className="text-sm text-gray-500 dark:text-gray-400"> {item.data.title} </p> */}
+              <p className="text-sm text-gray-500 dark:text-gray-400"> {item.data.title} </p>
             </div>
           </div>
         ))}
-        {/* <div className="mt-5">
+        <div className="mt-5">
           <Button color="white" bgColor={currentColor} text="Lihat semua notifikasi" borderRadius="10px" width="full" />
-        </div> */}
+        </div>
       </div>  
     </div>
   );

@@ -26,7 +26,7 @@ export const FilterComponent = ({ filterText, onFilter, onClick}) =>
 {
   return(
     <>
-      <button className="btn-ungu float-right mb-5" onClick={onClick}><i className="fa fa-plus-square-o mr-2 mt-1"></i>Tambah</button>
+      <button className="btn-mrh float-right mb-5" onClick={onClick}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
   
       <Input 
         id="search"

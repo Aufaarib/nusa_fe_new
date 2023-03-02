@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import { Header } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 class Dashboard extends Component {
+
+  handleClick = (e) => {
+    console.log("element clicked");
+  }
+
   constructor(props) {
     super(props);
-
+  
     this.state = {
       series: [{
         name: 'Uang Masuk',
@@ -26,7 +32,7 @@ class Dashboard extends Component {
             offsetX: 0,
             offsetY: 0,
             tools: {
-              download: true,
+              download: '<i class="fa fa-download" aria-hidden="true" width="30"></i>',
               selection: true,
               zoom: true,
               zoomin: true,
@@ -73,6 +79,52 @@ class Dashboard extends Component {
         xaxis: {
           categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
         },
+        legend: {
+          show: true,
+          showForSingleSeries: false,
+          showForNullSeries: true,
+          showForZeroSeries: true,
+          position: 'top',
+          horizontalAlign: 'center', 
+          floating: true,
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial',
+          fontWeight: 400,
+          formatter: undefined,
+          inverseOrder: false,
+          width: undefined,
+          height: undefined,
+          tooltipHoverFormatter: undefined,
+          customLegendItems: [],
+          offsetX: 210,
+          offsetY: -39,
+          labels: {
+              colors: undefined,
+              useSeriesColors: false
+          },
+          markers: {
+              width: 12,
+              height: 12,
+              strokeWidth: 0,
+              strokeColor: '#fff',
+              fillColors: undefined,
+              radius: 12,
+              customHTML: undefined,
+              onClick: undefined,
+              offsetX: 0,
+              offsetY: 0
+          },
+          itemMargin: {
+              horizontal: 5,
+              vertical: 0
+          },
+          onItemClick: {
+              toggleDataSeries: true
+          },
+          onItemHover: {
+              highlightDataSeries: true
+          },
+        },
         title: {
           text: 'Grafik',
           style: {
@@ -88,10 +140,7 @@ class Dashboard extends Component {
             return "Rp " + val + " K"
           }
         },
-        // tooltip: {
-          
-        // }
-      },
+      }
     };
 
     this.state2 = {
@@ -129,34 +178,56 @@ class Dashboard extends Component {
         }
       },
     };
-  }
-
+    }  
   render() {
     return (
-    <>
-      <Header category="Dashboard" title="Keuangan" />
-
-      <div style={{display : "flex", marginTop : "250px", marginLeft : "33px" }}>
-
-          <div style={{alignContent : "center", padding : "20px", width : "705px", border : "3px solid grey", borderRadius : "25px"}}>
-            <Chart
-              options={this.state.options}
-              series={this.state.series}
-              type="bar"
-            />
+      <>
+        <Header category="Dashboard" title="Keuangan" />
+    
+        <div style={{display : "flex", marginTop : "50px", marginLeft : "33px"}}>
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", border : "3px solid grey", borderRadius : "10px ", backgroundColor : "#CC3506D9"}}>
+            <p style={{ color : "white" }}>800.000</p>
+            <p style={{ color : "white" }}>Uang Masuk</p>
+            <div style={{textAlign : "center", width : "full", backgroundColor : "#CC3506D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
+            <p><button style={{ color : "white", fontSize : "13px" }} onClick={this.handleClick} target="_blank">Lihat Laporan</button></p>
+            </div>
           </div>
-
-          <div style={{alignContent : "center", width : "290px", border : "3px solid grey", marginBottom : "auto", marginLeft : "30px", borderRadius : "25px"}}>
-            <Chart
-              options={this.state2.options}
-              series={this.state2.series}
-              type="pie"
-            />
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", border : "3px solid grey", borderRadius : "10px ", backgroundColor : "#E4A11ED9", marginLeft : "15px"}}>
+            <p style={{ color : "white" }}>1.000.000</p>
+            <p style={{ color : "white" }}>Uang Keluar</p>
+            <div style={{textAlign : "center", width : "full", backgroundColor : "#E4A11ED9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
+              <p style={{ color : "white", fontSize : "13px" }}>Lihat Laporan</p>
+            </div>
           </div>
-      </div>
-    </>
-    );
-  }
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", border : "3px solid grey", borderRadius : "10px ", backgroundColor : "#1E53B9D9", marginLeft : "15px"}}>
+            <p style={{ color : "white" }}>10.000.000</p>
+            <p style={{ color : "white" }}>Total Kas</p>
+            <div style={{textAlign : "center", width : "auto", backgroundColor : "#1E53B9D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
+              <p style={{ color : "white", fontSize : "13px" }}>Lihat Laporan</p>
+            </div>
+          </div>
+        </div>
+    
+        <div style={{display : "flex", marginTop : "70px", marginLeft : "33px" }}>
+    
+            <div style={{alignContent : "center", padding : "20px", width : "705px", border : "3px solid grey", borderRadius : "25px"}}>
+              <Chart
+                options={this.state.options}
+                series={this.state.series}
+                type="bar"
+              />
+            </div>
+    
+            <div style={{alignContent : "center", width : "290px", border : "3px solid grey", marginBottom : "auto", marginLeft : "30px", borderRadius : "25px"}}>
+              <Chart
+                options={this.state2.options}
+                series={this.state2.series}
+                type="pie"
+              />
+            </div>
+        </div>
+      </>
+      );
+    }
 }
-
 export default Dashboard;

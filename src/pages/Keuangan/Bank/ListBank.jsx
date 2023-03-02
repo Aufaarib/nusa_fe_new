@@ -111,9 +111,9 @@ const columns = [
     name: "Aksi",
     cell:(data) => 
     <div>
-        <button onClick={() => navigateUbahListBank(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
-        <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
-        <button onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
+        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahListBank(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
+        <button style={{ fontSize : "14px" }} className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
+        <button style={{ fontSize : "14px" }} onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
     allowOverflow: true,
