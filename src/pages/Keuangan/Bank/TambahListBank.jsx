@@ -1,10 +1,9 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
-import { CustomStylesStatus } from "../../../components/CustomStyles";
+import { ModalEmpty, ModalStatus } from '../../../components/ModalPopUp';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from '../../../api/axios';
-import Modal from 'react-modal';
 
 export default function TambahListBank() {
 
@@ -14,7 +13,6 @@ const [nama_pemilik, setNamaPemilik] = useState('');
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
-
 
 
 const postData = (e) => {
@@ -94,39 +92,18 @@ return (
                 </button>
             </div>
 
-            <Modal
-                isOpen={isOpenStatus}
-                onRequestClose={closeModalStatus}
-                style={CustomStylesStatus}
-                contentLabel="Modal Status"
-                ariaHideApp={false}
-                >
-                {status?.type === 'success' && 
-                <div>
-                    <h2>Berhasil</h2>
-                    <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-                </div>
-                }
-                {status?.type === 'error' && 
-                <div>
-                    <h2>Gagal</h2>
-                    <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-                </div>
-                } 
-            </Modal>
+            <ModalStatus 
+                isOpenStatus={isOpenStatus}
+                closeModalStatus={closeModalStatus}
+                status={status}
+                navigate={navigateListBank}
+            />
 
-            <Modal
-                isOpen={isOpenEmpty}
-                onRequestClose={closeModalEmpty}
-                style={CustomStylesStatus}
-                contentLabel="Modal Status"
-                ariaHideApp={false}
-                >
-                <div>
-                    <h2>Data Tidak Lengkap</h2>
-                    <button className="btn-action-pink w-20 mt-5" onClick={closeModalEmpty}>Tutup</button>
-                </div>
-            </Modal>
+            <ModalEmpty
+                isOpenEmpty={isOpenEmpty}
+                closeModalEmpty={closeModalEmpty}
+                onRequestCloseEmpty={closeModalEmpty}
+            />
 
         </article>
 

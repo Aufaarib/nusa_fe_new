@@ -1,7 +1,7 @@
 import {FilterComponent} from "../../../components/Filter";
 import {CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
+import getBank from "../../../api/Bank";
 import DataTables from "../../../components/DataTables";
-import { utils, writeFileXLSX } from 'xlsx';
 import { useState, useEffect } from "react";
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ const [data, setData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
 // const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
-const [status, setStatus] = useState(undefined);
+const [sts, setSts] = useState(undefined);
 const [deleteId, setDeleteId] = useState('');
 const [desc_nama, setDesc_nama] = useState('');
 // const [desc_status, setDesc_status] = useState('');
@@ -26,30 +26,7 @@ const filteredItems =
     item.nama_bank.toLowerCase().includes(filterText.toLowerCase())
   );
 
-useEffect(() => {
-  axios
-    .get("https://nusa.nuncorp.id/golang/api/v1/bank/fetch")
-    .then((res) => {
-      console.log(res.data.data)
-      setData(res.data.data);
-      setStatus({ type: 'success' });
-    })
-    .catch((error) => {
-      setStatus({ type: 'error', error });
-    });
-}, []);
-
-const getData = () => {
-  axios.get("https://nusa.nuncorp.id/golang/api/v1/bank/fetch")
-      .then((res) => {
-        console.log(res.data.data)
-        setData(res.data.data);
-        setStatus({ type: 'success' });
-      })
-      .catch((error) => {
-        setStatus({ type: 'error', error });
-      });
-}
+useEffect(() => {getBank(setData, setSts)}, []);
 
 const openModalHapus = (id, nama_pemilik) => {
   setisOpenDelete(true);
@@ -74,19 +51,19 @@ const closeModalHapus = () => {
 const onDelete = () => {
   axios.delete(`https://nusa.nuncorp.id/golang/api/v1/bank/delete/${deleteId}`)
       .then(() => {
-        setStatus({ type: 'success' });
+        setSts({ type: 'success' });
         closeModalHapus();
         setisOpenStatus(true);
-        getData();
+        getBank(setData, setSts)
         })
       .catch((error) => {
-          setStatus({ type: 'error', error });
+        setSts({ type: 'error', error });
       });
 }
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
-  setStatus('');
+  setSts('');
 }
 
 const columns = [
@@ -163,13 +140,13 @@ const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
           contentLabel="Modal Status"
           ariaHideApp={false}
           >
-          {status?.type === 'success' && 
+          {sts?.type === 'success' && 
           <div>
             <h2>Berhasil</h2>
             <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
           </div>
           }
-          {status?.type === 'error' && 
+          {sts?.type === 'error' && 
           <div>
             <h2>Gagal</h2>
             <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>

@@ -1,5 +1,6 @@
 import { FilterComponent, FilterDate } from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
+import getCostCenter from "../../../api/CostCenter";
 import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
 import { utils, writeFileXLSX } from 'xlsx';
@@ -23,28 +24,7 @@ const filteredItems =
     item.group.toLowerCase().includes(filterText.toLowerCase())
   );
 
-useEffect(() => {
-  axios.get("https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch")
-    .then((res) => {
-      setData(res.data.data);
-      setSts({ type: 'success' });
-    })
-    .catch((error) => {
-      setSts({ type: 'error', error });
-    });
-}, []);
-
-
-const getData = () => {
-  axios.get(`https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch`)
-    .then((res) => {
-      setData(res.data.data);
-      setSts({ type: 'success' });
-    })
-    .catch((error) => {
-      setSts({ type: 'error', error });
-    });
-}
+useEffect(() => { getCostCenter(setData, setSts); }, []);
 
 const openModalHapus = (id, code) => {
   setisOpenDelete(true);
@@ -62,7 +42,7 @@ const onDelete = () => {
         setSts({ type: 'success' });
         closeModalHapus();
         setisOpenStatus(true);
-        getData();
+        getCostCenter(setData, setSts);
         })
       .catch((error) => {
           setSts({ type: 'error', error });

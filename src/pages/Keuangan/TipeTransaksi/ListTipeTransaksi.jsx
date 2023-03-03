@@ -1,5 +1,6 @@
 import { FilterComponent } from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
+import getTipeTransaksi from "../../../api/TipeTransaksi";
 import { CustomStylesModalHapus, CustomStylesStatus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
 import { utils, writeFileXLSX } from 'xlsx';
@@ -23,28 +24,7 @@ const filteredItems =
     item.status.toLowerCase().includes(filterText.toLowerCase())
   );
 
-useEffect(() => {
-  axios.get("https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch")
-    .then((response) => {
-      setData(response.data.data);
-      setSts({ type: 'success' });
-    })
-    .catch((error) => {
-      setSts({ type: 'error', error });
-    });
-}, []);
-
-
-const getData = () => {
-  axios.get(`https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch`)
-    .then((response) => {
-      setData(response.data.data);
-      setSts({ type: 'success' });
-    })
-    .catch((error) => {
-      setSts({ type: 'error', error });
-    });
-}
+useEffect(() => {getTipeTransaksi(setData, setSts)}, []);
 
 const openModalHapus = (id, description) => {
   setisOpenDelete(true);
@@ -62,7 +42,7 @@ const onDelete = () => {
         setSts({ type: 'success' });
         closeModalHapus();
         setisOpenStatus(true);
-        getData();
+        getTipeTransaksi(setData, setSts)
         })
       .catch((error) => {
           setSts({ type: 'error', error });

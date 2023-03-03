@@ -38,6 +38,7 @@ body{
 
     a:hover {
         @apply text-pink;
+        cursor: pointer;
     }
 
     ol{

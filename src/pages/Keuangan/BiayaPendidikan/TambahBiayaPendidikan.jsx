@@ -3,9 +3,8 @@ import {TextInput, TextArea} from '../../../components/TextInput'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from '../../../api/axios';
-import Modal from 'react-modal';
-import {DropdownCostCenter, DropdownJenisTransaksi, DropdownSiswa} from '../../../components/Dropdown';
-import { CustomStylesStatus } from "../../../components/CustomStyles";
+import { ModalEmpty, ModalStatus, ModalCostCenter, ModalStatusCostCenter } from '../../../components/ModalPopUp';
+import {DropdownCostCenter, DropdownJenisTransaksi} from '../../../components/Dropdown';
 import { FileUpload } from '../../../components/FileUpload';
 
 export default function TambahBiayaPendidikan() {
@@ -24,22 +23,17 @@ const [bank, setBank] = useState('');
 const [jumlah, setJumlah] = useState('');
 const [catatan, setCatatan] = useState('');
 const [file_name, setFileName] = useState('');
+const [isOpenCostCenter, setisOpenCostCenter] = useState(false);
+const [isOpenStatusCostCenter, setisOpenStatusCostCenter] = useState(false);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
 
-// console.log(code);
-// console.log(group);
-// console.log(sub_group);
-// console.log(item);
-// console.log(debitKredit);
-
-
 useEffect(() => {
     axios
-        .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center")
+        .get("https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch")
         .then((res) => {
-        setData(res.data);
+        setData(res.data.data);
         setStatus({ type: 'success' });
         })
         .catch((error) => {
@@ -93,7 +87,7 @@ const postData = (e) => {
 const postDataCostCenter = (e) => {
     e.preventDefault();
 
-    const debit_kredit = debitKredit.value
+    const payment_type = debitKredit.value
 
     if (code.length === 0 || group.length === 0 || sub_group.length === 0
     || item.length === 0 || debitKredit.length === 0) {
@@ -101,35 +95,44 @@ const postDataCostCenter = (e) => {
         setisOpenEmpty(true);
     }
     else {
-        axios.post('https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-cost-center',{
+        axios.post('https://nusa.nuncorp.id/golang/api/v1/cost-center/create',{
         code,
         group,
         sub_group,
         item,
-        debit_kredit
+        payment_type
     })
     .then(() => {
         setStatus({ type: 'success' });
-        setisOpenStatus(true);
+        setisOpenStatusCostCenter(true);
     })
     .catch((error) => {
         setStatus({ type: 'error', error });
     });
     }
 }
-
 const closeModalEmpty = () => {
-setisOpenEmpty(false);
+    setisOpenEmpty(false);
+}
+const closeModalStatus = () => {
+    setisOpenStatus(false);
+}
+const closeModalCostCenter = () => {
+    setisOpenCostCenter(false);
+}
+const closeModalStatusCostCenter = () => {
+    setisOpenCostCenter(false);
+    setisOpenStatusCostCenter(false)
 }
 
-const closeModalStatus = () => {
-setisOpenStatus(false);
-setStatus('');
-}
 const navigate = useNavigate();
 
 const navigateBiayaPendidikan = () => {
     navigate('/admin/list-biaya-pendidikan');
+};
+
+const navigateCostCenter = () => {
+    navigate('/admin/list-cost-center');
 };
 
 const addCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -147,7 +150,10 @@ return (
         <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Form Tambah Biaya Pendidikan</p>
         
         <article>
-            <DropdownCostCenter
+
+            <ModalCostCenter
+                isOpenCostCenter={isOpenCostCenter}
+                closeModalCostCenter={closeModalCostCenter}
                 setCode={(e) => setCode(e.target.value)}
                 setGroup={(e) => setGroup(e.target.value)}
                 setSubGroup={(e) => setSubGroup(e.target.value)}
@@ -155,12 +161,16 @@ return (
                 setDebitKredit={setDebitKredit}
                 defaultValueDK={debitKredit}
                 post={postDataCostCenter}
+            />
+
+            <DropdownCostCenter
                 label="Cost Center"
                 required={true}
                 defaultValue={costCenter}
                 isClearable={true}
                 options={options}
                 onChange={setCostCenter}
+                handleOnClick={() => setisOpenCostCenter(true)}
             />
             <TextInput
                 label="Siswa"
@@ -212,39 +222,25 @@ return (
                 </button>
             </div>
 
-            <Modal
-                isOpen={isOpenStatus}
-                onRequestClose={closeModalStatus}
-                style={CustomStylesStatus}
-                contentLabel="Modal Status"
-                ariaHideApp={false}
-                >
-                {status?.type === 'success' && 
-                <div>
-                    <h2>Berhasil</h2>
-                    <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-                </div>
-                }
-                {status?.type === 'error' && 
-                <div>
-                    <h2>Gagal</h2>
-                    <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-                </div>
-                } 
-            </Modal>
+            <ModalStatusCostCenter
+                isOpenStatus={isOpenStatusCostCenter}
+                closeModalStatus={() => closeModalStatusCostCenter()}
+                status={status}
+                navigate={navigateCostCenter}
+            />
 
-            <Modal
-                isOpen={isOpenEmpty}
-                onRequestClose={closeModalEmpty}
-                style={CustomStylesStatus}
-                contentLabel="Modal Status"
-                ariaHideApp={false}
-                >
-                <div>
-                    <h2>Data Tidak Lengkap</h2>
-                    <button className="btn-action-pink w-20 mt-5" onClick={closeModalEmpty}>Tutup</button>
-                </div>
-            </Modal>
+            <ModalStatus 
+                isOpenStatus={isOpenStatus}
+                closeModalStatus={closeModalStatus}
+                status={status}
+                navigate={navigateBiayaPendidikan}
+            />
+
+            <ModalEmpty
+                isOpenEmpty={isOpenEmpty}
+                closeModalEmpty={closeModalEmpty}
+                onRequestCloseEmpty={closeModalEmpty}
+            />
         </article>
     </div>
 )

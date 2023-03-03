@@ -3,7 +3,7 @@ import TextInput from '../../../components/TextInput'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from '../../../api/axios';
-import Modal from 'react-modal';
+import { ModalEmpty, ModalStatus } from '../../../components/ModalPopUp';
 
 export default function TambahTipeTransaksi() {
 
@@ -44,26 +44,6 @@ const closeModalStatus = () => {
     setisOpenStatus(false);
     setSts('');
 }
-
-    const customStylesStatus = {
-        content: {
-          width: 'auto',
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          border: 'none',
-          cursor: 'auto',
-          padding: '30px'
-        },
-        overlay: {
-          backgroundColor: 'rgba(0,0,0,.5)',
-          cursor: 'pointer'
-        }
-      };
-
     const navigate = useNavigate();
 
     const navigateListTipeTransaksi = () => {
@@ -103,39 +83,18 @@ const closeModalStatus = () => {
                     </button>
                 </div>
 
-                <Modal
-                    isOpen={isOpenStatus}
-                    onRequestClose={closeModalStatus}
-                    style={customStylesStatus}
-                    contentLabel="Modal Status"
-                    ariaHideApp={false}
-                    >
-                    {sts?.type === 'success' && 
-                    <div>
-                        <h2>Berhasil</h2>
-                        <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-                    </div>
-                    }
-                    {sts?.type === 'error' && 
-                    <div>
-                        <h2>Gagal</h2>
-                        <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-                    </div>
-                        } 
-                </Modal>
+                <ModalStatus 
+                    isOpenStatus={isOpenStatus}
+                    closeModalStatus={closeModalStatus}
+                    status={sts}
+                    navigate={navigateListTipeTransaksi}
+                />
 
-                <Modal
-                    isOpen={isOpenEmpty}
-                    onRequestClose={closeModalEmpty}
-                    style={customStylesStatus}
-                    contentLabel="Modal Status"
-                    ariaHideApp={false}
-                    >
-                    <div>
-                        <h2>Data Tidak Lengkap</h2>
-                        <button className="btn-action-pink w-20 mt-5" onClick={closeModalEmpty}>Tutup</button>
-                    </div>
-                </Modal>
+                <ModalEmpty
+                    isOpenEmpty={isOpenEmpty}
+                    closeModalEmpty={closeModalEmpty}
+                    onRequestCloseEmpty={closeModalEmpty}
+                />
 
             </article>
 

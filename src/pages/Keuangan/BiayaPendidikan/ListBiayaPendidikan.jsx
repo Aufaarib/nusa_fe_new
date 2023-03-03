@@ -1,5 +1,6 @@
 import { FilterComponent, FilterDate } from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
+import getBiayaPendidikan from "../../../api/BiayaPendidikan";
 import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
 import { utils, writeFileXLSX } from 'xlsx';
@@ -7,20 +8,17 @@ import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
-import moment from "moment";
 
 export default function ListBiayaPendidikan() {
 const [data, setData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
 // const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
-const [status, setStatus] = useState(undefined);
+const [sts, setSts] = useState(undefined);
 const [deleteId, setDeleteId] = useState('');
 const [desc_nama, setDesc_nama] = useState('');
 // const [desc_status, setDesc_status] = useState('');
 const [filterText, setFilterText] = useState('');
-const [startDate,setStartDate]= useState(new Date());
-const [endDate,setEndDate]= useState(new Date());
 
 const filteredItems = 
     data.filter(
@@ -30,28 +28,7 @@ const filteredItems =
       data.bank.toLowerCase().includes(filterText.toLowerCase())
       )
 
-useEffect(() => {
-  axios
-    .get("https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-pendidikan")
-    .then((res) => {
-      setData(res.data);
-      setStatus({ type: 'success' });
-    })
-    .catch((error) => {
-      setStatus({ type: 'error', error });
-    });
-}, []);
-
-const getData = () => {
-  axios.get("https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-pendidikan")
-      .then((getData) => {
-        setData(getData.data);
-        setStatus({ type: 'success' });
-      })
-      .catch((error) => {
-        setStatus({ type: 'error', error });
-      });
-}
+useEffect(() => {getBiayaPendidikan(setData, setSts)}, []);
 
 const openModalHapus = (id, siswa) => {
   setisOpenDelete(true);
@@ -76,66 +53,60 @@ const closeModalHapus = () => {
 const onDelete = () => {
   axios.delete(`https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-pendidikan/${deleteId}`)
       .then(() => {
-        setStatus({ type: 'success' });
+        setSts({ type: 'success' });
         closeModalHapus();
         setisOpenStatus(true);
-        getData();
+        getBiayaPendidikan(setData, setSts);
         })
       .catch((error) => {
-          setStatus({ type: 'error', error });
+        setSts({ type: 'error', error });
       });
 }
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
-  setStatus('');
+  setSts('');
 }
 
 const columns = [
   {
     name: 'No',
     selector: (_row, i) => i + 1,
-    width: "37px"  
+    width: "55px"  
   },
   {
-    name: "Cost Center",
-    selector: (data) => data.cost_center,
-    width: "100px" 
+    name: "Jenis Biaya",
+    selector: (data) => data.payment_type,
   },
   {
-    name: "Siswa",
-    selector: (data) => data.siswa,
-    width: "200px" 
+    name: "Tanggal Transaksi",
+    selector: (data) => data.transaction_date,
   },
   {
-    name: "Jenis Transaksi",
-    selector: (data) => data.jenis_transaksi,
-  },
-  {
-    name: "Bank",
+    name: "Nama Bank",
     selector: (data) => data.bank,
   },
   {
-    name: "Jumlah",
-    selector: (data) => data.jumlah,
+    name: "Jenis Transaksi",
+    selector: (data) => data.transaction_type,
   },
   {
     name: "Catatan",
-    selector: (data) => data.catatan,
+    selector: (data) => data.note,
     width: "247px"
   },
-  {
-    name: "Aksi",
-    cell:(data) => 
-    <div>
-        <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
-        <button onClick={() => openModalHapus(data.id, data.siswa)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
-    </div>,
-    ignoreRowClick: true,
-    allowOverflow: true,
-    button: true,
-    width: "194px",
-  },
+  // {
+  //   name: "Aksi",
+  //   cell:(data) => 
+  //   <div>
+  //       <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
+  //       <button onClick={() => openModalHapus(data.id, data.siswa)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
+  //   </div>,
+  //   ignoreRowClick: true,
+  //   allowOverflow: true,
+  //   button: true,
+  //   width: "194px",
+  // },
 ];
 const navigate = useNavigate();
 
@@ -187,13 +158,13 @@ const handleDownloadExcel = () => {
           contentLabel="Modal Status"
           ariaHideApp={false}
           >
-          {status?.type === 'success' && 
+          {sts?.type === 'success' && 
           <div>
             <h2>Berhasil</h2>
             <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
           </div>
           }
-          {status?.type === 'error' && 
+          {sts?.type === 'error' && 
           <div>
             <h2>Gagal</h2>
             <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
