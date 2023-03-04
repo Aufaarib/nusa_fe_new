@@ -186,38 +186,38 @@ export const sidebarMenus = [
 ];
 
 export const sidebarMenusAdmin = [
-  // {
-  //   title: 'Admin PMB',
-  //   path: `admin/pmb`,
-  //   icon: <AiOutlineBarChart />,
-  //   links: [
-  //     {
-  //       name: 'Setup PMB',
-  //       path: `admin/setup-pmb`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: 'Konfirmasi Pembayaran',
-  //       path: `admin/konfirmasi-pembayaran`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: 'Hasil Tes',
-  //       path: `admin/hasil-tes`,
-  //       icon: <FaWpforms />,
-  //     },
-  //     {
-  //       name: 'Preview',
-  //       path: `admin/preview`,
-  //       icon: <FaWpforms />,
-  //     },
-  //   ],
-  // },
   {
     title: 'Dashboard',
     path: `dashboard`,
     icon: <AiOutlineBarChart />,
     links: []
+  },
+  {
+    title: 'Admin PMB',
+    path: `admin/pmb`,
+    icon: <AiOutlineBarChart />,
+    links: [
+      {
+        name: 'Setup PMB',
+        path: `admin/setup-pmb`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Konfirmasi Pembayaran',
+        path: `admin/konfirmasi-pembayaran`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Hasil Tes',
+        path: `admin/hasil-tes`,
+        icon: <FaWpforms />,
+      },
+      // {
+      //   name: 'Preview',
+      //   path: `admin/preview`,
+      //   icon: <FaWpforms />,
+      // },
+    ],
   },
   {
     title: 'Keuangan',

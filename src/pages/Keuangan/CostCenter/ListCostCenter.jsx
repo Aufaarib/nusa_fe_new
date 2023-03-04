@@ -127,57 +127,56 @@ const handleDownloadExcel = () => {
 
  return (
   <>
-    <Header category="Admin Keuangan" title="Cost Center" />
+    <Header category="Keuangan / Cost Center" title="Cost Center" />
 
-    <article>
-      <FilterComponent
-          onDownloadExcel={handleDownloadExcel}
-          onClick={navigateCostCenter}
-          onFilter={e => setFilterText(e.target.value)}
-          filterText={filterText}
-      />
+    <div style={{ marginTop : "90px" }}>
+          <FilterComponent
+              onDownloadExcel={handleDownloadExcel}
+              onClick={navigateCostCenter}
+              onFilter={e => setFilterText(e.target.value)}
+              filterText={filterText}
+          />
 
-      <DataTables
-          columns={columns}
-          data={filteredItems}
-      />
+          <DataTables
+              columns={columns}
+              data={filteredItems}
+          />
 
-      <Modal
-          isOpen={isOpenStatus}
-          onRequestClose={closeModalStatus}
-          style={CustomStylesStatus}
-          contentLabel="Modal Status"
-          ariaHideApp={false}
-          >
-          {sts?.type === 'success' && 
-          <div>
-            <h2>Berhasil</h2>
-            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-          </div>
-          }
-          {sts?.type === 'error' && 
-          <div>
-            <h2>Gagal</h2>
-            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-          </div>
-          } 
-      </Modal>
+          <Modal
+              isOpen={isOpenStatus}
+              onRequestClose={closeModalStatus}
+              style={CustomStylesStatus}
+              contentLabel="Modal Status"
+              ariaHideApp={false}
+              >
+              {sts?.type === 'success' && 
+              <div>
+                <h2>Berhasil</h2>
+                <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
+              </div>
+              }
+              {sts?.type === 'error' && 
+              <div>
+                <h2>Gagal</h2>
+                <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
+              </div>
+              } 
+          </Modal>
 
-      <Modal
-          isOpen={isOpenDelete}
-          onRequestClose={closeModalHapus}
-          style={CustomStylesModalHapus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
-          <h4 className='mb-3 text-merah ml-3'>{desc}?</h4>
-          <button className="btn-action-hijau w-20 ml-4" onClick={onDelete}>Hapus</button>
-          <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
+          <Modal
+              isOpen={isOpenDelete}
+              onRequestClose={closeModalHapus}
+              style={CustomStylesModalHapus}
+              contentLabel="Modal Hapus"
+              ariaHideApp={false}
+            >
+              <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
+              <h4 className='mb-3 text-merah ml-3'>{desc}?</h4>
+              <button className="btn-action-hijau w-20 ml-4" onClick={onDelete}>Hapus</button>
+              <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
 
-      </Modal>
-
-    </article>
-   </>
+          </Modal>
+    </div>
+  </>
  );
 }

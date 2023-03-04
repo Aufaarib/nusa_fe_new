@@ -304,7 +304,7 @@ const HasilTes = () => {
         >
           {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Data Murid</h2> */}
           <h2 className='mb-3'>Data Murid</h2>
-          {/* <button onClick={closeModalMurid}>close</button> */}
+          <button onClick={closeModalMurid}>close</button>
 
           <p>DATA: {JSON.stringify(murid)}</p>
 

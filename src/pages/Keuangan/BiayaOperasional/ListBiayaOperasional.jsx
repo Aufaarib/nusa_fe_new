@@ -127,82 +127,56 @@ const handleDownloadExcel = () => {
 
  return (
   <>
-    <Header category="Admin Keuangan" title="List Biaya Operasional" />
+    <Header category="Keuangan / Biaya Operasional" title="List Biaya Operasional" />
 
-    {/* <FilterDate
-      selectedStart={startDate}
-      onChangeStart={(date) => setStartDate(date)}
-      selectedEnd={endDate}
-      onChangeEnd={(date) => setEndDate(date)}
-      />
-    <br/>
-    <br/> */}
+    <div style={{ marginTop : "90px" }}>
+        <button className="btn-mrh float-right mb-5 ml-3" onClick={handleDownloadExcel}><i className="fa fa-file-text-o mr-2 mt-1"></i>Download Excel</button>
 
-    <article>
+        <FilterComponent
+            onClick={navigateTambahBiayaOperasional}
+            onFilter={e => setFilterText(e.target.value)}
+            filterText={filterText}
+          />
 
-      <button className="btn-mrh float-right mb-5 ml-3" onClick={handleDownloadExcel}><i className="fa fa-file-text-o mr-2 mt-1"></i>Download Excel</button>
-
-      <FilterComponent
-          onClick={navigateTambahBiayaOperasional}
-          onFilter={e => setFilterText(e.target.value)}
-          filterText={filterText}
+        <DataTables
+            columns={columns}
+            data={filteredItems}
         />
 
-      <DataTables
-          columns={columns}
-          data={filteredItems}
-      />
+        <Modal
+            isOpen={isOpenStatus}
+            onRequestClose={closeModalStatus}
+            style={CustomStylesStatus}
+            contentLabel="Modal Status"
+            ariaHideApp={false}
+            >
+            {sts?.type === 'success' && 
+            <div>
+              <h2>Berhasil</h2>
+              <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
+            </div>
+            }
+            {sts?.type === 'error' && 
+            <div>
+              <h2>Gagal</h2>
+              <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
+            </div>
+            } 
+        </Modal>
 
-      <Modal
-          isOpen={isOpenStatus}
-          onRequestClose={closeModalStatus}
-          style={CustomStylesStatus}
-          contentLabel="Modal Status"
-          ariaHideApp={false}
+        <Modal
+            isOpen={isOpenDelete}
+            onRequestClose={closeModalHapus}
+            style={CustomStylesModalHapus}
+            contentLabel="Modal Hapus"
+            ariaHideApp={false}
           >
-          {sts?.type === 'success' && 
-          <div>
-            <h2>Berhasil</h2>
-            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-          </div>
-          }
-          {sts?.type === 'error' && 
-          <div>
-            <h2>Gagal</h2>
-            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-          </div>
-          } 
-      </Modal>
-
-      <Modal
-          isOpen={isOpenDelete}
-          onRequestClose={closeModalHapus}
-          style={CustomStylesModalHapus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
-          <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
-          <button className="btn-action-ungu w-20 ml-4" onClick={onDelete}>Hapus</button>
-          <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
-      </Modal>
-
-      {/* <Modal
-          isOpen={isOpenUbahStatus}
-          onRequestClose={closeModalUbahStatus}
-          style={customStylesModalHapus}
-          contentLabel="Modal Ubah Status"
-        >
-          <h2 className='mb-2 ml-3'>Ubah Status </h2>
-          <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
-          <h2 className='mb-2 ml-3'>Menjadi</h2>
-          <h4 className='mb-3 text-merah ml-3'>{desc_status}?</h4>
-          <button className="btn-action-ungu w-20 ml-4" onClick={onUbahStatus}>Ubah</button>
-          <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
-
-      </Modal> */}
-
-    </article>
+            <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
+            <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
+            <button className="btn-action-ungu w-20 ml-4" onClick={onDelete}>Hapus</button>
+            <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
+        </Modal>
+    </div>
    </>
  );
 }

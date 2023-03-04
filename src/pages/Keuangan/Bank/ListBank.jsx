@@ -118,10 +118,9 @@ const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
 
  return (
   <>
-    <Header category="Admin Keuangan" title="List Bank" />
-    
-    <article>
+    <Header category="Keuangan / Bank" title="List Bank" />
 
+    <div style={{ marginTop : "90px" }}>
       <FilterComponent
           onClick={navigateTambahListBank}
           onFilter={e => setFilterText(e.target.value)}
@@ -181,8 +180,7 @@ const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
           <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
 
       </Modal> */}
-
-    </article>
-   </>
+    </div>
+  </>
  );
 }

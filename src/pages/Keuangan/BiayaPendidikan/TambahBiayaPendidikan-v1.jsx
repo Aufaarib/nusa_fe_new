@@ -145,104 +145,103 @@ const options = data.map((c) => (
     {value: c.code, label: c.item}
     ));
 
-return (
-    <>
+return (  
+    <div>
         <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Form Tambah Biaya Pendidikan</p>
+        
+        <article>
 
-        <div>
-            <article>
+            <ModalCostCenter
+                isOpenCostCenter={isOpenCostCenter}
+                closeModalCostCenter={closeModalCostCenter}
+                setCode={(e) => setCode(e.target.value)}
+                setGroup={(e) => setGroup(e.target.value)}
+                setSubGroup={(e) => setSubGroup(e.target.value)}
+                setItem={(e) => setItem(e.target.value)}
+                setDebitKredit={setDebitKredit}
+                defaultValueDK={debitKredit}
+                post={postDataCostCenter}
+            />
 
+            <DropdownCostCenter
+                label="Cost Center"
+                required={true}
+                defaultValue={costCenter}
+                isClearable={true}
+                options={options}
+                onChange={setCostCenter}
+                handleOnClick={() => setisOpenCostCenter(true)}
+            />
+            <TextInput
+                label="Siswa"
+                required={true}
+                type="text"
+                onChange={(e) => setSiswa(e.target.value)}
+            />
+            <DropdownJenisTransaksi
+                label="Jenis Transaksi"
+                required={true}
+                defaultValue={jenisTransaksi}
+                isClearable={false}
+                isSearchable={false}
+                onChange={setJenisTransaksi}
+            />
+            {jenisTransaksi.value === 'Transfer' && 
                 <TextInput
-                    label="Jenis Biaya"
-                    required={true}
-                    type="text"
-                    onChange={(e) => setBank(e.target.value)}
+                label="Bank"
+                type="text"
+                required={true}
+                onChange={(e) => setBank(e.target.value)}
                 />
-                <br/>
-                <TextInput
-                    label="Tanggal Transaksi"
-                    required={true}
-                    type="text"
-                    onChange={(e) => setBank(e.target.value)}
-                />
-                <br/>
-                <DropdownJenisTransaksi
-                    label="Jenis Transaksi"
-                    required={true}
-                    defaultValue={jenisTransaksi}
-                    isClearable={false}
-                    isSearchable={false}
-                    onChange={setJenisTransaksi}
-                />
-                <br/>
-                {jenisTransaksi.value === 'Transfer' && 
-                    <TextInput
-                    label="Bank"
-                    type="text"
-                    required={true}
-                    onChange={(e) => setBank(e.target.value)}
-                    />
-                }
-                {jenisTransaksi.value === 'Transfer' && 
-                    <br/>
-                }
-                <TextInput
-                    label="Jumlah"
-                    required={true}
-                    onInput={handleChange}
-                    value={jumlah}
-                />
-                <br/>
-                <TextInput
-                    label="Nasma Siswa"
-                    type="text"
-                    onChange={(e) => setCatatan(e.target.value)}
-                    required={true}
-                />
-                <br/>
-                <TextInput
-                    label="Kelas"
-                    type="text"
-                    onChange={(e) => setCatatan(e.target.value)}
-                    required={true}
-                />
-                <br/>
-                <TextArea
-                    label="Catatan"
-                    type="text"
-                    onChange={(e) => setCatatan(e.target.value)}
-                    required={false}
-                />
-                <FileUpload 
-                    required={true}
-                    onChange={(e) => setFileName(e.target.value)}
-                    label="Tarik File Kesini"
-                    type="file"
-                />
-                <div className='btn-form'>
-                    <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
-                        Simpan
-                    </button>
-                    <button type="button" className="w-20 btn-merah flex justify-center mb-5"
-                    onClick={navigateBiayaPendidikan}>
-                        Batal
-                    </button>
-                </div>
+            }
+            <TextInput
+                label="Jumlah"
+                required={true}
+                onInput={handleChange}
+                value={jumlah}
+            />
+            <TextArea
+                label="Catatan"
+                type="text"
+                onChange={(e) => setCatatan(e.target.value)}
+                required={false}
+            />
+            <FileUpload 
+                required={true}
+                onChange={(e) => setFileName(e.target.value)}
+                label="Tarik File Kesini"
+                type="file"
+            />
+            <div className='btn-form'>
+                <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
+                    Simpan
+                </button>
+                <button type="button" className="w-20 btn-merah flex justify-center mb-5"
+                onClick={navigateBiayaPendidikan}>
+                    Batal
+                </button>
+            </div>
 
-                <ModalStatus 
-                    isOpenStatus={isOpenStatus}
-                    closeModalStatus={closeModalStatus}
-                    status={status}
-                    navigate={navigateBiayaPendidikan}
-                />
+            <ModalStatusCostCenter
+                isOpenStatus={isOpenStatusCostCenter}
+                closeModalStatus={() => closeModalStatusCostCenter()}
+                status={status}
+                navigate={navigateCostCenter}
+            />
 
-                <ModalEmpty
-                    isOpenEmpty={isOpenEmpty}
-                    closeModalEmpty={closeModalEmpty}
-                    onRequestCloseEmpty={closeModalEmpty}
-                />
-            </article>
-        </div>
-    </>
+            <ModalStatus 
+                isOpenStatus={isOpenStatus}
+                closeModalStatus={closeModalStatus}
+                status={status}
+                navigate={navigateBiayaPendidikan}
+            />
+
+            <ModalEmpty
+                isOpenEmpty={isOpenEmpty}
+                closeModalEmpty={closeModalEmpty}
+                onRequestCloseEmpty={closeModalEmpty}
+            />
+        </article>
+    </div>
 )
 }
