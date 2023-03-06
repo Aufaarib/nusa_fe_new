@@ -120,7 +120,7 @@ const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
   <>
     <Header category="Keuangan / Bank" title="List Bank" />
 
-    <div style={{ marginTop : "90px" }}>
+    <div style={{ marginTop : "35px" }}>
       <FilterComponent
           onClick={navigateTambahListBank}
           onFilter={e => setFilterText(e.target.value)}

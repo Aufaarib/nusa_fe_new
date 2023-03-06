@@ -10,9 +10,9 @@ const Input = styled.input.attrs(props => ({
 }))
 
 `
-  height: 32px;
+  display: inline-block;
+  float: left;
   width: 200px;
-  margin-bottom: 20px;
   border-radius: 3px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -26,14 +26,17 @@ export const FilterComponent = ({ filterText, onFilter, onClick}) =>
 {
   return(
     <>
-      <button className="btn-mrh float-right mb-5" onClick={onClick}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
-  
+    <div style={{ display : "flex", backgroundColor : "#D5D5D540", padding : "5px 5px", marginBottom : "10px", borderRadius : "10px", overflow : "auto"}}>
       <Input 
         id="search"
         placeholder="Pencarian..."
         value={filterText}
         onChange={onFilter}
       />
+      <div style={{ display : "inline-block", float : "right"}}>
+        <button className="btn-mrh" onClick={onClick}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
+      </div>
+    </div>
     </>
   );
 } 

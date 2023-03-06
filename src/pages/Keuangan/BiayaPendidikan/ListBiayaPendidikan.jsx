@@ -125,7 +125,7 @@ const handleDownloadExcel = () => {
   <>
     <Header category="Keuangan / Biaya Pendidikan" title="List Biaya Pendidikan" />
 
-    <div style={{ marginTop : "90px" }}>
+    <div style={{ marginTop : "35px" }}>
         <button className="btn-mrh float-right mb-5 ml-3" onClick={handleDownloadExcel}><i className="fa fa fa-file-text-o mr-2 mt-1"></i>Download Excel</button>
 
         <FilterComponent

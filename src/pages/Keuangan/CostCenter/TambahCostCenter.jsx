@@ -24,7 +24,7 @@ const postData = (e) => {
     const payment_type = debitKredit.value
 
     if (code.length === 0 || group.length === 0 || sub_group.length === 0
-    || item.length === 0 || payment_type.length === 0) {
+    || item.length === 0 || payment_type === "") {
 
         setisOpenEmpty(true);
     }

@@ -181,10 +181,10 @@ class Dashboard extends Component {
     }  
   render() {
     return (
-      <>
+    <>
         <Header category="Dashboard" title="Keuangan" />
     
-        <div style={{display : "flex", marginTop : "50px", marginLeft : "33px"}}>
+        <div style={{display : "flex", marginTop : "35px", marginLeft : "33px"}}>
           <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", border : "3px solid grey", borderRadius : "10px ", backgroundColor : "#CC3506D9"}}>
             <p style={{ color : "white" }}>800.000</p>
             <p style={{ color : "white" }}>Uang Masuk</p>
@@ -196,37 +196,35 @@ class Dashboard extends Component {
             <p style={{ color : "white" }}>1.000.000</p>
             <p style={{ color : "white" }}>Uang Keluar</p>
             <div style={{textAlign : "center", width : "full", backgroundColor : "#E4A11ED9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
-              <p style={{ color : "white", fontSize : "13px" }}>Lihat Laporan</p>
-            </div>
+            <p><button style={{ color : "white", fontSize : "13px" }} onClick={this.handleClick} target="_blank">Lihat Laporan</button></p>            </div>
           </div>
           <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", border : "3px solid grey", borderRadius : "10px ", backgroundColor : "#1E53B9D9", marginLeft : "15px"}}>
             <p style={{ color : "white" }}>10.000.000</p>
             <p style={{ color : "white" }}>Total Kas</p>
             <div style={{textAlign : "center", width : "auto", backgroundColor : "#1E53B9D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
-              <p style={{ color : "white", fontSize : "13px" }}>Lihat Laporan</p>
+            <p><button style={{ color : "white", fontSize : "13px" }} onClick={this.handleClick} target="_blank">Lihat Laporan</button></p>
             </div>
           </div>
         </div>
     
-        <div style={{display : "flex", marginTop : "70px", marginLeft : "33px" }}>
-    
-            <div style={{alignContent : "center", padding : "20px", width : "705px", border : "3px solid grey", borderRadius : "25px"}}>
-              <Chart
-                options={this.state.options}
-                series={this.state.series}
-                type="bar"
-              />
-            </div>
-    
-            <div style={{alignContent : "center", width : "290px", border : "3px solid grey", marginBottom : "auto", marginLeft : "30px", borderRadius : "25px"}}>
-              <Chart
-                options={this.state2.options}
-                series={this.state2.series}
-                type="pie"
-              />
-            </div>
-        </div>
-      </>
+      <div style={{display : "flex", marginTop : "70px", marginLeft : "33px" }}>
+          <div style={{alignContent : "center", padding : "20px", width : "705px", border : "3px solid grey", borderRadius : "25px"}}>
+            <Chart
+              options={this.state.options}
+              series={this.state.series}
+              type="bar"
+            />
+          </div>
+  
+          <div style={{alignContent : "center", width : "290px", border : "3px solid grey", marginBottom : "auto", marginLeft : "30px", borderRadius : "25px"}}>
+            <Chart
+              options={this.state2.options}
+              series={this.state2.series}
+              type="pie"
+            />
+          </div>
+      </div>
+  </>
       );
     }
 }
