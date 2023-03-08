@@ -58,7 +58,6 @@ const columns = [
   {
     name: "Code",
     selector: (data) => data.code,
-    width: "55px"
   },
   { 
     name: "Group",
@@ -75,7 +74,6 @@ const columns = [
   { 
     name: "Kredit/Debit",
     selector: (data) => data.payment_type,
-    width: "99px"
   },
   {
     name: "Aksi",
@@ -113,7 +111,7 @@ const closeModalStatus = () => {
 
 const navigate = useNavigate();
 
-const navigateCostCenter = () => {
+const navigateTambahCostCenter = () => {
   // 👇️ navigate to /contacts
     navigate('/admin/tambah-cost-center');
 };
@@ -125,14 +123,18 @@ const handleDownloadExcel = () => {
   writeFileXLSX(wb, `coba.xlsx`);        
 };
 
- return (
+return (
   <>
     <Header category="Keuangan / Cost Center" title="Cost Center" />
 
-    <div style={{ marginTop : "35px" }}>
+    <div style={{ float : "right", marginBottom : "5px", padding : "0px 14px" }}>
+        <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={navigateTambahCostCenter}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
+    </div>
+
+    <div style={{ marginTop : "65px" }}>
           <FilterComponent
               onDownloadExcel={handleDownloadExcel}
-              onClick={navigateCostCenter}
+              onClick={navigateTambahCostCenter}
               onFilter={e => setFilterText(e.target.value)}
               filterText={filterText}
           />

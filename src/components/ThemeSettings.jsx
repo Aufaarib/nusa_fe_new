@@ -2,6 +2,7 @@ import React from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 import { BsCheck } from 'react-icons/bs';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { Button } from '.';
 
 import { themeColors } from '../data/initData';
 import { useStateContext } from '../contexts/ContextProvider';
@@ -14,15 +15,14 @@ const ThemeSettings = () => {
       <div className="float-right h-screen dark:text-gray-200  bg-white dark:bg-[#484B52] w-400">
         <div className="flex items-center justify-between p-4 ml-4">
           <p className="text-lg font-semibold">Pengaturan</p>
-          <button
-            type="button"
-            onClick={() => setThemeSettings(false)}
-            style={{ color: 'rgb(153, 171, 180)', borderRadius: '50%' }}
-            className="p-3 text-2xl hover:drop-shadow-xl hover:bg-soft"
-          >
-            <MdOutlineCancel />
-          </button>
-
+          <Button
+            icon={<MdOutlineCancel />}
+            color="rgb(153, 171, 180)"
+            bgHoverColor="merah"
+            textHoverColor="putih"
+            size="2xl"
+            borderRadius="50%"
+          />
         </div>
         <div className="flex-col p-4 ml-4 border-t-1 border-color">
           <p className="text-xl font-semibold ">Pilihan Tema</p>

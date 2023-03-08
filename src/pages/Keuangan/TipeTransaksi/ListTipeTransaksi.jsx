@@ -105,7 +105,11 @@ const handleDownloadExcel = () => {
   <>
     <Header category="Keuangan / Tipe Transaksi" title="Tipe Transaksi" />
 
-    <div style={{ marginTop : "35px" }}>
+    <div style={{ float : "right", marginBottom : "5px", padding : "0px 14px" }}>
+        <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={navigateTambahTipeTransaksi}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
+    </div>
+
+    <div style={{ marginTop : "65px" }}>
         <FilterComponent
           onDownloadExcel={handleDownloadExcel}
           onClick={navigateTambahTipeTransaksi}

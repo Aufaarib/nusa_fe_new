@@ -1,29 +1,3 @@
-export const CustomStylesTable = {
-    rows: {
-        style: {
-            justifyContent: 'center',
-        },
-    },
-    headCells: {
-        style: {
-            paddingLeft: '8px', // override the cell padding for head cells
-            paddingRight: '8px',
-            justifyContent: 'center',
-            backgroundColor: '#8F0D1E',
-            color: 'rgb(243 241 241)',
-        },
-    },
-    cells: {
-        style: {
-            paddingLeft: '8px', // override the cell padding for head cells
-            paddingRight: '8px',
-            justifyContent: 'center',
-            fontWeight: 'bold',
-            width: 'auto'
-        },
-    },
-  };
-  
   export const CustomStylesStatus = {
     content: {
       width: 'auto',

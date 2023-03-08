@@ -51,13 +51,8 @@ export const DropdownSiswa = ({ label, type, id, name, ref, autoComplete, onChan
     );
   };
 
-  export const DropdownJenisTransaksi = ({isSearchable, label, type, id, name, ref, autoComplete, onChange, required, rows, isClearable, defaultValue}) =>
+  export const DropdownJenisTransaksi = ({isSearchable, label, type, id, name, ref, autoComplete, onChange, required, options, isClearable, defaultValue}) =>
   {
-    const options = [
-      { value: 'Cash', label: 'Cash'},
-      { value: 'Transfer', label: 'Transfer'}
-    ];
-
       return (
         <div>
           <form className='grid-container'>
@@ -88,6 +83,55 @@ export const DropdownSiswa = ({ label, type, id, name, ref, autoComplete, onChan
       { value: 'Kredit', label: 'Kredit'}
     ];
 
+      return (
+        <div>
+          <form className='grid-container'>
+            {label && (
+            <label htmlFor={name} className="mt-2">
+              {label} {required && <span className="ml-1 text-merah">*</span>}
+            </label>
+            )}
+            <span className="mt-2">:</span>  
+            <Select
+              className="ml-20"
+              isSearchable={isSearchable}
+              isClearable={isClearable}
+              defaultValue={defaultValue}
+              placeholder="Pilih Salah Satu..."
+              options={options}
+              onChange={onChange}
+            />
+          </form>
+        </div>
+      );
+    };
+
+  export const DropdownBank = ({isSearchable, label, type, id, name, ref, autoComplete, onChange, required, options, defaultValue, isClearable}) =>
+  {
+      return (
+        <div>
+          <form className='grid-container'>
+            {label && (
+            <label htmlFor={name} className="mt-1">
+              {label} {required && <span className="ml-1 text-merah">*</span>}
+            </label>
+            )}
+            <span className="mt-1">:</span>  
+            <Select
+              className="ml-20"
+              isSearchable={isSearchable}
+              isClearable={isClearable}
+              defaultValue={defaultValue}
+              placeholder="Pilih Salah Satu..."
+              options={options}
+              onChange={onChange}
+            />
+          </form>
+        </div>
+      );
+    };
+    export const DropdownPendaftaran = ({isSearchable, label, type, id, name, ref, autoComplete, onChange, required, options, defaultValue, isClearable}) =>
+    {
       return (
         <div>
           <form className='grid-container'>

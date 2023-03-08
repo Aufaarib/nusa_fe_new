@@ -149,26 +149,20 @@ return (
 
         <article>
 
-            <ModalCostCenter
-                isOpenCostCenter={isOpenCostCenter}
-                closeModalCostCenter={closeModalCostCenter}
-                setCode={(e) => setCode(e.target.value)}
-                setGroup={(e) => setGroup(e.target.value)}
-                setSubGroup={(e) => setSubGroup(e.target.value)}
-                setItem={(e) => setItem(e.target.value)}
-                setDebitKredit={setDebitKredit}
-                defaultValueDK={debitKredit}
-                post={postDataCostCenter}
-            />
-            <DropdownCostCenter
-                label="Cost Center"
+            <TextInput
+                label="Jenis Biaya"
                 required={true}
-                defaultValue={costCenter}
-                isClearable={true}
-                options={options}
-                onChange={setCostCenter}
-                handleOnClick={() => setisOpenCostCenter(true)}
+                type="text"
+                onChange={(e) => setBank(e.target.value)}
             />
+            <br/>
+            <TextInput
+                label="Tanggal Transaksi"
+                required={true}
+                type="text"
+                onChange={(e) => setBank(e.target.value)}
+            />
+            <br/>
             <DropdownJenisTransaksi
                 label="Jenis Transaksi"
                 required={true}
@@ -177,6 +171,7 @@ return (
                 isSearchable={false}
                 onChange={setJenisTransaksi}
             />
+            <br/>
             {jenisTransaksi.value === 'Transfer' && 
                 <TextInput
                 label="Bank"
@@ -185,12 +180,16 @@ return (
                 onChange={(e) => setBank(e.target.value)}
                 />
             }
+            {jenisTransaksi.value === 'Transfer' && 
+                <br/>
+            }
             <TextInput
                 label="Jumlah"
                 required={true}
                 onInput={handleChange}
                 value={jumlah}
             />
+            <br/>
             <TextArea
                 label="Catatan"
                 type="text"
@@ -213,13 +212,6 @@ return (
                     Batal
                 </button>
             </div>
-
-            <ModalStatusCostCenter
-                isOpenStatus={isOpenStatusCostCenter}
-                closeModalStatus={() => closeModalStatusCostCenter()}
-                status={status}
-                navigate={navigateCostCenter}
-            />
 
             <ModalStatus 
                 isOpenStatus={isOpenStatus}

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from '../../../api/axios';
 import { ModalEmpty, ModalStatus, ModalCostCenter, ModalStatusCostCenter } from '../../../components/ModalPopUp';
-import {DropdownCostCenter, DropdownJenisTransaksi} from '../../../components/Dropdown';
+import {DropdownCostCenter, DropdownJenisTransaksi, DropdownBank} from '../../../components/Dropdown';
 import { FileUpload } from '../../../components/FileUpload';
 
 export default function TambahBiayaOperasional() {
@@ -15,7 +15,12 @@ const [sub_group, setSubGroup] = useState('');
 const [item, setItem] = useState('');
 const [debitKredit, setDebitKredit] = useState('');
 
-const [data, setData] = useState([]);
+const [costCenterData, setCostCenterData] = useState([]);
+const [bankData, setBankData] = useState([]);
+const [transactionTypeData, setTransactionTypeData] = useState([]);
+const [transactionTypeFilter, setTransactionTypeFilter] = useState([]);
+
+
 const [costCenter, setCostCenter] = useState('');
 const [jenisTransaksi, setJenisTransaksi] = useState('');
 const [bank, setBank] = useState('');
@@ -28,54 +33,131 @@ const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
 
-useEffect(() => {
-    axios
-        .get("https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch")
-        .then((res) => {
-        setData(res.data.data);
-        setStatus({ type: 'success' });
-        })
-        .catch((error) => {
-        setStatus({ type: 'error', error });
-        });
-    }, []);
+// fetch function
+const fetchCostCenter = async () => {
+    try {
+      const fetchData = await axios.get(
+        "https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch"
+      );
+      const data = fetchData.data.data.filter((e) => e.group === "Operasional");
+      setCostCenterData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const fetchBank = async () => {
+    try {
+      const fetchData = await axios.get(
+        "https://nusa.nuncorp.id/golang/api/v1/bank/fetch"
+      );
+      setBankData(fetchData.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchTransactionType = async () => {
+    try {
+      const fetchData = await axios.get(
+        "https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch"
+      );
+      const data = fetchData.data.data.filter((e) => e.status === "Aktif");
+      setTransactionTypeData(data);
+      setTransactionTypeFilter(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+useEffect(() => {
+    fetchCostCenter();
+    fetchBank();
+    fetchTransactionType();
+}, []);
+
+const now = Date.now();
+const date = new Date(now);
+const isoStringWithMs = date.toISOString();
+
+const onChangeFee = (e) => {
+    const data = parseInt(e.target.value);
+    setJumlah(data);
+  };
 
 const postData = (e) => {
     e.preventDefault();
 
-    const cost_center = costCenter.value;
-    const jenis_transaksi = jenisTransaksi.value;
+    console.log(costCenter);
+    console.log(bank);
+    console.log(jenisTransaksi);
+    console.log(parseInt(jumlah, 10));
+    console.log(catatan);
+    console.log(isoStringWithMs);
 
-    const post = () => {
-        axios.post('https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional',{
-            cost_center,
-            jenis_transaksi,
-            bank,
-            jumlah,
-            catatan
-        })
-        .then(() => {
+
+    const postDataTransfer = {
+        cost_center_id: costCenter,
+        bank_id: bank,
+        transaction_type_id: jenisTransaksi,
+        total_fee: parseInt(jumlah, 10),
+        note: catatan,
+        transaction_date: isoStringWithMs,
+    };
+
+    const postDataCash = {
+        cost_center_id: costCenter,
+        transaction_type_id: jenisTransaksi,
+        total_fee: parseInt(jumlah, 10),
+        note: catatan,
+        transaction_date: isoStringWithMs,
+    };
+
+    const postTransfer = () => {
+        axios
+        .post('https://nusa.nuncorp.id/golang/api/v1/transaction/create',
+            postDataTransfer
+        )
+        .then((response) => {
             setStatus({ type: 'success' });
             setisOpenStatus(true);
+            console.log(response.data);
         })
         .catch((error) => {
             setStatus({ type: 'error', error });
+            console.log(error);
         });
     }
-    if (jenisTransaksi.value === 'Transfer') {
-        if (costCenter.length === 0 || jenisTransaksi.length === 0|| bank.length === 0 || jumlah.length === 0 || file_name.length === 0) {
+
+    const postCash = () => {
+        axios
+        .post('https://nusa.nuncorp.id/golang/api/v1/transaction/create',
+            postDataCash
+        )
+        .then((response) => {
+            setStatus({ type: 'success' });
+            setisOpenStatus(true);
+            console.log(response.data);
+        })
+        .catch((error) => {
+            setStatus({ type: 'error', error });
+            console.log(error);
+        });
+    }
+
+    if (transactionTypeFilter === 'Transfer') {
+        if (costCenter.length === 0 || bank.length === 0|| jenisTransaksi.length === 0 || jumlah.length === 0 || file_name.length === 0) {
             setisOpenEmpty(true);
         }
         else {
-            post()
+            postTransfer()
         }
-    }else if (jenisTransaksi.value === 'Cash') {
+    }else if (transactionTypeFilter === 'Cash') {
         if (costCenter.length === 0 || jenisTransaksi.length === 0|| jumlah.length === 0 || file_name.length === 0) {
             setisOpenEmpty(true);
         }
         else {
-            post()
+            postCash()
         }
     }else {
         setisOpenEmpty(true);
@@ -110,6 +192,11 @@ const postDataCostCenter = (e) => {
     }
 }
 
+const onTransactionTypeChange = (e) => {
+    setJenisTransaksi(e.value);
+    setTransactionTypeFilter(e.description);
+  };
+
 const closeModalEmpty = () => {
     setisOpenEmpty(false);
 }
@@ -133,15 +220,27 @@ const navigateCostCenter = () => {
     navigate('/admin/list-cost-center');
 };
 
-const addCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-const removeNonNumeric = num => num.toString().replace(/[^0-9]/g, "");
+// const addCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+// const removeNonNumeric = num => num.toString().replace(/[^0-9]/g, "");
 
-const handleChange = event =>
-    setJumlah(addCommas(removeNonNumeric(event.target.value)));
+// const handleChange = event => setJumlah(addCommas(removeNonNumeric(event.target.value)));
 
-const options = data.map((c) => (
-    {label: c.item, value: c.code}
-    ));
+// options
+const costCenterOptions = costCenterData.map((c) => ({
+    label: c.group + " - " + c.item,
+    value: c.id,
+}));
+
+const bankOptions = bankData.map((c) => ({
+    label: `${c.nama_bank} : ${c.nama_pemilik} - ${c.nomor_rekening}`,
+    value: c.id,
+}));
+
+const transactionTypeOptions = transactionTypeData.map((c) => ({
+    label: `${c.description} - ${c.status} `,
+    value: c.id,
+    description: c.description,
+}));
 
 return (    
     <div>
@@ -149,18 +248,25 @@ return (
 
         <article>
 
-            <TextInput
-                label="Jenis Biaya"
-                required={true}
-                type="text"
-                onChange={(e) => setBank(e.target.value)}
+            <ModalCostCenter
+                isOpenCostCenter={isOpenCostCenter}
+                closeModalCostCenter={closeModalCostCenter}
+                setCode={(e) => setCode(e.target.value)}
+                setGroup={(e) => setGroup(e.target.value)}
+                setSubGroup={(e) => setSubGroup(e.target.value)}
+                setItem={(e) => setItem(e.target.value)}
+                setDebitKredit={setDebitKredit}
+                defaultValueDK={debitKredit}
+                post={postDataCostCenter}
             />
-            <br/>
-            <TextInput
-                label="Tanggal Transaksi"
+            <DropdownCostCenter
+                label="Cost Center"
                 required={true}
-                type="text"
-                onChange={(e) => setBank(e.target.value)}
+                defaultValue={costCenter}
+                // isClearable={true}
+                options={costCenterOptions}
+                onChange={(e) => setCostCenter(e.value)}
+                handleOnClick={() => setisOpenCostCenter(true)}
             />
             <br/>
             <DropdownJenisTransaksi
@@ -168,25 +274,30 @@ return (
                 required={true}
                 defaultValue={jenisTransaksi}
                 isClearable={false}
+                options={transactionTypeOptions}
                 isSearchable={false}
-                onChange={setJenisTransaksi}
+                onChange={onTransactionTypeChange}
             />
             <br/>
-            {jenisTransaksi.value === 'Transfer' && 
-                <TextInput
-                label="Bank"
-                type="text"
-                required={true}
-                onChange={(e) => setBank(e.target.value)}
+            {transactionTypeFilter === "Transfer" && 
+                <DropdownBank
+                    label="Bank"
+                    required={true}
+                    defaultValue={bank}
+                    isClearable={false}
+                    options={bankOptions}
+                    isSearchable={false}
+                    onChange={(e) => setBank(e.value)}
                 />
             }
-            {jenisTransaksi.value === 'Transfer' && 
+            {transactionTypeFilter === "Transfer" && 
                 <br/>
             }
             <TextInput
                 label="Jumlah"
+                type={"number"}
                 required={true}
-                onInput={handleChange}
+                onInput={onChangeFee}
                 value={jumlah}
             />
             <br/>
@@ -212,6 +323,13 @@ return (
                     Batal
                 </button>
             </div>
+
+            <ModalStatusCostCenter
+                isOpenStatus={isOpenStatusCostCenter}
+                closeModalStatus={() => closeModalStatusCostCenter()}
+                status={status}
+                navigate={navigateCostCenter}
+            />
 
             <ModalStatus 
                 isOpenStatus={isOpenStatus}

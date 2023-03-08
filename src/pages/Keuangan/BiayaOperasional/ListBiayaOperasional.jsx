@@ -9,61 +9,23 @@ import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
-import axios from "axios";
+import moment from "moment/moment";
 
 export default function ListBiayaOperasional() {
 const [data, setData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
-const [isOpenDelete, setisOpenDelete] = useState(false);
-// const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
 const [sts, setSts] = useState(undefined);
-const [deleteId, setDeleteId] = useState('');
-const [desc_nama, setDesc_nama] = useState('');
-// const [desc_status, setDesc_status] = useState('');
 const [filterText, setFilterText] = useState('');
 
 const filteredItems = 
     data.filter(
-      data => 
       // new Date(moment(data.created_at).format('DD/MM/YYYY')) >= new Date(startDate) 
       // && new Date(moment(data.created_at).format('DD/MM/YYYY')) <= new Date(endDate) &&
-      data.bank.toLowerCase().includes(filterText.toLowerCase())
+      data => data.bank.toLowerCase().includes(filterText)||
+      data.note.toLowerCase().includes(filterText.toLowerCase())
       ) 
 
 useEffect(() => {getBiayaOperasional(setData, setSts)}, []);
-
-const openModalHapus = (id, cost_center) => {
-  setisOpenDelete(true);
-  setDesc_nama(cost_center);
-  setDeleteId(id);
-}
-
-const closeModalHapus = () => {
-  setisOpenDelete(false);
-}
-
-// const openModalUbahStatus = (id, nama_pemilik) => {
-//   setisOpenUbahStatus(true);
-//   setDesc_nama(nama_pemilik);
-//   setDeleteId(id);
-// }
-
-// const closeModalUbahStatus = () => {
-//   setisOpenUbahStatus(false);
-// }
-
-const onDelete = () => {
-  axios.delete(`https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional/${deleteId}`)
-      .then(() => {
-        setSts({ type: 'success' });
-        closeModalHapus();
-        setisOpenStatus(true);
-        getBiayaOperasional(setData, setSts)
-        })
-      .catch((error) => {
-        setSts({ type: 'error', error });
-      });
-}
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
@@ -79,36 +41,47 @@ const columns = [
   {
     name: "Jenis Biaya",
     selector: (data) => data.payment_type,
+    width: "110px"
   },
   {
+    id: "tanggalTransaksi",
     name: "Tanggal Transaksi",
-    selector: (data) => data.transaction_date,
+    selector: (data) => moment(data.transaction_date).format("MM-DD-YYYY"),
+    width: "140px",
+    sortable: true
   },
   {
     name: "Nama Bank",
     selector: (data) => data.bank,
+    width: "195px"
   },
   {
     name: "Jenis Transaksi",
     selector: (data) => data.transaction_type,
+    width: "140px"
   },
   {
     name: "Catatan",
     selector: (data) => data.note,
-    width: "247px"
+    width: "305px"
   },
-  // {
-  //   name: "Aksi",
-  //   cell:(data) => 
-  //   <div>
-  //       <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
-  //       <button onClick={() => openModalHapus(data.id, data.cost_center)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
-  //   </div>,
-  //   ignoreRowClick: true,
-  //   allowOverflow: true,
-  //   button: true,
-  //   width: "194px",
-  // },
+  {
+    name: "Jumlah",
+    selector: (data) => data.total_fee,
+    width: "100px"
+  },
+  {
+    name: "Aksi",
+    cell:(data) => 
+    <div>
+        <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
+        <button className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
+    </div>,
+    ignoreRowClick: true,
+    allowOverflow: true,
+    button: true,
+    width: "315px",
+  },
 ];
 
 const navigate = useNavigate();
@@ -129,9 +102,12 @@ const handleDownloadExcel = () => {
   <>
     <Header category="Keuangan / Biaya Operasional" title="List Biaya Operasional" />
 
-    <div style={{ marginTop : "35px" }}>
-        <button className="btn-mrh float-right mb-5 ml-3" onClick={handleDownloadExcel}><i className="fa fa-file-text-o mr-2 mt-1"></i>Download Excel</button>
+    <div style={{ display : "flex", float : "right", marginBottom : "5px", gap : "10px", padding : "0px 14px" }}>
+        <button style={{ fontSize : "12px", width : "175px" }} className="btn-mrh" onClick={handleDownloadExcel}><i className="fa fa-file-text-o mr-2 mt-1"></i>Download Format Excel</button>
+        <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={navigateTambahBiayaOperasional}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
+    </div>
 
+    <div style={{ marginTop : "65px" }}>
         <FilterComponent
             onClick={navigateTambahBiayaOperasional}
             onFilter={e => setFilterText(e.target.value)}
@@ -141,6 +117,7 @@ const handleDownloadExcel = () => {
         <DataTables
             columns={columns}
             data={filteredItems}
+            defaultSortFieldId="tanggalTransaksi"
         />
 
         <Modal
@@ -162,19 +139,6 @@ const handleDownloadExcel = () => {
               <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
             </div>
             } 
-        </Modal>
-
-        <Modal
-            isOpen={isOpenDelete}
-            onRequestClose={closeModalHapus}
-            style={CustomStylesModalHapus}
-            contentLabel="Modal Hapus"
-            ariaHideApp={false}
-          >
-            <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
-            <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
-            <button className="btn-action-ungu w-20 ml-4" onClick={onDelete}>Hapus</button>
-            <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
         </Modal>
     </div>
    </>

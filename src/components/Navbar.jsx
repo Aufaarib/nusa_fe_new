@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { RiNotification3Line } from 'react-icons/ri';
+import { RiNotification3Line, RiPaintBrushFill } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { BsSearch } from 'react-icons/bs';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import avatar from '../data/product1.jpg';
 import logoSaim from '../data/logo-saim.png';
 
-import { Notification, UserProfile } from '.';
+import { Notification, ThemeSettings, UserProfile } from '.';
 import { useStateContext } from '../contexts/ContextProvider';
 import useAuth from "../hooks/useAuth";
 
@@ -70,6 +70,7 @@ const Navbar = () => {
 
       <div className="flex">
         {role !== "Admin PMB" && (<NavButton title="Notifikasi" dotColor={notifDotColor} customFunc={() => handleClick('notification')} color={currentColor} icon={<RiNotification3Line />} />)}
+        {/* <NavButton title="Theme Setting" dotColor={notifDotColor} customFunc={() => handleClick('themeSetting')} color={currentColor} icon={<RiPaintBrushFill />} /> */}
         <TooltipComponent content="Profil" position="BottomCenter">
           <div
             className="flex items-center w-full h-12 gap-2 p-1 rounded-full cursor-pointer lg:pr-4 hover:bg-soft "
@@ -87,6 +88,7 @@ const Navbar = () => {
 
         {isClicked.notification && (<Notification notificationData={notifications} unreadTotal={notificationUnreadLength} newNotif={notificationNew} />)}
         {isClicked.userProfile && (<UserProfile />)}
+        {/* {isClicked.themeSetting && (<ThemeSettings />)} */}
       </div>
     </div>
   );
