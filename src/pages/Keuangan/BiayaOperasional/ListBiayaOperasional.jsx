@@ -40,39 +40,41 @@ const columns = [
   },
   {
     name: "Jenis Biaya",
-    selector: (data) => data.payment_type,
+    selector: "payment_type",
     width: "110px",
     sortable: true
   },
   {
     id: "tanggalTransaksi",
     name: "Tanggal Transaksi",
-    selector: (data) => moment(data.transaction_date).format("MM-DD-YYYY"),
+    selector: "transaction_date",
+    cell:(data) => moment(data.transaction_date).format("DD/MM/YYYY"),
     width: "140px",
     sortable: true
   },
   {
     name: "Nama Bank",
-    selector: (data) => data.bank,
-    width: "195px",
+    selector: "bank",
+    width: "230px",
     sortable: true
   },
   {
     name: "Jenis Transaksi",
-    selector: (data) => data.transaction_type,
+    selector: "transaction_type",
     width: "140px",
     sortable: true
   },
   {
     name: "Catatan",
-    selector: (data) => data.note,
+    selector: "note",
     width: "305px",
     sortable: true
   },
   {
     name: "Jumlah",
-    selector: (data) => data.total_fee,
-    width: "100px",
+    selector: "total_fee",
+    cell:(data) => new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(data.total_fee),
+    width: "130px",
     sortable: true
   },
   {
@@ -85,7 +87,7 @@ const columns = [
     ignoreRowClick: true,
     allowOverflow: true,
     button: true,
-    width: "315px",
+    width: "265px",
   },
 ];
 

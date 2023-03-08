@@ -126,8 +126,7 @@ export const ModalStatus = ({closeModalStatus, isOpenStatus, status, navigate}) 
             {status?.type === 'success' && 
             <div style={{ textAlign : "center" }}>
                 <h2>Berhasil</h2>
-                <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={closeModalStatus}>Tambah Data Lain</button>
-                <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5 ml-5" onClick={navigate}>Lihat Halaman List</button>
+                <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={navigate}>Kembali Ke Halaman List</button>
             </div>
             }
             {status?.type === 'error' && 

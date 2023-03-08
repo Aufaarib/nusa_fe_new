@@ -65,7 +65,6 @@ return (
                 onChange={(e) => setNamaBank(e.target.value)}
                 required={true}
             />
-            <br />
             <TextInput
                 label="Nomor Rekening"
                 type="number"
@@ -73,7 +72,6 @@ return (
                 onChange={(e) => setNomorRekening(e.target.value)}
                 required={true}
             />
-            <br />
             <TextInput
                 label="Nama Pemilik"
                 type="text"

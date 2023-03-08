@@ -97,26 +97,13 @@ const fetchCostCenter = async () => {
   const date = new Date(now);
   const isoStringWithMs = date.toISOString();
 
-  const onChangeFee = (e) => {
-    const data = parseInt(e.target.value);
-    setJumlah(data);
-  };
-
 const postData = (e) => {
     e.preventDefault();
-
-    console.log(costCenter);
-    console.log(bank);
-    console.log(jenisTransaksi);
-    console.log(parseInt(jumlah, 10));
-    console.log(catatan);
-    console.log(pendaftaran);
-    console.log(isoStringWithMs);
 
     const postDataCash = {
         cost_center_id: costCenter,
         transaction_type_id: jenisTransaksi,
-        total_fee: parseInt(jumlah, 10),
+        total_fee: parseInt(jumlah.replace(".", "")),
         pendaftaran_id: pendaftaran,
         note: catatan,
         transaction_date: isoStringWithMs,
@@ -126,7 +113,7 @@ const postData = (e) => {
         cost_center_id: costCenter,
         bank_id: bank,
         transaction_type_id: jenisTransaksi,
-        total_fee: parseInt(jumlah, 10),
+        total_fee: parseInt(jumlah.replace(".", "")),
         pendaftaran_id: pendaftaran,
         note: catatan,
         transaction_date: isoStringWithMs,
@@ -240,11 +227,12 @@ const navigateCostCenter = () => {
     navigate('/admin/list-cost-center');
 };
 
-// const addCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-// const removeNonNumeric = num => num.toString().replace(/[^0-9]/g, "");
+const addCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const removeNonNumeric = num => num.toString().replace(/[^0-9]/g, "");
 
-// const handleChange = event =>
-//     setJumlah(addCommas(removeNonNumeric(event.target.value)));
+const handleChange = event => {
+    setJumlah(addCommas(removeNonNumeric(event.target.value)));
+}
 
   // options
 const costCenterOptions = costCenterData.map((c) => ({
@@ -295,7 +283,6 @@ return (
                 onChange={(e) => setCostCenter(e.value)}
                 handleOnClick={() => setisOpenCostCenter(true)}
             />
-            <br/>
             <DropdownPendaftaran
                 label="Siswa"
                 required={true}
@@ -304,7 +291,6 @@ return (
                 options={pendaftaranOptions}
                 onChange={(e) => setPendaftaran(e.value)}
             />
-            <br/>
             <DropdownJenisTransaksi
                 label="Jenis Transaksi"
                 required={true}
@@ -314,7 +300,6 @@ return (
                 isSearchable={false}
                 onChange={onTransactionTypeChange}
             />
-            <br/>
             {transactionTypeFilter === "Transfer" && 
                 <DropdownBank
                     label="Bank"
@@ -326,16 +311,13 @@ return (
                     onChange={(e) => setBank(e.value)}
                 />
             }
-            {transactionTypeFilter === "Transfer" && 
-                <br/>
-            }
             <TextInput
                 label="Jumlah"
+                type="text"
                 required={true}
-                onInput={onChangeFee}
+                onInput={handleChange}
                 value={jumlah}
             />
-            <br/>
             <TextArea
                 label="Catatan"
                 type="text"

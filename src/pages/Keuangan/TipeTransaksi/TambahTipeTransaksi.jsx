@@ -64,7 +64,6 @@ const closeModalStatus = () => {
                     onChange={(e) => setDesc(e.target.value)}
                     required={true}
                 />
-                <br/>
                 <TextInput
                     label="Status"
                     type="text"

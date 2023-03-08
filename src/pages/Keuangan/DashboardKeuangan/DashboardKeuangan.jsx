@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
-import { Header } from "../../components";
+import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 
-class Dashboard extends Component {
+class DashboardKeuangan extends Component {
 
   handleClick = (e) => {
     console.log("element clicked");
@@ -182,23 +182,23 @@ class Dashboard extends Component {
   render() {
     return (
     <>
-        <Header category="Dashboard" title="Keuangan" />
+        <Header category="Keuangan / Dashboard" title="Keuangan" />
     
         <div style={{display : "flex", marginTop : "35px", marginLeft : "33px"}}>
-          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", border : "3px solid grey", borderRadius : "10px ", backgroundColor : "#CC3506D9"}}>
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", borderRadius : "10px ", backgroundColor : "#CC3506D9"}}>
             <p style={{ color : "white" }}>800.000</p>
             <p style={{ color : "white" }}>Uang Masuk</p>
             <div style={{textAlign : "center", width : "full", backgroundColor : "#CC3506D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
             <p><button style={{ color : "white", fontSize : "13px" }} onClick={this.handleClick} target="_blank">Lihat Laporan</button></p>
             </div>
           </div>
-          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", border : "3px solid grey", borderRadius : "10px ", backgroundColor : "#E4A11ED9", marginLeft : "15px"}}>
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", borderRadius : "10px ", backgroundColor : "#E4A11ED9", marginLeft : "15px"}}>
             <p style={{ color : "white" }}>1.000.000</p>
             <p style={{ color : "white" }}>Uang Keluar</p>
             <div style={{textAlign : "center", width : "full", backgroundColor : "#E4A11ED9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
             <p><button style={{ color : "white", fontSize : "13px" }} onClick={this.handleClick} target="_blank">Lihat Laporan</button></p>            </div>
           </div>
-          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", border : "3px solid grey", borderRadius : "10px ", backgroundColor : "#1E53B9D9", marginLeft : "15px"}}>
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", borderRadius : "10px ", backgroundColor : "#1E53B9D9", marginLeft : "15px"}}>
             <p style={{ color : "white" }}>10.000.000</p>
             <p style={{ color : "white" }}>Total Kas</p>
             <div style={{textAlign : "center", width : "auto", backgroundColor : "#1E53B9D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
@@ -228,4 +228,4 @@ class Dashboard extends Component {
       );
     }
 }
-export default Dashboard;
+export default DashboardKeuangan;

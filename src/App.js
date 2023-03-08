@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
-import Dashboard from './pages/Dashboard/Dashboard';
 import TahapanPMB from './pages/PMB/TahapanPMB';
 import FormMurid from './pages/PMB/FormMurid';
 import FormOrangTua from './pages/PMB/FormOrangTua';
@@ -15,6 +14,8 @@ import RequireAuth from './components/RequireAuth';
 import RequireAuthAdmin from './components/RequireAuthAdmin';
 
 import UbahListBank from './pages/Keuangan/Bank/UbahListBank';
+
+import DashboardKeuangan from './pages/Keuangan/DashboardKeuangan/DashboardKeuangan';
 
 import ListBank from './pages/Keuangan/Bank/ListBank';
 import ListCostCenter from './pages/Keuangan/CostCenter/ListCostCenter';
@@ -66,7 +67,7 @@ const App = () => {
 
           {/* PROTECTED ROUTES */}
           <Route element={<RequireAuth />}>
-            <Route path="/dashboard" element={(<Dashboard />)} />
+            <Route path="/dashboard" element={(<DashboardKeuangan />)} />
             <Route path="/pmb?verified=1" element={(<TahapanPMB />)} />
             <Route path="/pmb/tahapan-pmb?verified=1" element={(<TahapanPMB />)} />
             <Route path="/pmb" element={(<TahapanPMB />)} />

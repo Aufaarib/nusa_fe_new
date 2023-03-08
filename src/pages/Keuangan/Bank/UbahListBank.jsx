@@ -74,7 +74,6 @@ return (
                     />
                     <p className='mt-3'>Data Sebelumnya :</p>
                     <p className='text-merah font-bold'>{location.state.nama_bank}</p>
-                    <br />
                     <TextInput
                         label="Nomor Rekening"
                         type="number"
@@ -83,7 +82,6 @@ return (
                     />
                     <p className='mt-3'>Data Sebelumnya :</p>
                     <p className='text-merah font-bold'>{location.state.nomor_rekening}</p>
-                    <br />
                     <TextInput
                         label="Nama Pemilik"
                         type="text"

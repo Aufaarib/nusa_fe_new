@@ -112,11 +112,11 @@ export const DropdownSiswa = ({ label, type, id, name, ref, autoComplete, onChan
         <div>
           <form className='grid-container'>
             {label && (
-            <label htmlFor={name} className="mt-1">
+            <label htmlFor={name}>
               {label} {required && <span className="ml-1 text-merah">*</span>}
             </label>
             )}
-            <span className="mt-1">:</span>  
+            <span>:</span>  
             <Select
               className="ml-20"
               isSearchable={isSearchable}
@@ -136,11 +136,11 @@ export const DropdownSiswa = ({ label, type, id, name, ref, autoComplete, onChan
         <div>
           <form className='grid-container'>
             {label && (
-            <label htmlFor={name} className="mt-2">
+            <label htmlFor={name}>
               {label} {required && <span className="ml-1 text-merah">*</span>}
             </label>
             )}
-            <span className="mt-2">:</span>  
+            <span>:</span>  
             <Select
               className="ml-20"
               isSearchable={isSearchable}
