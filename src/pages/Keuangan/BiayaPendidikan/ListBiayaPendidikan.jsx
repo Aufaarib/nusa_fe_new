@@ -7,7 +7,7 @@ import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
-import axios from "axios";
+import moment from "moment";
 
 export default function ListBiayaPendidikan() {
 const [data, setData] = useState([]);
@@ -44,37 +44,45 @@ const columns = [
   {
     name: "Jenis Biaya",
     selector: (data) => data.payment_type,
-    width: "110px"
+    width: "110px",
+    sortable: true
   },
   {
+    id: "tanggalTransaksi",
     name: "Tanggal Transaksi",
-    selector: (data) => data.transaction_date,
-    width: "170px"
+    selector: (data) => moment(data.transaction_date).format("MM-DD-YYYY"),
+    width: "170px",
+    sortable: true
   },
   {
     name: "Nama Bank",
     selector: (data) => data.bank,
-    width: "195px"
+    width: "195px",
+    sortable: true
   },
   {
     name: "Jenis Transaksi",
     selector: (data) => data.transaction_type,
-    width: "140px"
+    width: "140px",
+    sortable: true
   },
   {
     name: "Catatan",
     selector: (data) => data.note,
-    width: "210px"
+    width: "210px",
+    sortable: true
   },
   {
     name: "Jumlah",
     selector: (data) => data.total_fee,
-    width: "100px"
+    width: "100px",
+    sortable: true
   },
   {
     name: "Nama Siswa",
     selector: (data) => data.nama_lengkap_anak,
-    width: "200px"
+    width: "200px",
+    sortable: true
   },
   {
     name: "Kelas",
@@ -125,7 +133,7 @@ const handleDownloadExcel = () => {
         <DataTables
             columns={columns}
             data={filteredItems}
-
+            defaultSortFieldId="tanggalTransaksi"
         />
         <Modal
             isOpen={isOpenStatus}

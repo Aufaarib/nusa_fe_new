@@ -41,7 +41,8 @@ const columns = [
   {
     name: "Jenis Biaya",
     selector: (data) => data.payment_type,
-    width: "110px"
+    width: "110px",
+    sortable: true
   },
   {
     id: "tanggalTransaksi",
@@ -53,22 +54,26 @@ const columns = [
   {
     name: "Nama Bank",
     selector: (data) => data.bank,
-    width: "195px"
+    width: "195px",
+    sortable: true
   },
   {
     name: "Jenis Transaksi",
     selector: (data) => data.transaction_type,
-    width: "140px"
+    width: "140px",
+    sortable: true
   },
   {
     name: "Catatan",
     selector: (data) => data.note,
-    width: "305px"
+    width: "305px",
+    sortable: true
   },
   {
     name: "Jumlah",
     selector: (data) => data.total_fee,
-    width: "100px"
+    width: "100px",
+    sortable: true
   },
   {
     name: "Aksi",
