@@ -1,12 +1,11 @@
-import { FilterComponent, FilterDate } from "../../../components/Filter";
+import { FilterComponentSaring, FilterDate } from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
-import getBiayaOperasional from "../../../api/BiayaOperasional";
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
-import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
+import { getBiayaOperasional, getBiayaOperasionalByDate} from "../../../api/BiayaOperasional";
+import { CustomStylesStatus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
 import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from '../../../components';
+import { ModalFilter } from "../../../components/ModalPopUp";
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import moment from "moment/moment";
@@ -14,13 +13,19 @@ import moment from "moment/moment";
 export default function ListBiayaOperasional() {
 const [data, setData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
+const [isOpenFilter, setisOpenFilter] = useState(false);
 const [sts, setSts] = useState(undefined);
+const [startDateInput, setStartDateInput] = useState(new Date());
+const [endDateInput, setEndDateInput] = useState(new Date());
+const [startDate, setStartDate] = useState('');
+const [endDate, setEndDate] = useState('');
 const [filterText, setFilterText] = useState('');
+
+console.log(startDate)
+console.log(endDate)
 
 const filteredItems = 
     data.filter(
-      // new Date(moment(data.created_at).format('DD/MM/YYYY')) >= new Date(startDate) 
-      // && new Date(moment(data.created_at).format('DD/MM/YYYY')) <= new Date(endDate) &&
       data => data.bank.toLowerCase().includes(filterText)||
       data.note.toLowerCase().includes(filterText.toLowerCase())
       ) 
@@ -31,64 +36,86 @@ const closeModalStatus = () => {
   setisOpenStatus(false);
   setSts('');
 }
+const openModalFilter = () => {
+  setisOpenFilter(true);
+}
+const closeModalFilter = () => {
+  setisOpenFilter(false);
+}
+const handleChangeStart = (date) => {
+  setStartDateInput(date);
+  setStartDate(moment(date).format("yyyy-MM-DD"));
+}
+const handleChangeEnd = (date) => {
+  setEndDateInput(date);
+  setEndDate(moment(date).format("yyyy-MM-DD"));
+}
+const FilterDateHandler = () => {
+  setisOpenFilter(false)
+  getBiayaOperasionalByDate(setData, setSts, startDate, endDate)
+}
 
 const columns = [
   {
     name: 'No',
     selector: (_row, i) => i + 1,
-    width: "55px"  
+    width: "55px"
   },
   {
-    name: "Jenis Biaya",
-    selector: "payment_type",
-    width: "110px",
-    sortable: true
-  },
-  {
-    id: "tanggalTransaksi",
-    name: "Tanggal Transaksi",
-    selector: "transaction_date",
-    cell:(data) => moment(data.transaction_date).format("DD/MM/YYYY"),
-    width: "140px",
-    sortable: true
-  },
-  {
-    name: "Nama Bank",
-    selector: "bank",
-    width: "230px",
-    sortable: true
-  },
-  {
-    name: "Jenis Transaksi",
-    selector: "transaction_type",
-    width: "140px",
-    sortable: true
-  },
-  {
-    name: "Catatan",
-    selector: "note",
-    width: "305px",
-    sortable: true
-  },
-  {
-    name: "Jumlah",
-    selector: "total_fee",
-    cell:(data) => new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(data.total_fee),
+    name: <div>Jenis Biaya</div>,
+    selector:(data) => data.payment_type,
+    cell:(data) => <div>{data.payment_type}</div>,
     width: "130px",
     sortable: true
   },
   {
-    name: "Aksi",
-    cell:(data) => 
-    <div>
-        <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
-        <button className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
-    </div>,
-    ignoreRowClick: true,
-    allowOverflow: true,
-    button: true,
-    width: "265px",
+    id: "tanggalTransaksi",
+    name: <div>Tanggal Transaksi</div>,
+    selector:(data) => data.transaction_date,
+    cell:(data) => moment(data.transaction_date).format("DD/MM/YYYY"),
+    width: "110px",
+    sortable: true
   },
+  {
+    name: <div>Nama Bank</div>,
+    selector:(data) => data.bank,
+    cell:(data) => <div>{data.bank}</div>,
+    width: "160px",
+    sortable: true
+  },
+  {
+    name: <div>Jenis Transaksi</div>,
+    selector:(data) => data.transaction_type,
+    cell:(data) => <div>{data.transaction_type}</div>,
+    width: "100px",
+    sortable: true
+  },
+  {
+    name: <div>Catatan</div>,
+    selector:(data) => data.note,
+    cell:(data) => <div>{data.note}</div>,
+    width: "auto",
+    sortable: true
+  },
+  {
+    name: <div>Jumlah</div>,
+    selector:(data) => data.total_fee,
+    cell:(data) => <div>{new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR", minimumFractionDigits: 0}).format(data.total_fee)}</div>,
+    width: "170px",
+    sortable: true
+  },
+  // {
+  //   name: "Aksi",
+  //   cell:(data) => 
+  //   <div>
+  //       <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
+  //       <button className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
+  //   </div>,
+  //   ignoreRowClick: true,
+  //   allowOverflow: true,
+  //   button: true,
+  //   width: "265px",
+  // },
 ];
 
 const navigate = useNavigate();
@@ -115,18 +142,25 @@ const handleDownloadExcel = () => {
     </div>
 
     <div style={{ marginTop : "65px" }}>
-        <FilterComponent
-            onClick={navigateTambahBiayaOperasional}
+        <FilterComponentSaring
+            onClick={() => openModalFilter()}
             onFilter={e => setFilterText(e.target.value)}
             filterText={filterText}
           />
-
         <DataTables
             columns={columns}
             data={filteredItems}
             defaultSortFieldId="tanggalTransaksi"
         />
-
+        <ModalFilter
+            onChangeStart={handleChangeStart}
+            onChangeEnd={handleChangeEnd}
+            selectedStart={startDateInput}
+            selectedEnd={endDateInput}
+            isOpenFilter={isOpenFilter}
+            onClickFilterDate={FilterDateHandler}
+            closeModalFilter={closeModalFilter}
+        />
         <Modal
             isOpen={isOpenStatus}
             onRequestClose={closeModalStatus}

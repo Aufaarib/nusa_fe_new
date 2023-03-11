@@ -51,56 +51,55 @@ const onDelete = () => {
 
 const columns = [
   {
-    name: 'No',
+    name: <div>No</div>,
     selector: (_row, i) => i + 1,
     width: "55px"  
   },
   {
-    name: "Code",
+    name: <div>Code</div>,
     selector: (data) => data.code,
+    cell:(data) => <div>{data.code}</div>,
+    width: "auto",
+    sortable: true
   },
   { 
-    name: "Group",
+    name: <div>Group</div>,
     selector: (data) => data.group,
+    cell:(data) => <div>{data.group}</div>,
+    width: "auto",
+    sortable: true
   },
   { 
-    name: "Sub Group",
+    name: <div>Sub Group</div>,
     selector: (data) => data.sub_group,
+    cell:(data) => <div>{data.sub_group}</div>,
+    width: "auto",
+    sortable: true
   },
   { 
-    name: "Item",
+    name: <div>Item</div>,
     selector: (data) => data.item,
+    cell:(data) => <div>{data.item}</div>,
+    width: "auto",
+    sortable: true
   },
   { 
-    name: "Kredit/Debit",
+    name: <div>Payment Type</div>,
     selector: (data) => data.payment_type,
+    cell:(data) => <div>{data.payment_type}</div>,
+    width: "auto",
+    sortable: true
   },
   {
-    name: "Aksi",
+    name: <div>Aksi</div>,
     cell:(data) =>
-    <div>
-        <div>
-            <button style={{ fontSize : "14px" }} className="btn-action-hijau ml-3 w-auto px-2"><i className="fa fa-play"></i> Aktif</button>
-            <button style={{ fontSize : "14px" }} onClick={() => openModalHapus(data.id, data.code)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
-        </div>
-
-      {/* {data?.status === 'Aktif' && 
-        <div>
-          <button className="btn-action-hijau ml-3 w-auto px-2"><i className="fa fa-play"></i> Aktiv</button>
-          <button onClick={() => openModalHapus(data.id, data.code)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
-        </div>
-      } */}
-      {/* {data?.status === 'Tidak Aktif' && 
-        <div>
-          <button className="btn-action-pink ml-3 w-auto px-2"><i className="fa fa-pause"></i> {data.status}</button>
-          <button onClick={() => openModalHapus(data.id, data.description)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
-        </div>
-      } */}
-    </div>,
+      <div>
+          <button style={{ fontSize : "14px" }} className="btn-action-hijau"><i className="fa fa-play"></i> Aktif</button>
+          <button style={{ fontSize : "14px", marginLeft : "5px" }} onClick={() => openModalHapus(data.id, data.code)} className="btn-action-pink"><i className="fa fa-trash"></i> Hapus</button>
+      </div>,
     ignoreRowClick: true,
-    allowOverflow: true,
     button: true,
-    width: "183px" 
+    width: "360px" 
   },
 ];
 
@@ -127,11 +126,7 @@ return (
   <>
     <Header category="Keuangan / Cost Center" title="Cost Center" />
 
-    <div style={{ float : "right", marginBottom : "5px", padding : "0px 14px" }}>
-        <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={navigateTambahCostCenter}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
-    </div>
-
-    <div style={{ marginTop : "65px" }}>
+    <div style={{ marginTop : "50px" }}>
           <FilterComponent
               onDownloadExcel={handleDownloadExcel}
               onClick={navigateTambahCostCenter}

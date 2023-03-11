@@ -1,31 +1,32 @@
-import { FilterComponent, FilterDate } from "../../../components/Filter";
+import { FilterComponentSaring, FilterDate } from "../../../components/Filter";
 import DataTables from "../../../components/DataTables";
-import getBiayaPendidikan from "../../../api/BiayaPendidikan";
-import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
+import {getBiayaPendidikan, getBiayaPendidikanByDate} from "../../../api/BiayaPendidikan";
+import { CustomStylesStatus} from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
 import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
+import { ModalFilter } from "../../../components/ModalPopUp";
 import Modal from 'react-modal';
 import moment from "moment";
 
 export default function ListBiayaPendidikan() {
 const [data, setData] = useState([]);
 const [isOpenStatus, setisOpenStatus] = useState(false);
-const [isOpenDelete, setisOpenDelete] = useState(false);
-// const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
+const [isOpenFilter, setisOpenFilter] = useState(false);
 const [sts, setSts] = useState(undefined);
-const [deleteId, setDeleteId] = useState('');
-const [desc_nama, setDesc_nama] = useState('');
-// const [desc_status, setDesc_status] = useState('');
+const [startDateInput, setStartDateInput] = useState(new Date());
+const [endDateInput, setEndDateInput] = useState(new Date());
+const [startDate, setStartDate] = useState('');
+const [endDate, setEndDate] = useState('');
 const [filterText, setFilterText] = useState('');
+
+console.log(startDate)
+console.log(endDate)
 
 const filteredItems = 
     data.filter(
-      data => 
-      // new Date(moment(data.created_at).format('DD/MM/YYYY')) >= new Date(startDate) 
-      // && new Date(moment(data.created_at).format('DD/MM/YYYY')) <= new Date(endDate) &&
-      data.bank.toLowerCase().includes(filterText.toLowerCase())
+      data => data.bank.toLowerCase().includes(filterText.toLowerCase())
       )
 
 useEffect(() => {getBiayaPendidikan(setData, setSts)}, []);
@@ -34,75 +35,100 @@ const closeModalStatus = () => {
   setisOpenStatus(false);
   setSts('');
 }
+const openModalFilter = () => {
+  setisOpenFilter(true);
+}
+const closeModalFilter = () => {
+  setisOpenFilter(false);
+}
+const handleChangeStart = (date) => {
+  setStartDateInput(date);
+  setStartDate(moment(date).format("yyyy-MM-DD"));
+}
+const handleChangeEnd = (date) => {
+  setEndDateInput(date);
+  setEndDate(moment(date).format("yyyy-MM-DD"));
+}
+const FilterDateHandler = () => {
+  setisOpenFilter(false)
+  getBiayaPendidikanByDate(setData, setSts, startDate, endDate)
+}
 
 const columns = [
   {
     name: 'No',
     selector: (_row, i) => i + 1,
-    width: "55px"  
+    width: "55px"
   },
   {
-    name: "Jenis Biaya",
-    selector: "payment_type",
-    width: "110px",
+    name: <div>Jenis Biaya</div>,
+    selector:(data) => data.payment_type,
+    cell:(data) => <div>{data.payment_type}</div>,
+    width: "120px",
     sortable: true
   },
   {
     id: "tanggalTransaksi",
-    name: "Tanggal Transaksi",
-    selector: "transaction_date",
+    name: <div>Tanggal Transaksi</div>,
+    selector:(data) => data.transaction_date,
     cell:(data) => moment(data.transaction_date).format("DD/MM/YYYY"),
-    width: "170px",
+    width: "110px",
     sortable: true
   },
   {
-    name: "Nama Bank",
-    selector: "bank",
+    name: <div>Nama Bank</div>,
+    selector:(data) => data.bank,
+    cell:(data) => <div>{data.bank}</div>,
+    width: "160px",
+    sortable: true
+  },
+  {
+    name: <div>Jenis Transaksi</div>,
+    selector:(data) => data.transaction_type,
+    cell:(data) => <div>{data.transaction_type}</div>,
+    width: "100px",
+    sortable: true
+  },
+  {
+    name: <div>Catatan</div>,
+    selector:(data) => data.note,
+    cell:(data) => <div>{data.note}</div>,
+    width: "auto",
+    sortable: true
+  },
+  {
+    name: <div>Jumlah</div>,
+    selector:(data) => data.total_fee,
+    cell:(data) => <div>{new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR", minimumFractionDigits: 0}).format(data.total_fee)}</div>,
+    width: "135px",
+    sortable: true
+  },
+  {
+    name: <div>Nama Siswa</div>,
+    selector:(data) => data.nama_lengkap_anak,
+    cell:(data) => <div>{data.nama_lengkap_anak}</div>,
     width: "195px",
     sortable: true
   },
   {
-    name: "Jenis Transaksi",
-    selector: "transaction_type",
-    width: "140px",
+    name: <div>Kelas</div>,
+    selector:(data) => data.class,
+    cell:(data) => <div>IV</div>,
+    width: "75px",
     sortable: true
   },
-  {
-    name: "Catatan",
-    selector: "note",
-    width: "210px",
-    sortable: true
-  },
-  {
-    name: "Jumlah",
-    selector: "total_fee",
-    cell:(data) => new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(data.total_fee),
-    width: "130px",
-    sortable: true
-  },
-  {
-    name: "Nama Siswa",
-    selector: "nama_lengkap_anak",
-    width: "200px",
-    sortable: true
-  },
-  {
-    name: "Kelas",
-    selector: "class",
-    width: "90px"
-  },
-  {
-    name: "Aksi",
-    cell:(data) => 
-    <div>
-        <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
-        <button className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
-    </div>,
-    ignoreRowClick: true,
-    allowOverflow: true,
-    button: true,
-    width: "194px",
-  },
+  // {
+  //   name: "Aksi",
+  //   cell:(data) => 
+  //   <div>
+  //       <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
+  //       <button className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
+  //   </div>,
+  //   ignoreRowClick: true,
+  //   allowOverflow: true,
+  //   button: true,
+  //   width: "194px",
+  // },
 ];
 const navigate = useNavigate();
 
@@ -127,8 +153,8 @@ const handleDownloadExcel = () => {
     </div>
 
     <div style={{ marginTop : "65px" }}>
-        <FilterComponent
-            onClick={navigateTambahBiayaPendidikan}
+        <FilterComponentSaring
+            onClick={() => openModalFilter()}
             onFilter={e => setFilterText(e.target.value)}
             filterText={filterText}
         />
@@ -136,6 +162,15 @@ const handleDownloadExcel = () => {
             columns={columns}
             data={filteredItems}
             defaultSortFieldId="tanggalTransaksi"
+        />
+        <ModalFilter
+            onChangeStart={handleChangeStart}
+            onChangeEnd={handleChangeEnd}
+            selectedStart={startDateInput}
+            selectedEnd={endDateInput}
+            isOpenFilter={isOpenFilter}
+            onClickFilterDate={FilterDateHandler}
+            closeModalFilter={closeModalFilter}
         />
         <Modal
             isOpen={isOpenStatus}

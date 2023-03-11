@@ -118,7 +118,6 @@ input[type=file]::file-selector-button:hover {
   margin-left: "5px";
   margin-top: "1000px";
 }
-
 @media screen and (max-width:1030px) {
   .sidebar{
     z-index: 10000000;

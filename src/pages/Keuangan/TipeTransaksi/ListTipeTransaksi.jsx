@@ -56,21 +56,24 @@ const closeModalStatus = () => {
 
 const columns = [
   {
-    name: 'No',
+    name: <div>No</div>,
     selector: (_row, i) => i + 1,
-    width: "37px"  
+    width: "55px"  
   },
   {
-    name: "Deskripsi",
+    name: <div>Deskripsi</div>,
     selector: (data) => data.description,
-    width: "387px" 
+    cell:(data) => <div>{data.description}</div>,
+    width: "auto"
   },
   { 
-    name: "Status",
+    name: <div>Status</div>,
     selector: (data) => data.status,
+    cell:(data) => <div>{data.status}</div>,
+    width: "auto" 
   },
   {
-    name: "Aksi",
+    name: <div>Aksi</div>,
     cell:(data) =>
     <div>
       {data?.status === 'Aktif' && 
@@ -82,7 +85,6 @@ const columns = [
       <button onClick={() => openModalHapus(data.id, data.description)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
-    allowOverflow: true,
     button: true,
     width: "360px" 
   },
@@ -105,11 +107,7 @@ const handleDownloadExcel = () => {
   <>
     <Header category="Keuangan / Tipe Transaksi" title="Tipe Transaksi" />
 
-    <div style={{ float : "right", marginBottom : "5px", padding : "0px 14px" }}>
-        <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={navigateTambahTipeTransaksi}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
-    </div>
-
-    <div style={{ marginTop : "65px" }}>
+    <div style={{ marginTop : "50px" }}>
         <FilterComponent
           onDownloadExcel={handleDownloadExcel}
           onClick={navigateTambahTipeTransaksi}

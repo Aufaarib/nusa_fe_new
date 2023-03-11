@@ -83,13 +83,13 @@ const isoStringWithMs = date.toISOString();
 const postData = (e) => {
     e.preventDefault();
 
-    console.log(jumlah)
+    console.log(parseInt(jumlah.replace(/\./g, ''), 10))
 
     const postDataTransfer = {
         cost_center_id: costCenter,
         bank_id: bank,
         transaction_type_id: jenisTransaksi,
-        total_fee: parseInt(jumlah.replace(".", "")),
+        total_fee: parseInt(jumlah.replace(/\./g, ''), 10),
         note: catatan,
         transaction_date: isoStringWithMs,
     };
@@ -97,7 +97,7 @@ const postData = (e) => {
     const postDataCash = {
         cost_center_id: costCenter,
         transaction_type_id: jenisTransaksi,
-        total_fee: parseInt(jumlah.replace(".", "")),
+        total_fee: parseInt(jumlah.replace(/\./g, ''), 10),
         note: catatan,
         transaction_date: isoStringWithMs,
     };
@@ -209,12 +209,12 @@ const navigateCostCenter = () => {
     navigate('/admin/list-cost-center');
 };
 
-const addCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-const removeNonNumeric = num => num.toString().replace(/[^0-9]/g, "");
-
-const handleChange = event => {
-    setJumlah(addCommas(removeNonNumeric(event.target.value)));
-}
+const handleInputChange = (event) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ''); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add dots every 3 digits
+    setJumlah(inputVal);
+  };
 
 // options
 const costCenterOptions = costCenterData.map((c) => ({
@@ -283,7 +283,7 @@ return (
                 label="Jumlah"
                 type="text"
                 required={true}
-                onInput={handleChange}
+                onInput={handleInputChange}
                 value={jumlah}
             />
             <TextArea

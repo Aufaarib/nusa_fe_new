@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import TextInput from "./TextInput";
 import { DropdownDebitKredit } from './Dropdown';
+import { FilterDate } from './Filter';
 
 const CustomStylesStatus = {
     content: {
@@ -20,6 +21,35 @@ const CustomStylesStatus = {
       cursor: 'pointer'
     }
   };
+
+  export const ModalFilter = ({isOpenFilter, closeModalFilter, onChangeStart, onChangeEnd, selectedEnd, selectedStart, onClickFilterDate, setDebitKredit, post, status}) => {
+
+    return(
+        <Modal
+            isOpen={isOpenFilter}
+            onRequestClose={closeModalFilter}
+            style={CustomStylesStatus}
+            contentLabel="Modal Status"
+            ariaHideApp={false}
+            >
+            <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Filter</p>
+            <FilterDate
+                selectedStart={selectedStart}
+                onChangeStart={onChangeStart}
+                selectedEnd={selectedEnd}
+                onChangeEnd={onChangeEnd}
+            />
+            <div className='btn-form'>
+                <button type="button" style={{width : "auto", }} className="btn-hijau flex justify-center mb-5" onClick={onClickFilterDate}>
+                    Terapkan
+                </button>
+                <button type="button" className="w-20 btn-merah flex justify-center mb-5" onClick={closeModalFilter}>
+                    Batal
+                </button>
+            </div>
+        </Modal>
+    );
+}
 
 export const ModalCostCenter = ({isOpenCostCenter, closeModalCostCenter, setCode, setGroup, setSubGroup, setItem, defaultValueDK, setDebitKredit, post, status}) => {
 

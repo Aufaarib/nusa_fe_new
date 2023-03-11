@@ -38,16 +38,6 @@ const closeModalHapus = () => {
   setisOpenDelete(false);
 }
 
-// const openModalUbahStatus = (id, nama_pemilik) => {
-//   setisOpenUbahStatus(true);
-//   setDesc_nama(nama_pemilik);
-//   setDeleteId(id);
-// }
-
-// const closeModalUbahStatus = () => {
-//   setisOpenUbahStatus(false);
-// }
-
 const onDelete = () => {
   axios.delete(`https://nusa.nuncorp.id/golang/api/v1/bank/delete/${deleteId}`)
       .then(() => {
@@ -68,24 +58,30 @@ const closeModalStatus = () => {
 
 const columns = [
   {
-    name: 'No',
+    name: <div>No</div>,
     selector: (_row, i) => i + 1,
-    width: "37px"  
+    width: "55px"  
   },
   {
-    name: "Nama Bank",
+    name: <div>Nama Bank</div>,
     selector: (data) => data.nama_bank,
+    cell:(data) => <div>{data.nama_bank}</div>,
+    width: "auto"
   },
   {
-    name: "Nomor Rekening",
+    name: <div>Nomor Rekening</div>,
     selector: (data) => data.nomor_rekening,
+    cell:(data) => <div>{data.nomor_rekening}</div>,
+    width: "auto"
   },
   {
-    name: "Nama Pemilik",
+    name: <div>Nama Pemilik</div>,
     selector: (data) => data.nama_pemilik,
+    cell:(data) => <div>{data.nama_pemilik}</div>,
+    width: "auto"
   },
   {
-    name: "Aksi",
+    name: <div>Aksi</div>,
     cell:(data) => 
     <div>
         <button style={{ fontSize : "14px" }} onClick={() => navigateUbahListBank(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
@@ -93,7 +89,6 @@ const columns = [
         <button style={{ fontSize : "14px" }} onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
-    allowOverflow: true,
     button: true,
     width: "360px",
   },
@@ -120,11 +115,7 @@ const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
   <>
     <Header category="Keuangan / Bank" title="List Bank" />
 
-    <div style={{ float : "right", marginBottom : "5px", padding : "0px 14px" }}>
-        <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={navigateTambahListBank}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
-    </div>
-
-    <div style={{ marginTop : "65px" }}>
+    <div style={{ marginTop : "50px" }}>
       <FilterComponent
           onClick={navigateTambahListBank}
           onFilter={e => setFilterText(e.target.value)}
