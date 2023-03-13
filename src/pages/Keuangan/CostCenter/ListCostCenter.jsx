@@ -1,5 +1,4 @@
-import { FilterComponent, FilterDate } from "../../../components/Filter";
-import DataTables from "../../../components/DataTables";
+import { FilterComponent, DataTables } from "../../../components/DataTables";
 import getCostCenter from "../../../api/CostCenter";
 import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
@@ -26,9 +25,9 @@ const filteredItems =
 
 useEffect(() => { getCostCenter(setData, setSts); }, []);
 
-const openModalHapus = (id, code) => {
+const openModalHapus = (id, item) => {
   setisOpenDelete(true);
-  setDesc(code);
+  setDesc(item);
   setDeleteId(id);
 }
 
@@ -95,7 +94,7 @@ const columns = [
     cell:(data) =>
       <div>
           <button style={{ fontSize : "14px" }} className="btn-action-hijau"><i className="fa fa-play"></i> Aktif</button>
-          <button style={{ fontSize : "14px", marginLeft : "5px" }} onClick={() => openModalHapus(data.id, data.code)} className="btn-action-pink"><i className="fa fa-trash"></i> Hapus</button>
+          <button style={{ fontSize : "14px", marginLeft : "5px" }} onClick={() => openModalHapus(data.id, data.item)} className="btn-action-pink"><i className="fa fa-trash"></i> Hapus</button>
       </div>,
     ignoreRowClick: true,
     button: true,
@@ -115,30 +114,19 @@ const navigateTambahCostCenter = () => {
     navigate('/admin/tambah-cost-center');
 };
 
-const handleDownloadExcel = () => {
-  const ws = utils.json_to_sheet(data);
-  const wb = utils.book_new();
-  utils.book_append_sheet(wb, ws, "test");
-  writeFileXLSX(wb, `coba.xlsx`);        
-};
-
 return (
   <>
-    <Header category="Keuangan / Cost Center" title="Cost Center" />
+    <Header category="Admin Keuangan / Cost Center" title="Cost Center" />
 
     <div style={{ marginTop : "50px" }}>
-          <FilterComponent
-              onDownloadExcel={handleDownloadExcel}
-              onClick={navigateTambahCostCenter}
-              onFilter={e => setFilterText(e.target.value)}
-              filterText={filterText}
-          />
 
           <DataTables
               columns={columns}
               data={filteredItems}
+              onClick={navigateTambahCostCenter}
+              onFilter={e => setFilterText(e.target.value)}
+              filterText={filterText}
           />
-
           <Modal
               isOpen={isOpenStatus}
               onRequestClose={closeModalStatus}
@@ -147,15 +135,15 @@ return (
               ariaHideApp={false}
               >
               {sts?.type === 'success' && 
-              <div>
+              <div style={{ textAlign : "center" }}>
                 <h2>Berhasil</h2>
-                <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
+                <button className="btn-form" onClick={closeModalStatus}>Tutup</button>
               </div>
               }
               {sts?.type === 'error' && 
-              <div>
+              <div style={{ textAlign : "center" }}>
                 <h2>Gagal</h2>
-                <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
+                <button className="btn-form" onClick={closeModalStatus}>Tutup</button>
               </div>
               } 
           </Modal>
@@ -167,11 +155,12 @@ return (
               contentLabel="Modal Hapus"
               ariaHideApp={false}
             >
-              <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
-              <h4 className='mb-3 text-merah ml-3'>{desc}?</h4>
-              <button className="btn-action-hijau w-20 ml-4" onClick={onDelete}>Hapus</button>
-              <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
-
+              <div style={{ textAlign : "center" }}>  
+                  <h2 className='mb-2'>Hapus Transaksi</h2>
+                  <h4 className='mb-3 text-merah'>{desc}?</h4>
+                  <button className="btn-action-hijau w-20" onClick={onDelete}>Hapus</button>
+                  <button className="btn-action-pink w-20 ml-2" onClick={closeModalHapus}>Batal</button>
+              </div>
           </Modal>
     </div>
   </>

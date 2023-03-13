@@ -214,7 +214,7 @@ export const sidebarMenusAdmin = [
     ],
   },
   {
-    title: 'Keuangan',
+    title: 'Admin Keuangan',
     path: `admin/keuangan`,
     icon: <AiOutlineBarChart />,
     links: [

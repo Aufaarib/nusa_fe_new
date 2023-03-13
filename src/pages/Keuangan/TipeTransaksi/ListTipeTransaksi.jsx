@@ -1,5 +1,4 @@
-import { FilterComponent } from "../../../components/Filter";
-import DataTables from "../../../components/DataTables";
+import { FilterComponent, DataTables } from "../../../components/DataTables";
 import getTipeTransaksi from "../../../api/TipeTransaksi";
 import { CustomStylesModalHapus, CustomStylesStatus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
@@ -105,53 +104,51 @@ const handleDownloadExcel = () => {
 
  return (
   <>
-    <Header category="Keuangan / Tipe Transaksi" title="Tipe Transaksi" />
+    <Header category="Admin Keuangan / Tipe Transaksi" title="Tipe Transaksi" />
 
     <div style={{ marginTop : "50px" }}>
-        <FilterComponent
-          onDownloadExcel={handleDownloadExcel}
-          onClick={navigateTambahTipeTransaksi}
-          onFilter={e => setFilterText(e.target.value)}
-          filterText={filterText}
-        />
         <DataTables 
             columns={columns}
             data={filteredItems}
+            onClick={navigateTambahTipeTransaksi}
+            onFilter={e => setFilterText(e.target.value)}
+            filterText={filterText}
         />
-        <Modal
-            isOpen={isOpenStatus}
-            onRequestClose={closeModalStatus}
-            style={CustomStylesStatus}
-            contentLabel="Modal Status"
-            ariaHideApp={false}
+          <Modal
+              isOpen={isOpenStatus}
+              onRequestClose={closeModalStatus}
+              style={CustomStylesStatus}
+              contentLabel="Modal Status"
+              ariaHideApp={false}
+              >
+              {sts?.type === 'success' && 
+              <div style={{ textAlign : "center" }}>
+                <h2>Berhasil</h2>
+                <button className="btn-form" onClick={closeModalStatus}>Tutup</button>
+              </div>
+              }
+              {sts?.type === 'error' && 
+              <div style={{ textAlign : "center" }}>
+                <h2>Gagal</h2>
+                <button className="btn-form" onClick={closeModalStatus}>Tutup</button>
+              </div>
+              } 
+          </Modal>
+
+          <Modal
+              isOpen={isOpenDelete}
+              onRequestClose={closeModalHapus}
+              style={CustomStylesModalHapus}
+              contentLabel="Modal Hapus"
+              ariaHideApp={false}
             >
-            {sts?.type === 'success' && 
-            <div>
-              <h2>Berhasil</h2>
-              <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-            </div>
-            }
-            {sts?.type === 'error' && 
-            <div>
-              <h2>Gagal</h2>
-              <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-            </div>
-            } 
-        </Modal>
-
-        <Modal
-            isOpen={isOpenDelete}
-            onRequestClose={closeModalHapus}
-            style={CustomStylesModalHapus}
-            contentLabel="Modal Hapus"
-            ariaHideApp={false}
-          >
-            <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
-            <h4 className='mb-3 text-merah ml-3'>{desc}?</h4>
-            <button className="btn-action-hijau w-20 ml-4" onClick={onDelete}>Hapus</button>
-            <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
-
-        </Modal>
+              <div style={{ textAlign : "center" }}>  
+                  <h2 className='mb-2'>Hapus Transaksi</h2>
+                  <h4 className='mb-3 text-merah'>{desc}?</h4>
+                  <button className="btn-action-hijau w-20" onClick={onDelete}>Hapus</button>
+                  <button className="btn-action-pink w-20 ml-2" onClick={closeModalHapus}>Batal</button>
+              </div>
+          </Modal>
     </div>
    </>
  );

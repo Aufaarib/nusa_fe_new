@@ -1,12 +1,12 @@
-import {FilterComponent} from "../../../components/Filter";
+import { FilterComponent, DataTables } from "../../../components/DataTables";
 import {CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import getBank from "../../../api/Bank";
-import DataTables from "../../../components/DataTables";
 import { useState, useEffect } from "react";
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
+import ReactPaginate from 'react-paginate';
 
 export default function ListBank() {
 const [data, setData] = useState([]);   
@@ -113,68 +113,51 @@ const navigateUbahListBank = (id, nama_bank, nomor_rekening, nama_pemilik) => {
 
  return (
   <>
-    <Header category="Keuangan / Bank" title="List Bank" />
+    <Header category="Admin Keuangan / Bank" title="List Bank" />
 
     <div style={{ marginTop : "50px" }}>
-      <FilterComponent
-          onClick={navigateTambahListBank}
-          onFilter={e => setFilterText(e.target.value)}
-          filterText={filterText}
-        />
-
       <DataTables
           columns={columns}
           data={filteredItems}
+          onClick={navigateTambahListBank}
+          onFilter={e => setFilterText(e.target.value)}
+          filterText={filterText}
       />
-
       <Modal
-          isOpen={isOpenStatus}
-          onRequestClose={closeModalStatus}
-          style={CustomStylesStatus}
-          contentLabel="Modal Status"
-          ariaHideApp={false}
-          >
-          {sts?.type === 'success' && 
-          <div>
-            <h2>Berhasil</h2>
-            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-          </div>
-          }
-          {sts?.type === 'error' && 
-          <div>
-            <h2>Gagal</h2>
-            <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-          </div>
-          } 
-      </Modal>
+              isOpen={isOpenStatus}
+              onRequestClose={closeModalStatus}
+              style={CustomStylesStatus}
+              contentLabel="Modal Status"
+              ariaHideApp={false}
+              >
+              {sts?.type === 'success' && 
+              <div style={{ textAlign : "center" }}>
+                <h2>Berhasil</h2>
+                <button className="btn-form" onClick={closeModalStatus}>Tutup</button>
+              </div>
+              }
+              {sts?.type === 'error' && 
+              <div style={{ textAlign : "center" }}>
+                <h2>Gagal</h2>
+                <button className="btn-form" onClick={closeModalStatus}>Tutup</button>
+              </div>
+              } 
+          </Modal>
 
-      <Modal
-          isOpen={isOpenDelete}
-          onRequestClose={closeModalHapus}
-          style={CustomStylesModalHapus}
-          contentLabel="Modal Hapus"
-          ariaHideApp={false}
-        >
-          <h2 className='mb-2 ml-3'>Hapus Transaksi</h2>
-          <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
-          <button className="btn-action-ungu w-20 ml-4" onClick={onDelete}>Hapus</button>
-          <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
-      </Modal>
-
-      {/* <Modal
-          isOpen={isOpenUbahStatus}
-          onRequestClose={closeModalUbahStatus}
-          style={customStylesModalHapus}
-          contentLabel="Modal Ubah Status"
-        >
-          <h2 className='mb-2 ml-3'>Ubah Status </h2>
-          <h4 className='mb-3 text-merah ml-3'>{desc_nama}?</h4>
-          <h2 className='mb-2 ml-3'>Menjadi</h2>
-          <h4 className='mb-3 text-merah ml-3'>{desc_status}?</h4>
-          <button className="btn-action-ungu w-20 ml-4" onClick={onUbahStatus}>Ubah</button>
-          <button className="btn-action-pink w-20 ml-5" onClick={closeModalHapus}>Batal</button>
-
-      </Modal> */}
+          <Modal
+              isOpen={isOpenDelete}
+              onRequestClose={closeModalHapus}
+              style={CustomStylesModalHapus}
+              contentLabel="Modal Hapus"
+              ariaHideApp={false}
+            >
+              <div style={{ textAlign : "center" }}>  
+                  <h2 className='mb-2'>Hapus Transaksi</h2>
+                  <h4 className='mb-3 text-merah'>{desc_nama}?</h4>
+                  <button className="btn-action-hijau w-20" onClick={onDelete}>Hapus</button>
+                  <button className="btn-action-pink w-20 ml-2" onClick={closeModalHapus}>Batal</button>
+              </div>
+          </Modal>
     </div>
   </>
  );

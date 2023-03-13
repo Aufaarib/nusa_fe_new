@@ -1,5 +1,4 @@
-import { FilterComponentSaring, FilterDate } from "../../../components/Filter";
-import DataTables from "../../../components/DataTables";
+import { FilterComponentSaring, DataTablesSaring } from "../../../components/DataTables";
 import {getBiayaPendidikan, getBiayaPendidikanByDate} from "../../../api/BiayaPendidikan";
 import { CustomStylesStatus} from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
@@ -31,10 +30,10 @@ const filteredItems =
 
 useEffect(() => {getBiayaPendidikan(setData, setSts)}, []);
 
-const closeModalStatus = () => {
-  setisOpenStatus(false);
-  setSts('');
-}
+// const closeModalStatus = () => {
+//   setisOpenStatus(false);
+//   setSts('');
+// }
 const openModalFilter = () => {
   setisOpenFilter(true);
 }
@@ -145,23 +144,23 @@ const handleDownloadExcel = () => {
 
  return (
   <>
-    <Header category="Keuangan / Biaya Pendidikan" title="List Biaya Pendidikan" />
+    <Header category="Admin Keuangan / Biaya Pendidikan" title="List Biaya Pendidikan" />
 
-    <div style={{ display : "flex", float : "right", marginBottom : "5px", gap : "10px", padding : "0px 14px" }}>
+    <div style={{ display : "block", overflow : "auto"}}>
+      <div style={{ display : "inline-block", float : "right", padding : "5px 14px" }}>
         <button style={{ fontSize : "12px", width : "175px" }} className="btn-mrh" onClick={handleDownloadExcel}><i className="fa fa-file-text-o mr-2 mt-1"></i>Download Format Excel</button>
-        <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={navigateTambahBiayaPendidikan}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
+        <button style={{ fontSize : "12px", marginLeft : "10px" }} className="btn-mrh" onClick={navigateTambahBiayaPendidikan}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
+      </div>
     </div>
 
-    <div style={{ marginTop : "65px" }}>
-        <FilterComponentSaring
-            onClick={() => openModalFilter()}
-            onFilter={e => setFilterText(e.target.value)}
-            filterText={filterText}
-        />
-        <DataTables
+    <div style={{ marginTop : "15px" }}>
+        <DataTablesSaring
             columns={columns}
             data={filteredItems}
             defaultSortFieldId="tanggalTransaksi"
+            onClick={() => openModalFilter()}
+            onFilter={e => setFilterText(e.target.value)}
+            filterText={filterText}
         />
         <ModalFilter
             onChangeStart={handleChangeStart}
@@ -172,7 +171,8 @@ const handleDownloadExcel = () => {
             onClickFilterDate={FilterDateHandler}
             closeModalFilter={closeModalFilter}
         />
-        <Modal
+
+        {/* <Modal
             isOpen={isOpenStatus}
             onRequestClose={closeModalStatus}
             style={CustomStylesStatus}
@@ -191,7 +191,7 @@ const handleDownloadExcel = () => {
               <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
             </div>
             } 
-        </Modal>
+        </Modal> */}
     </div>
    </>
  );
