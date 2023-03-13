@@ -1,8 +1,7 @@
-import { FilterComponent, DataTables } from "../../../components/DataTables";
+import { DataTables } from "../../../components/DataTables";
 import getCostCenter from "../../../api/CostCenter";
 import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
-import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
@@ -38,10 +37,10 @@ const closeModalHapus = () => {
 const onDelete = () => {
   axios.delete(`https://nusa.nuncorp.id/golang/api/v1/cost-center/delete/${deleteId}`)
       .then(() => {
-        setSts({ type: 'success' });
-        closeModalHapus();
-        setisOpenStatus(true);
-        getCostCenter(setData, setSts);
+          setSts({ type: 'success' });
+          closeModalHapus();
+          setisOpenStatus(true);
+          getCostCenter(setData, setSts);
         })
       .catch((error) => {
           setSts({ type: 'error', error });
@@ -110,7 +109,6 @@ const closeModalStatus = () => {
 const navigate = useNavigate();
 
 const navigateTambahCostCenter = () => {
-  // 👇️ navigate to /contacts
     navigate('/admin/tambah-cost-center');
 };
 

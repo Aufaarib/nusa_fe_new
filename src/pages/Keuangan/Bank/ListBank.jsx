@@ -1,4 +1,4 @@
-import { FilterComponent, DataTables } from "../../../components/DataTables";
+import { DataTables } from "../../../components/DataTables";
 import {CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import getBank from "../../../api/Bank";
 import { useState, useEffect } from "react";
@@ -6,17 +6,14 @@ import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from "axios";
-import ReactPaginate from 'react-paginate';
 
 export default function ListBank() {
 const [data, setData] = useState([]);   
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
-// const [isOpenUbahStatus, setisOpenUbahStatus] = useState(false);
 const [sts, setSts] = useState(undefined);
 const [deleteId, setDeleteId] = useState('');
 const [desc_nama, setDesc_nama] = useState('');
-// const [desc_status, setDesc_status] = useState('');
 const [filterText, setFilterText] = useState('');
 
 const filteredItems = 

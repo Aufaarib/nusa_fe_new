@@ -1,17 +1,14 @@
-import { FilterComponentSaring, DataTablesSaring } from "../../../components/DataTables";
+import { DataTablesSaring } from "../../../components/DataTables";
 import {getBiayaPendidikan, getBiayaPendidikanByDate} from "../../../api/BiayaPendidikan";
-import { CustomStylesStatus} from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
 import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import { ModalFilter } from "../../../components/ModalPopUp";
-import Modal from 'react-modal';
 import moment from "moment";
 
 export default function ListBiayaPendidikan() {
 const [data, setData] = useState([]);
-const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenFilter, setisOpenFilter] = useState(false);
 const [sts, setSts] = useState(undefined);
 const [startDateInput, setStartDateInput] = useState(new Date());
@@ -20,9 +17,6 @@ const [startDate, setStartDate] = useState('');
 const [endDate, setEndDate] = useState('');
 const [filterText, setFilterText] = useState('');
 
-console.log(startDate)
-console.log(endDate)
-
 const filteredItems = 
     data.filter(
       data => data.bank.toLowerCase().includes(filterText.toLowerCase())
@@ -30,10 +24,6 @@ const filteredItems =
 
 useEffect(() => {getBiayaPendidikan(setData, setSts)}, []);
 
-// const closeModalStatus = () => {
-//   setisOpenStatus(false);
-//   setSts('');
-// }
 const openModalFilter = () => {
   setisOpenFilter(true);
 }
@@ -116,18 +106,6 @@ const columns = [
     width: "75px",
     sortable: true
   },
-  // {
-  //   name: "Aksi",
-  //   cell:(data) => 
-  //   <div>
-  //       <button className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
-  //       <button className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
-  //   </div>,
-  //   ignoreRowClick: true,
-  //   allowOverflow: true,
-  //   button: true,
-  //   width: "194px",
-  // },
 ];
 const navigate = useNavigate();
 
@@ -171,27 +149,6 @@ const handleDownloadExcel = () => {
             onClickFilterDate={FilterDateHandler}
             closeModalFilter={closeModalFilter}
         />
-
-        {/* <Modal
-            isOpen={isOpenStatus}
-            onRequestClose={closeModalStatus}
-            style={CustomStylesStatus}
-            contentLabel="Modal Status"
-            ariaHideApp={false}
-            >
-            {sts?.type === 'success' && 
-            <div>
-              <h2>Berhasil</h2>
-              <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-            </div>
-            }
-            {sts?.type === 'error' && 
-            <div>
-              <h2>Gagal</h2>
-              <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-            </div>
-            } 
-        </Modal> */}
     </div>
    </>
  );

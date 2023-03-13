@@ -42,7 +42,7 @@ const fetchCostCenter = async () => {
       const data = fetchData.data.data.filter((e) => e.group === "Operasional");
       setCostCenterData(data);
     } catch (error) {
-      console.log(error);
+    //   console.log(error);
     }
   };
 
@@ -53,7 +53,7 @@ const fetchCostCenter = async () => {
       );
       setBankData(fetchData.data.data);
     } catch (error) {
-      console.log(error);
+    //   console.log(error);
     }
   };
 
@@ -66,7 +66,7 @@ const fetchCostCenter = async () => {
       setTransactionTypeData(data);
       setTransactionTypeFilter(data);
     } catch (error) {
-      console.log(error);
+    //   console.log(error);
     }
   };
 
@@ -82,8 +82,6 @@ const isoStringWithMs = date.toISOString();
 
 const postData = (e) => {
     e.preventDefault();
-
-    console.log(parseInt(jumlah.replace(/\./g, ''), 10))
 
     const postDataTransfer = {
         cost_center_id: costCenter,
@@ -107,14 +105,13 @@ const postData = (e) => {
         .post('https://nusa.nuncorp.id/golang/api/v1/transaction/create',
             postDataTransfer
         )
-        .then((response) => {
+        .then(() => {
             setStatus({ type: 'success' });
             setisOpenStatus(true);
-            console.log(response.data);
         })
         .catch((error) => {
             setStatus({ type: 'error', error });
-            console.log(error);
+            // console.log(error);
         });
     }
 
@@ -123,14 +120,13 @@ const postData = (e) => {
         .post('https://nusa.nuncorp.id/golang/api/v1/transaction/create',
             postDataCash
         )
-        .then((response) => {
+        .then(() => {
             setStatus({ type: 'success' });
             setisOpenStatus(true);
-            console.log(response.data);
         })
         .catch((error) => {
             setStatus({ type: 'error', error });
-            console.log(error);
+            // console.log(error);
         });
     }
 

@@ -13,8 +13,6 @@ export default function TambahTipeTransaksi() {
     const [isOpenEmpty, setisOpenEmpty] = useState(false);
     const [sts, setSts] = useState(undefined);
 
-
-
     const postData = (e) => {
         e.preventDefault();
 
@@ -47,7 +45,6 @@ const closeModalStatus = () => {
     const navigate = useNavigate();
 
     const navigateListTipeTransaksi = () => {
-      // 👇️ navigate to /contacts
       navigate('/admin/list-tipe-transaksi');
     };
 

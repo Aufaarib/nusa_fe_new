@@ -371,9 +371,6 @@ const Input = styled.input.attrs(props => ({
   
   export function FilterComponentSaring ({ filterText, onFilter, onClick, data = [], onChangeRows, valueRows})
   {
-
-    console.log(data)
-
     return(
       <>
       <div style={{ display : "block", backgroundColor : "#D5D5D540", padding : "5px 14px", marginBottom : "10px", borderRadius : "10px", overflow : "auto"}}>

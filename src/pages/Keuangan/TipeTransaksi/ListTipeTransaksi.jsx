@@ -1,8 +1,7 @@
-import { FilterComponent, DataTables } from "../../../components/DataTables";
+import { DataTables } from "../../../components/DataTables";
 import getTipeTransaksi from "../../../api/TipeTransaksi";
 import { CustomStylesModalHapus, CustomStylesStatus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
-import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
@@ -93,13 +92,6 @@ const navigate = useNavigate();
 
 const navigateTambahTipeTransaksi = () => {
     navigate('/admin/tambah-tipe-transaksi');
-};
-
-const handleDownloadExcel = () => {
-  const ws = utils.json_to_sheet(data);
-  const wb = utils.book_new();
-  utils.book_append_sheet(wb, ws, "test");
-  writeFileXLSX(wb, `coba.xlsx`);        
 };
 
  return (
