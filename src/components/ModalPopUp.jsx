@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 import TextInput from "./TextInput";
 import { DropdownDebitKredit } from './Dropdown';
-import { FilterDate } from './Filter';
+import { FilterDate } from './DataTables';
 
 const CustomStylesStatus = {
     content: {
@@ -114,33 +114,33 @@ export const ModalCostCenter = ({isOpenCostCenter, closeModalCostCenter, setCode
     );
 }
 
-export const ModalStatusCostCenter = ({closeModalStatus, isOpenStatus, status, navigate}) => {
+// export const ModalStatusCostCenter = ({closeModalStatus, isOpenStatus, status, navigate}) => {
 
-    return(
-        <Modal
-            isOpen={isOpenStatus}
-            onRequestClose={closeModalStatus}
-            style={CustomStylesStatus}
-            contentLabel="Modal Status"
-            ariaHideApp={false}
-            >
-            {status?.type === 'success' && 
-            <div style={{ textAlign : "center" }}>
-                <h2>Berhasil</h2>
-                <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={closeModalStatus}>Kembali Ke Tambah Biaya</button>
-                <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5 ml-5" onClick={navigate}>Lihat Halaman List</button>
-            </div>
-            }
-            {status?.type === 'error' && 
-            <div>
-                <h2>Gagal</h2>
-                <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
-            </div>
-            } 
-        </Modal>
+//     return(
+//         <Modal
+//             isOpen={isOpenStatus}
+//             onRequestClose={closeModalStatus}
+//             style={CustomStylesStatus}
+//             contentLabel="Modal Status"
+//             ariaHideApp={false}
+//             >
+//             {status?.type === 'success' && 
+//             <div style={{ textAlign : "center" }}>
+//                 <h2>Berhasil</h2>
+//                 <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={closeModalStatus}>Kembali Ke Tambah Biaya</button>
+//                 <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5 ml-5" onClick={navigate}>Lihat Halaman List</button>
+//             </div>
+//             }
+//             {status?.type === 'error' && 
+//             <div>
+//                 <h2>Gagal</h2>
+//                 <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
+//             </div>
+//             } 
+//         </Modal>
         
-    );
-}
+//     );
+// }
 
 
 export const ModalStatus = ({closeModalStatus, isOpenStatus, status, navigate}) => {
