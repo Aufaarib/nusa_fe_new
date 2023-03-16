@@ -17,11 +17,16 @@ const [startDate, setStartDate] = useState('');
 const [endDate, setEndDate] = useState('');
 const [filterText, setFilterText] = useState('');
 
-const filteredItems = 
+let filteredItems = data
+
+if (data !== null) {
+  filteredItems = 
     data.filter(
-      data => data.bank.toLowerCase().includes(filterText)||
-      data.note.toLowerCase().includes(filterText.toLowerCase())
-      ) 
+      data => data.bank.toLowerCase().includes(filterText.toLowerCase())
+      )
+}if (data === null) {
+  filteredItems = data
+}
 
 useEffect(() => {getBiayaOperasional(setData, setSts)}, []);
 

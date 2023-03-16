@@ -1,9 +1,9 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
+import { updateBank } from '../../../api/Bank';
 import { ModalEmpty, ModalStatus } from '../../../components/ModalPopUp';
 import { useLocation, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
-import axios from '../../../api/axios';
 
 export default function UbahListBank() {
 
@@ -17,23 +17,14 @@ const location = useLocation();
 
 const postData = (e) => {
     e.preventDefault();
+    const id = location.state.id
 
     if (nama_bank.trim().length === 0 || nomor_rekening.trim().length === 0 || nama_pemilik.trim().length === 0) {
         setisOpenEmpty(true);
     }
     else {
-        axios.post(`https://nusa.nuncorp.id/golang/api/v1/bank/update/${location.state.id}`, {
-            nama_bank,
-            nomor_rekening,
-            nama_pemilik
-        })
-        .then(() => {
-            setStatus({ type: 'success' });
-            setisOpenStatus(true);
-        })
-        .catch((error) => {
-            setStatus({ type: 'error', error });
-        });
+        updateBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, id)
+        setisOpenStatus(true);
     }
 }
 

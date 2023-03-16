@@ -3,7 +3,7 @@ import axios from "./axios";
 export function getBiayaPendidikan(setData, setSts) {
 
     axios
-        .get(`https://nusa.nuncorp.id/golang/api/v1/payment-report/educational-payment/fetch`)
+        .get(process.env.REACT_APP_NUSA + `/payment-report/educational-payment/fetch`)
         .then((res) => {
         setData(res.data.data);
         setSts({ type: 'success' });
@@ -18,7 +18,7 @@ export function getBiayaPendidikan(setData, setSts) {
 export function getBiayaPendidikanByDate(setData, setSts, startDate, endDate) {
 
     axios
-        .get(`https://nusa.nuncorp.id/golang/api/v1/payment-report/educational-payment/fetch?startDate=${startDate}&endDate=${endDate}`)
+        .get(process.env.REACT_APP_NUSA + `/payment-report/educational-payment/fetch?startDate=${startDate}&endDate=${endDate}`)
         .then((res) => {
         setData(res.data.data);
         setSts({ type: 'success' });

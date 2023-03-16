@@ -1,8 +1,11 @@
 import React from 'react'
+import { getCostCenterOperasional, postCostCenter } from '../../../api/CostCenter';
+import { getBank } from '../../../api/Bank';
+import { getTipeTransaksi } from '../../../api/TipeTransaksi';
 import {TextInput, TextArea} from '../../../components/TextInput'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from '../../../api/axios';
+import { postTransfer, postCash } from '../../../api/Transaction';
 import { ModalEmpty, ModalStatus, ModalCostCenter, ModalStatusCostCenter } from '../../../components/ModalPopUp';
 import {DropdownCostCenter, DropdownJenisTransaksi, DropdownBank} from '../../../components/Dropdown';
 import { FileUpload } from '../../../components/FileUpload';
@@ -32,43 +35,21 @@ const [isOpenStatusCostCenter, setisOpenStatusCostCenter] = useState(false);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
+const created_by = localStorage.getItem("NAMA")
+
 
 // fetch function
 const fetchCostCenter = async () => {
-    try {
-      const fetchData = await axios.get(
-        "https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch"
-      );
-      const data = fetchData.data.data.filter((e) => e.group === "Operasional");
-      setCostCenterData(data);
-    } catch (error) {
-    //   console.log(error);
-    }
+    getCostCenterOperasional(setCostCenterData, setStatus)
   };
 
-  const fetchBank = async () => {
-    try {
-      const fetchData = await axios.get(
-        "https://nusa.nuncorp.id/golang/api/v1/bank/fetch"
-      );
-      setBankData(fetchData.data.data);
-    } catch (error) {
-    //   console.log(error);
-    }
-  };
+const fetchBank = async () => {
+    getBank(setBankData, setStatus)
+};
 
-  const fetchTransactionType = async () => {
-    try {
-      const fetchData = await axios.get(
-        "https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch"
-      );
-      const data = fetchData.data.data.filter((e) => e.status === "Aktif");
-      setTransactionTypeData(data);
-      setTransactionTypeFilter(data);
-    } catch (error) {
-    //   console.log(error);
-    }
-  };
+const fetchTransactionType = async () => {
+    getTipeTransaksi(setTransactionTypeData, setStatus)
+};
 
 useEffect(() => {
     fetchCostCenter();
@@ -90,59 +71,32 @@ const postData = (e) => {
         total_fee: parseInt(jumlah.replace(/\./g, ''), 10),
         note: catatan,
         transaction_date: isoStringWithMs,
+        created_by : created_by
     };
-
+    
     const postDataCash = {
         cost_center_id: costCenter,
         transaction_type_id: jenisTransaksi,
         total_fee: parseInt(jumlah.replace(/\./g, ''), 10),
         note: catatan,
         transaction_date: isoStringWithMs,
+        created_by : created_by
     };
-
-    const postTransfer = () => {
-        axios
-        .post('https://nusa.nuncorp.id/golang/api/v1/transaction/create',
-            postDataTransfer
-        )
-        .then(() => {
-            setStatus({ type: 'success' });
-            setisOpenStatus(true);
-        })
-        .catch((error) => {
-            setStatus({ type: 'error', error });
-            // console.log(error);
-        });
-    }
-
-    const postCash = () => {
-        axios
-        .post('https://nusa.nuncorp.id/golang/api/v1/transaction/create',
-            postDataCash
-        )
-        .then(() => {
-            setStatus({ type: 'success' });
-            setisOpenStatus(true);
-        })
-        .catch((error) => {
-            setStatus({ type: 'error', error });
-            // console.log(error);
-        });
-    }
-
     if (transactionTypeFilter === 'Transfer') {
         if (costCenter.length === 0 || bank.length === 0|| jenisTransaksi.length === 0 || jumlah.length === 0 || file_name.length === 0) {
             setisOpenEmpty(true);
         }
         else {
-            postTransfer()
+            postTransfer(postDataTransfer, setStatus);
+            setisOpenStatus(true);
         }
     }else if (transactionTypeFilter === 'Cash') {
         if (costCenter.length === 0 || jenisTransaksi.length === 0|| jumlah.length === 0 || file_name.length === 0) {
             setisOpenEmpty(true);
         }
         else {
-            postCash()
+            postCash(postDataCash, setStatus)
+            setisOpenStatus(true);
         }
     }else {
         setisOpenEmpty(true);
@@ -160,20 +114,8 @@ const postDataCostCenter = (e) => {
         setisOpenEmpty(true);
     }
     else {
-        axios.post('https://nusa.nuncorp.id/golang/api/v1/cost-center/create',{
-        code,
-        group,
-        sub_group,
-        item,
-        payment_type
-    })
-    .then(() => {
-        setStatus({ type: 'success' });
-        setisOpenStatusCostCenter(true);
-    })
-    .catch((error) => {
-        setStatus({ type: 'error', error });
-    });
+        postCostCenter(setStatus, code, group, sub_group, item, payment_type, created_by)
+        setisOpenStatus(true)
     }
 }
 

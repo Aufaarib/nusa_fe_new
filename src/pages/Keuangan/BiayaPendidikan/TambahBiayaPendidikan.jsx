@@ -1,7 +1,12 @@
 import React from 'react'
+import { getCostCenterPendidikan, postCostCenter } from '../../../api/CostCenter';
+import { getBank } from '../../../api/Bank';
+import { getTipeTransaksi } from '../../../api/TipeTransaksi';
 import {TextInput, TextArea} from '../../../components/TextInput'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { getPendaftaran } from '../../../api/Pendaftaran';
+import { postTransfer, postCash } from '../../../api/Transaction';
 import axios from '../../../api/axios';
 import { ModalEmpty, ModalStatus, ModalCostCenter, ModalStatusCostCenter } from '../../../components/ModalPopUp';
 import {DropdownCostCenter, DropdownJenisTransaksi, DropdownPendaftaran, DropdownBank} from '../../../components/Dropdown';
@@ -34,68 +39,35 @@ const [isOpenStatusCostCenter, setisOpenStatusCostCenter] = useState(false);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
+const created_by = localStorage.getItem("NAMA")
+
 
 const fetchCostCenter = async () => {
-    try {
-      const fetchData = await axios.get(
-        "https://nusa.nuncorp.id/golang/api/v1/cost-center/fetch"
-      );
-      const data = fetchData.data.data.filter(
-        (e) => e.group === "Biaya Pendidikan"
-      );
-      setCostCenterData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    getCostCenterPendidikan(setCostCenterData, setStatus)
+};
 
-  const fetchBank = async () => {
-    try {
-      const fetchData = await axios.get(
-        "https://nusa.nuncorp.id/golang/api/v1/bank/fetch"
-      );
-      setBankData(fetchData.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const fetchBank = async () => {
+    getBank(setBankData, setStatus)
+};
 
-  const fetchTransactionType = async () => {
-    try {
-      const fetchData = await axios.get(
-        "https://nusa.nuncorp.id/golang/api/v1/transaction-type/fetch"
-      );
-      const data = fetchData.data.data.filter((e) => e.status === "Aktif");
-      setTransactionTypeData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const fetchTransactionType = async () => {
+    getTipeTransaksi(setTransactionTypeData, setStatus)
+};
 
-  const fetchPendaftaran = async () => {
-    try {
-      const fetchData = await axios.get(
-        "https://nusa.nuncorp.id/golang/api/v1/pendaftaran/fetch"
-      );
-      const data = fetchData.data.data.filter(
-        (e) => e.nama_lengkap_anak !== ""
-      );
-      setPendaftaranData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const fetchPendaftaran = () => {
+    getPendaftaran(setPendaftaran, setStatus)
+};
 
-  useEffect(() => {
-    fetchCostCenter();
-    fetchBank();
-    fetchTransactionType();
-    fetchPendaftaran();
-  }, []);
+useEffect(() => {
+getCostCenterPendidikan(setCostCenterData, setStatus)
+getBank(setBankData, setStatus)
+getTipeTransaksi(setTransactionTypeData, setStatus)
+getPendaftaran(setPendaftaranData, setStatus)
+}, []);
 
-  const now = Date.now();
-  const date = new Date(now);
-  const isoStringWithMs = date.toISOString();
+const now = Date.now();
+const date = new Date(now);
+const isoStringWithMs = date.toISOString();
 
 const postData = (e) => {
     e.preventDefault();
@@ -107,6 +79,7 @@ const postData = (e) => {
         pendaftaran_id: pendaftaran,
         note: catatan,
         transaction_date: isoStringWithMs,
+        created_by : created_by
     };
 
     const postDataTransfer = {
@@ -117,51 +90,23 @@ const postData = (e) => {
         pendaftaran_id: pendaftaran,
         note: catatan,
         transaction_date: isoStringWithMs,
+        created_by : created_by
     };
-
-    const postTransfer = () => {
-        axios
-        .post('https://nusa.nuncorp.id/golang/api/v1/transaction/create',
-            postDataTransfer
-        )
-        .then(() => {
-            setStatus({ type: 'success' });
-            setisOpenStatus(true);
-        })
-        .catch((error) => {
-            setStatus({ type: 'error', error });
-            console.log(error);
-        });
-    }
-
-    const postCash = () => {
-        axios
-        .post('https://nusa.nuncorp.id/golang/api/v1/transaction/create',
-            postDataCash
-        )
-        .then(() => {
-            setStatus({ type: 'success' });
-            setisOpenStatus(true);
-        })
-        .catch((error) => {
-            setStatus({ type: 'error', error });
-            // console.log(error);
-        });
-    }
-
     if (transactionTypeFilter === 'Transfer') {
         if (costCenter.length === 0 || bank.length === 0|| jenisTransaksi.length === 0 || jumlah.length === 0 || file_name.length === 0 || pendaftaran.length === 0) {
             setisOpenEmpty(true);
         }
         else {
-            postTransfer()
+            postTransfer(postDataTransfer, setStatus)
+            setisOpenStatus(true)
         }
     }else if (transactionTypeFilter === 'Cash') {
         if (costCenter.length === 0 || jenisTransaksi.length === 0|| jumlah.length === 0 || file_name.length === 0 || pendaftaran.length === 0) {
             setisOpenEmpty(true);
         }
         else {
-            postCash()
+            postCash(postDataCash, setStatus)
+            setisOpenStatus(true)
         }
     }else {
         setisOpenEmpty(true);
@@ -179,20 +124,8 @@ const postDataCostCenter = (e) => {
         setisOpenEmpty(true);
     }
     else {
-        axios.post('https://nusa.nuncorp.id/golang/api/v1/cost-center/create',{
-        code,
-        group,
-        sub_group,
-        item,
-        payment_type
-    })
-    .then(() => {
-        setStatus({ type: 'success' });
-        setisOpenStatusCostCenter(true);
-    })
-    .catch((error) => {
-        setStatus({ type: 'error', error });
-    });
+        postCostCenter(setStatus, code, group, sub_group, item, payment_type, created_by)
+        setisOpenStatus(true)
     }
 }
 

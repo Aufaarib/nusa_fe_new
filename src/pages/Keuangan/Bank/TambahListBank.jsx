@@ -1,9 +1,9 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
+import { postBank } from '../../../api/Bank';
 import { ModalEmpty, ModalStatus } from '../../../components/ModalPopUp';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import axios from '../../../api/axios';
 
 export default function TambahListBank() {
 
@@ -13,7 +13,7 @@ const [nama_pemilik, setNamaPemilik] = useState('');
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
-
+const created_by = localStorage.getItem("NAMA")
 
 const postData = (e) => {
     e.preventDefault();
@@ -22,19 +22,9 @@ const postData = (e) => {
         setisOpenEmpty(true);
     }
     else {
-        axios.post('https://nusa.nuncorp.id/golang/api/v1/bank/create',{
-        nama_bank,
-        nomor_rekening,
-        nama_pemilik
-    })
-    .then(() => {
-        setStatus({ type: 'success' });
+        postBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, created_by);
         setisOpenStatus(true);
-    })
-    .catch((error) => {
-        setStatus({ type: 'error', error });
-    });
-}
+    }
 }
 
 const closeModalEmpty = () => {

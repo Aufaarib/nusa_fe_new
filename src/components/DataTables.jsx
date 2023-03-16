@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 //Table Components
-export function DataTables ({columns, data , defaultSortFieldId, filterText, onFilter, onClick}){
+export function DataTables ({columns, data = [] , defaultSortFieldId, filterText, onFilter, onClick}){
 
     const CustomStylesTable = {
         table: {
@@ -129,8 +129,14 @@ export function DataTables ({columns, data , defaultSortFieldId, filterText, onF
     };
     
     const offset = currentPage * itemsPerPage;
-    const currentPageData = data.slice(offset, offset + itemsPerPage);
+    let currentPageData = [];
+    let pageCount = 0;
 
+    if (data !== null) {
+        currentPageData = data.slice(offset, offset + itemsPerPage);
+        pageCount = Math.ceil(data.length / itemsPerPage)
+    }
+    
     return(
         <>  
             <FilterComponent 
@@ -154,7 +160,7 @@ export function DataTables ({columns, data , defaultSortFieldId, filterText, onF
                     previousLabel={"<"}
                     nextLabel={">"}
                     breakLabel={"..."}
-                    pageCount={Math.ceil(data.length / itemsPerPage)}
+                    pageCount={pageCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePageClick}
@@ -166,7 +172,7 @@ export function DataTables ({columns, data , defaultSortFieldId, filterText, onF
     )
 }
 
-export function DataTablesSaring ({columns, data , defaultSortFieldId, filterText, onFilter, onClick}){
+export function DataTablesSaring ({columns, data = [] , defaultSortFieldId, filterText, onFilter, onClick}){
 
     const CustomStylesTable = {
         table: {
@@ -272,7 +278,7 @@ export function DataTablesSaring ({columns, data , defaultSortFieldId, filterTex
         `;
 
     const [currentPage, setCurrentPage] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [itemsPerPage, setItemsPerPage] = useState(30);
 
 
     const handleItemsPerPageChange = (event) => {
@@ -288,7 +294,13 @@ export function DataTablesSaring ({columns, data , defaultSortFieldId, filterTex
     };
     
     const offset = currentPage * itemsPerPage;
-    const currentPageData = data.slice(offset, offset + itemsPerPage);
+    let currentPageData = [];
+    let pageCount = 0;
+
+    if (data !== null) {
+        currentPageData = data.slice(offset, offset + itemsPerPage);
+        pageCount = Math.ceil(data.length / itemsPerPage)
+    }
 
     return(
         <>  
@@ -313,7 +325,7 @@ export function DataTablesSaring ({columns, data , defaultSortFieldId, filterTex
                     previousLabel={"<"}
                     nextLabel={">"}
                     breakLabel={"..."}
-                    pageCount={Math.ceil(data.length / itemsPerPage)}
+                    pageCount={pageCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePageClick}
@@ -353,14 +365,18 @@ const Input = styled.input.attrs(props => ({
         value={filterText}
         onChange={onFilter}
         />
-        <select style={{ border : "1px solid grey", borderRadius : "10px", width : "auto", height : "30px", fontSize : "12px", backgroundColor : "#D5D5D540", padding : "5px", marginLeft : "10px" }} value={valueRows} onChange={onChangeRows}>
-            <option value="5">Tampilkan 5</option>
-            <option value="10">Tampilkan 10</option>
-            <option value="15">Tampilkan 15</option>
-            <option value="20">Tampilkan 20</option>
-            <option value="30">Tampilkan 30</option>
-            <option value={data.length}>Tampilkan Semua</option>
-        </select>
+        {data ? (   
+            <select style={{ border : "1px solid grey", borderRadius : "10px", width : "auto", height : "30px", fontSize : "12px", backgroundColor : "#D5D5D540", padding : "5px", marginLeft : "10px" }} value={valueRows} onChange={onChangeRows}>
+                <option value="5">Tampilkan 5</option>
+                <option value="10">Tampilkan 10</option>
+                <option value="15">Tampilkan 15</option>
+                <option value="20">Tampilkan 20</option>
+                <option value="30">Tampilkan 30</option>
+                <option value={data.length}>Tampilkan Semua</option>
+            </select>
+        ) : (   
+            <a style={{  marginLeft : "10px", fontSize : "12px" }}>No data available</a>
+        )}
         <div style={{ display : "inline-block", float : "right"}}>
             <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={onClick}><i className="fa fa-plus mr-2 mt-1"></i>Tambah</button>
         </div>
@@ -380,14 +396,18 @@ const Input = styled.input.attrs(props => ({
         value={filterText}
         onChange={onFilter}
         />
-        <select style={{ border : "1px solid grey", borderRadius : "10px", width : "auto", height : "30px", fontSize : "12px", backgroundColor : "#D5D5D540", padding : "5px", marginLeft : "10px" }} value={valueRows} onChange={onChangeRows}>
-            <option value="5">Tampilkan 5</option>
-            <option value="10">Tampilkan 10</option>
-            <option value="15">Tampilkan 15</option>
-            <option value="20">Tampilkan 20</option>
-            <option value="30">Tampilkan 30</option>
-            <option value={data.length}>Tampilkan Semua</option>
-        </select>
+        {data ? (   
+            <select style={{ border : "1px solid grey", borderRadius : "10px", width : "auto", height : "30px", fontSize : "12px", backgroundColor : "#D5D5D540", padding : "5px", marginLeft : "10px" }} value={valueRows} onChange={onChangeRows}>
+                <option value="5">Tampilkan 5</option>
+                <option value="10">Tampilkan 10</option>
+                <option value="15">Tampilkan 15</option>
+                <option value="20">Tampilkan 20</option>
+                <option value="30">Tampilkan 30</option>
+                <option value={data.length}>Tampilkan Semua</option>
+            </select>
+        ) : (   
+            <a style={{ marginLeft : "10px", fontSize : "12px" }}>No data available</a>
+        )}
         <div style={{ display : "inline-block", float : "right"}}>
             <button style={{ fontSize : "12px" }} className="btn-mrh" onClick={onClick}><i className="fa fa-filter mr-2 mt-1"></i>Saring</button>
         </div>

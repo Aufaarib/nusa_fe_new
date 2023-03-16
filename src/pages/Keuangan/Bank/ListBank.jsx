@@ -1,11 +1,10 @@
 import { DataTables } from "../../../components/DataTables";
 import {CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
-import getBank from "../../../api/Bank";
+import { getBank, deleteBank } from "../../../api/Bank";
 import { useState, useEffect } from "react";
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
-import axios from "axios";
 
 export default function ListBank() {
 const [data, setData] = useState([]);   
@@ -36,20 +35,14 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  axios.delete(`https://nusa.nuncorp.id/golang/api/v1/bank/delete/${deleteId}`)
-      .then(() => {
-        setSts({ type: 'success' });
-        closeModalHapus();
-        setisOpenStatus(true);
-        getBank(setData, setSts)
-        })
-      .catch((error) => {
-        setSts({ type: 'error', error });
-      });
+  deleteBank(setSts, deleteId);
+  closeModalHapus();
+  setisOpenStatus(true);
 }
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
+  getBank(setData, setSts)
   setSts('');
 }
 

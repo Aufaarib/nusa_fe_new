@@ -16,11 +16,20 @@ const [endDateInput, setEndDateInput] = useState(new Date());
 const [startDate, setStartDate] = useState('');
 const [endDate, setEndDate] = useState('');
 const [filterText, setFilterText] = useState('');
+const sample = localStorage.getItem("NAMA")
+console.log(sample)
 
-const filteredItems = 
+let filteredItems = data
+
+if (data !== null) {
+  filteredItems = 
     data.filter(
       data => data.bank.toLowerCase().includes(filterText.toLowerCase())
       )
+}if (data === null) {
+  filteredItems = data
+}
+
 
 useEffect(() => {getBiayaPendidikan(setData, setSts)}, []);
 

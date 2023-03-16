@@ -1,9 +1,9 @@
 import axios from "./axios";
 
-export default function getBank(setData, setSts) {
+export function getBank(setData, setSts) {
 
     axios
-        .get("https://nusa.nuncorp.id/golang/api/v1/bank/fetch")
+        .get(process.env.REACT_APP_NUSA + "/bank/fetch")
         .then((res) => {
         setData(res.data.data);
         setSts({ type: 'success' });
@@ -11,6 +11,48 @@ export default function getBank(setData, setSts) {
         .catch((error) => {
         setSts({ type: 'error', error });
         });
+}
+
+export function updateBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, id) {
+
+    axios.post(process.env.REACT_APP_NUSA + `/bank/update/${id}`, {
+        nama_bank,
+        nomor_rekening,
+        nama_pemilik
+    })
+    .then(() => {
+        setStatus({ type: 'success' });
+    })
+    .catch((error) => {
+        setStatus({ type: 'error', error });
+    });
+}
+
+export function postBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, created_by) {
+
+    axios.post(process.env.REACT_APP_NUSA + '/bank/create',{
+        nama_bank,
+        nomor_rekening,
+        nama_pemilik,
+        created_by
+    })
+    .then(() => {
+        setStatus({ type: 'success' });
+    })
+    .catch((error) => {
+        setStatus({ type: 'error', error });
+    });
+}
+
+export function deleteBank(setSts, deleteId) {
+
+    axios.delete(process.env.REACT_APP_NUSA + `/bank/delete/${deleteId}`)
+    .then(() => {
+      setSts({ type: 'success' });
+      })
+    .catch((error) => {
+      setSts({ type: 'error', error });
+    });
 
 
 }

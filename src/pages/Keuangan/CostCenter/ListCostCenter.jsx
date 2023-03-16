@@ -1,11 +1,10 @@
 import { DataTables } from "../../../components/DataTables";
-import getCostCenter from "../../../api/CostCenter";
+import { getCostCenter, deleteCostCenter } from "../../../api/CostCenter";
 import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
-import axios from "axios";
 
 export default function ListCostCenter() {
 const [data, setData] = useState([]);
@@ -35,16 +34,9 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  axios.delete(`https://nusa.nuncorp.id/golang/api/v1/cost-center/delete/${deleteId}`)
-      .then(() => {
-          setSts({ type: 'success' });
-          closeModalHapus();
-          setisOpenStatus(true);
-          getCostCenter(setData, setSts);
-        })
-      .catch((error) => {
-          setSts({ type: 'error', error });
-      });
+  deleteCostCenter(setSts, deleteId)
+  closeModalHapus();
+  setisOpenStatus(true);
 }
 
 const columns = [
@@ -103,6 +95,7 @@ const columns = [
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
+  getCostCenter(setData, setSts)
   setSts('');
 }
 

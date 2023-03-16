@@ -1,5 +1,5 @@
 import { DataTables } from "../../../components/DataTables";
-import getTipeTransaksi from "../../../api/TipeTransaksi";
+import { getTipeTransaksi, deleteTipeTransaksi } from "../../../api/TipeTransaksi";
 import { CustomStylesModalHapus, CustomStylesStatus } from "../../../components/CustomStyles";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
@@ -35,20 +35,14 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  axios.delete(`https://nusa.nuncorp.id/golang/api/v1/transaction-type/delete/${deleteId}`)
-      .then(() => {
-        setSts({ type: 'success' });
-        closeModalHapus();
-        setisOpenStatus(true);
-        getTipeTransaksi(setData, setSts)
-        })
-      .catch((error) => {
-          setSts({ type: 'error', error });
-      });
+  deleteTipeTransaksi(setSts, deleteId)
+  closeModalHapus();
+  setisOpenStatus(true);
 }
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
+  getTipeTransaksi(setData, setSts)
   setSts('');
 }
 

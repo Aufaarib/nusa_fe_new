@@ -1,8 +1,8 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
+import { postCostCenter } from '../../../api/CostCenter';
 import { useNavigate } from 'react-router-dom';
 import { useState} from 'react';
-import axios from '../../../api/axios';
 import { ModalEmpty, ModalStatus } from '../../../components/ModalPopUp';
 import { DropdownDebitKredit } from '../../../components/Dropdown';
 
@@ -17,6 +17,7 @@ const [debitKredit, setDebitKredit] = useState('');
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
+const created_by = localStorage.getItem("NAMA")
 
 const postData = (e) => {
     e.preventDefault();
@@ -29,20 +30,8 @@ const postData = (e) => {
         setisOpenEmpty(true);
     }
     else {
-        axios.post('https://nusa.nuncorp.id/golang/api/v1/cost-center/create',{
-        code,
-        group,
-        sub_group,
-        item,
-        payment_type
-    })
-    .then(() => {
-        setStatus({ type: 'success' });
-        setisOpenStatus(true);
-    })
-    .catch((error) => {
-        setStatus({ type: 'error', error });
-    });
+       postCostCenter(setStatus, code, group, sub_group, item, payment_type, created_by)
+       setisOpenStatus(true)
     }
 }
 

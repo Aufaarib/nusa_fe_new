@@ -2,7 +2,7 @@ import React from 'react'
 import TextInput from '../../../components/TextInput'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import axios from '../../../api/axios';
+import { postTipeTransaksi } from '../../../api/TipeTransaksi';
 import { ModalEmpty, ModalStatus } from '../../../components/ModalPopUp';
 
 export default function TambahTipeTransaksi() {
@@ -12,6 +12,8 @@ export default function TambahTipeTransaksi() {
     const [isOpenStatus, setisOpenStatus] = useState(false);
     const [isOpenEmpty, setisOpenEmpty] = useState(false);
     const [sts, setSts] = useState(undefined);
+    const created_by = localStorage.getItem("NAMA")
+
 
     const postData = (e) => {
         e.preventDefault();
@@ -20,17 +22,8 @@ export default function TambahTipeTransaksi() {
             setisOpenEmpty(true);
         }
         else {
-            axios.post('https://nusa.nuncorp.id/golang/api/v1/transaction-type/create',{
-            description,
-            status
-        })
-        .then(() => {
-            setSts({ type: 'success' });
-            setisOpenStatus(true);
-        })
-        .catch((error) => {
-            setSts({ type: 'error', error });
-        });
+            postTipeTransaksi(description, status, created_by, setSts)
+            setisOpenStatus(true)
     }
 }
 
