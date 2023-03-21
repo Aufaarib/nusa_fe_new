@@ -113,15 +113,12 @@ export function DataTables ({columns, data = [] , defaultSortFieldId, filterText
         `;
 
     const [currentPage, setCurrentPage] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [itemsPerPage, setItemsPerPage] = useState("all");
 
 
     const handleItemsPerPageChange = (event) => {
-        const newItemsPerPage = event.target.value;
-    
+        setItemsPerPage(event.target.value);
         setCurrentPage(0);
-    
-        setItemsPerPage(newItemsPerPage);
     };
     
     const handlePageClick = ({ selected }) => {
@@ -133,8 +130,8 @@ export function DataTables ({columns, data = [] , defaultSortFieldId, filterText
     let pageCount = 0;
 
     if (data !== null) {
-        currentPageData = data.slice(offset, offset + itemsPerPage);
-        pageCount = Math.ceil(data.length / itemsPerPage)
+        currentPageData = itemsPerPage === "all" ? data : data.slice(0, itemsPerPage);
+        pageCount = Math.ceil(data.length / itemsPerPage);
     }
     
     return(
@@ -147,6 +144,12 @@ export function DataTables ({columns, data = [] , defaultSortFieldId, filterText
                 onFilter={onFilter}
                 onClick={onClick}
             />
+            {data.length === 0 && (
+              <div style={{ textAlign : "center" }}>
+                <h1>loading...</h1>
+              </div>
+            )}
+            {data.length !== 0 && (
             <DataTable
                 columns={columns}
                 customStyles={CustomStylesTable}
@@ -154,20 +157,24 @@ export function DataTables ({columns, data = [] , defaultSortFieldId, filterText
                 defaultSortAsc={false}
                 defaultSortFieldId={defaultSortFieldId}
             />
-            <div>
-                <style>{styles}</style>
-                <ReactPaginate
-                    previousLabel={"<"}
-                    nextLabel={">"}
-                    breakLabel={"..."}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination"}
-                    activeClassName={"active"}
-                />
-            </div>
+            )}
+            {itemsPerPage !== "all" && (
+                <div>
+                    <style>{styles}</style>
+                    <ReactPaginate
+                        previousLabel={"<"}
+                        nextLabel={">"}
+                        breakLabel={"..."}
+                        pageRangeDisplayed={5}
+                        marginPagesDisplayed={2}
+                        forcePage={currentPage}
+                        pageCount={pageCount}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination"}
+                        activeClassName={"active"}
+                    />
+                </div>
+            )}
         </>
     )
 }
@@ -278,28 +285,26 @@ export function DataTablesSaring ({columns, data = [] , defaultSortFieldId, filt
         `;
 
     const [currentPage, setCurrentPage] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(30);
-
+    const [itemsPerPage, setItemsPerPage] = useState("all");
 
     const handleItemsPerPageChange = (event) => {
-        const newItemsPerPage = event.target.value;
-    
+        setItemsPerPage(event.target.value);
         setCurrentPage(0);
-    
-        setItemsPerPage(newItemsPerPage);
     };
     
     const handlePageClick = ({ selected }) => {
         setCurrentPage(selected);
+        // setItemsPerPage(itemsPerPage);
     };
-    
+
+
     const offset = currentPage * itemsPerPage;
     let currentPageData = [];
     let pageCount = 0;
 
     if (data !== null) {
-        currentPageData = data.slice(offset, offset + itemsPerPage);
-        pageCount = Math.ceil(data.length / itemsPerPage)
+        currentPageData = itemsPerPage === "all" ? data : data.slice(offset, offset + itemsPerPage);
+        pageCount = Math.ceil(data.length / itemsPerPage);
     }
 
     return(
@@ -312,6 +317,12 @@ export function DataTablesSaring ({columns, data = [] , defaultSortFieldId, filt
                 onFilter={onFilter}
                 onClick={onClick}
             />
+            {data.length === 0 && (
+              <div style={{ textAlign : "center" }}>
+                <h1>loading...</h1>
+              </div>
+            )}
+            {data.length !== 0 && (
             <DataTable
                 columns={columns}
                 customStyles={CustomStylesTable}
@@ -319,24 +330,28 @@ export function DataTablesSaring ({columns, data = [] , defaultSortFieldId, filt
                 defaultSortAsc={false}
                 defaultSortFieldId={defaultSortFieldId}
             />
-            <div>
-                <style>{styles}</style>
-                <ReactPaginate
-                    previousLabel={"<"}
-                    nextLabel={">"}
-                    breakLabel={"..."}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination"}
-                    activeClassName={"active"}
-                />
-            </div>
+            )}
+            {itemsPerPage !== "all" && (
+                <div>
+                    <style>{styles}</style>
+                    <ReactPaginate
+                        previousLabel={"<"}
+                        nextLabel={">"}
+                        breakLabel={"..."}
+                        pageRangeDisplayed={5}
+                        marginPagesDisplayed={2}
+                        forcePage={currentPage}
+                        pageCount={pageCount}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination"}
+                        activeClassName={"active"}
+                    />
+                </div>
+            )}
+
         </>
     )
 }
-
 
 //Filter Components
 const Input = styled.input.attrs(props => ({
@@ -358,7 +373,7 @@ const Input = styled.input.attrs(props => ({
 
     return(
       <>
-      <div style={{ display : "block", backgroundColor : "#D5D5D540", padding : "5px 14px", marginBottom : "10px", borderRadius : "10px", overflow : "auto"}}>
+      <div style={{ display : "block", padding : "5px 14px", marginBottom : "10px", borderRadius : "10px", overflow : "auto"}}>
         <Input 
         id="search"
         placeholder="Pencarian..."
@@ -366,13 +381,11 @@ const Input = styled.input.attrs(props => ({
         onChange={onFilter}
         />
         {data ? (   
-            <select style={{ border : "1px solid grey", borderRadius : "10px", width : "auto", height : "30px", fontSize : "12px", backgroundColor : "#D5D5D540", padding : "5px", marginLeft : "10px" }} value={valueRows} onChange={onChangeRows}>
-                <option value="5">Tampilkan 5</option>
-                <option value="10">Tampilkan 10</option>
-                <option value="15">Tampilkan 15</option>
-                <option value="20">Tampilkan 20</option>
-                <option value="30">Tampilkan 30</option>
-                <option value={data.length}>Tampilkan Semua</option>
+            <select style={{ border : "1px solid grey", borderRadius : "10px", width : "auto", height : "30px", fontSize : "12px", padding : "5px", marginLeft : "10px" }} value={valueRows} onChange={onChangeRows}>
+            <option value="20">Tampilkan 20</option>
+            <option value="25">Tampilkan 25</option>
+            <option value="30">Tampilkan 30</option>
+            <option value="all">Tampilkan Semua</option>
             </select>
         ) : (   
             <a style={{  marginLeft : "10px", fontSize : "12px" }}>No data available</a>
@@ -389,7 +402,7 @@ const Input = styled.input.attrs(props => ({
   {
     return(
       <>
-      <div style={{ display : "block", backgroundColor : "#D5D5D540", padding : "5px 14px", marginBottom : "10px", borderRadius : "10px", overflow : "auto"}}>
+      <div style={{ display : "block", padding : "5px 14px", marginBottom : "10px", borderRadius : "10px", overflow : "auto"}}>
         <Input 
         id="search"
         placeholder="Pencarian..."
@@ -397,13 +410,11 @@ const Input = styled.input.attrs(props => ({
         onChange={onFilter}
         />
         {data ? (   
-            <select style={{ border : "1px solid grey", borderRadius : "10px", width : "auto", height : "30px", fontSize : "12px", backgroundColor : "#D5D5D540", padding : "5px", marginLeft : "10px" }} value={valueRows} onChange={onChangeRows}>
-                <option value="5">Tampilkan 5</option>
-                <option value="10">Tampilkan 10</option>
-                <option value="15">Tampilkan 15</option>
-                <option value="20">Tampilkan 20</option>
-                <option value="30">Tampilkan 30</option>
-                <option value={data.length}>Tampilkan Semua</option>
+            <select style={{ border : "1px solid grey", borderRadius : "10px", width : "auto", height : "30px", fontSize : "12px", padding : "5px", marginLeft : "10px" }} value={valueRows} onChange={onChangeRows}>
+            <option value="20">Tampilkan 20</option>
+            <option value="25">Tampilkan 25</option>
+            <option value="30">Tampilkan 30</option>
+            <option value="all">Tampilkan Semua</option>
             </select>
         ) : (   
             <a style={{ marginLeft : "10px", fontSize : "12px" }}>No data available</a>

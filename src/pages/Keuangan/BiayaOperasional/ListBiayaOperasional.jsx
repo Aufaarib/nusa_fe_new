@@ -24,8 +24,6 @@ if (data !== null) {
     data.filter(
       data => data.bank.toLowerCase().includes(filterText.toLowerCase())
       )
-}if (data === null) {
-  filteredItems = data
 }
 
 useEffect(() => {getBiayaOperasional(setData, setSts)}, []);

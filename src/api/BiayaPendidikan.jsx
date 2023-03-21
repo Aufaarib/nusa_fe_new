@@ -12,6 +12,15 @@ export function getBiayaPendidikan(setData, setSts) {
         setSts({ type: 'error', error });
         });
 
+    // axios
+    // .get(`https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-pendidikan`)
+    // .then((res) => {
+    // setData(res.data);
+    // setSts({ type: 'success' });
+    // })
+    // .catch((error) => {
+    // setSts({ type: 'error', error });
+    // });
 
 }
 
@@ -26,6 +35,5 @@ export function getBiayaPendidikanByDate(setData, setSts, startDate, endDate) {
         .catch((error) => {
         setSts({ type: 'error', error });
         });
-
 
 }

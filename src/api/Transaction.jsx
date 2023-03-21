@@ -7,9 +7,12 @@ export function postTransfer(postDataTransfer, setStatus) {
     )
     .then(() => {
         setStatus({ type: 'success' });
+        console.log(postDataTransfer);
     })
     .catch((error) => {
         setStatus({ type: 'error', error });
+        console.log(error);
+        console.log(postDataTransfer);
     });
 }
 
@@ -20,8 +23,11 @@ export function postCash(postDataCash, setStatus) {
     )
     .then(() => {
         setStatus({ type: 'success' });
+        console.log(postDataCash);
     })
     .catch((error) => {
         setStatus({ type: 'error', error });
+        console.log(error);
+        console.log(postDataCash);
     });
 }

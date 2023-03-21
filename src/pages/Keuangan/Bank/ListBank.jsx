@@ -15,12 +15,14 @@ const [deleteId, setDeleteId] = useState('');
 const [desc_nama, setDesc_nama] = useState('');
 const [filterText, setFilterText] = useState('');
 
-const filteredItems = 
-  data.filter(
-    item => item.nama_pemilik.toLowerCase().includes(filterText.toLowerCase())||
-    item.nomor_rekening.toLowerCase().includes(filterText.toLowerCase())||
-    item.nama_bank.toLowerCase().includes(filterText.toLowerCase())
-  );
+let filteredItems = data
+
+if (data !== null) {
+  filteredItems = 
+    data.filter(
+      data => data.nama_pemilik.toLowerCase().includes(filterText.toLowerCase())
+      )
+}
 
 useEffect(() => {getBank(setData, setSts)}, []);
 

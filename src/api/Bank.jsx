@@ -11,6 +11,17 @@ export function getBank(setData, setSts) {
         .catch((error) => {
         setSts({ type: 'error', error });
         });
+
+    // axios
+    //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
+    //     .then((res) => {
+    //     setData(res.data);
+    //     setSts({ type: 'success' });
+    //     })
+    //     .catch((error) => {
+    //     setSts({ type: 'error', error });
+    //     });
+
 }
 
 export function updateBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, id) {

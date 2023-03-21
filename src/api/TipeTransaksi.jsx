@@ -10,6 +10,15 @@ export function getTipeTransaksi(setData, setSts) {
         .catch((error) => {
         setSts({ type: 'error', error });
         });
+
+//     axios.get("https://63dcbb592308e3e319eca644.mockapi.io/nusa-tipe-transaksi")
+//     .then((response) => {
+//     setData(response.data);
+//     setSts({ type: 'success' });
+//     })
+//     .catch((error) => {
+//     setSts({ type: 'error', error });
+//     });
 }
 
 export function deleteTipeTransaksi(setSts, deleteId) {
@@ -21,11 +30,20 @@ export function deleteTipeTransaksi(setSts, deleteId) {
     .catch((error) => {
         setSts({ type: 'error', error });
     });
+
+    // axios.delete(`https://63dcbb592308e3e319eca644.mockapi.io/nusa-tipe-transaksi/${deleteId}`)
+    // .then(() => {
+    //   setSts({ type: 'success' });
+    //   })
+    // .catch((error) => {
+    //     setSts({ type: 'error', error });
+    // });
+
 }
 
 export function postTipeTransaksi(description, status, created_by, setSts) {
 
-        axios.post(process.env.REACT_APP_NUSA + '/transaction-type/create',{
+    axios.post(process.env.REACT_APP_NUSA + '/transaction-type/create',{
         description,
         status,
         created_by
@@ -36,4 +54,17 @@ export function postTipeTransaksi(description, status, created_by, setSts) {
     .catch((error) => {
         setSts({ type: 'error', error });
     });
+
+    // axios.post('https://63dcbb592308e3e319eca644.mockapi.io/nusa-tipe-transaksi',{
+    //     description,
+    //     status,
+    //     created_by
+    // })
+    // .then(() => {
+    //     setSts({ type: 'success' });
+    // })
+    // .catch((error) => {
+    //     setSts({ type: 'error', error });
+    // });
+
 }

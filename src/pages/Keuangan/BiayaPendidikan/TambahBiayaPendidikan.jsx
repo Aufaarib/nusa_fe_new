@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getPendaftaran } from '../../../api/Pendaftaran';
 import { postTransfer, postCash } from '../../../api/Transaction';
-import axios from '../../../api/axios';
 import { ModalEmpty, ModalStatus, ModalCostCenter, ModalStatusCostCenter } from '../../../components/ModalPopUp';
 import {DropdownCostCenter, DropdownJenisTransaksi, DropdownPendaftaran, DropdownBank} from '../../../components/Dropdown';
 import { FileUpload } from '../../../components/FileUpload';
@@ -28,7 +27,7 @@ const [pendaftaranData, setPendaftaranData] = useState([]);
 
 
 const [costCenter, setCostCenter] = useState('');
-const [pendaftaran, setPendaftaran] = useState(null);
+const [pendaftaran, setPendaftaran] = useState('');
 const [jenisTransaksi, setJenisTransaksi] = useState('');
 const [bank, setBank] = useState('');
 const [jumlah, setJumlah] = useState('');
@@ -39,12 +38,12 @@ const [isOpenStatusCostCenter, setisOpenStatusCostCenter] = useState(false);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
-const created_by = localStorage.getItem("NAMA")
+const created_by = localStorage.getItem("NAMA");
 
-
+// fetch function
 const fetchCostCenter = async () => {
     getCostCenterPendidikan(setCostCenterData, setStatus)
-};
+  };
 
 const fetchBank = async () => {
     getBank(setBankData, setStatus)
@@ -54,15 +53,15 @@ const fetchTransactionType = async () => {
     getTipeTransaksi(setTransactionTypeData, setStatus)
 };
 
-const fetchPendaftaran = () => {
-    getPendaftaran(setPendaftaran, setStatus)
+const fetchPendaftaran = async () => {
+    getPendaftaran(setPendaftaranData, setStatus)
 };
 
 useEffect(() => {
-getCostCenterPendidikan(setCostCenterData, setStatus)
-getBank(setBankData, setStatus)
-getTipeTransaksi(setTransactionTypeData, setStatus)
-getPendaftaran(setPendaftaranData, setStatus)
+    fetchCostCenter();
+    fetchBank();
+    fetchTransactionType();
+    fetchPendaftaran();
 }, []);
 
 const now = Date.now();
@@ -71,16 +70,6 @@ const isoStringWithMs = date.toISOString();
 
 const postData = (e) => {
     e.preventDefault();
-
-    const postDataCash = {
-        cost_center_id: costCenter,
-        transaction_type_id: jenisTransaksi,
-        total_fee: parseInt(jumlah.replace(/\./g, ''), 10),
-        pendaftaran_id: pendaftaran,
-        note: catatan,
-        transaction_date: isoStringWithMs,
-        created_by : created_by
-    };
 
     const postDataTransfer = {
         cost_center_id: costCenter,
@@ -92,6 +81,17 @@ const postData = (e) => {
         transaction_date: isoStringWithMs,
         created_by : created_by
     };
+
+    const postDataCash = {
+        cost_center_id: costCenter,
+        transaction_type_id: jenisTransaksi,
+        total_fee: parseInt(jumlah.replace(/\./g, ''), 10),
+        pendaftaran_id: pendaftaran,
+        note: catatan,
+        transaction_date: isoStringWithMs,
+        created_by : created_by
+    };
+
     if (transactionTypeFilter === 'Transfer') {
         if (costCenter.length === 0 || bank.length === 0|| jenisTransaksi.length === 0 || jumlah.length === 0 || file_name.length === 0 || pendaftaran.length === 0) {
             setisOpenEmpty(true);
@@ -209,7 +209,7 @@ return (
                 label="Cost Center"
                 required={true}
                 defaultValue={costCenter}
-                isClearable={true}
+                // isClearable={true}s
                 options={costCenterOptions}
                 onChange={(e) => setCostCenter(e.value)}
                 handleOnClick={() => setisOpenCostCenter(true)}

@@ -11,6 +11,17 @@ export function getBiayaOperasional(setData, setSts) {
     .catch((error) => {
     setSts({ type: 'error', error });
     });
+
+    // axios
+    // .get("https://63f2e9beaab7d091250fb6d3.mockapi.io/nusa-biaya-operasional")
+    // .then((res) => {
+    // setData(res.data);
+    // setSts({ type: 'success' });
+    // })
+    // .catch((error) => {
+    // setSts({ type: 'error', error });
+    // });
+
 }
 
 export function getBiayaOperasionalByDate(setData, setSts, startDate, endDate) {

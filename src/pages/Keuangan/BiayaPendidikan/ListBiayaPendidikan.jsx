@@ -5,7 +5,8 @@ import { utils, writeFileXLSX } from 'xlsx';
 import { Header } from '../../../components';
 import { useNavigate } from "react-router-dom";
 import { ModalFilter } from "../../../components/ModalPopUp";
-import moment from "moment";
+
+const moment = require('moment');
 
 export default function ListBiayaPendidikan() {
 const [data, setData] = useState([]);
@@ -16,20 +17,22 @@ const [endDateInput, setEndDateInput] = useState(new Date());
 const [startDate, setStartDate] = useState('');
 const [endDate, setEndDate] = useState('');
 const [filterText, setFilterText] = useState('');
-const sample = localStorage.getItem("NAMA")
-console.log(sample)
+
+console.log(moment(startDateInput).format("yyyy-MM-DD"));
+// console.log(endDateInput);
+// console.log(startDate);
+// console.log(endDate);
+
+
+
 
 let filteredItems = data
-
 if (data !== null) {
   filteredItems = 
     data.filter(
       data => data.bank.toLowerCase().includes(filterText.toLowerCase())
       )
-}if (data === null) {
-  filteredItems = data
 }
-
 
 useEffect(() => {getBiayaPendidikan(setData, setSts)}, []);
 
