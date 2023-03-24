@@ -14,15 +14,26 @@ import RequireAuth from './components/RequireAuth';
 import RequireAuthAdmin from './components/RequireAuthAdmin';
 
 import UbahListBank from './pages/Keuangan/Bank/UbahListBank';
+import UbahKelompokMapel from './pages/KBM/KelompokMapel/UbahKelompokMapel';
+import UbahKelas from './pages/KBM/Kelas/UbahKelas';
+import UbahSemester from './pages/KBM/Semester/UbahSemester';
 
 import DashboardKeuangan from './pages/Keuangan/DashboardKeuangan/DashboardKeuangan';
 
+import ListKurikulum from './pages/KBM/Kurikulum/ListKurikulum';
+import ListSemester from './pages/KBM/Semester/ListSemester';
+import ListKelas from './pages/KBM/Kelas/ListKelas';
+import ListKelompokMapel from './pages/KBM/KelompokMapel/ListKelompokMapel';
 import ListBank from './pages/Keuangan/Bank/ListBank';
 import ListCostCenter from './pages/Keuangan/CostCenter/ListCostCenter';
 import ListBiayaOperasional from './pages/Keuangan/BiayaOperasional/ListBiayaOperasional';
 import ListTipeTransaksi from './pages/Keuangan/TipeTransaksi/ListTipeTransaksi';
 import ListBiayaPendidikan from './pages/Keuangan/BiayaPendidikan/ListBiayaPendidikan';
 
+import TambahKurikulum from './pages/KBM/Kurikulum/TambahKurikulum';
+import TambahSemester from './pages/KBM/Semester/TambahSemester';
+import TambahKelas from './pages/KBM/Kelas/TambahKelas';
+import TambahKelompokMapel from './pages/KBM/KelompokMapel/TambahKelompokMapel';
 import TambahTipeTransaksi from './pages/Keuangan/TipeTransaksi/TambahTipeTransaksi';
 import TambahCostCenter from './pages/Keuangan/CostCenter/TambahCostCenter';
 import TambahBiayaOperasional from './pages/Keuangan/BiayaOperasional/TambahBiayaOperasional';
@@ -49,6 +60,10 @@ const App = () => {
             <Route path="/admin/konfirmasi-pembayaran" element={(<KonfirmasiPembayaran />)} />
             <Route path="/admin/hasil-tes" element={(<HasilTes />)} />
 
+            <Route path="/admin/list-kurikulum" element={(<ListKurikulum />)} />
+            <Route path="/admin/list-semester" element={(<ListSemester />)} />
+            <Route path="/admin/list-kelas" element={(<ListKelas />)} />
+            <Route path="/admin/list-kelompok-mapel" element={(<ListKelompokMapel />)} />
             <Route path="/admin/list-bank" element={(<ListBank />)} />
             <Route path="/admin/list-cost-center" element={(<ListCostCenter />)}></Route>
             <Route path="/admin/list-biaya-operasional" element={(<ListBiayaOperasional />)} />
@@ -56,7 +71,14 @@ const App = () => {
             <Route path="/admin/list-biaya-pendidikan" element={(<ListBiayaPendidikan />)} />
 
             <Route path="/admin/ubah-list-bank" element={(<UbahListBank />)} />
+            <Route path="/admin/ubah-kelompok-mapel" element={(<UbahKelompokMapel />)} />
+            <Route path="/admin/ubah-kelas" element={(<UbahKelas />)} />
+            <Route path="/admin/ubah-semester" element={(<UbahSemester />)} />
 
+            <Route path="/admin/tambah-kurikulum" element={(<TambahKurikulum />)} />
+            <Route path="/admin/tambah-semester" element={(<TambahSemester />)} />
+            <Route path="/admin/tambah-kelas" element={(<TambahKelas />)} />
+            <Route path="/admin/tambah-kelompok-mapel" element={(<TambahKelompokMapel />)} />
             <Route path="/admin/tambah-list-bank" element={(<TambahListBank />)} />
             <Route path="/admin/tambah-cost-center" element={(<TambahCostCenter />)} />
             <Route path="/admin/tambah-biaya-pendidikan" element={(<TambahBiayaPendidikan />)} />

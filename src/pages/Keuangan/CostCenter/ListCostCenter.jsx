@@ -4,6 +4,7 @@ import { CustomStylesStatus, CustomStylesModalHapus } from "../../../components/
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
+import { ModalStatusList } from "../../../components/ModalPopUp";
 import Modal from 'react-modal';
 
 export default function ListCostCenter() {
@@ -107,7 +108,7 @@ const navigateTambahCostCenter = () => {
 
 return (
   <>
-    <Header category="Admin Keuangan / Cost Center" title="Cost Center" />
+    <Header category="Admin Keuangan / Cost Center" title="List Cost Center" />
 
     <div style={{ marginTop : "50px" }}>
 
@@ -118,27 +119,11 @@ return (
               onFilter={e => setFilterText(e.target.value)}
               filterText={filterText}
           />
-          <Modal
+          <ModalStatusList
               isOpen={isOpenStatus}
               onRequestClose={closeModalStatus}
-              style={CustomStylesStatus}
-              contentLabel="Modal Status"
-              ariaHideApp={false}
-              >
-              {sts?.type === 'success' && 
-              <div style={{ textAlign : "center" }}>
-                <h2>Berhasil</h2>
-                <button className="btn-form" onClick={closeModalStatus}>Tutup</button>
-              </div>
-              }
-              {sts?.type === 'error' && 
-              <div style={{ textAlign : "center" }}>
-                <h2>Gagal</h2>
-                <button className="btn-form" onClick={closeModalStatus}>Tutup</button>
-              </div>
-              } 
-          </Modal>
-
+              status={sts}
+          />
           <Modal
               isOpen={isOpenDelete}
               onRequestClose={closeModalHapus}

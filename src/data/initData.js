@@ -250,6 +250,43 @@ export const sidebarMenusAdmin = [
       },
     ],
   },
+  {
+    title: 'Admin KBM',
+    path: `admin/kbm`,
+    icon: <AiOutlineBarChart />,
+    links: [
+      {
+        name: 'Kelompok Mapel',
+        path: `admin/list-kelompok-mapel`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Kelas',
+        path: `admin/list-kelas`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Semester',
+        path: `admin/list-semester`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Kurikulum',
+        path: `admin/list-kurikulum`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Mata Pelajaran',
+        path: `admin/list-biaya-pendidikan`,
+        icon: <FaWpforms />,
+      },
+      {
+        name: 'Jadwal Mapel',
+        path: `admin/list-biaya-operasional`,
+        icon: <FaWpforms />,
+      },
+    ],
+  },
 ];
 
 export const themeColors = [

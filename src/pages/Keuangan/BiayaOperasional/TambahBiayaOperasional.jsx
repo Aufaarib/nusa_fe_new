@@ -6,9 +6,10 @@ import {TextInput, TextArea} from '../../../components/TextInput'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { postTransfer, postCash } from '../../../api/Transaction';
-import { ModalEmpty, ModalStatus, ModalCostCenter, ModalStatusCostCenter } from '../../../components/ModalPopUp';
+import { ModalEmpty, ModalCostCenter, ModalStatusCostCenter, ModalStatusTambah } from '../../../components/ModalPopUp';
 import {DropdownCostCenter, DropdownJenisTransaksi, DropdownBank} from '../../../components/Dropdown';
 import { FileUpload } from '../../../components/FileUpload';
+import { Header } from '../../../components';
 
 export default function TambahBiayaOperasional() {
 
@@ -173,100 +174,103 @@ const transactionTypeOptions = transactionTypeData.map((c) => ({
 
 return (    
     <div>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Form Tambah Biaya Operasional</p>
-
-        <article>
-
-            <ModalCostCenter
-                isOpenCostCenter={isOpenCostCenter}
-                closeModalCostCenter={closeModalCostCenter}
-                setCode={(e) => setCode(e.target.value)}
-                setGroup={(e) => setGroup(e.target.value)}
-                setSubGroup={(e) => setSubGroup(e.target.value)}
-                setItem={(e) => setItem(e.target.value)}
-                setDebitKredit={setDebitKredit}
-                defaultValueDK={debitKredit}
-                post={postDataCostCenter}
-            />
-            <DropdownCostCenter
-                label="Cost Center"
-                required={true}
-                defaultValue={costCenter}
-                // isClearable={true}
-                options={costCenterOptions}
-                onChange={(e) => setCostCenter(e.value)}
-                handleOnClick={() => setisOpenCostCenter(true)}
-            />
-            <DropdownJenisTransaksi
-                label="Jenis Transaksi"
-                required={true}
-                defaultValue={jenisTransaksi}
-                isClearable={false}
-                options={transactionTypeOptions}
-                isSearchable={false}
-                onChange={onTransactionTypeChange}
-            />
-            {transactionTypeFilter === "Transfer" && 
-                <DropdownBank
-                    label="Bank"
-                    required={true}
-                    defaultValue={bank}
-                    isClearable={false}
-                    options={bankOptions}
-                    isSearchable={false}
-                    onChange={(e) => setBank(e.value)}
+        <div style={{ marginBottom : "50px" }}>
+            <Header category="Admin Keuangan / Biaya Operasional / Tambah Biaya Operasional" title="Tambah Biaya Operasional" />
+        </div>
+        <div style={{ marginLeft : "60px" }}>
+            <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Form Tambah Biaya Operasional</p>
+            <article>
+                <ModalCostCenter
+                    isOpenCostCenter={isOpenCostCenter}
+                    closeModalCostCenter={closeModalCostCenter}
+                    setCode={(e) => setCode(e.target.value)}
+                    setGroup={(e) => setGroup(e.target.value)}
+                    setSubGroup={(e) => setSubGroup(e.target.value)}
+                    setItem={(e) => setItem(e.target.value)}
+                    setDebitKredit={setDebitKredit}
+                    defaultValueDK={debitKredit}
+                    post={postDataCostCenter}
                 />
-            }
-            <TextInput
-                label="Jumlah"
-                type="text"
-                required={true}
-                onInput={handleInputChange}
-                value={jumlah}
-            />
-            <TextArea
-                label="Catatan"
-                type="text"
-                onChange={(e) => setCatatan(e.target.value)}
-                required={false}
-            />
-            <FileUpload 
-                required={true}
-                onChange={(e) => setFileName(e.target.value)}
-                label="Tarik File Kesini"
-                type="file"
-            />
+                <DropdownCostCenter
+                    label="Cost Center"
+                    required={true}
+                    defaultValue={costCenter}
+                    // isClearable={true}
+                    options={costCenterOptions}
+                    onChange={(e) => setCostCenter(e.value)}
+                    handleOnClick={() => setisOpenCostCenter(true)}
+                />
+                <DropdownJenisTransaksi
+                    label="Jenis Transaksi"
+                    required={true}
+                    defaultValue={jenisTransaksi}
+                    isClearable={false}
+                    options={transactionTypeOptions}
+                    isSearchable={false}
+                    onChange={onTransactionTypeChange}
+                />
+                {transactionTypeFilter === "Transfer" && 
+                    <DropdownBank
+                        label="Bank"
+                        required={true}
+                        defaultValue={bank}
+                        isClearable={false}
+                        options={bankOptions}
+                        isSearchable={false}
+                        onChange={(e) => setBank(e.value)}
+                    />
+                }
+                <TextInput
+                    label="Jumlah"
+                    type="text"
+                    required={true}
+                    onInput={handleInputChange}
+                    value={jumlah}
+                />
+                <TextArea
+                    label="Catatan"
+                    type="text"
+                    onChange={(e) => setCatatan(e.target.value)}
+                    required={false}
+                />
+                <FileUpload 
+                    required={true}
+                    onChange={(e) => setFileName(e.target.value)}
+                    label="Tarik File Kesini"
+                    type="file"
+                />
 
-            <div className='btn-form'>
-                <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
-                    Simpan
-                </button>
-                <button type="button" className="w-20 btn-merah flex justify-center mb-5"
-                onClick={navigateBiayaOperasional}>
-                    Batal
-                </button>
-            </div>
+                <div className='btn-form'>
+                    <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
+                        Simpan
+                    </button>
+                    <button type="button" className="w-20 btn-merah flex justify-center mb-5"
+                    onClick={navigateBiayaOperasional}>
+                        Batal
+                    </button>
+                </div>
 
-            <ModalStatusCostCenter
-                isOpenStatus={isOpenStatusCostCenter}
-                closeModalStatus={() => closeModalStatusCostCenter()}
-                status={status}
-                navigate={navigateCostCenter}
-            />
+                <ModalStatusCostCenter
+                    isOpenStatus={isOpenStatusCostCenter}
+                    closeModalStatus={() => closeModalStatusCostCenter()}
+                    status={status}
+                    navigate={navigateCostCenter}
+                />
 
-            <ModalStatus 
-                isOpenStatus={isOpenStatus}
-                closeModalStatus={closeModalStatus}
-                status={status}
-                navigate={navigateBiayaOperasional}
-            />
+                <ModalStatusTambah
+                    isOpenStatus={isOpenStatus}
+                    closeModalStatus={closeModalStatus}
+                    status={status}
+                    navigate={navigateBiayaOperasional}
+                />
 
-            <ModalEmpty
-                isOpenEmpty={isOpenEmpty}
-                closeModalEmpty={closeModalEmpty}
-                onRequestCloseEmpty={closeModalEmpty}
-            />
-        </article>
+                <ModalEmpty
+                    isOpenEmpty={isOpenEmpty}
+                    closeModalEmpty={closeModalEmpty}
+                    onRequestCloseEmpty={closeModalEmpty}
+                />
+            </article>
+        </div>
     </div>
 )
 }

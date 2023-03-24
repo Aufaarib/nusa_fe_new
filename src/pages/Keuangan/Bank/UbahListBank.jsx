@@ -1,9 +1,10 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
 import { updateBank } from '../../../api/Bank';
-import { ModalEmpty, ModalStatus } from '../../../components/ModalPopUp';
+import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
 import { useLocation, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
+import { Header } from '../../../components';
 
 export default function UbahListBank() {
 
@@ -46,71 +47,71 @@ const navigateListBank = () => {
 
 return (
     <div>
-        <p className="text-3xl mb-16 mt-5 font-bold">Form Ubah List Bank</p>
+        <div style={{ marginBottom : "50px" }}>
+            <Header category="Admin Keuangan / Bank / Ubah List Bank" title="Ubah List Bank" />
+        </div>
+        <div style={{ marginLeft : "60px" }}>
+            <p className="text-3xl mb-16 mt-5 font-bold">Form Ubah List Bank</p>
+            <article>
+                <form
+                    className='grid mt-3 xs:grid-cols-1 
+                    md:grid-cols-2 lg:grid-cols-3 gap-7'
+                    style={{ zIndex: -1 }}>
 
-        <article>
+                    {/* COL 1 */}
+                    <section>
+                        <TextInput
+                            label="Nama Bank"
+                            type="text"
+                            onChange={(e) => setNamaBank(e.target.value)}
+                            required={true}
+                        />
+                        <p className='mt-3'>Data Sebelumnya :</p>
+                        <p className='text-merah font-bold'>{location.state.nama_bank}</p>
+                        <TextInput
+                            label="Nomor Rekening"
+                            type="number"
+                            onChange={(e) => setNomorRekening(e.target.value)}
+                            required={true}
+                        />
+                        <p className='mt-3'>Data Sebelumnya :</p>
+                        <p className='text-merah font-bold'>{location.state.nomor_rekening}</p>
+                        <TextInput
+                            label="Nama Pemilik"
+                            type="text"
+                            onChange={(e) => setNamaPemilik(e.target.value)}
+                            required={true}
+                        />
+                        <p className='mt-3'>Data Sebelumnya :</p>
+                        <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
+                    </section>
 
-            <form
-                className='grid mt-3 xs:grid-cols-1 
-                md:grid-cols-2 lg:grid-cols-3 gap-7'
-                style={{ zIndex: -1 }}>
+                </form>
 
-                {/* COL 1 */}
-                <section>
-                    <TextInput
-                        label="Nama Bank"
-                        type="text"
-                        onChange={(e) => setNamaBank(e.target.value)}
-                        required={true}
-                    />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_bank}</p>
-                    <TextInput
-                        label="Nomor Rekening"
-                        type="number"
-                        onChange={(e) => setNomorRekening(e.target.value)}
-                        required={true}
-                    />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nomor_rekening}</p>
-                    <TextInput
-                        label="Nama Pemilik"
-                        type="text"
-                        onChange={(e) => setNamaPemilik(e.target.value)}
-                        required={true}
-                    />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
+                <section className='flex mt-12'>
+                    <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
+                        Ubah
+                    </button>
+                    <button type="button" className="w-20 btn-merah flex justify-center mb-5"
+                    onClick={navigateListBank}>
+                        Batal
+                    </button>
                 </section>
 
-            </form>
+                <ModalStatusTambah
+                    isOpenStatus={isOpenStatus}
+                    closeModalStatus={closeModalStatus}
+                    status={status}
+                    navigate={navigateListBank}
+                />
 
-            <section className='flex mt-12'>
-                <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
-                    Ubah
-                </button>
-                <button type="button" className="w-20 btn-merah flex justify-center mb-5"
-                onClick={navigateListBank}>
-                    Batal
-                </button>
-            </section>
-
-            <ModalStatus 
-                isOpenStatus={isOpenStatus}
-                closeModalStatus={closeModalStatus}
-                status={status}
-                navigate={navigateListBank}
-            />
-
-            <ModalEmpty
-                isOpenEmpty={isOpenEmpty}
-                closeModalEmpty={closeModalEmpty}
-                onRequestCloseEmpty={closeModalEmpty}
-            />
-
-        </article>
-
-
+                <ModalEmpty
+                    isOpenEmpty={isOpenEmpty}
+                    closeModalEmpty={closeModalEmpty}
+                    onRequestCloseEmpty={closeModalEmpty}
+                />
+            </article>
+        </div>
     </div>
 )
 }

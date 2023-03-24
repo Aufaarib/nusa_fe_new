@@ -18,14 +18,6 @@ const [startDate, setStartDate] = useState('');
 const [endDate, setEndDate] = useState('');
 const [filterText, setFilterText] = useState('');
 
-console.log(moment(startDateInput).format("yyyy-MM-DD"));
-// console.log(endDateInput);
-// console.log(startDate);
-// console.log(endDate);
-
-
-
-
 let filteredItems = data
 if (data !== null) {
   filteredItems = 

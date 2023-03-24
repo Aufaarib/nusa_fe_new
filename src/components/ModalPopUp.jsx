@@ -143,7 +143,7 @@ export const ModalStatusCostCenter = ({closeModalStatus, isOpenStatus, status, n
 }
 
 
-export const ModalStatus = ({closeModalStatus, isOpenStatus, status, navigate}) => {
+export const ModalStatusTambah = ({closeModalStatus, isOpenStatus, status, navigate}) => {
 
     return(
         <Modal
@@ -163,6 +163,33 @@ export const ModalStatus = ({closeModalStatus, isOpenStatus, status, navigate}) 
             <div>
                 <h2>Gagal</h2>
                 <button className="btn-action-pink w-20 mt-5" onClick={closeModalStatus}>Tutup</button>
+            </div>
+            } 
+        </Modal>
+        
+    );
+}
+
+export const ModalStatusList = ({onRequestClose, isOpen, status}) => {
+
+    return(
+        <Modal
+            isOpen={isOpen}
+            onRequestClose={onRequestClose}
+            style={CustomStylesStatus}
+            contentLabel="Modal Status"
+            ariaHideApp={false}
+            >
+            {status?.type === 'success' && 
+            <div style={{ textAlign : "center" }}>
+            <h2>Berhasil</h2>
+            <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={onRequestClose}>Tutup</button>
+            </div>
+            }
+            {status?.type === 'error' && 
+            <div style={{ textAlign : "center" }}>
+            <h2>Gagal</h2>
+            <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={onRequestClose}>Tutup</button>
             </div>
             } 
         </Modal>
