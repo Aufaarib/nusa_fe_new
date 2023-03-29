@@ -1,6 +1,6 @@
 import { DataTables } from "../../../components/DataTables";
-import { getTipeTransaksi, deleteTipeTransaksi } from "../../../api/TipeTransaksi";
-import { CustomStylesModalHapus } from "../../../components/CustomStyles";
+import { getTipeTransaksi, deleteTipeTransaksi, updateTipeTransaksi } from "../../../api/TipeTransaksi";
+import { CustomStylesStatus } from "../../../components/ModalPopUp";
 import { ModalStatusList } from "../../../components/ModalPopUp";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
@@ -9,8 +9,12 @@ import Modal from 'react-modal';
 
 export default function ListTipeTransaksi() {
 const [data, setData] = useState([]);
+const [status, setStatus] = useState("");
+const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
+const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenDelete, setisOpenDelete] = useState(false);
+const [updateId, setUpdateId] = useState("");
 const [deleteId, setDeleteId] = useState("");
 const [desc, setDesc] = useState("");
 const [filterText, setFilterText] = useState("");
@@ -24,6 +28,28 @@ const filteredItems =
 
 useEffect(() => {getTipeTransaksi(setData, setSts)}, []);
 
+const handleNonActiveStatus = (id, description) => {
+  setisOpenUpdateTidakAktif(true);
+  setStatus("Aktif");
+  setDesc(description);
+  setUpdateId(id);
+}
+
+const closeModalUpdateTidakAktif = () => {
+  setisOpenUpdateTidakAktif(false);
+}
+
+const handleActiveStatus = (id, description) => {
+  setisOpenUpdateAktif(true);
+  setStatus("Tidak Aktif");
+  setDesc(description);
+  setUpdateId(id);
+}
+
+const closeModalUpdateAktif = () => {
+  setisOpenUpdateAktif(false);
+}
+
 const openModalHapus = (id, description) => {
   setisOpenDelete(true);
   setDesc(description);
@@ -32,6 +58,13 @@ const openModalHapus = (id, description) => {
 
 const closeModalHapus = () => {
   setisOpenDelete(false);
+}
+
+const onUpdateStatus = () => {
+  updateTipeTransaksi(setSts, status, updateId)
+  closeModalUpdateAktif();
+  closeModalUpdateTidakAktif();
+  setisOpenStatus(true);
 }
 
 const onDelete = () => {
@@ -69,10 +102,10 @@ const columns = [
     cell:(data) =>
     <div>
       {data?.status === 'Aktif' && 
-          <button className="btn-action-hijau ml-3 w-auto px-2"><i className="fa fa-play"></i> {data.status}</button>
+          <button className="btn-action-hijau ml-3 w-auto px-2" onClick={() => handleActiveStatus(data.id, data.description)}><i className="fa fa-play"></i> {data.status}</button>
       }
       {data?.status === 'Tidak Aktif' && 
-          <button className="btn-action-pink ml-3 w-auto px-2"><i className="fa fa-pause"></i> {data.status}</button>
+          <button className="btn-action-pink ml-3 w-auto px-2"  onClick={() => handleNonActiveStatus(data.id, data.description)}><i className="fa fa-pause"></i> {data.status}</button>
       }
       <button onClick={() => openModalHapus(data.id, data.description)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
@@ -106,9 +139,37 @@ const navigateTambahTipeTransaksi = () => {
             status={sts}
         />
         <Modal
+            isOpen={isOpenUpdateTidakAktif}
+            onRequestClose={closeModalUpdateTidakAktif}
+            style={CustomStylesStatus}
+            contentLabel="Modal Hapus"
+            ariaHideApp={false}
+        >
+            <div style={{ textAlign : "center" }}>  
+                <h2 className='mb-2'>Aktifkan</h2>
+                <h4 className='mb-3 text-merah'>{desc}?</h4>
+                <button className="btn-action-hijau w-20" onClick={onUpdateStatus}>Aktifkan</button>
+                <button className="btn-action-pink w-20 ml-2" onClick={closeModalUpdateTidakAktif}>Batal</button>
+            </div>
+        </Modal>
+        <Modal
+            isOpen={isOpenUpdateAktif}
+            onRequestClose={closeModalUpdateAktif}
+            style={CustomStylesStatus}
+            contentLabel="Modal Hapus"
+            ariaHideApp={false}
+        >
+            <div style={{ textAlign : "center" }}>  
+                <h2 style={{ marginBottom : "10px" }}>Non-Aktifkan</h2>
+                <h4 className='text-merah' style={{ marginBottom : "10px" }}>{desc}?</h4>
+                <button style={{ padding : "0 5px", marginBottom : "10px", width : "auto" }}className="btn-action-hijau" onClick={onUpdateStatus}>Non-Aktifkan</button>
+                <button style={{ padding : "0 5px", marginBottom : "10px", width : "auto", marginLeft : "10px" }} className="btn-action-pink" onClick={closeModalUpdateAktif}>Batal</button>
+            </div>
+        </Modal>
+        <Modal
             isOpen={isOpenDelete}
             onRequestClose={closeModalHapus}
-            style={CustomStylesModalHapus}
+            style={CustomStylesStatus}
             contentLabel="Modal Hapus"
             ariaHideApp={false}
           >

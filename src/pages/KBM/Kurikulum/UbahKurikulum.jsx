@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Header } from '../../../components';
 
 
-export default function UbahKelompokMapel() {
+export default function UbahKurikulum() {
 
 const [nama_bank, setNamaBank] = useState('');
 const [nomor_rekening, setNomorRekening] = useState('');
@@ -41,28 +41,46 @@ const closeModalStatus = () => {
 
 const navigate = useNavigate();
 
-const navigateKelompokMapel = () => {
+const navigateKurikulum = () => {
     navigate('/admin/list-kurikulum');
 };
 
 return (
     <div>
         <div style={{ marginBottom : "50px" }}>
-            <Header category="Admin KBM / Kelompok Mapel / Ubah Kelompok Mata Pelajaran" title="Ubah Kelompok Mata Pelajaran" />
+            <Header category="Admin KBM / Kurikulum / Ubah Kurikulum" title="Ubah Kurikulum" />
         </div>
         <div style={{ marginLeft : "60px" }}>
-            <p className="text-3xl mb-16 mt-5 font-bold">Form Ubah Kelompok Mata Pelajaran</p>
+            <p className="text-3xl mb-16 mt-5 font-bold">Form Ubah Kurikulum</p>
             <article>
                 {/* COL 1 */}
                 <section>
                     <TextInput
-                        label="Kelompok"
+                        label="Code"
                         type="text"
                         onChange={(e) => setNamaBank(e.target.value)}
                         required={true}
                     />
                     <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_bank}</p>
+                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
+
+                    <TextInput
+                        label="Nama"
+                        type="text"
+                        onChange={(e) => setNamaBank(e.target.value)}
+                        required={true}
+                    />
+                    <p className='mt-3'>Data Sebelumnya :</p>
+                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
+
+                    <TextInput
+                        label="Deskripsi"
+                        type="text"
+                        onChange={(e) => setNamaBank(e.target.value)}
+                        required={true}
+                    />
+                    <p className='mt-3'>Data Sebelumnya :</p>
+                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
                 </section>
 
                 <div className='btn-form'>
@@ -70,7 +88,7 @@ return (
                         Ubah
                     </button>
                     <button type="button" className="w-20 btn-merah flex justify-center mb-5"
-                    onClick={navigateKelompokMapel}>
+                    onClick={navigateKurikulum}>
                         Batal
                     </button>
                 </div>
@@ -79,7 +97,7 @@ return (
                     isOpenStatus={isOpenStatus}
                     closeModalStatus={closeModalStatus}
                     status={status}
-                    navigate={navigateKelompokMapel}
+                    navigate={navigateKurikulum}
                 />
 
                 <ModalEmpty

@@ -1,6 +1,7 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
-import { postCostCenter } from '../../../api/CostCenter';
+import { DropdownStatus } from '../../../components/Dropdown';
+import { postKelompokMapel } from '../../../api/KelompokMataPelajaran';
 import { useNavigate } from 'react-router-dom';
 import { useState} from 'react';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
@@ -8,30 +9,28 @@ import { Header } from '../../../components';
 
 export default function TambahKelompokMapel() {
 
-const [code, setCode] = useState('');
-const [group, setGroup] = useState('');
-const [sub_group, setSubGroup] = useState('');
-const [item, setItem] = useState('');
-const [debitKredit, setDebitKredit] = useState('');
+const [name, setName] = useState('');
+const [statusVal, setStatus] = useState('');
 
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
-const [status, setStatus] = useState(undefined);
+const [sts, setSts] = useState(undefined);
 const created_by = localStorage.getItem("NAMA")
+
+console.log(created_by)
 
 const postData = (e) => {
     e.preventDefault();
 
-    const payment_type = debitKredit.value
+    const status = statusVal.value
 
-    if (code.length === 0 || group.length === 0 || sub_group.length === 0
-    || item.length === 0 || payment_type === "") {
+    if (name.length === 0 || status.length === 0) {
 
         setisOpenEmpty(true);
     }
     else {
-       postCostCenter(setStatus, code, group, sub_group, item, payment_type, created_by)
-       setisOpenStatus(true)
+        postKelompokMapel(setSts, name, status, created_by)
+        setisOpenStatus(true)
     }
 }
 
@@ -41,7 +40,7 @@ setisOpenEmpty(false);
 
 const closeModalStatus = () => {
 setisOpenStatus(false);
-setStatus('');
+setSts('');
 }
 const navigate = useNavigate();
 
@@ -55,15 +54,22 @@ return (
             <Header category="Admin KBM / Kelompok Mapel / Tambah Kelompok Mata Pelajaran" title="Tambah Kelompok Mata Pelajaran" />
         </div>
         <div style={{ marginLeft : "60px" }}>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Form Tambah Kelompok Pelajaran</p>
+        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Form Tambah Kelompok Mata Pelajaran</p>
             <article>
                 <TextInput
-                    label="Kelompok"
-                    type="number"
-                    id="group"
+                    label="Nama"
+                    type="text"
                     name="code"
-                    onChange={(e) => setCode(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                     required={true}
+                />
+                <DropdownStatus
+                    label="Status"
+                    required={true}
+                    isClearable={true}
+                    defaultValue={statusVal}
+                    isSearchable={false}
+                    onChange={setStatus}
                 />
 
                 <div className='btn-form'>
@@ -79,7 +85,7 @@ return (
                 <ModalStatusTambah 
                     isOpenStatus={isOpenStatus}
                     closeModalStatus={closeModalStatus}
-                    status={status}
+                    status={sts}
                     navigate={navigateKelompokMapel}
                 />
 

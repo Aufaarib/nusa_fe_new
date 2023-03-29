@@ -118,11 +118,12 @@ export function DataTables ({columns, data = [] , defaultSortFieldId, filterText
 
     const handleItemsPerPageChange = (event) => {
         setItemsPerPage(event.target.value);
-        setCurrentPage(0);
+        // setCurrentPage(0);
     };
     
     const handlePageClick = ({ selected }) => {
         setCurrentPage(selected);
+        setItemsPerPage(itemsPerPage);
     };
     
     const offset = currentPage * itemsPerPage;
@@ -130,7 +131,7 @@ export function DataTables ({columns, data = [] , defaultSortFieldId, filterText
     let pageCount = 0;
 
     if (data !== null) {
-        currentPageData = itemsPerPage === "all" ? data : data.slice(0, itemsPerPage);
+        currentPageData = itemsPerPage === "all" ? data : data.slice(offset, offset + itemsPerPage);
         pageCount = Math.ceil(data.length / itemsPerPage);
     }
     
@@ -296,12 +297,12 @@ export function DataTablesSaring ({columns, data = [] , defaultSortFieldId, filt
 
     const handleItemsPerPageChange = (event) => {
         setItemsPerPage(event.target.value);
-        setCurrentPage(0);
+        // setCurrentPage(0);
     };
     
     const handlePageClick = ({ selected }) => {
         setCurrentPage(selected);
-        // setItemsPerPage(itemsPerPage);
+        setItemsPerPage(itemsPerPage);
     };
 
 
@@ -377,9 +378,9 @@ const Input = styled.input.attrs(props => ({
     float: left;
     height: 30px;
     width: 200px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid #BFBFBF;
-    padding: 0 32px 0 16px;
+    padding: 15px;
   `;
   
   export function FilterComponent ({ filterText, onFilter, onClick, data = [], onChangeRows, valueRows})
@@ -387,7 +388,7 @@ const Input = styled.input.attrs(props => ({
 
     return(
       <>
-      <div style={{ display : "block", padding : "5px 14px", marginBottom : "10px", borderRadius : "10px", overflow : "auto"}}>
+      <div style={{ display : "block", padding : "14px", marginBottom : "10px", borderRadius : "10px"}}>
         <Input 
         id="search"
         placeholder="Pencarian..."
@@ -419,7 +420,7 @@ const Input = styled.input.attrs(props => ({
   {
     return(
       <>
-      <div style={{ display : "block", padding : "5px 14px", marginBottom : "10px", borderRadius : "10px", overflow : "auto"}}>
+      <div style={{ display : "block", padding : "5px 14px", marginBottom : "10px", borderRadius : "10px"}}>
         <Input 
         id="search"
         placeholder="Pencarian..."

@@ -15,7 +15,7 @@ import { Header } from '../../../components';
 export default function TambahBiayaPendidikan() {
 
 const [code, setCode] = useState('');
-const [group, setGroup] = useState('');
+const [groupVal, setGroup] = useState('');
 const [sub_group, setSubGroup] = useState('');
 const [item, setItem] = useState('');
 const [debitKredit, setDebitKredit] = useState('');
@@ -26,9 +26,9 @@ const [transactionTypeData, setTransactionTypeData] = useState([]);
 const [transactionTypeFilter, setTransactionTypeFilter] = useState([]);
 const [pendaftaranData, setPendaftaranData] = useState([]);
 
-
 const [costCenter, setCostCenter] = useState('');
 const [pendaftaran, setPendaftaran] = useState('');
+const [kelas, setKelas] = useState('');
 const [jenisTransaksi, setJenisTransaksi] = useState('');
 const [bank, setBank] = useState('');
 const [jumlah, setJumlah] = useState('');
@@ -72,6 +72,7 @@ const isoStringWithMs = date.toISOString();
 const postData = (e) => {
     e.preventDefault();
 
+
     const postDataTransfer = {
         cost_center_id: costCenter,
         bank_id: bank,
@@ -80,7 +81,8 @@ const postData = (e) => {
         pendaftaran_id: pendaftaran,
         note: catatan,
         transaction_date: isoStringWithMs,
-        created_by : created_by
+        created_by : created_by,
+        class : kelas
     };
 
     const postDataCash = {
@@ -90,7 +92,8 @@ const postData = (e) => {
         pendaftaran_id: pendaftaran,
         note: catatan,
         transaction_date: isoStringWithMs,
-        created_by : created_by
+        created_by : created_by,
+        class : kelas
     };
 
     if (transactionTypeFilter === 'Transfer') {
@@ -100,6 +103,7 @@ const postData = (e) => {
         else {
             postTransfer(postDataTransfer, setStatus)
             setisOpenStatus(true)
+            console.log(postDataTransfer)
         }
     }else if (transactionTypeFilter === 'Cash') {
         if (costCenter.length === 0 || jenisTransaksi.length === 0|| jumlah.length === 0 || file_name.length === 0 || pendaftaran.length === 0) {
@@ -118,6 +122,7 @@ const postDataCostCenter = (e) => {
     e.preventDefault();
 
     const payment_type = debitKredit.value
+    const group = groupVal.value
 
     if (code.length === 0 || group.length === 0 || sub_group.length === 0
     || item.length === 0 || debitKredit.length === 0) {
@@ -134,6 +139,11 @@ const onTransactionTypeChange = (e) => {
     setJenisTransaksi(e.value);
     setTransactionTypeFilter(e.description);
   };
+
+const onPendaftaranChange = (e) => {
+    setPendaftaran(e.value)
+    setKelas(e.description)
+};
 
 const closeModalEmpty = () => {
     setisOpenEmpty(false);
@@ -184,8 +194,9 @@ const transactionTypeOptions = transactionTypeData.map((c) => ({
 }));
 
 const pendaftaranOptions = pendaftaranData.map((c) => ({
-    label: `${c.nama_lengkap_anak} - ${c.jenis_kelamin} `,
+    label: `${c.nama_lengkap_anak} - ${c.kelas_pada_saat_mendaftar} `,
     value: c.id,
+    description: c.kelas_pada_saat_mendaftar,
 }));
 
 return (  
@@ -200,11 +211,12 @@ return (
                     isOpenCostCenter={isOpenCostCenter}
                     closeModalCostCenter={closeModalCostCenter}
                     setCode={(e) => setCode(e.target.value)}
-                    setGroup={(e) => setGroup(e.target.value)}
+                    setGroup={setGroup}
                     setSubGroup={(e) => setSubGroup(e.target.value)}
                     setItem={(e) => setItem(e.target.value)}
                     setDebitKredit={setDebitKredit}
                     defaultValueDK={debitKredit}
+                    defaultValueGroup={groupVal}
                     post={postDataCostCenter}
                 />
 
@@ -220,10 +232,10 @@ return (
                 <DropdownPendaftaran
                     label="Siswa"
                     required={true}
-                    defaultValue={costCenter}
-                    isClearable={true}
+                    defaultValue={pendaftaran}
+                    isClearable={false}
                     options={pendaftaranOptions}
-                    onChange={(e) => setPendaftaran(e.value)}
+                    onChange={onPendaftaranChange}
                 />
                 <DropdownJenisTransaksi
                     label="Jenis Transaksi"

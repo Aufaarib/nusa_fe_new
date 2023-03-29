@@ -4,13 +4,13 @@ import { postCostCenter } from '../../../api/CostCenter';
 import { useNavigate } from 'react-router-dom';
 import { useState} from 'react';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
-import { DropdownDebitKredit } from '../../../components/Dropdown';
+import { DropdownDebitKredit, DropdownGroup } from '../../../components/Dropdown';
 import { Header } from '../../../components';
 
 export default function TambahCostCenter() {
 
 const [code, setCode] = useState('');
-const [group, setGroup] = useState('');
+const [groupVal, setGroup] = useState('');
 const [sub_group, setSubGroup] = useState('');
 const [item, setItem] = useState('');
 const [debitKredit, setDebitKredit] = useState('');
@@ -24,6 +24,7 @@ const postData = (e) => {
     e.preventDefault();
 
     const payment_type = debitKredit.value
+    const group = groupVal.value
 
     if (code.length === 0 || group.length === 0 || sub_group.length === 0
     || item.length === 0 || payment_type === "") {
@@ -66,12 +67,13 @@ return (
                 onChange={(e) => setCode(e.target.value)}
                 required={true}
             />
-            <TextInput
+            <DropdownGroup
                 label="Group"
-                type="text"
-                id="group"
-                onChange={(e) => setGroup(e.target.value)}
                 required={true}
+                isClearable={true}
+                defaultValue={groupVal}
+                isSearchable={false}
+                onChange={setGroup}
             />
             <TextInput
                 label="Sub Group"

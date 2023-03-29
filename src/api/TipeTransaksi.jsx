@@ -68,3 +68,16 @@ export function postTipeTransaksi(description, status, created_by, setSts) {
     // });
 
 }
+
+export function updateTipeTransaksi(setSts, status, id) {
+
+    axios.post(process.env.REACT_APP_NUSA + `/transaction-type/update/${id}`, {
+        status
+    })
+    .then(() => {
+        setSts({ type: 'success' });
+    })
+    .catch((error) => {
+        setSts({ type: 'error', error });
+    });
+}

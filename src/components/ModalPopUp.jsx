@@ -1,9 +1,9 @@
 import Modal from 'react-modal';
 import TextInput from "./TextInput";
-import { DropdownDebitKredit } from './Dropdown';
+import { DropdownDebitKredit, DropdownGroup } from './Dropdown';
 import { FilterDate } from './DataTables';
 
-const CustomStylesStatus = {
+export const CustomStylesStatus = {
     content: {
       width: 'auto',
       top: '50%',
@@ -20,9 +20,9 @@ const CustomStylesStatus = {
       backgroundColor: 'rgba(0,0,0,.5)',
       cursor: 'pointer'
     }
-  };
+};
 
-  export const ModalFilter = ({isOpenFilter, closeModalFilter, onChangeStart, onChangeEnd, selectedEnd, selectedStart, onClickFilterDate, setDebitKredit, post, status}) => {
+export const ModalFilter = ({isOpenFilter, closeModalFilter, onChangeStart, onChangeEnd, selectedEnd, selectedStart, onClickFilterDate, setDebitKredit, post, status}) => {
 
     return(
         <Modal
@@ -40,7 +40,7 @@ const CustomStylesStatus = {
                 onChangeEnd={onChangeEnd}
             />
             <div className='btn-form'>
-                <button type="button" style={{width : "auto", }} className="btn-hijau flex justify-center mb-5" onClick={onClickFilterDate}>
+                <button type="button" style={{ width : "auto" }} className="btn-hijau flex justify-center mb-5" onClick={onClickFilterDate}>
                     Terapkan
                 </button>
                 <button type="button" className="w-20 btn-merah flex justify-center mb-5" onClick={closeModalFilter}>
@@ -51,7 +51,7 @@ const CustomStylesStatus = {
     );
 }
 
-export const ModalCostCenter = ({isOpenCostCenter, closeModalCostCenter, setCode, setGroup, setSubGroup, setItem, defaultValueDK, setDebitKredit, post, status}) => {
+export const ModalCostCenter = ({isOpenCostCenter, closeModalCostCenter, setCode, setGroup, setSubGroup, setItem, defaultValueDK, setDebitKredit, post, defaultValueGroup}) => {
 
     return(
         <Modal
@@ -71,12 +71,13 @@ export const ModalCostCenter = ({isOpenCostCenter, closeModalCostCenter, setCode
                     onChange={setCode}
                     required={true}
                 />
-                <TextInput
+                <DropdownGroup
                     label="Group"
-                    type="text"
-                    id="group"
-                    onChange={setGroup}
                     required={true}
+                    isClearable={true}
+                    defaultValue={defaultValueGroup}
+                    isSearchable={false}
+                    onChange={setGroup}
                 />
                 <TextInput
                     label="Sub Group"
@@ -181,15 +182,15 @@ export const ModalStatusList = ({onRequestClose, isOpen, status}) => {
             ariaHideApp={false}
             >
             {status?.type === 'success' && 
-            <div style={{ textAlign : "center" }}>
-            <h2>Berhasil</h2>
-            <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={onRequestClose}>Tutup</button>
+            <div>
+                <h2>Berhasil</h2>
+                <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={onRequestClose}>Tutup</button>
             </div>
             }
             {status?.type === 'error' && 
-            <div style={{ textAlign : "center" }}>
-            <h2>Gagal</h2>
-            <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={onRequestClose}>Tutup</button>
+            <div>
+                <h2>Gagal</h2>
+                <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={onRequestClose}>Tutup</button>
             </div>
             } 
         </Modal>

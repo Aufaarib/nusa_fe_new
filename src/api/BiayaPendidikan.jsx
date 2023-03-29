@@ -7,6 +7,7 @@ export function getBiayaPendidikan(setData, setSts) {
         .then((res) => {
         setData(res.data.data);
         setSts({ type: 'success' });
+        console.log(res.data.data)
         })
         .catch((error) => {
         setSts({ type: 'error', error });

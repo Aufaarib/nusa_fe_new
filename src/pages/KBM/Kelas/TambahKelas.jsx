@@ -1,6 +1,6 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
-import { postCostCenter } from '../../../api/CostCenter';
+import { postKelas } from '../../../api/Kelas';
 import { useNavigate } from 'react-router-dom';
 import { useState} from 'react';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
@@ -8,11 +8,8 @@ import { Header } from '../../../components';
 
 export default function TambahKelas() {
 
-const [code, setCode] = useState('');
-const [group, setGroup] = useState('');
-const [sub_group, setSubGroup] = useState('');
-const [item, setItem] = useState('');
-const [debitKredit, setDebitKredit] = useState('');
+const [name, setName] = useState('');
+const [description, setDescription] = useState('');
 
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
@@ -22,16 +19,13 @@ const created_by = localStorage.getItem("NAMA")
 const postData = (e) => {
     e.preventDefault();
 
-    const payment_type = debitKredit.value
-
-    if (code.length === 0 || group.length === 0 || sub_group.length === 0
-    || item.length === 0 || payment_type === "") {
+    if (name.length === 0 || description.length === 0) {
 
         setisOpenEmpty(true);
     }
     else {
-       postCostCenter(setStatus, code, group, sub_group, item, payment_type, created_by)
-       setisOpenStatus(true)
+        postKelas(setStatus, name, description, created_by)
+        setisOpenStatus(true)
     }
 }
 
@@ -59,18 +53,16 @@ return (
             <article>
                 <TextInput
                     label="Nama"
-                    type="number"
-                    id="group"
+                    type="text"
                     name="code"
-                    onChange={(e) => setCode(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                     required={true}
                 />
                 <TextInput
                     label="Deskripsi"
-                    type="number"
-                    id="group"
+                    type="text"
                     name="code"
-                    onChange={(e) => setCode(e.target.value)}
+                    onChange={(e) => setDescription(e.target.value)}
                     required={true}
                 />
 

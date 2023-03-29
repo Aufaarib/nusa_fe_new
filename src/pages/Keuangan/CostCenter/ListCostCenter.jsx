@@ -85,12 +85,11 @@ const columns = [
     name: <div>Aksi</div>,
     cell:(data) =>
       <div>
-          <button style={{ fontSize : "14px" }} className="btn-action-hijau"><i className="fa fa-play"></i> Aktif</button>
           <button style={{ fontSize : "14px", marginLeft : "5px" }} onClick={() => openModalHapus(data.id, data.item)} className="btn-action-pink"><i className="fa fa-trash"></i> Hapus</button>
       </div>,
     ignoreRowClick: true,
     button: true,
-    width: "360px" 
+    width: "160px" 
   },
 ];
 

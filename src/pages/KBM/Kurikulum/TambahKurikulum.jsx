@@ -1,6 +1,7 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
-import { postCostCenter } from '../../../api/CostCenter';
+import { DropdownStatus } from '../../../components/Dropdown';
+import { postKurikulum } from '../../../api/Kurikulum';
 import { useNavigate } from 'react-router-dom';
 import { useState} from 'react';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
@@ -9,29 +10,31 @@ import { Header } from '../../../components';
 export default function TambahKurikulum() {
 
 const [code, setCode] = useState('');
-const [group, setGroup] = useState('');
-const [sub_group, setSubGroup] = useState('');
-const [item, setItem] = useState('');
-const [debitKredit, setDebitKredit] = useState('');
+const [name, setName] = useState('');
+const [description, setDescription] = useState('');
+const [semester, setSemester] = useState('');
+const [statusVal, setStatus] = useState('');
 
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
-const [status, setStatus] = useState(undefined);
+const [sts, setSts] = useState(undefined);
 const created_by = localStorage.getItem("NAMA")
 
 const postData = (e) => {
     e.preventDefault();
 
-    const payment_type = debitKredit.value
+    const semester_id = parseInt(semester)
+    const status = statusVal.value
 
-    if (code.length === 0 || group.length === 0 || sub_group.length === 0
-    || item.length === 0 || payment_type === "") {
+
+    if (code.length === 0 || name.length === 0 || description.length === 0
+    || semester_id.length === 0 ) {
 
         setisOpenEmpty(true);
     }
     else {
-       postCostCenter(setStatus, code, group, sub_group, item, payment_type, created_by)
-       setisOpenStatus(true)
+        postKurikulum(setSts, code, name, status, description, semester_id, created_by)
+        setisOpenStatus(true)
     }
 }
 
@@ -41,7 +44,7 @@ setisOpenEmpty(false);
 
 const closeModalStatus = () => {
 setisOpenStatus(false);
-setStatus('');
+setSts('');
 }
 const navigate = useNavigate();
 
@@ -67,18 +70,34 @@ return (
                 />
                 <TextInput
                     label="Nama"
-                    type="number"
+                    type="text"
                     id="group"
                     name="code"
-                    onChange={(e) => setCode(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                     required={true}
                 />
                 <TextInput
                     label="Deskripsi"
+                    type="text"
+                    id="group"
+                    name="code"
+                    onChange={(e) => setDescription(e.target.value)}
+                    required={true}
+                />
+                <DropdownStatus
+                    label="Status"
+                    required={true}
+                    isClearable={true}
+                    defaultValue={statusVal}
+                    isSearchable={false}
+                    onChange={setStatus}
+                />
+                <TextInput
+                    label="Semester"
                     type="number"
                     id="group"
                     name="code"
-                    onChange={(e) => setCode(e.target.value)}
+                    onChange={(e) => setSemester(e.target.value)}
                     required={true}
                 />
 
@@ -94,7 +113,7 @@ return (
                 <ModalStatusTambah 
                     isOpenStatus={isOpenStatus}
                     closeModalStatus={closeModalStatus}
-                    status={status}
+                    status={sts}
                     navigate={navigateSemester}
                 />
                 <ModalEmpty

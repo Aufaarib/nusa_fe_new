@@ -277,12 +277,12 @@ export const sidebarMenusAdmin = [
       },
       {
         name: 'Mata Pelajaran',
-        path: `admin/list-biaya-pendidikan`,
+        path: `admin/list-mata-pelajaran`,
         icon: <FaWpforms />,
       },
       {
         name: 'Jadwal Mapel',
-        path: `admin/list-biaya-operasional`,
+        path: `admin/list-jadwal-mata-pelajaran`,
         icon: <FaWpforms />,
       },
     ],

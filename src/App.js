@@ -13,6 +13,8 @@ import Layout from './components/Layout';
 import RequireAuth from './components/RequireAuth';
 import RequireAuthAdmin from './components/RequireAuthAdmin';
 
+import UbahMataPelajaran from './pages/KBM/Mapel/UbahMataPelajaran';
+import UbahKurikulum from './pages/KBM/Kurikulum/UbahKurikulum';
 import UbahListBank from './pages/Keuangan/Bank/UbahListBank';
 import UbahKelompokMapel from './pages/KBM/KelompokMapel/UbahKelompokMapel';
 import UbahKelas from './pages/KBM/Kelas/UbahKelas';
@@ -20,6 +22,8 @@ import UbahSemester from './pages/KBM/Semester/UbahSemester';
 
 import DashboardKeuangan from './pages/Keuangan/DashboardKeuangan/DashboardKeuangan';
 
+import ListJadwalMataPelajaran from './pages/KBM/JadwalMapel/ListJadwalMapel';
+import ListMataPelajaran from './pages/KBM/Mapel/ListMataPelajaran';
 import ListKurikulum from './pages/KBM/Kurikulum/ListKurikulum';
 import ListSemester from './pages/KBM/Semester/ListSemester';
 import ListKelas from './pages/KBM/Kelas/ListKelas';
@@ -30,6 +34,8 @@ import ListBiayaOperasional from './pages/Keuangan/BiayaOperasional/ListBiayaOpe
 import ListTipeTransaksi from './pages/Keuangan/TipeTransaksi/ListTipeTransaksi';
 import ListBiayaPendidikan from './pages/Keuangan/BiayaPendidikan/ListBiayaPendidikan';
 
+import TambahJadwalMataPelajaran from './pages/KBM/JadwalMapel/TambahJadwalMapel';
+import TambahMataPelajaran from './pages/KBM/Mapel/TambahMataPelajaran';
 import TambahKurikulum from './pages/KBM/Kurikulum/TambahKurikulum';
 import TambahSemester from './pages/KBM/Semester/TambahSemester';
 import TambahKelas from './pages/KBM/Kelas/TambahKelas';
@@ -60,6 +66,8 @@ const App = () => {
             <Route path="/admin/konfirmasi-pembayaran" element={(<KonfirmasiPembayaran />)} />
             <Route path="/admin/hasil-tes" element={(<HasilTes />)} />
 
+            <Route path="/admin/list-jadwal-mata-pelajaran" element={(<ListJadwalMataPelajaran />)} />
+            <Route path="/admin/list-mata-pelajaran" element={(<ListMataPelajaran />)} />
             <Route path="/admin/list-kurikulum" element={(<ListKurikulum />)} />
             <Route path="/admin/list-semester" element={(<ListSemester />)} />
             <Route path="/admin/list-kelas" element={(<ListKelas />)} />
@@ -70,11 +78,15 @@ const App = () => {
             <Route path="/admin/list-tipe-transaksi" element={(<ListTipeTransaksi />)} />
             <Route path="/admin/list-biaya-pendidikan" element={(<ListBiayaPendidikan />)} />
 
+            <Route path="/admin/ubah-mata-pelajaran" element={(<UbahMataPelajaran />)} />
+            <Route path="/admin/ubah-kurikulum" element={(<UbahKurikulum />)} />
             <Route path="/admin/ubah-list-bank" element={(<UbahListBank />)} />
             <Route path="/admin/ubah-kelompok-mapel" element={(<UbahKelompokMapel />)} />
             <Route path="/admin/ubah-kelas" element={(<UbahKelas />)} />
             <Route path="/admin/ubah-semester" element={(<UbahSemester />)} />
 
+            <Route path="/admin/tambah-jadwal-mata-pelajaran" element={(<TambahJadwalMataPelajaran />)} />
+            <Route path="/admin/tambah-mata-pelajaran" element={(<TambahMataPelajaran />)} />
             <Route path="/admin/tambah-kurikulum" element={(<TambahKurikulum />)} />
             <Route path="/admin/tambah-semester" element={(<TambahSemester />)} />
             <Route path="/admin/tambah-kelas" element={(<TambahKelas />)} />

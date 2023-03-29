@@ -5,11 +5,12 @@ import { useState } from 'react';
 import { postTipeTransaksi } from '../../../api/TipeTransaksi';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
 import { Header } from '../../../components';
+import { DropdownStatus } from '../../../components/Dropdown';
 
 export default function TambahTipeTransaksi() {
 
     const [description, setDesc] = useState('');
-    const [status, setStatus] = useState('');
+    const [statusVal, setStatus] = useState('');
     const [isOpenStatus, setisOpenStatus] = useState(false);
     const [isOpenEmpty, setisOpenEmpty] = useState(false);
     const [sts, setSts] = useState(undefined);
@@ -19,7 +20,9 @@ export default function TambahTipeTransaksi() {
     const postData = (e) => {
         e.preventDefault();
 
-        if (description.trim().length === 0 || status.trim().length === 0) {
+        const status = statusVal.value
+
+        if (description.length === 0 || status.length === 0) {
             setisOpenEmpty(true);
         }
         else {
@@ -57,12 +60,13 @@ const closeModalStatus = () => {
                         onChange={(e) => setDesc(e.target.value)}
                         required={true}
                     />
-                    <TextInput
+                    <DropdownStatus
                         label="Status"
-                        type="text"
-                        name="status"
-                        onChange={(e) => setStatus(e.target.value)}
                         required={true}
+                        isClearable={true}
+                        defaultValue={statusVal}
+                        isSearchable={false}
+                        onChange={setStatus}
                     />
                     <div className='btn-form'>
                         <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>

@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import { Header } from "../../../components";
-import { useNavigate } from "react-router-dom";
 
 class DashboardKeuangan extends Component {
 
-  handleClick = (e) => {
-    console.log("element clicked");
-  }
+  // handleClick = (e) => {
+  //   console.log("element clicked");
+  // }
 
   constructor(props) {
     super(props);
@@ -26,7 +25,7 @@ class DashboardKeuangan extends Component {
       options: {
         chart: {
           type: 'bar',
-          height: "350px",
+          width: '100%',
           toolbar: {
             show: true,
             offsetX: 0,
@@ -64,7 +63,7 @@ class DashboardKeuangan extends Component {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '55%',
+            columnWidth: '100%',
             endingShape: 'rounded'
           },
         },
@@ -84,9 +83,7 @@ class DashboardKeuangan extends Component {
           showForSingleSeries: false,
           showForNullSeries: true,
           showForZeroSeries: true,
-          position: 'top',
-          horizontalAlign: 'center', 
-          floating: true,
+          position: 'bottom',
           fontSize: '14px',
           fontFamily: 'Helvetica, Arial',
           fontWeight: 400,
@@ -96,8 +93,8 @@ class DashboardKeuangan extends Component {
           height: undefined,
           tooltipHoverFormatter: undefined,
           customLegendItems: [],
-          offsetX: 210,
-          offsetY: -39,
+          offsetX: 0,
+          offsetY: 45,
           labels: {
               colors: undefined,
               useSeriesColors: false
@@ -184,31 +181,31 @@ class DashboardKeuangan extends Component {
     <>
         <Header category="Admin Keuangan / Dashboard" title="Keuangan" />
     
-        <div style={{display : "flex", marginTop : "35px", marginLeft : "33px"}}>
-          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", borderRadius : "10px ", backgroundColor : "#CC3506D9"}}>
+        <div style={{display : "flex", marginTop : "35px"}}>
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "100%", borderRadius : "10px ", backgroundColor : "#CC3506D9"}}>
             <p style={{ color : "white" }}>800.000</p>
             <p style={{ color : "white" }}>Uang Masuk</p>
-            <div style={{textAlign : "center", width : "full", backgroundColor : "#CC3506D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
+            <div style={{textAlign : "center", width : "100%", backgroundColor : "#CC3506D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
             <p><button style={{ color : "white", fontSize : "13px" }} onClick={this.handleClick} target="_blank">Lihat Laporan</button></p>
             </div>
           </div>
-          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", borderRadius : "10px ", backgroundColor : "#E4A11ED9", marginLeft : "15px"}}>
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "100%", borderRadius : "10px ", backgroundColor : "#E4A11ED9", marginLeft : "15px"}}>
             <p style={{ color : "white" }}>1.000.000</p>
             <p style={{ color : "white" }}>Uang Keluar</p>
-            <div style={{textAlign : "center", width : "full", backgroundColor : "#E4A11ED9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
+            <div style={{textAlign : "center", width : "100%", backgroundColor : "#E4A11ED9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
             <p><button style={{ color : "white", fontSize : "13px" }} onClick={this.handleClick} target="_blank">Lihat Laporan</button></p>            </div>
           </div>
-          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "250px", borderRadius : "10px ", backgroundColor : "#1E53B9D9", marginLeft : "15px"}}>
+          <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "100%", borderRadius : "10px ", backgroundColor : "#1E53B9D9", marginLeft : "15px"}}>
             <p style={{ color : "white" }}>10.000.000</p>
             <p style={{ color : "white" }}>Total Kas</p>
-            <div style={{textAlign : "center", width : "auto", backgroundColor : "#1E53B9D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
+            <div style={{textAlign : "center", width : "100%", backgroundColor : "#1E53B9D9", borderRadius : "0px 0px 10px 10px", marginTop : "11px"}}>
             <p><button style={{ color : "white", fontSize : "13px" }} onClick={this.handleClick} target="_blank">Lihat Laporan</button></p>
             </div>
           </div>
         </div>
     
-      <div style={{display : "flex", marginTop : "70px", marginLeft : "33px" }}>
-          <div style={{alignContent : "center", padding : "20px", width : "705px", border : "3px solid grey", borderRadius : "25px"}}>
+      <div style={{display : "flex", marginTop : "70px"}}>
+          <div style={{alignContent : "center", padding : "20px", width : "100%", border : "3px solid grey", borderRadius : "25px"}}>
             <Chart
               options={this.state.options}
               series={this.state.series}
@@ -216,7 +213,7 @@ class DashboardKeuangan extends Component {
             />
           </div>
   
-          <div style={{alignContent : "center", width : "290px", border : "3px solid grey", marginBottom : "auto", marginLeft : "30px", borderRadius : "25px"}}>
+          <div style={{alignContent : "center", width : "100%", border : "3px solid grey", marginBottom : "auto", marginLeft : "30px", borderRadius : "25px"}}>
             <Chart
               options={this.state2.options}
               series={this.state2.series}

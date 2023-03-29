@@ -1,5 +1,5 @@
 import { DataTables } from "../../../components/DataTables";
-import {CustomStylesModalHapus } from "../../../components/CustomStyles";
+import { CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { ModalStatusList } from "../../../components/ModalPopUp";
 import { getBank, deleteBank } from "../../../api/Bank";
 import { useState, useEffect } from "react";
@@ -78,7 +78,6 @@ const columns = [
     cell:(data) => 
     <div>
         <button style={{ fontSize : "14px" }} onClick={() => navigateUbahListBank(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
-        <button style={{ fontSize : "14px" }} className="btn-action-hijau ml-3"><i className="fa fa-play"></i> Aktif</button>
         <button style={{ fontSize : "14px" }} onClick={() => openModalHapus(data.id, data.nama_pemilik)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,

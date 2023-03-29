@@ -14,7 +14,7 @@ import { Header } from '../../../components';
 export default function TambahBiayaOperasional() {
 
 const [code, setCode] = useState('');
-const [group, setGroup] = useState('');
+const [groupVal, setGroup] = useState('');
 const [sub_group, setSubGroup] = useState('');
 const [item, setItem] = useState('');
 const [debitKredit, setDebitKredit] = useState('');
@@ -108,6 +108,7 @@ const postDataCostCenter = (e) => {
     e.preventDefault();
 
     const payment_type = debitKredit.value
+    const group = groupVal.value
 
     if (code.length === 0 || group.length === 0 || sub_group.length === 0
     || item.length === 0 || debitKredit.length === 0) {
@@ -184,11 +185,12 @@ return (
                     isOpenCostCenter={isOpenCostCenter}
                     closeModalCostCenter={closeModalCostCenter}
                     setCode={(e) => setCode(e.target.value)}
-                    setGroup={(e) => setGroup(e.target.value)}
+                    setGroup={setGroup}
                     setSubGroup={(e) => setSubGroup(e.target.value)}
                     setItem={(e) => setItem(e.target.value)}
                     setDebitKredit={setDebitKredit}
                     defaultValueDK={debitKredit}
+                    defaultValueGroup={groupVal}
                     post={postDataCostCenter}
                 />
                 <DropdownCostCenter

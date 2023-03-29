@@ -1,15 +1,16 @@
 import { DataTables } from "../../../components/DataTables";
+import { CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { CustomStylesStatus } from "../../../components/ModalPopUp";
-import { getKelompokMapel } from "../../../api/KelompokMataPelajaran";
+import { getMapel } from "../../../api/MataPelajaran";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import { ModalStatusList } from "../../../components/ModalPopUp";
 
-export default function ListKelompokMapel() {
+export default function ListMataPelajaran() {
 const [data, setData] = useState([]);   
-const [status, setStatus] = useState("");
+const [status, setStatus] = useState('');
 const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
 const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
 const [isOpenStatus, setisOpenStatus] = useState(false);
@@ -26,11 +27,11 @@ let filteredItems = data
 if (data !== null) {
   filteredItems = 
     data.filter(
-      data => data.name.toLowerCase().includes(filterText.toLowerCase())
+      data => data.course_name.toLowerCase().includes(filterText.toLowerCase())
       )
 }
 
-useEffect(() => {getKelompokMapel(setData, setSts)}, []);
+useEffect(() => {getMapel(setData, setSts)}, []);
 
 const handleNonActiveStatus = (id, description) => {
   setisOpenUpdateTidakAktif(true);
@@ -61,9 +62,9 @@ const onUpdateStatus = () => {
   setisOpenStatus(true);
 }
 
-const openModalHapus = (id, nama_pemilik) => {
+const openModalHapus = (id, course_name) => {
   setisOpenDelete(true);
-  setDesc_nama(nama_pemilik);
+  setDesc_nama(course_name);
   setDeleteId(id);
 }
 
@@ -79,7 +80,7 @@ const onDelete = () => {
 
 const closeModalStatus = () => {
   setisOpenStatus(false);
-  getKelompokMapel(setData, setSts)
+  getMapel(setData, setSts)
   setSts('');
 }
 
@@ -90,9 +91,27 @@ const columns = [
     width: "55px"  
   },
   {
-    name: <div>Nama</div>,
-    selector: (data) => data.name,
-    cell:(data) => <div>{data.name}</div>,
+    name: <div>Code</div>,
+    selector: (data) => data.code,
+    cell:(data) => <div>{data.code}</div>,
+    width: "auto"
+  },
+  {
+    name: <div>Kelompok Mata Pelajaran</div>,
+    selector: (data) => data.group_course_id,
+    cell:(data) => <div>{data.group_course_id}</div>,
+    width: "auto"
+  },
+  {
+    name: <div>Nama Mata Pelajaran</div>,
+    selector: (data) => data.course_name,
+    cell:(data) => <div>{data.course_name}</div>,
+    width: "auto"
+  },
+  {
+    name: <div>Deskripsi</div>,
+    selector: (data) => data.description,
+    cell:(data) => <div>{data.description}</div>,
     width: "auto"
   },
   {
@@ -105,14 +124,14 @@ const columns = [
     name: <div>Aksi</div>,
     cell:(data) => 
     <div>
-        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKelompokMapel(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
+        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahMapel(data.id, data.course_name)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
         {data?.status === 'Aktif' && 
-          <button className="btn-action-hijau ml-3 w-auto px-2" onClick={() => handleActiveStatus(data.id, data.name)}><i className="fa fa-play"></i> {data.status}</button>
+          <button className="btn-action-hijau ml-3 w-auto px-2" onClick={() => handleActiveStatus(data.id, data.course_name)}><i className="fa fa-play"></i> {data.status}</button>
         }
         {data?.status === 'Tidak Aktif' && 
-            <button className="btn-action-pink ml-3 w-auto px-2"  onClick={() => handleNonActiveStatus(data.id, data.name)}><i className="fa fa-pause"></i> {data.status}</button>
+            <button className="btn-action-pink ml-3 w-auto px-2"  onClick={() => handleNonActiveStatus(data.id, data.course_name)}><i className="fa fa-pause"></i> {data.status}</button>
         }
-        <button style={{ fontSize : "14px" }} onClick={() => openModalHapus(data.id, data.name)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
+        <button style={{ fontSize : "14px" }} onClick={() => openModalHapus(data.id, data.course_name)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
     button: true,
@@ -122,29 +141,29 @@ const columns = [
 
 const navigate = useNavigate();
 
-const navigateTambahKelompokMapel = () => {
-    navigate('/admin/tambah-kelompok-mapel');
+const navigateTambahMataPelajaran = () => {
+    navigate('/admin/tambah-mata-pelajaran');
 };
 
-const navigateUbahKelompokMapel = (id, nama_bank) => {
-      navigate('/admin/ubah-kelompok-mapel', { 
+const navigateUbahMapel = (id, course_name) => {
+      navigate('/admin/ubah-mata-pelajaran', { 
         state : {
             id : id,
-            nama_bank : nama_bank,
+            course_name : course_name,
         }
       });
   }; 
 
  return (
   <>
-    <Header category="Admin KBM / Kelompok Mapel" title="List Kelompok Mata Pelajaran" />
+    <Header category="Admin KBM / Mata Pelajaran" title="List Mata Pelajaran" />
 
     <div style={{ marginTop : "50px" }}>
 
-    <DataTables
+      <DataTables
         columns={columns}
         data={filteredItems}
-        onClick={navigateTambahKelompokMapel}
+        onClick={navigateTambahMataPelajaran}
         onFilter={e => setFilterText(e.target.value)}
         filterText={filterText}
       />
@@ -184,12 +203,12 @@ const navigateUbahKelompokMapel = (id, nama_bank) => {
       <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
-          style={CustomStylesStatus}
+          style={CustomStylesModalHapus}
           contentLabel="Modal Hapus"
           ariaHideApp={false}
       >
           <div style={{ textAlign : "center" }}>  
-              <h2 className='mb-2'>Hapus</h2>
+              <h2 className='mb-2'>Hapus Transaksi</h2>
               <h4 className='mb-3 text-merah'>{desc_nama}?</h4>
               <button className="btn-action-hijau w-20" onClick={onDelete}>Hapus</button>
               <button className="btn-action-pink w-20 ml-2" onClick={closeModalHapus}>Batal</button>

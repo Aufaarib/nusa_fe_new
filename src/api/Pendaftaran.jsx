@@ -7,6 +7,10 @@ export function getPendaftaran(setPendaftaranData, setStatus)  {
         const data = res.data.data.filter(
             (e) => e.nama_lengkap_anak !== ""
             );
+        const kelas = res.data.data.filter(
+            (e) => e.kelas_pada_saat_mendaftar !== ""
+        )
+        console.log(kelas)
         setPendaftaranData(data);
         setStatus({ type: 'success' });
     })

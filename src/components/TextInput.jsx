@@ -1,4 +1,4 @@
-export const TextInput = ({ index, label, type, id, name, ref, autoComplete, onChange, value, required, rows, min, max, onInput }) => {
+export const TextInput = ({ placeholder, label, type, id, name, ref, autoComplete, onChange, value, required, rows, min, max, onInput }) => {
 
   return (
     <>
@@ -19,6 +19,7 @@ export const TextInput = ({ index, label, type, id, name, ref, autoComplete, onC
               id={id}
               name={name}
               ref={ref}
+              placeholder={placeholder}
               autoComplete={autoComplete}
               onInput={onInput}
               onChange={onChange}

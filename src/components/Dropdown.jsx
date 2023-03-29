@@ -1,5 +1,71 @@
 import Select from "react-select";
 
+export const DropdownStatus = ({isSearchable, label, name, onChange, required, defaultValue, isClearable, handleOnClick}) =>
+{
+
+  const options = [
+    { value: 'Aktif', label: 'Aktif'},
+    { value: 'Tidak Aktif', label: 'Tidak Aktif'}
+  ];
+
+  return (
+    <div>
+      <form className='grid-container'>
+        {label && (
+        <label htmlFor={name}>
+          {label} {required && <span className="ml-1 text-merah">*</span>} 
+        </label>
+        )}
+        <span>:</span> 
+        <div>
+            <Select
+              className="ml-20"
+              isSearchable={isSearchable}
+              isClearable={isClearable}
+              defaultValue={defaultValue}
+              placeholder="Pilih Salah Satu..."
+              options={options}
+              onChange={onChange}
+            />
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export const DropdownGroup = ({isSearchable, label, name, onChange, required, defaultValue, isClearable, handleOnClick}) =>
+{
+
+  const options = [
+    { value: 'Operasional', label: 'Biaya Operasional'},
+    { value: 'Biaya Pendidikan', label: 'Biaya Pendidikan'}
+  ];
+
+  return (
+    <div>
+      <form className='grid-container'>
+        {label && (
+        <label htmlFor={name}>
+          {label} {required && <span className="ml-1 text-merah">*</span>} 
+        </label>
+        )}
+        <span>:</span> 
+        <div>
+            <Select
+              className="ml-20"
+              isSearchable={isSearchable}
+              isClearable={isClearable}
+              defaultValue={defaultValue}
+              placeholder="Pilih Salah Satu..."
+              options={options}
+              onChange={onChange}
+            />
+        </div>
+      </form>
+    </div>
+  );
+};
+
 export const DropdownCostCenter = ({label, name, onChange, required, options, defaultValue, isClearable, handleOnClick}) =>
 {
   return (
