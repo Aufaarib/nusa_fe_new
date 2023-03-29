@@ -64,7 +64,7 @@ const columns = [
     id: "tanggalTransaksi",
     name: <div>Tanggal Transaksi</div>,
     selector:(data) => data.transaction_date,
-    cell:(data) => moment(data.transaction_date).format("DD/MM/YYYY"),
+    cell:(data) => <div>{moment(data.transaction_date).format("DD/MM/YYYY")}</div>,
     width: "110px",
     sortable: true
   },
@@ -105,8 +105,8 @@ const columns = [
   },
   {
     name: <div>Kelas</div>,
-    selector:(data) => data.class,
-    cell:(data) => <div>IV</div>,
+    selector:(data) => data.kelas_pada_saat_mendaftar,
+    cell:(data) => <div>{data.kelas_pada_saat_mendaftar}</div>,
     width: "75px",
     sortable: true
   },
