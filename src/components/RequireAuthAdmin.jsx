@@ -18,11 +18,14 @@ const RequireAuthAdmin = () => {
   const { auth, setAuth } = useAuth();
   const location = useLocation();  
 
-  const nama = JSON.parse(localStorage.getItem('NAMA'));
-  const role = JSON.parse(localStorage.getItem('ROLE'));
-  const email = JSON.parse(localStorage.getItem('EMAIL'));
-  const token = JSON.parse(localStorage.getItem('TOKEN'));
-  const verified = localStorage.getItem('VERIFIED');
+  // const nama = JSON.parse(localStorage.getItem('NAMA'));
+  // const role = JSON.parse(localStorage.getItem('ROLE'));
+  // const email = JSON.parse(localStorage.getItem('EMAIL'));
+  // const token = JSON.parse(localStorage.getItem('TOKEN'));
+  // const verified = localStorage.getItem('VERIFIED');
+  const nama = localStorage.getItem('NAMA');
+  const role = localStorage.getItem('ROLE');
+  const email = localStorage.getItem('EMAIL');
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -31,7 +34,8 @@ const RequireAuthAdmin = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
-    setAuth({ nama, role, email, token, verified });
+    // setAuth({ nama, role, email, token, verified });
+    setAuth({ nama, role, email });
   }, []);
 
   useEffect(() => {

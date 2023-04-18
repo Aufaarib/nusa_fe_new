@@ -31,6 +31,7 @@ export function getBiayaOperasionalByDate(setData, setSts, startDate, endDate) {
     .then((res) => {
     setData(res.data.data);
     setSts({ type: 'success' });
+    console.log(res.data.data)
     })
     .catch((error) => {
     setSts({ type: 'error', error });

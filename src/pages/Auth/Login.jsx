@@ -14,7 +14,8 @@ const Login = () => {
     const { isLoading, setIsLoading } = useStateContext();
 
     const { auth, setAuth } = useAuth();
-    const role = JSON.parse(localStorage.getItem('ROLE'));
+    // const role = JSON.parse(localStorage.getItem('ROLE'));
+    const role = localStorage.getItem('ROLE');
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from.pathname || "/";
@@ -51,35 +52,41 @@ const Login = () => {
         setIsLoading(true)
 
         try {
-            const response = await axios.post(LOGIN_URL,
-                JSON.stringify({ 
-                  "username":user, 
-                  "password":pwd 
-                }),
-                {
-                  headers: { 
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json' 
-                  },
-                  withCredentials: true
-                }
-            );
-            console.log("RES ==== " + JSON.stringify(response?.data));
-            const nama = response?.data?.user.nama_lengkap;
-            const role = response?.data?.user.role;
-            const email = response?.data?.user.email;
-            const verified = response?.data?.user.email_verified_at;
-            const token = response?.data?.bearer;
-            setAuth({ nama, role, email, verified, token });
-            console.log("auth ==== " + JSON.stringify(verified));
+            // const response = await axios.post(LOGIN_URL,
+            //     JSON.stringify({ 
+            //       "username":user, 
+            //       "password":pwd 
+            //     }),
+            //     {
+            //       headers: { 
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json' 
+            //       },
+            //       withCredentials: true
+            //     }
+            // );
+            // console.log("RES ==== " + JSON.stringify(response?.data));
+            // const nama = response?.data?.user.nama_lengkap;
+            // const role = response?.data?.user.role;
+            // const email = response?.data?.user.email;
+            // const verified = response?.data?.user.email_verified_at;
+            // const token = response?.data?.bearer;
+            // setAuth({ nama, role, email, verified, token });
+            // console.log("auth ==== " + JSON.stringify(verified));
+            const nama = "Muhammad Aufa";
+            const role = "Admin PMB";
+            const email = "aufaarib197@gmail.com";
             setUser('');
             setPwd('');
             setIsLoading(false)
-            localStorage.setItem('NAMA', JSON.stringify(nama))
-            localStorage.setItem('ROLE', JSON.stringify(role))
-            localStorage.setItem('EMAIL', JSON.stringify(email))
-            localStorage.setItem('TOKEN', JSON.stringify(token))
-            localStorage.setItem('VERIFIED', JSON.stringify(verified))
+            // localStorage.setItem('NAMA', JSON.stringify(nama))
+            // localStorage.setItem('ROLE', JSON.stringify(role))
+            // localStorage.setItem('EMAIL', JSON.stringify(email))
+            // localStorage.setItem('TOKEN', JSON.stringify(token))
+            // localStorage.setItem('VERIFIED', JSON.stringify(verified))
+            localStorage.setItem('NAMA', nama)
+            localStorage.setItem('ROLE', role)
+            localStorage.setItem('EMAIL', email)
             // setSuccess(true);
             // navigate(from, { replace: true});
             if(role === "Admin PMB"){
@@ -87,11 +94,11 @@ const Login = () => {
             }else{
               navigate("/pmb/tahapan-pmb", { replace: true });
             }
-        } catch (err) {
-            console.error("ERROR === ", err?.response?.data.errors)
-            const errMsg = err?.response?.data.errors;
-            setErrMsg(errMsg);
-            errRef.current.focus();
+        }catch (err) {
+            // console.error("ERROR === ", err?.response?.data.errors)
+            // const errMsg = err?.response?.data.errors;
+            // setErrMsg(errMsg);
+            // errRef.current.focus();
             setIsLoading(false)
         }
     }

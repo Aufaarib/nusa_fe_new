@@ -18,11 +18,14 @@ const RequireAuth = () => {
   const { auth, setAuth } = useAuth();
   const location = useLocation();  
 
-  const nama = JSON.parse(localStorage.getItem('NAMA'));
-  const role = JSON.parse(localStorage.getItem('ROLE'));
-  const email = JSON.parse(localStorage.getItem('EMAIL'));
-  const token = JSON.parse(localStorage.getItem('TOKEN'));
-  const verified = localStorage.getItem('VERIFIED');
+  // const nama = JSON.parse(localStorage.getItem('NAMA'));
+  // const role = JSON.parse(localStorage.getItem('ROLE'));
+  // const email = JSON.parse(localStorage.getItem('EMAIL'));
+  // const token = JSON.parse(localStorage.getItem('TOKEN'));
+  // const verified = localStorage.getItem('VERIFIED');
+  const nama = localStorage.getItem('NAMA');
+  const role = localStorage.getItem('ROLE');
+  const email = localStorage.getItem('EMAIL');
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -31,7 +34,8 @@ const RequireAuth = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
-    setAuth({ nama, role, email, token, verified });
+    // setAuth({ nama, role, email, token, verified });
+    setAuth({ nama, role, email });
   }, []);
 
   useEffect(() => {
@@ -83,8 +87,8 @@ const RequireAuth = () => {
   // }, [toastShow]);
 
   return (
-    token
-        ? <div className={currentMode === 'Dark' ? 'dark' : ' min-h-screen bg-slate-500'}>
+    // token ? 
+        <div className={currentMode === 'Dark' ? 'dark' : ' min-h-screen bg-slate-500'}>
             <div className="relative flex min-h-screen dark:bg-gelap bg-slate-500">
 
               {/* <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
@@ -144,7 +148,7 @@ const RequireAuth = () => {
             </div>
           </div>
 
-        : <Navigate to ="/login" state={{ from: location }} replace />
+        // : <Navigate to ="/login" state={{ from: location }} replace />
   )
 }
 

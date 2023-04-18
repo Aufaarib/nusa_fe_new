@@ -9,7 +9,7 @@ import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
 import { Header } from '../../../components';
 import { DropdownJenisTransaksi } from '../../../components/Dropdown';
 
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 export default function TambahJadwalMataPelajaran() {
 
@@ -44,8 +44,15 @@ useEffect(() => {
 const postData = (e) => {
     e.preventDefault();
 
-    const start_time = date + "T" + startTime + ".594Z"
-    const end_time = date + "T" + endTime + ".594Z"
+    const jakartaTimezone = 'Asia/Jakarta';
+    const start = moment.tz(startTime, 'HH:mm:ss', jakartaTimezone);
+    const end = moment.tz(endTime, 'HH:mm:ss', jakartaTimezone);
+
+    const displayStartTime = start.format('HH:mm:ss');
+    const displayEndTime = end.format('HH:mm:ss');
+
+    const start_time = date + "T" + displayStartTime + ".594Z"
+    const end_time = date + "T" + displayEndTime + ".594Z"
 
     if (course_id.length === 0 || course_id.length === 0 || day.length === 0 || start_time.length === 0 || end_time.length === 0) {
 

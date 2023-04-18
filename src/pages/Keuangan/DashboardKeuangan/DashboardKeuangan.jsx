@@ -179,7 +179,7 @@ class DashboardKeuangan extends Component {
   render() {
     return (
     <>
-        <Header category="Admin Keuangan / Dashboard" title="Keuangan" />
+        <Header category="Admin Keuangan / Dashboard / Keuangan" title="Keuangan" />
     
         <div style={{display : "flex", marginTop : "35px"}}>
           <div style={{textAlign : "center", paddingTop : "7px", paddingBottom : "0px", paddingLeft : "0px", paddingRight : "0px", width : "100%", borderRadius : "10px ", backgroundColor : "#CC3506D9"}}>

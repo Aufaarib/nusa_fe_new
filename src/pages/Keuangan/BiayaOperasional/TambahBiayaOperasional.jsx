@@ -70,6 +70,7 @@ const postData = (e) => {
         bank_id: bank,
         transaction_type_id: jenisTransaksi,
         total_fee: parseInt(jumlah.replace(/\./g, ''), 10),
+        pendaftaran_id: 1,
         note: catatan,
         transaction_date: isoStringWithMs,
         created_by : created_by
@@ -77,8 +78,10 @@ const postData = (e) => {
     
     const postDataCash = {
         cost_center_id: costCenter,
+        bank_id: null,
         transaction_type_id: jenisTransaksi,
         total_fee: parseInt(jumlah.replace(/\./g, ''), 10),
+        pendaftaran_id: null,
         note: catatan,
         transaction_date: isoStringWithMs,
         created_by : created_by
@@ -143,10 +146,6 @@ const navigate = useNavigate();
 
 const navigateBiayaOperasional = () => {
     navigate('/admin/list-biaya-operasional');
-};
-
-const navigateCostCenter = () => {
-    navigate('/admin/list-cost-center');
 };
 
 const handleInputChange = (event) => {
@@ -256,7 +255,7 @@ return (
                     isOpenStatus={isOpenStatusCostCenter}
                     closeModalStatus={() => closeModalStatusCostCenter()}
                     status={status}
-                    navigate={navigateCostCenter}
+                    navigate={navigateBiayaOperasional}
                 />
 
                 <ModalStatusTambah

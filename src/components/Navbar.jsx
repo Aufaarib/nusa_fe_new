@@ -29,7 +29,8 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 );
 
 const Navbar = () => {
-  const role = JSON.parse(localStorage.getItem('ROLE'));
+  // const role = JSON.parse(localStorage.getItem('ROLE'));
+  const role = localStorage.getItem('ROLE');
   const { auth, setAuth } = useAuth();
   const { currentColor, activeMenu, setActiveMenu, handleClick, isClicked, setScreenSize, screenSize, getNotifications, notifications, notificationNew, notificationUnreadLength, listenBroadcast } = useStateContext();
   const notifDotColor = notificationNew ? currentColor : '';

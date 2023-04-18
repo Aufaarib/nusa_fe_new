@@ -182,7 +182,7 @@ export const ModalStatusList = ({onRequestClose, isOpen, status}) => {
             ariaHideApp={false}
             >
             {status?.type === 'success' && 
-            <div>
+            <div style={{ textAlign : "center" }}>
                 <h2>Berhasil</h2>
                 <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={onRequestClose}>Tutup</button>
             </div>
@@ -190,7 +190,7 @@ export const ModalStatusList = ({onRequestClose, isOpen, status}) => {
             {status?.type === 'error' && 
             <div>
                 <h2>Gagal</h2>
-                <button style={{ padding : "5px" }} className="btn-action-pink w-auto mt-5" onClick={onRequestClose}>Tutup</button>
+                <button className="btn-action-pink w-20 mt-5" onClick={onRequestClose}>Tutup</button>
             </div>
             } 
         </Modal>

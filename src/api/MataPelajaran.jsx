@@ -24,17 +24,32 @@ export function getMapel(setData, setSts) {
 
 }
 
-export function updateKelompokMapel(setStatus, name, status, id) {
+export function updateStatusMapel(setSts, status, id) {
 
-    axios.post(process.env.REACT_APP_NUSA + `/group-course/update/${id}`, {
-        name,
-        status
+    axios.post(process.env.REACT_APP_NUSA + `/course/update/${id}`, {
+        status,
     })
     .then(() => {
-        setStatus({ type: 'success' });
+        setSts({ type: 'success' });
     })
     .catch((error) => {
-        setStatus({ type: 'error', error });
+        setSts({ type: 'error', error });
+    });
+}
+
+export function updateMapel(setSts, code, course_name, description, group_course_id, id) {
+
+    axios.post(process.env.REACT_APP_NUSA + `/course/update/${id}`, {
+        code,
+        course_name,
+        description,
+        group_course_id
+    })
+    .then(() => {
+        setSts({ type: 'success' });
+    })
+    .catch((error) => {
+        setSts({ type: 'error', error });
     });
 }
 
@@ -56,9 +71,9 @@ export function postMapel(setSts, code, course_name, description, group_course_i
     });
 }
 
-export function deleteKelompokMapel(setSts, deleteId) {
+export function deleteMapel(setSts, deleteId) {
 
-    axios.delete(process.env.REACT_APP_NUSA + `/group-course/delete/${deleteId}`)
+    axios.delete(process.env.REACT_APP_NUSA + `/course/delete/${deleteId}`)
     .then(() => {
       setSts({ type: 'success' });
       })

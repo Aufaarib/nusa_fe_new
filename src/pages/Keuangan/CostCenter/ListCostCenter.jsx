@@ -18,8 +18,7 @@ const [sts, setSts] = useState(undefined);
 
 const filteredItems = 
   data.filter(
-    item => item.item.toLowerCase().includes(filterText)||
-    item.group.toLowerCase().includes(filterText.toLowerCase())
+    item => item.item.toLowerCase().includes(filterText)
   );
 
 useEffect(() => { getCostCenter(setData, setSts); }, []);

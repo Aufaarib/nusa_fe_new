@@ -1,9 +1,11 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput'
+import { DropdownJenisTransaksi } from '../../../components/Dropdown';
+import { getSemester } from '../../../api/Semester';
 import { DropdownStatus } from '../../../components/Dropdown';
 import { postKurikulum } from '../../../api/Kurikulum';
 import { useNavigate } from 'react-router-dom';
-import { useState} from 'react';
+import { useState, useEffect } from 'react';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
 import { Header } from '../../../components';
 
@@ -15,10 +17,20 @@ const [description, setDescription] = useState('');
 const [semester, setSemester] = useState('');
 const [statusVal, setStatus] = useState('');
 
+const [semesterData, setSemesterData] = useState([]);
+
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [sts, setSts] = useState(undefined);
 const created_by = localStorage.getItem("NAMA")
+
+const fetchSemester = async () => {
+    getSemester(setSemesterData, setSts)
+  };
+
+useEffect(() => {
+    fetchSemester();
+}, []);
 
 const postData = (e) => {
     e.preventDefault();
@@ -51,6 +63,11 @@ const navigate = useNavigate();
 const navigateSemester = () => {
     navigate('/admin/list-kurikulum');
 };
+
+const SemesterOptions = semesterData.map((c) => ({
+    label: c.name + " - " + c.status,
+    value: c.id,
+}));
 
 return (    
     <div>
@@ -92,13 +109,14 @@ return (
                     isSearchable={false}
                     onChange={setStatus}
                 />
-                <TextInput
+                <DropdownJenisTransaksi
                     label="Semester"
-                    type="number"
-                    id="group"
-                    name="code"
-                    onChange={(e) => setSemester(e.target.value)}
                     required={true}
+                    defaultValue={semester}
+                    isClearable={false}
+                    options={SemesterOptions}
+                    isSearchable={false}
+                    onChange={(e) => setSemester(e.value)}
                 />
 
                 <div className='btn-form'>

@@ -1,6 +1,6 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput';
-import { updateBank } from '../../../api/Bank';
+import { updateSemester } from '../../../api/Semester';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
 import { useLocation, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
@@ -9,23 +9,23 @@ import { Header } from '../../../components';
 
 export default function UbahSemester() {
 
-const [nama_bank, setNamaBank] = useState('');
-const [nomor_rekening, setNomorRekening] = useState('');
-const [nama_pemilik, setNamaPemilik] = useState('');
+const [name, setName] = useState('');
+const [description, setDescription] = useState('');
+const [status, setStatus] = useState('');
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
-const [status, setStatus] = useState(undefined);
+const [sts, setSts] = useState(undefined);
 const location = useLocation();
 
 const postData = (e) => {
     e.preventDefault();
     const id = location.state.id
 
-    if (nama_bank.trim().length === 0 || nomor_rekening.trim().length === 0 || nama_pemilik.trim().length === 0) {
+    if (name.trim().length === 0 || description.trim().length === 0 ) {
         setisOpenEmpty(true);
     }
     else {
-        updateBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, id)
+        updateSemester(setSts, name, description, status, id)
         setisOpenStatus(true);
     }
 }
@@ -36,7 +36,7 @@ const closeModalEmpty = () => {
 
 const closeModalStatus = () => {
     setisOpenStatus(false);
-    setStatus('');
+    setSts('');
 }
 
 const navigate = useNavigate();
@@ -58,19 +58,17 @@ return (
                     <TextInput
                         label="Nama"
                         type="text"
-                        onChange={(e) => setNamaBank(e.target.value)}
+                        placeholder={location.state.name}
+                        onChange={(e) => setName(e.target.value)}
                         required={true}
                     />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
                     <TextInput
                         label="Deskripsi"
                         type="text"
-                        onChange={(e) => setNamaBank(e.target.value)}
+                        placeholder={location.state.description}
+                        onChange={(e) => setDescription(e.target.value)}
                         required={true}
                     />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
                 </section>
 
                 <div className='btn-form'>
@@ -86,7 +84,7 @@ return (
                 <ModalStatusTambah
                     isOpenStatus={isOpenStatus}
                     closeModalStatus={closeModalStatus}
-                    status={status}
+                    status={sts}
                     navigate={navigateSemester}
                 />
 

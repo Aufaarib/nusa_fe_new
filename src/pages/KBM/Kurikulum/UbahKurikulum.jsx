@@ -1,31 +1,44 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput';
-import { updateBank } from '../../../api/Bank';
+import { DropdownJenisTransaksi } from '../../../components/Dropdown';
+import { getSemester } from '../../../api/Semester';
+import { updateKurikulum } from '../../../api/Kurikulum';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
 import { useLocation, useNavigate} from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from '../../../components';
 
 
 export default function UbahKurikulum() {
 
-const [nama_bank, setNamaBank] = useState('');
-const [nomor_rekening, setNomorRekening] = useState('');
-const [nama_pemilik, setNamaPemilik] = useState('');
+const [code, setCode] = useState('');
+const [name, setName] = useState('');
+const [description, setDescription] = useState('');
+const [semester_id, setSemesterId] = useState('');
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
-const [status, setStatus] = useState(undefined);
+const [sts, setSts] = useState(undefined);
 const location = useLocation();
+const [semesterData, setSemesterData] = useState([]);
+
+
+const fetchSemester = async () => {
+    getSemester(setSemesterData, setSts)
+  };
+
+useEffect(() => {
+    fetchSemester();
+}, []);
 
 const postData = (e) => {
     e.preventDefault();
     const id = location.state.id
 
-    if (nama_bank.trim().length === 0 || nomor_rekening.trim().length === 0 || nama_pemilik.trim().length === 0) {
+    if (code.trim().length === 0 || name.trim().length === 0 || description.trim().length === 0 || semester_id.length === 0) {
         setisOpenEmpty(true);
     }
     else {
-        updateBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, id)
+        updateKurikulum(setSts, code, name, description, semester_id, id);
         setisOpenStatus(true);
     }
 }
@@ -36,7 +49,7 @@ const closeModalEmpty = () => {
 
 const closeModalStatus = () => {
     setisOpenStatus(false);
-    setStatus('');
+    setSts('');
 }
 
 const navigate = useNavigate();
@@ -44,6 +57,11 @@ const navigate = useNavigate();
 const navigateKurikulum = () => {
     navigate('/admin/list-kurikulum');
 };
+
+const SemesterOptions = semesterData.map((c) => ({
+    label: c.name + " - " + c.status,
+    value: c.id,
+}));
 
 return (
     <div>
@@ -58,29 +76,33 @@ return (
                     <TextInput
                         label="Code"
                         type="text"
-                        onChange={(e) => setNamaBank(e.target.value)}
+                        placeholder={location.state.code}
+                        onChange={(e) => setCode(e.target.value)}
                         required={true}
                     />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
-
                     <TextInput
                         label="Nama"
                         type="text"
-                        onChange={(e) => setNamaBank(e.target.value)}
+                        placeholder={location.state.name}
+                        onChange={(e) => setName(e.target.value)}
                         required={true}
                     />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
-
                     <TextInput
                         label="Deskripsi"
                         type="text"
-                        onChange={(e) => setNamaBank(e.target.value)}
+                        placeholder={location.state.description}
+                        onChange={(e) => setDescription(e.target.value)}
                         required={true}
                     />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
+                    <DropdownJenisTransaksi
+                        label="Semester"
+                        required={true}
+                        defaultValue={semester_id}
+                        isClearable={false}
+                        options={SemesterOptions}
+                        isSearchable={false}
+                        onChange={(e) => setSemesterId(e.value)}
+                    />
                 </section>
 
                 <div className='btn-form'>
@@ -96,7 +118,7 @@ return (
                 <ModalStatusTambah
                     isOpenStatus={isOpenStatus}
                     closeModalStatus={closeModalStatus}
-                    status={status}
+                    status={sts}
                     navigate={navigateKurikulum}
                 />
 

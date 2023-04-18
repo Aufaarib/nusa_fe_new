@@ -187,6 +187,12 @@ export const sidebarMenus = [
 
 export const sidebarMenusAdmin = [
   {
+    title: 'Dashboard',
+    path: `dashboard`,
+    icon: <AiOutlineBarChart />,
+    links: []
+  },
+  {
     title: 'Admin PMB',
     path: `admin/pmb`,
     icon: <AiOutlineBarChart />,
@@ -218,11 +224,6 @@ export const sidebarMenusAdmin = [
     path: `admin/keuangan`,
     icon: <AiOutlineBarChart />,
     links: [
-      {
-        name: 'Dashboard',
-        path: `dashboard`,
-        icon: <FaWpforms />,
-      },
       {
         name: 'Cost Center',
         path: `admin/list-cost-center`,

@@ -1,6 +1,6 @@
 import React from 'react'
 import TextInput from '../../../components/TextInput';
-import { updateBank } from '../../../api/Bank';
+import { updateKelompokMapel } from '../../../api/KelompokMataPelajaran';
 import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
 import { useLocation, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
@@ -9,9 +9,7 @@ import { Header } from '../../../components';
 
 export default function UbahKelompokMapel() {
 
-const [nama_bank, setNamaBank] = useState('');
-const [nomor_rekening, setNomorRekening] = useState('');
-const [nama_pemilik, setNamaPemilik] = useState('');
+const [name, setName] = useState('');
 const [isOpenStatus, setisOpenStatus] = useState(false);
 const [isOpenEmpty, setisOpenEmpty] = useState(false);
 const [status, setStatus] = useState(undefined);
@@ -21,11 +19,11 @@ const postData = (e) => {
     e.preventDefault();
     const id = location.state.id
 
-    if (nama_bank.trim().length === 0 || nomor_rekening.trim().length === 0 || nama_pemilik.trim().length === 0) {
+    if (name.trim().length === 0) {
         setisOpenEmpty(true);
     }
     else {
-        updateBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, id)
+        updateKelompokMapel(setStatus, name, status, id)
         setisOpenStatus(true);
     }
 }
@@ -42,7 +40,7 @@ const closeModalStatus = () => {
 const navigate = useNavigate();
 
 const navigateKelompokMapel = () => {
-    navigate('/admin/list-kurikulum');
+    navigate('/admin/list-kelompok-mapel');
 };
 
 return (
@@ -58,11 +56,10 @@ return (
                     <TextInput
                         label="Kelompok"
                         type="text"
-                        onChange={(e) => setNamaBank(e.target.value)}
+                        placeholder={location.state.name}
+                        onChange={(e) => setName(e.target.value)}
                         required={true}
                     />
-                    <p className='mt-3'>Data Sebelumnya :</p>
-                    <p className='text-merah font-bold'>{location.state.nama_bank}</p>
                 </section>
 
                 <div className='btn-form'>

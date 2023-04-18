@@ -78,13 +78,13 @@ const columns = [
   {
     name: <div>Jam Mulai</div>,
     selector: (data) => data.start_time,
-    cell:(data) => <div>{moment.parseZone(data.start_time).format('h:mm a')}</div>,
+    cell:(data) => <div>{moment.parseZone(data.start_time).format('hh:mm a')}</div>,
     width: "auto"
   },
   {
     name: <div>Jam Selesai</div>,
     selector: (data) => data.end_time,
-    cell:(data) => <div>{moment.parseZone(data.end_time).format('h:mm a')}</div>,
+    cell:(data) => <div>{moment.parseZone(data.end_time).format('hh:mm a')}</div>,
     width: "auto"
   },
   {

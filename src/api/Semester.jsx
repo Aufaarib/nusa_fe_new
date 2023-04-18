@@ -24,21 +24,22 @@ export function getSemester(setData, setSts) {
 
 }
 
-export function updateKelompokMapel(setStatus, name, status, id) {
+export function updateSemester(setSts, name, description, status, id) {
 
-    axios.post(process.env.REACT_APP_NUSA + `/group-course/update/${id}`, {
+    axios.post(process.env.REACT_APP_NUSA + `/semester/update/${id}`, {
         name,
-        status
+        status,
+        description
     })
     .then(() => {
-        setStatus({ type: 'success' });
+        setSts({ type: 'success' });
     })
     .catch((error) => {
-        setStatus({ type: 'error', error });
+        setSts({ type: 'error', error });
     });
 }
 
-export function postSemester(setStatus, name, description, status) {
+export function postSemester(setSts, name, description, status) {
 
     axios.post(process.env.REACT_APP_NUSA + '/semester/create',{
         name,
@@ -46,10 +47,10 @@ export function postSemester(setStatus, name, description, status) {
         description
     })
     .then(() => {
-        setStatus({ type: 'success' });
+        setSts({ type: 'success' });
     })
     .catch((error) => {
-        setStatus({ type: 'error', error });
+        setSts({ type: 'error', error });
     });
 }
 

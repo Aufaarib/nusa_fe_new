@@ -63,32 +63,29 @@ return (
                         <TextInput
                             label="Nama Bank"
                             type="text"
+                            placeholder={location.state.nama_bank}
                             onChange={(e) => setNamaBank(e.target.value)}
                             required={true}
                         />
-                        <p className='mt-3'>Data Sebelumnya :</p>
-                        <p className='text-merah font-bold'>{location.state.nama_bank}</p>
                         <TextInput
                             label="Nomor Rekening"
                             type="number"
+                            placeholder={location.state.nomor_rekening}
                             onChange={(e) => setNomorRekening(e.target.value)}
                             required={true}
                         />
-                        <p className='mt-3'>Data Sebelumnya :</p>
-                        <p className='text-merah font-bold'>{location.state.nomor_rekening}</p>
                         <TextInput
                             label="Nama Pemilik"
                             type="text"
+                            placeholder={location.state.nama_pemilik}
                             onChange={(e) => setNamaPemilik(e.target.value)}
                             required={true}
                         />
-                        <p className='mt-3'>Data Sebelumnya :</p>
-                        <p className='text-merah font-bold'>{location.state.nama_pemilik}</p>
                     </section>
 
                 </form>
 
-                <section className='flex mt-12'>
+                <div className='btn-form'>
                     <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
                         Ubah
                     </button>
@@ -96,7 +93,7 @@ return (
                     onClick={navigateListBank}>
                         Batal
                     </button>
-                </section>
+                </div>
 
                 <ModalStatusTambah
                     isOpenStatus={isOpenStatus}

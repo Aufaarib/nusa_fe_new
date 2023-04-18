@@ -112,7 +112,7 @@ const App = () => {
             <Route path="/pmb/berkas-pendaftaran" element={(<BerkasPendaftaran />)} />
           </Route>
           
-      </Route>
+        </Route>
     </Routes>
 
   );

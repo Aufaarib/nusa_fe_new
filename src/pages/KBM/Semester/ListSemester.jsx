@@ -1,6 +1,6 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesStatus } from "../../../components/ModalPopUp";
-import { getSemester } from "../../../api/Semester";
+import { getSemester, updateSemester } from "../../../api/Semester";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -32,10 +32,10 @@ if (data !== null) {
 
 useEffect(() => {getSemester(setData, setSts)}, []);
 
-const handleNonActiveStatus = (id, description) => {
+const handleNonActiveStatus = (id, name) => {
   setisOpenUpdateTidakAktif(true);
   setStatus("Aktif");
-  setDesc(description);
+  setDesc(name);
   setUpdateId(id);
 }
 
@@ -43,10 +43,10 @@ const closeModalUpdateTidakAktif = () => {
   setisOpenUpdateTidakAktif(false);
 }
 
-const handleActiveStatus = (id, description) => {
+const handleActiveStatus = (id, name) => {
   setisOpenUpdateAktif(true);
   setStatus("Tidak Aktif");
-  setDesc(description);
+  setDesc(name);
   setUpdateId(id);
 }
 
@@ -55,7 +55,7 @@ const closeModalUpdateAktif = () => {
 }
 
 const onUpdateStatus = () => {
-  // updateTipeTransaksi(setSts, status, updateId)
+  updateSemester(setSts, desc_nama, desc, status, updateId)
   closeModalUpdateAktif();
   closeModalUpdateTidakAktif();
   setisOpenStatus(true);
@@ -111,7 +111,7 @@ const columns = [
     name: <div>Aksi</div>,
     cell:(data) => 
     <div>
-        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKelas(data.id, data.name)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
+        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKelas(data.id, data.name, data.description)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
         {data?.status === 'Aktif' && 
           <button className="btn-action-hijau ml-3 w-auto px-2" onClick={() => handleActiveStatus(data.id, data.name)}><i className="fa fa-play"></i> {data.status}</button>
         }
@@ -132,11 +132,12 @@ const navigateTambahSemester = () => {
     navigate('/admin/tambah-semester');
 };
 
-const navigateUbahKelas = (id, name) => {
+const navigateUbahKelas = (id, name, description) => {
       navigate('/admin/ubah-semester', { 
         state : {
             id : id,
             name : name,
+            description : description
         }
       });
   }; 

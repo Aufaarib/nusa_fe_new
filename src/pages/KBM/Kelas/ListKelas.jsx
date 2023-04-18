@@ -1,6 +1,6 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesModalHapus } from "../../../components/CustomStyles";
-import { getKelas } from "../../../api/Kelas";
+import { getKelas, deleteKelas } from "../../../api/Kelas";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,7 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  // deleteBank(setSts, deleteId);
+  deleteKelas(setSts, deleteId);
   closeModalHapus();
   setisOpenStatus(true);
 }
@@ -71,7 +71,7 @@ const columns = [
     name: <div>Aksi</div>,
     cell:(data) => 
     <div>
-        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKelas(data.id, data.name)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
+        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKelas(data.id, data.name, data.description)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
         <button style={{ fontSize : "14px" }} onClick={() => openModalHapus(data.id, data.name)} className="btn-action-pink ml-3"><i className="fa fa-trash"></i> Hapus</button>
     </div>,
     ignoreRowClick: true,
@@ -86,11 +86,12 @@ const navigateTambahKelas = () => {
     navigate('/admin/tambah-kelas');
 };
 
-const navigateUbahKelas = (id, name) => {
+const navigateUbahKelas = (id, name, description) => {
       navigate('/admin/ubah-kelas', { 
         state : {
             id : id,
             name : name,
+            description : description
         }
       });
   }; 

@@ -24,17 +24,32 @@ export function getKurikulum(setData, setSts) {
 
 }
 
-export function updateKelompokMapel(setStatus, name, status, id) {
+export function updateKurikulum(setSts, code, name, description, semester_id, updateId) {
 
-    axios.post(process.env.REACT_APP_NUSA + `/group-course/update/${id}`, {
+    axios.post(process.env.REACT_APP_NUSA + `/curriculum/update/${updateId}`, {
+        code,
         name,
+        description,
+        semester_id,
+    })
+    .then(() => {
+        setSts({ type: 'success' });
+    })
+    .catch((error) => {
+        setSts({ type: 'error', error });
+    });
+}
+
+export function updateStatusKurikulum(setSts, status, updateId) {
+
+    axios.post(process.env.REACT_APP_NUSA + `/curriculum/update/${updateId}`, {
         status
     })
     .then(() => {
-        setStatus({ type: 'success' });
+        setSts({ type: 'success' });
     })
     .catch((error) => {
-        setStatus({ type: 'error', error });
+        setSts({ type: 'error', error });
     });
 }
 

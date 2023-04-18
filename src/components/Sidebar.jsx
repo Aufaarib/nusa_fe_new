@@ -11,7 +11,8 @@ import logoSaim from '../data/logo-saim.png';
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize, stepsPMB, formCheck, openForm, setOpenForm, setFormCheck, getFormCheck } = useStateContext();
   const [submenuOpen, setSubmenuOpen] = useState(false);
-  const role = JSON.parse(localStorage.getItem('ROLE'));
+  // const role = JSON.parse(localStorage.getItem('ROLE'));
+  const role = localStorage.getItem('ROLE');
   const [currentSidebarMenus, setCurrentSidebarMenus] = useState(sidebarMenus)
 
   const activeLinkTitle = 'flex items-center gap-3 pl-3 pt-2.5 pb-2.5 rounded-md text-black text-md m-0 font-bold bg-krem ';
@@ -47,7 +48,7 @@ const Sidebar = () => {
                 alt="SAIM"
               />
             </Link>
-            <TooltipComponent content="Menu" position="BottomCenter">
+            {/* <TooltipComponent content="Menu" position="BottomCenter">
               <button
                 type="button"
                 onClick={() => setActiveMenu(!activeMenu)}
@@ -56,7 +57,7 @@ const Sidebar = () => {
               >
                 <MdOutlineCancel />
               </button>
-            </TooltipComponent>
+            </TooltipComponent> */}
           </div>
           <div className="p-3 mt-7 w-72">
             {currentSidebarMenus.map((item, index) => (
@@ -72,7 +73,7 @@ const Sidebar = () => {
                     className={({ isActive }) => (isActive ? activeLinkTitle : normalLinkTitle)}
                   >
                     <span>{item.icon}</span>
-                    <span className="w-full capitalize">{item.title}</span>
+                    <span className="w-full capitzalize">{item.title}</span>
                 </NavLink>
                 :
                 <NavLink

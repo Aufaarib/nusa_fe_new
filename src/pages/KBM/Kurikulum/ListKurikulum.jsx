@@ -1,6 +1,6 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesStatus } from "../../../components/ModalPopUp";
-import { getKurikulum } from "../../../api/Kurikulum";
+import { getKurikulum, updateStatusKurikulum } from "../../../api/Kurikulum";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { ModalStatusList } from "../../../components/ModalPopUp";
 
 export default function ListKurikulum() {
 const [data, setData] = useState([]);   
-const [status, setStatus] = useState(false);
+const [status, setStatus] = useState('');
 const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
 const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
 const [isOpenStatus, setisOpenStatus] = useState(false);
@@ -55,7 +55,7 @@ const closeModalUpdateAktif = () => {
 }
 
 const onUpdateStatus = () => {
-  // updateTipeTransaksi(setSts, status, updateId)
+  updateStatusKurikulum(setSts, status, updateId)
   closeModalUpdateAktif();
   closeModalUpdateTidakAktif();
   setisOpenStatus(true);
@@ -108,6 +108,12 @@ const columns = [
     width: "auto"
   },
   {
+    name: <div>Semester ID</div>,
+    selector: (data) => data.semester_id,
+    cell:(data) => <div>{data.semester_id}</div>,
+    width: "auto"
+  },
+  {
     name: <div>Status</div>,
     selector: (data) => data.status,
     cell:(data) => <div>{data.status}</div>,
@@ -117,7 +123,7 @@ const columns = [
     name: <div>Aksi</div>,
     cell:(data) => 
     <div>
-        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKurikulum(data.id, data.name)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
+        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKurikulum( data.id, data.code, data.name, data.description, data.semester_id)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
         {data?.status === 'Aktif' && 
           <button className="btn-action-hijau ml-3 w-auto px-2" onClick={() => handleActiveStatus(data.id, data.name)}><i className="fa fa-play"></i> {data.status}</button>
         }
@@ -138,11 +144,14 @@ const navigateTambahKurikulum = () => {
     navigate('/admin/tambah-kurikulum');
 };
 
-const navigateUbahKurikulum = (id, name) => {
+const navigateUbahKurikulum = (id, code, name, description, semester_id) => {
       navigate('/admin/ubah-kurikulum', { 
         state : {
             id : id,
+            code : code,
             name : name,
+            description : description,
+            semester_id : semester_id
         }
       });
   }; 

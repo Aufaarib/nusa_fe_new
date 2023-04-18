@@ -1,7 +1,7 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesModalHapus } from "../../../components/CustomStyles";
 import { CustomStylesStatus } from "../../../components/ModalPopUp";
-import { getMapel } from "../../../api/MataPelajaran";
+import { getMapel, deleteMapel, updateStatusMapel, updateMapel } from "../../../api/MataPelajaran";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const [isOpenDelete, setisOpenDelete] = useState(false);
 const [sts, setSts] = useState(undefined);
 const [updateId, setUpdateId] = useState("");
 const [deleteId, setDeleteId] = useState("");
-const [desc, setDesc] = useState("");
+const [desc, setDesc] = useState('');
 const [desc_nama, setDesc_nama] = useState('');
 const [filterText, setFilterText] = useState('');
 
@@ -33,10 +33,10 @@ if (data !== null) {
 
 useEffect(() => {getMapel(setData, setSts)}, []);
 
-const handleNonActiveStatus = (id, description) => {
+const handleNonActiveStatus = (id, course_name) => {
   setisOpenUpdateTidakAktif(true);
   setStatus("Aktif");
-  setDesc(description);
+  setDesc(course_name);
   setUpdateId(id);
 }
 
@@ -44,10 +44,10 @@ const closeModalUpdateTidakAktif = () => {
   setisOpenUpdateTidakAktif(false);
 }
 
-const handleActiveStatus = (id, description) => {
+const handleActiveStatus = (id, course_name) => {
   setisOpenUpdateAktif(true);
   setStatus("Tidak Aktif");
-  setDesc(description);
+  setDesc(course_name);
   setUpdateId(id);
 }
 
@@ -56,7 +56,7 @@ const closeModalUpdateAktif = () => {
 }
 
 const onUpdateStatus = () => {
-  // updateTipeTransaksi(setSts, status, updateId)
+  updateStatusMapel(setSts, status, updateId)
   closeModalUpdateAktif();
   closeModalUpdateTidakAktif();
   setisOpenStatus(true);
@@ -73,7 +73,7 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  // deleteBank(setSts, deleteId);
+  deleteMapel(setSts, deleteId);
   closeModalHapus();
   setisOpenStatus(true);
 }
@@ -124,7 +124,7 @@ const columns = [
     name: <div>Aksi</div>,
     cell:(data) => 
     <div>
-        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahMapel(data.id, data.course_name)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
+        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahMapel(data.id, data.course_name,data.code, data.group_course_id, data.description)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
         {data?.status === 'Aktif' && 
           <button className="btn-action-hijau ml-3 w-auto px-2" onClick={() => handleActiveStatus(data.id, data.course_name)}><i className="fa fa-play"></i> {data.status}</button>
         }
@@ -145,11 +145,14 @@ const navigateTambahMataPelajaran = () => {
     navigate('/admin/tambah-mata-pelajaran');
 };
 
-const navigateUbahMapel = (id, course_name) => {
+const navigateUbahMapel = (id, course_name, code, group_course_id, description) => {
       navigate('/admin/ubah-mata-pelajaran', { 
         state : {
             id : id,
             course_name : course_name,
+            code : code,
+            group_course_id : group_course_id,
+            description : description
         }
       });
   }; 

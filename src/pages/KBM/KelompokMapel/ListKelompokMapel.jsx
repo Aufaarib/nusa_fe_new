@@ -1,6 +1,6 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesStatus } from "../../../components/ModalPopUp";
-import { getKelompokMapel } from "../../../api/KelompokMataPelajaran";
+import { getKelompokMapel, updateKelompokMapel, deleteKelompokMapel } from "../../../api/KelompokMataPelajaran";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -55,15 +55,15 @@ const closeModalUpdateAktif = () => {
 }
 
 const onUpdateStatus = () => {
-  // updateTipeTransaksi(setSts, status, updateId)
+  updateKelompokMapel(setSts, desc_nama, status, updateId)
   closeModalUpdateAktif();
   closeModalUpdateTidakAktif();
   setisOpenStatus(true);
 }
 
-const openModalHapus = (id, nama_pemilik) => {
+const openModalHapus = (id, name) => {
   setisOpenDelete(true);
-  setDesc_nama(nama_pemilik);
+  setDesc_nama(name);
   setDeleteId(id);
 }
 
@@ -72,7 +72,7 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  // deleteBank(setSts, deleteId);
+  deleteKelompokMapel(setSts, deleteId)
   closeModalHapus();
   setisOpenStatus(true);
 }
@@ -105,7 +105,7 @@ const columns = [
     name: <div>Aksi</div>,
     cell:(data) => 
     <div>
-        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKelompokMapel(data.id, data.nama_bank, data.nomor_rekening, data.nama_pemilik)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
+        <button style={{ fontSize : "14px" }} onClick={() => navigateUbahKelompokMapel(data.id, data.name)} className="btn-action-ungu"><i className="fa fa-pencil"></i> Ubah</button>
         {data?.status === 'Aktif' && 
           <button className="btn-action-hijau ml-3 w-auto px-2" onClick={() => handleActiveStatus(data.id, data.name)}><i className="fa fa-play"></i> {data.status}</button>
         }
@@ -126,11 +126,11 @@ const navigateTambahKelompokMapel = () => {
     navigate('/admin/tambah-kelompok-mapel');
 };
 
-const navigateUbahKelompokMapel = (id, nama_bank) => {
+const navigateUbahKelompokMapel = (id, name) => {
       navigate('/admin/ubah-kelompok-mapel', { 
         state : {
             id : id,
-            nama_bank : nama_bank,
+            name : name,
         }
       });
   }; 
