@@ -1,6 +1,6 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesStatus } from "../../../components/ModalPopUp";
-import { getKurikulum, updateStatusKurikulum } from "../../../api/Kurikulum";
+import { getKurikulum, updateStatusKurikulum, deleteKurikulum } from "../../../api/Kurikulum";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -72,7 +72,7 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  // deleteBank(setSts, deleteId);
+  deleteKurikulum(setSts, deleteId);
   closeModalHapus();
   setisOpenStatus(true);
 }
@@ -210,7 +210,7 @@ const navigateUbahKurikulum = (id, code, name, description, semester_id) => {
           ariaHideApp={false}
       >
           <div style={{ textAlign : "center" }}>  
-              <h2 className='mb-2'>Hapus Transaksi</h2>
+              <h2 className='mb-2'>Hapus Kurikulum</h2>
               <h4 className='mb-3 text-merah'>{desc_nama}?</h4>
               <button className="btn-action-hijau w-20" onClick={onDelete}>Hapus</button>
               <button className="btn-action-pink w-20 ml-2" onClick={closeModalHapus}>Batal</button>

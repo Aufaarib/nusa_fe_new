@@ -130,7 +130,7 @@ return (
               ariaHideApp={false}
             >
               <div style={{ textAlign : "center" }}>  
-                  <h2 className='mb-2'>Hapus Transaksi</h2>
+                  <h2 className='mb-2'>Hapus</h2>
                   <h4 className='mb-3 text-merah'>{desc}?</h4>
                   <button className="btn-action-hijau w-20" onClick={onDelete}>Hapus</button>
                   <button className="btn-action-pink w-20 ml-2" onClick={closeModalHapus}>Batal</button>

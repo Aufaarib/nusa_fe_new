@@ -73,7 +73,7 @@ const Login = () => {
             // const token = response?.data?.bearer;
             // setAuth({ nama, role, email, verified, token });
             // console.log("auth ==== " + JSON.stringify(verified));
-            const nama = "Muhammad Aufa";
+            const nama = "Muhammad Aufa Arib";
             const role = "Admin PMB";
             const email = "aufaarib197@gmail.com";
             setUser('');
@@ -146,7 +146,7 @@ const Login = () => {
                             autoComplete="off"
                             onChange={(e) => setUser(e.target.value)}
                             value={user}
-                            required
+                            // required
                           />
                         </div>
 
@@ -162,7 +162,7 @@ const Login = () => {
                             id="password"
                             onChange={(e) => setPwd(e.target.value)}
                             value={pwd}
-                            required
+                            // required
                           />
                         </div>
 

@@ -14,8 +14,8 @@ const [isOpenFilter, setisOpenFilter] = useState(false);
 const [sts, setSts] = useState(undefined);
 const [startDateInput, setStartDateInput] = useState(new Date());
 const [endDateInput, setEndDateInput] = useState(new Date());
-const [startDate, setStartDate] = useState('');
-const [endDate, setEndDate] = useState('');
+const [startDate, setStartDate] = useState(moment(new Date()).format("yyyy-MM-DD"));
+const [endDate, setEndDate] = useState(moment(new Date()).format("yyyy-MM-DD"));
 const [filterText, setFilterText] = useState('');
 
 let filteredItems = data

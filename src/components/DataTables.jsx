@@ -96,13 +96,13 @@ export function DataTables ({columns, data = [] , defaultSortFieldId, filterText
             cursor: not-allowed;
             color: grey;
         }
-        .pagination li:hover{
-            background-color: #8F0D1E;
-        }
-        .pagination li:hover a{
-            background-color: #8F0D1E;
-            color: #fff;
-        }
+        // .pagination li:hover{
+        //     background-color: #8F0D1E;
+        // }
+        // .pagination li:hover a{
+        //     background-color: #8F0D1E;
+        //     color: #fff;
+        // }
         .pagination li.disabled:hover{
             background-color: transparent;
         }

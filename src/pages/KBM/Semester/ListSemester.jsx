@@ -1,6 +1,6 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesStatus } from "../../../components/ModalPopUp";
-import { getSemester, updateSemester } from "../../../api/Semester";
+import { getSemester, updateSemester, deleteSemester } from "../../../api/Semester";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -72,7 +72,7 @@ const closeModalHapus = () => {
 }
 
 const onDelete = () => {
-  // deleteBank(setSts, deleteId);
+  deleteSemester(setSts, deleteId);
   closeModalHapus();
   setisOpenStatus(true);
 }

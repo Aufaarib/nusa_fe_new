@@ -71,9 +71,9 @@ export function postKurikulum(setSts, code, name, status, description, semester_
     });
 }
 
-export function deleteKelompokMapel(setSts, deleteId) {
+export function deleteKurikulum(setSts, deleteId) {
 
-    axios.delete(process.env.REACT_APP_NUSA + `/group-course/delete/${deleteId}`)
+    axios.delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
     .then(() => {
       setSts({ type: 'success' });
       })

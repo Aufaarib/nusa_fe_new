@@ -56,9 +56,9 @@ export function postJadwalMapel(setSts, class_id, course_id, day, start_time, en
     });
 }
 
-export function deleteKelompokMapel(setSts, deleteId) {
+export function deleteJadwalMapel(setSts, deleteId) {
 
-    axios.delete(process.env.REACT_APP_NUSA + `/group-course/delete/${deleteId}`)
+    axios.delete(process.env.REACT_APP_NUSA + `/course-schedule/delete/${deleteId}`)
     .then(() => {
       setSts({ type: 'success' });
       })
