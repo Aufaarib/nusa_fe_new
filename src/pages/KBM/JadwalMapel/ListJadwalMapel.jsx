@@ -62,13 +62,13 @@ export default function ListJadwalMataPelajaran() {
       width: "55px",
     },
     {
-      name: <div>Kelas</div>,
+      name: <div>ID Kelas</div>,
       selector: (data) => data.class_id,
       cell: (data) => <div>{data.class_id}</div>,
       width: "auto",
     },
     {
-      name: <div>Mata Pelajaran</div>,
+      name: <div>ID Mapel</div>,
       selector: (data) => data.course_id,
       cell: (data) => <div>{data.course_id}</div>,
       width: "auto",
@@ -101,7 +101,16 @@ export default function ListJadwalMataPelajaran() {
         <div>
           <button
             style={{ fontSize: "14px" }}
-            onClick={() => navigateUbahMapel(data.id, data.day)}
+            onClick={() =>
+              navigateUbahJadwalMapel(
+                data.id,
+                data.class_id,
+                data.course_id,
+                data.day,
+                data.start_time,
+                data.end_time
+              )
+            }
             className="btn-action-ungu"
           >
             <i className="fa fa-pencil"></i> Ubah
@@ -127,11 +136,25 @@ export default function ListJadwalMataPelajaran() {
     navigate("/admin/tambah-jadwal-mata-pelajaran");
   };
 
-  const navigateUbahMapel = (id, course_name) => {
-    navigate("/admin/ubah-mata-pelajaran", {
+  const navigateUbahJadwalMapel = (
+    id,
+    class_id,
+    course_id,
+    day,
+    start_time,
+    end_time
+  ) => {
+    const strt_time = moment.parseZone(start_time).format("hh:mm a");
+    const en_time = moment.parseZone(end_time).format("hh:mm a");
+    console.log(strt_time);
+    navigate("/admin/ubah-jadwal-mata-pelajaran", {
       state: {
         id: id,
-        course_name: course_name,
+        class_id: class_id,
+        course_id: course_id,
+        day: day,
+        start_time: strt_time,
+        end_time: en_time,
       },
     });
   };

@@ -1,31 +1,31 @@
 import React from "react";
 import TextInput from "../../../components/TextInput";
-import { getKelas } from "../../../api/Kelas";
-import { getMapel } from "../../../api/MataPelajaran";
-import { postJadwalMapel } from "../../../api/JadwalMataPelajaran";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { ModalEmpty, ModalStatusTambah } from "../../../components/ModalPopUp";
-import { Header } from "../../../components";
 import { DropdownJenisTransaksi } from "../../../components/Dropdown";
-
+import { getMapel } from "../../../api/MataPelajaran";
+import { getKelas } from "../../../api/Kelas";
+import { updateJadwalMapel } from "../../../api/JadwalMataPelajaran";
+import { ModalEmpty, ModalStatusTambah } from "../../../components/ModalPopUp";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Header } from "../../../components";
 const moment = require("moment-timezone");
 
-export default function TambahJadwalMataPelajaran() {
+export default function UbahJadwalMapel() {
   const [class_id, setClassId] = useState("");
   const [course_id, setCourseId] = useState("");
   const [day, setDay] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-
-  const [classData, setClassData] = useState([]);
-  const [courseData, setCourseData] = useState([]);
-
   const [isOpenStatus, setisOpenStatus] = useState(false);
   const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const created_by = localStorage.getItem("NAMA");
+  //   const created_by = localStorage.getItem("NAMA");
+  const location = useLocation();
   const date = moment(new Date()).format("yyyy-MM-DD");
+
+  //   const [groupcourseData, setGroupCourseData] = useState([]);
+  const [classData, setClassData] = useState([]);
+  const [courseData, setCourseData] = useState([]);
 
   // fetch function
   const fetchCourse = async () => {
@@ -42,6 +42,7 @@ export default function TambahJadwalMataPelajaran() {
 
   const postData = (e) => {
     e.preventDefault();
+    const id = location.state.id;
 
     const jakartaTimezone = "Asia/Jakarta";
     const start = moment.tz(startTime, "HH:mm:ss", jakartaTimezone);
@@ -62,14 +63,14 @@ export default function TambahJadwalMataPelajaran() {
     ) {
       setisOpenEmpty(true);
     } else {
-      postJadwalMapel(
+      updateJadwalMapel(
         setSts,
         class_id,
         course_id,
         day,
         start_time,
         end_time,
-        created_by
+        id
       );
       setisOpenStatus(true);
     }
@@ -83,9 +84,10 @@ export default function TambahJadwalMataPelajaran() {
     setisOpenStatus(false);
     setSts("");
   };
+
   const navigate = useNavigate();
 
-  const navigateSemester = () => {
+  const navigateJadwalMapel = () => {
     navigate("/admin/list-jadwal-mata-pelajaran");
   };
 
@@ -103,62 +105,65 @@ export default function TambahJadwalMataPelajaran() {
     <div>
       <div style={{ marginBottom: "50px" }}>
         <Header
-          category="Admin KBM / Jadwal Mata Pelajaran / Tambah Jadwal Mata Pelajaran"
-          title="Tambah Jadwal Mata Pelajaran"
+          category="Admin KBM / Jadwal Mata Pelajaran / Ubah Jadwal Mata Pelajaran"
+          title="Ubah Jadwal Mata Pelajaran"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">
-          Form Tambah Jadwal Mata Pelajaran
+        <p className="text-3xl mb-16 mt-5 font-bold">
+          Form Ubah Jadwal Mata Pelajaran
         </p>
         <article>
-          <DropdownJenisTransaksi
-            label="Kelas"
-            required={true}
-            defaultValue={class_id}
-            isClearable={false}
-            options={classOptions}
-            isSearchable={false}
-            onChange={(e) => setClassId(e.value)}
-          />
-          <DropdownJenisTransaksi
-            label="Mata Pelajaran"
-            required={true}
-            defaultValue={course_id}
-            isClearable={false}
-            options={courseOptions}
-            isSearchable={false}
-            onChange={(e) => setCourseId(e.value)}
-          />
-          <TextInput
-            label="Hari"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setDay(e.target.value)}
-            required={true}
-          />
-
-          <TextInput
-            label="Jam Mulai"
-            type="text"
-            id="group"
-            name="code"
-            placeholder="00:00:00"
-            defaultValue={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            required={true}
-          />
-          <TextInput
-            label="Jam Selesai"
-            type="text"
-            id="group"
-            name="code"
-            placeholder="00:00:00"
-            defaultValue={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            required={true}
-          />
+          {/* COL 1 */}
+          <section>
+            <DropdownJenisTransaksi
+              label="Kelas"
+              required={true}
+              defaultValue={class_id}
+              isClearable={false}
+              options={classOptions}
+              isSearchable={false}
+              onChange={(e) => setClassId(e.value)}
+            />
+            <DropdownJenisTransaksi
+              label="Mata Pelajaran"
+              required={true}
+              defaultValue={course_id}
+              isClearable={false}
+              options={courseOptions}
+              isSearchable={false}
+              onChange={(e) => setCourseId(e.value)}
+            />
+            <TextInput
+              label="Hari"
+              type="text"
+              id="group"
+              placeholder={location.state.day}
+              name="code"
+              onChange={(e) => setDay(e.target.value)}
+              required={true}
+            />
+            <TextInput
+              label="Jam Mulai"
+              type="text"
+              id="group"
+              name="code"
+              placeholder={location.state.start_time}
+              //   defaultValue={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              required={true}
+            />
+            <TextInput
+              label="Jam Selesai"
+              type="text"
+              id="group"
+              name="code"
+              placeholder={location.state.end_time}
+              //   defaultValue={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              required={true}
+            />
+          </section>
 
           <div className="btn-form">
             <button
@@ -166,22 +171,24 @@ export default function TambahJadwalMataPelajaran() {
               className="w-20 btn-hijau flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Ubah
             </button>
             <button
               type="button"
               className="w-20 btn-merah flex justify-center mb-5"
-              onClick={navigateSemester}
+              onClick={navigateJadwalMapel}
             >
               Batal
             </button>
           </div>
+
           <ModalStatusTambah
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={sts}
-            navigate={navigateSemester}
+            navigate={navigateJadwalMapel}
           />
+
           <ModalEmpty
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
