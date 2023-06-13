@@ -108,7 +108,7 @@ const columns = [
     width: "auto"
   },
   {
-    name: <div>Semester ID</div>,
+    name: <div>Semester</div>,
     selector: (data) => data.semester_id,
     cell:(data) => <div>{data.semester_id}</div>,
     width: "auto"
