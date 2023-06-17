@@ -17,85 +17,84 @@ import product4 from "./product4.jpg";
 
 export const sidebarMenus = [
   // {
-  //   title: 'Dashboard',
-  //   path:`dashboard`,
+  //   title: "Dashboard",
+  //   path: `dashboard`,
   //   icon: <MdOutlineDashboard />,
   //   links: [],
   // },
 
+  {
+    title: "PMB",
+    path: `pmb`,
+    icon: <FaWpforms />,
+    links: [
+      {
+        name: "Tahapan PMB",
+        path: `pmb/tahapan-pmb`,
+        icon: <FaWpforms />,
+        step: "register_payment",
+      },
+      {
+        name: "Form Data Murid",
+        path: `pmb/form-data-murid`,
+        icon: <FaWpforms />,
+        step: "form_murid",
+      },
+      {
+        name: "Form Data Orang Tua",
+        path: `pmb/form-data-orang-tua`,
+        icon: <FaWpforms />,
+        step: "form_ortu_identitas",
+      },
+      {
+        name: "Form Pernyataan",
+        path: `pmb/form-pernyataan`,
+        icon: <FaWpforms />,
+        step: "form_ortu_pernyataan",
+      },
+      {
+        name: "Berkas Pendaftaran",
+        path: `pmb/berkas-pendaftaran`,
+        icon: <FaWpforms />,
+        step: "form_berkas",
+      },
+    ],
+  },
   // {
-  //   title: 'PMB',
-  //   path:`pmb`,
-  //   icon: <FaWpforms />,
-  //   links: [
-  //     {
-  //       name: 'Tahapan PMB',
-  //       path:`pmb/tahapan-pmb`,
-  //       icon: <FaWpforms />,
-  //       step: "register_payment"
-  //     },
-  //     {
-  //       name: 'Form Data Murid',
-  //       path:`pmb/form-data-murid`,
-  //       icon: <FaWpforms />,
-  //       step: "form_murid"
-  //     },
-  //     {
-  //       name: 'Form Data Orang Tua',
-  //       path:`pmb/form-data-orang-tua`,
-  //       icon: <FaWpforms />,
-  //       step: "form_ortu_identitas"
-  //     },
-  //     {
-  //       name: 'Form Pernyataan',
-  //       path:`pmb/form-pernyataan`,
-  //       icon: <FaWpforms />,
-  //       step: "form_ortu_pernyataan"
-  //     },
-  //     {
-  //       name: 'Berkas Pendaftaran',
-  //       path:`pmb/berkas-pendaftaran`,
-  //       icon: <FaWpforms />,
-  //       step: "form_berkas"
-  //     },
-  //   ],
+  //   title: "Tahapan PMB",
+  //   path: `pmb/tahapan-pmb`,
+  //   icon: <BsBarChartSteps />,
+  //   step: "register_payment",
+  //   links: [],
   // },
-  {
-    title: "Tahapan PMB",
-    path: `pmb/tahapan-pmb`,
-    icon: <BsBarChartSteps />,
-    step: "register_payment",
-    links: [],
-  },
-  {
-    title: "Form Data Murid",
-    path: `pmb/form-data-murid`,
-    icon: <FaChild />,
-    step: "register_payment",
-    links: [],
-  },
-  {
-    title: "Form Data Orang Tua",
-    path: `pmb/form-data-orang-tua`,
-    icon: <RiParentFill />,
-    step: "register_payment",
-    links: [],
-  },
-  {
-    title: "Form Pernyataan",
-    path: `pmb/form-pernyataan`,
-    icon: <FaFileSignature />,
-    step: "register_payment",
-    links: [],
-  },
-  {
-    title: "Berkas Pendaftaran",
-    path: `pmb/berkas-pendaftaran`,
-    icon: <AiFillFileText />,
-    step: "register_payment",
-    links: [],
-  },
-
+  // {
+  //   title: "Form Data Murid",
+  //   path: `pmb/form-data-murid`,
+  //   icon: <FaChild />,
+  //   step: "register_payment",
+  //   links: [],
+  // },
+  // {
+  //   title: "Form Data Orang Tua",
+  //   path: `pmb/form-data-orang-tua`,
+  //   icon: <RiParentFill />,
+  //   step: "register_payment",
+  //   links: [],
+  // },
+  // {
+  //   title: "Form Pernyataan",
+  //   path: `pmb/form-pernyataan`,
+  //   icon: <FaFileSignature />,
+  //   step: "register_payment",
+  //   links: [],
+  // },
+  // {
+  //   title: "Berkas Pendaftaran",
+  //   path: `pmb/berkas-pendaftaran`,
+  //   icon: <AiFillFileText />,
+  //   step: "register_payment",
+  //   links: [],
+  // },
   // {
   //   title: 'Keuangan',
   //   path:`keuangan`,
