@@ -11,7 +11,12 @@ import axios from '../api/axios';
 
 import { useStateContext } from '../contexts/ContextProvider';
 
+<<<<<<< HEAD
 import { dropdownData } from '../data/initData';
+=======
+import { dropdownData } from "../data/initData";
+import { DropdownListComponents } from "./Dropdown";
+>>>>>>> parent of 2b6e320 (update)
 
 const PARENTS_URL = '/api/pmb/parent';
 
@@ -136,6 +141,7 @@ const FormPernyataan = ({indexMurid}) => {
 
         <form onSubmit={handleSubmit} className='grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7' >
 
+<<<<<<< HEAD
           {/* COL 1 */}
           <section>
             <div className="flex flex-wrap">
@@ -220,6 +226,111 @@ const FormPernyataan = ({indexMurid}) => {
           
 
         </form>
+=======
+  return (
+    <article>
+      <form
+        onSubmit={handleSubmit}
+        className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7"
+      >
+        {/* COL 1 */}
+        <section>
+          <div className="flex ml-1">
+            <label htmlFor="wakaf" className="form-label">
+              Apakah Ayah dan Bunda bersedia untuk wakaf di Sekolah Adab Insan
+              Mulia<span className="ml-1 text-merah">*</span>
+            </label>
+            <div className="flex gap-5 w-full ml-20">
+              <RadioInput
+                name="wakaf"
+                value="1"
+                label="Ya"
+                onChange={updateParentsRadio}
+                checked={String(parent.question.wakaf)}
+              />
+              <RadioInput
+                id="question"
+                name="wakaf"
+                value="0"
+                label="Tidak"
+                onChange={updateParentsRadio}
+                checked={String(parent.question.wakaf)}
+              />
+            </div>
+          </div>
+
+          <DropdownListComponents
+            label="Jika Ayah dan Bunda bersedia, berapakah nilai nominal yang ingin
+            diwakafkan"
+            required={true}
+            name="question"
+            id="nominal_wakaf"
+            dataSource={dropdownData.nominalWakaf}
+            value={String(parent.question.nominal_infak)}
+            change={updateParentsDropDownCal.bind(this)}
+          />
+
+          <div className="flex ml-1">
+            <label htmlFor="komitmen_infak" className="form-label">
+              Apakah Ayah dan Bunda bersedia berkomitmen untuk berinfak setiap
+              bulan kepada Sekolah Adab Insan Mulia
+              <span className="ml-1 text-merah">*</span>
+            </label>
+            <div className="flex gap-5 w-full ml-20">
+              <RadioInput
+                id="question"
+                name="komitmen_infak"
+                value="1"
+                label="Ya"
+                onChange={updateParentsRadio}
+                checked={String(parent.question.komitmen_infak)}
+              />
+              <RadioInput
+                id="question"
+                name="komitmen_infak"
+                value="0"
+                label="Tidak"
+                onChange={updateParentsRadio}
+                checked={String(parent.question.komitmen_infak)}
+              />
+            </div>
+          </div>
+
+          <DropdownListComponents
+            label="Jika Ayah dan Bunda bersedia berinfak setiap bulan, berapakah
+            nilai nominal yang akan diberikan"
+            required={true}
+            name="question"
+            id="nominal_infak"
+            dataSource={dropdownData.nominalWakaf}
+            value={String(parent.question.nominal_infak)}
+            change={updateParentsDropDownCal.bind(this)}
+          />
+
+          <TextInput
+            label="Jelaskan harapan Ayah dan Bunda mendaftarkan Ananda ke Sekolah Adab Insan Mulia"
+            type="textarea"
+            name="question"
+            id="harapan_ayah_ibu"
+            onChange={updateParents}
+            value={parent.question.harapan_ayah_ibu}
+            required={true}
+            rows="4"
+          />
+
+          <TextInput
+            label="Apa potensi/kelebihan yang dimiliki ayah/bunda?Bersediakah jika ayah/bunda memberikan kontribusi dengan potensi tersebut untuk beramal jama'i membangun Sekolah Adab Insan Mulia"
+            type="textarea"
+            name="question"
+            id="potensi_ayah_ibu"
+            onChange={updateParents}
+            value={parent.question.potensi_ayah_ibu}
+            required={true}
+            rows="4"
+          />
+        </section>
+      </form>
+>>>>>>> parent of 2b6e320 (update)
 
         <section className='flex mt-12'>
           <button className="w-auto btn-merah" onClick={handleSubmit}>

@@ -350,3 +350,179 @@ export const DropdownTipeTransaksi = ({
     </div>
   );
 };
+<<<<<<< HEAD
+=======
+
+export const DropdownListComponents = ({
+  placeholder,
+  label,
+  dataSource,
+  id,
+  name,
+  fields,
+  value,
+  change,
+  required,
+  defaultValue,
+  isClearable,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div className="ml-20">
+          <DropDownListComponent
+            placeholder={placeholder}
+            id={id}
+            dataSource={dataSource}
+            fields={fields}
+            value={value}
+            change={change}
+            // popupHeight="auto"
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export const DropdownDatePickers = ({
+  placeholder,
+  label,
+  dataSource,
+  id,
+  name,
+  fields,
+  value,
+  change,
+  required,
+  defaultValue,
+  isClearable,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div className="ml-20">
+          <DatePickerComponent
+            id={id}
+            value={value}
+            change={change}
+            format="dd MMMM yyyy"
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export const DropdownRadioInputGender = ({
+  onChange,
+  label,
+  checked,
+  id,
+  name,
+  fields,
+  value,
+  change,
+  required,
+  defaultValue,
+  isClearable,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div className="flex gap-5 w-full ml-20">
+          <RadioInput
+            value="Laki-laki"
+            label="Laki-laki"
+            name="jenis_kelamin"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value="Perempuan"
+            label="Perempuan"
+            name="jenis_kelamin"
+            onChange={onChange}
+            checked={checked}
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export const DropdownRadioInputBloodType = ({
+  onChange,
+  label,
+  checked,
+  id,
+  name,
+  fields,
+  value,
+  change,
+  required,
+  defaultValue,
+  isClearable,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div className="flex gap-7 w-full ml-20">
+          <RadioInput
+            value="A"
+            label="A"
+            name="golongan_darah"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value="AB"
+            label="AB"
+            name="golongan_darah"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value="B"
+            label="B"
+            name="golongan_darah"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value="O"
+            label="O"
+            name="golongan_darah"
+            onChange={onChange}
+            checked={checked}
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
+>>>>>>> parent of 2b6e320 (update)

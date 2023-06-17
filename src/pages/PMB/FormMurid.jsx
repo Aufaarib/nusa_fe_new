@@ -54,9 +54,9 @@ const FormMurid = () => {
     setErrMsg("");
   };
 
-  const verified = stepsPMB.register.details.verified;
-  const status = stepsPMB.register_payment.status;
-  const message = stepsPMB.register.details.message;
+  // const verified = stepsPMB.register.details.verified;
+  // const status = stepsPMB.register_payment.status;
+  // const message = stepsPMB.register.details.message;
 
   return (
     <>
