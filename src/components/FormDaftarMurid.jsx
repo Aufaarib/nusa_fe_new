@@ -176,18 +176,12 @@ const FormDaftarMurid = ({ indexMurid }) => {
 
   return (
     <article>
-<<<<<<< HEAD
       <form
         onSubmit={handleSubmit}
         className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
       >
         {/* COL 1 */}
         <section>
-=======
-      <form onSubmit={handleSubmit} className="flex mt-3 gap-7">
-        {/* LEFT SECTION */}
-        <section className="w-full md:w-1/2">
->>>>>>> parent of 2b6e320 (update)
           <TextInput
             label="Nama Depan"
             type="text"
@@ -215,7 +209,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
             required={true}
           />
 
-<<<<<<< HEAD
           <div className="flex flex-wrap">
             <label htmlFor="user" className="flex w-full mt-4 mb-1 form-label">
               Status Anak<span className="ml-1 text-merah">*</span>
@@ -230,19 +223,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
               popupHeight="auto"
             />
           </div>
-=======
-          <DropdownListComponents
-            required={true}
-            label="Status Anak"
-            placeholder=""
-            id="status_anak"
-            dataSource={dropdownData.statusAnak}
-            fields={{ value: "text", text: "text" }}
-            value={student.status_anak}
-            change={updateStudentDropDownCal.bind(this)}
-            // popupHeight="auto"
-          />
->>>>>>> parent of 2b6e320 (update)
 
           <TextInput
             label="Anak ke"
@@ -264,7 +244,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
             min="1"
           />
 
-<<<<<<< HEAD
           <div className="flex flex-wrap">
             <label htmlFor="user" className="flex w-full mt-4 mb-1 form-label">
               Tinggal Bersama<span className="ml-1 text-merah">*</span>
@@ -283,18 +262,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
 
         {/* COL 2 */}
         <section>
-=======
-          <DropdownListComponents
-            required={true}
-            label="Tinggal Bersama"
-            placeholder=""
-            id="tinggal_bersama"
-            dataSource={dropdownData.tinggalBersama}
-            value={student.tinggal_bersama}
-            change={updateStudentDropDownCal.bind(this)}
-          />
-
->>>>>>> parent of 2b6e320 (update)
           <TextInput
             label="Tempat Lahir"
             type="text"
@@ -304,7 +271,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
             required={true}
           />
 
-<<<<<<< HEAD
           <div className="flex flex-wrap">
             <label
               htmlFor="tanggal_lahir"
@@ -442,77 +408,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
           </div>
 
           <TextInput
-=======
-          <DropdownDatePickers
-            label="Tanggal Lahir"
-            id="tanggal_lahir"
-            value={student.tanggal_lahir}
-            change={updateStudentCal.bind(this)}
-          />
-
-          <DropdownRadioInputGender
-            required={true}
-            label="Jenis Kelamin"
-            onChange={updateStudentRadio}
-            checked={student.jenis_kelamin}
-          />
-
-          <DropdownRadioInputBloodType
-            required={true}
-            label="Golongan Darah"
-            onChange={updateStudentRadio}
-            checked={student.golongan_darah}
-          />
-
-          <TextInput
-            label="Hobi Anak"
-            type="text"
-            id="hobby_anak"
-            onChange={updateStudents}
-            value={student.hobby_anak}
-            required={true}
-          />
-          <TextInput
-            label="Berat Badan Anak (Kg)"
-            type="number"
-            id="berat_badan_anak"
-            onChange={updateStudents}
-            value={student.berat_badan_anak}
-            required={true}
-            min="1"
-          />
-          <TextInput
-            label="Nomor Kartu Keluarga"
-            type="text"
-            id="nomor_kartu_keluarga"
-            onChange={updateStudents}
-            value={student.nomor_kartu_keluarga}
-            required={true}
-          />
-          <TextInput
-            label="Jarak Rumah ke Sekolah (Km)"
-            type="number"
-            id="jarak_rumah_ke_sekolah"
-            onChange={updateStudents}
-            value={student.jarak_rumah_ke_sekolah}
-            required={false}
-            min="1"
-          />
-
-          <DropdownListComponents
-            required={true}
-            label="Transportasi ke Sekolah"
-            placeholder=""
-            id="transportasi_ke_sekolah"
-            dataSource={dropdownData.transportasiSekolah}
-            fields={{ value: "text", text: "text" }}
-            value={student.transportasi_ke_sekolah}
-            change={updateStudentDropDownCal.bind(this)}
-            popupHeight="auto"
-          />
-
-          <TextInput
->>>>>>> parent of 2b6e320 (update)
             label="Kelas Pada Saat Mendaftar"
             type="number"
             id="kelas_saat_mendaftar"
