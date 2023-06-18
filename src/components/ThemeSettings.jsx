@@ -1,28 +1,29 @@
-import React from 'react';
-import { MdOutlineCancel } from 'react-icons/md';
-import { BsCheck } from 'react-icons/bs';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-import { Button } from '.';
+import React from "react";
+import { MdOutlineCancel } from "react-icons/md";
+import { BsCheck } from "react-icons/bs";
+import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import { Button } from ".";
 
-import { themeColors } from '../data/initData';
-import { useStateContext } from '../contexts/ContextProvider';
+import { themeColors } from "../data/initData";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const ThemeSettings = () => {
-  const { setColor, setMode, currentMode, currentColor, setThemeSettings } = useStateContext();
+  const { setColor, setMode, currentMode, currentColor, setThemeSettings } =
+    useStateContext();
 
   return (
     <div className="fixed top-0 right-0 w-screen bg-half-transparent nav-item">
       <div className="float-right h-screen dark:text-gray-200  bg-white dark:bg-[#484B52] w-400">
         <div className="flex items-center justify-between p-4 ml-4">
           <p className="text-lg font-semibold">Pengaturan</p>
-          <Button
-            icon={<MdOutlineCancel />}
-            color="rgb(153, 171, 180)"
-            bgHoverColor="merah"
-            textHoverColor="putih"
-            size="2xl"
-            borderRadius="50%"
-          />
+          <button
+            type="button"
+            onClick={() => setThemeSettings(false)}
+            style={{ color: "rgb(153, 171, 180)", borderRadius: "50%" }}
+            className="p-3 text-2xl hover:drop-shadow-xl hover:bg-soft"
+          >
+            <MdOutlineCancel />
+          </button>
         </div>
         <div className="flex-col p-4 ml-4 border-t-1 border-color">
           <p className="text-xl font-semibold ">Pilihan Tema</p>
@@ -35,7 +36,7 @@ const ThemeSettings = () => {
               value="Light"
               className="cursor-pointer"
               onChange={setMode}
-              checked={currentMode === 'Light'}
+              checked={currentMode === "Light"}
             />
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="light" className="ml-2 cursor-pointer text-md">
@@ -50,7 +51,7 @@ const ThemeSettings = () => {
               value="Dark"
               onChange={setMode}
               className="cursor-pointer"
-              checked={currentMode === 'Dark'}
+              checked={currentMode === "Dark"}
             />
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="dark" className="ml-2 cursor-pointer text-md">
@@ -62,7 +63,11 @@ const ThemeSettings = () => {
           <p className="text-xl font-semibold ">Warna Tema</p>
           <div className="flex gap-3">
             {themeColors.map((item, index) => (
-              <TooltipComponent key={index} content={item.name} position="TopCenter">
+              <TooltipComponent
+                key={index}
+                content={item.name}
+                position="TopCenter"
+              >
                 <div
                   className="relative flex items-center gap-5 mt-2 cursor-pointer"
                   key={item.name}
@@ -73,7 +78,11 @@ const ThemeSettings = () => {
                     style={{ backgroundColor: item.color }}
                     onClick={() => setColor(item.color)}
                   >
-                    <BsCheck className={`ml-2 text-2xl text-white ${item.color === currentColor ? 'block' : 'hidden'}`} />
+                    <BsCheck
+                      className={`ml-2 text-2xl text-white ${
+                        item.color === currentColor ? "block" : "hidden"
+                      }`}
+                    />
                   </button>
                 </div>
               </TooltipComponent>

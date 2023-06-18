@@ -12,6 +12,7 @@ import axios from "../api/axios";
 import { useStateContext } from "../contexts/ContextProvider";
 
 import { dropdownData } from "../data/initData";
+import { DropdownListComponents, DropdownRadioInputGender } from "./Dropdown";
 
 const PARENTS_URL = "/api/pmb/parent";
 
@@ -147,132 +148,84 @@ const FormPernyataan = ({ indexMurid }) => {
 
   return (
     <article>
-      <form
-        onSubmit={handleSubmit}
-        className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7"
-      >
-        {/* COL 1 */}
-        <section>
-          <div className="flex flex-wrap">
-            <label htmlFor="wakaf" className="mt-4 form-label">
-              Apakah Ayah dan Bunda bersedia untuk wakaf di Sekolah Adab Insan
-              Mulia<span className="ml-1 text-merah">*</span>
-            </label>
-            <div className="flex gap-5 w-full mt-2.5 mb-2">
-              <RadioInput
-                id="question"
-                name="wakaf"
-                value="1"
-                label="Ya"
-                onChange={updateParentsRadio}
-                checked={String(parent.question.wakaf)}
-              />
-              <RadioInput
-                id="question"
-                name="wakaf"
-                value="0"
-                label="Tidak"
-                onChange={updateParentsRadio}
-                checked={String(parent.question.wakaf)}
-              />
-            </div>
-          </div>
+      <div style={{ maxWidth: "140vh", overflow: "auto" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", gap: "22px", padding: "20px" }}
+        >
+          {/* COL 1 */}
+          <section>
+            <DropdownRadioInputGender
+              required={true}
+              label="Apakah Ayah dan Bunda bersedia untuk wakaf di Sekolah Adab Insan
+              Mulia"
+              value1="1"
+              value2="0"
+              label2="Ya"
+              label3="Tidak"
+              onChange={updateParentsRadio}
+              checked={String(parent.question.wakaf)}
+            />
 
-          <div
-            className={`flex flex-wrap ${
-              parent.question.wakaf == "0" && "hidden"
-            }`}
-          >
-            <label htmlFor="nominal_wakaf" className="mt-4 mb-1 form-label">
-              Jika Ayah dan Bunda bersedia, berapakah nilai nominal yang ingin
-              diwakafkan<span className="ml-1 text-merah">*</span>
-            </label>
-            <DropDownListComponent
-              placeholder=""
+            <DropdownRadioInputGender
+              required={true}
+              label="Apakah Ayah dan Bunda bersedia berkomitmen untuk berinfak setiap
+              bulan kepada Sekolah Adab Insan Mulia"
+              value1="1"
+              value2="0"
+              label2="Ya"
+              label3="Tidak"
+              onChange={updateParentsRadio}
+              checked={String(parent.question.komitmen_infak)}
+            />
+
+            <DropdownListComponents
+              label="Jika Ayah dan Bunda bersedia, berapakah nilai nominal yang ingin
+            diwakafkan"
+              required={true}
               name="question"
               id="nominal_wakaf"
               dataSource={dropdownData.nominalWakaf}
-              fields={{ value: "text", text: "text" }}
-              value={String(parent.question.nominal_wakaf)}
+              value={String(parent.question.nominal_infak)}
               change={updateParentsDropDownCal.bind(this)}
-              popupHeight="auto"
             />
-          </div>
 
-          <div className="flex flex-wrap">
-            <label htmlFor="komitmen_infak" className="mt-4 form-label">
-              Apakah Ayah dan Bunda bersedia berkomitmen untuk berinfak setiap
-              bulan kepada Sekolah Adab Insan Mulia
-              <span className="ml-1 text-merah">*</span>
-            </label>
-            <div className="flex gap-5 w-full mt-2.5 mb-2">
-              <RadioInput
-                id="question"
-                name="komitmen_infak"
-                value="1"
-                label="Ya"
-                onChange={updateParentsRadio}
-                checked={String(parent.question.komitmen_infak)}
-              />
-              <RadioInput
-                id="question"
-                name="komitmen_infak"
-                value="0"
-                label="Tidak"
-                onChange={updateParentsRadio}
-                checked={String(parent.question.komitmen_infak)}
-              />
-            </div>
-          </div>
-
-          <div
-            className={`flex flex-wrap ${
-              parent.question.komitmen_infak == "0" && "hidden"
-            }`}
-          >
-            <label htmlFor="nominal_infak" className="mt-4 mb-1 form-label">
-              Jika Ayah dan Bunda bersedia berinfak setiap bulan, berapakah
-              nilai nominal yang akan diberikan
-              <span className="ml-1 text-merah">*</span>
-            </label>
-            <DropDownListComponent
-              placeholder=""
+            <DropdownListComponents
+              label="Jika Ayah dan Bunda bersedia berinfak setiap bulan, berapakah
+            nilai nominal yang akan diberikan"
+              required={true}
               name="question"
               id="nominal_infak"
               dataSource={dropdownData.nominalWakaf}
-              fields={{ value: "text", text: "text" }}
               value={String(parent.question.nominal_infak)}
               change={updateParentsDropDownCal.bind(this)}
-              popupHeight="auto"
             />
-          </div>
-        </section>
+          </section>
+          <section>
+            <TextInput
+              label="Jelaskan harapan Ayah dan Bunda mendaftarkan Ananda ke Sekolah Adab Insan Mulia"
+              type="textarea"
+              name="question"
+              id="harapan_ayah_ibu"
+              onChange={updateParents}
+              value={parent.question.harapan_ayah_ibu}
+              required={true}
+              rows="4"
+            />
 
-        {/* COL 2 */}
-        <section>
-          <TextInput
-            label="Jelaskan harapan Ayah dan Bunda mendaftarkan Ananda ke Sekolah Adab Insan Mulia"
-            type="textarea"
-            name="question"
-            id="harapan_ayah_ibu"
-            onChange={updateParents}
-            value={parent.question.harapan_ayah_ibu}
-            required={true}
-            rows="4"
-          />
-
-          <TextInput
-            label="Apa potensi/kelebihan yang dimiliki ayah/bunda?Bersediakah jika ayah/bunda memberikan kontribusi dengan potensi tersebut untuk beramal jama'i membangun Sekolah Adab Insan Mulia"
-            type="textarea"
-            name="question"
-            id="potensi_ayah_ibu"
-            onChange={updateParents}
-            value={parent.question.potensi_ayah_ibu}
-            required={true}
-            rows="4"
-          />
-        </section>
-      </form>
+            <TextInput
+              label="Apa potensi/kelebihan yang dimiliki ayah/bunda?Bersediakah jika ayah/bunda memberikan kontribusi dengan potensi tersebut untuk beramal jama'i membangun Sekolah Adab Insan Mulia"
+              type="textarea"
+              name="question"
+              id="potensi_ayah_ibu"
+              onChange={updateParents}
+              value={parent.question.potensi_ayah_ibu}
+              required={true}
+              rows="4"
+            />
+          </section>
+        </form>
+      </div>
 
       <section className="flex mt-12">
         <button className="w-auto btn-merah" onClick={handleSubmit}>

@@ -8,7 +8,7 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 
-const LOGIN_URL = "/api/login";
+// const LOGIN_URL = "/api/login";
 
 const Login = () => {
   const { isLoading, setIsLoading } = useStateContext();
@@ -25,6 +25,7 @@ const Login = () => {
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
+  const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [errMsgUser, setErrMsgUser] = useState("");
   const [errMsgPwd, setErrMsgPwd] = useState("");
@@ -74,8 +75,7 @@ const Login = () => {
       // setAuth({ nama, role, email, verified, token });
       // console.log("auth ==== " + JSON.stringify(verified));
       const nama = "Muhammad Aufa Arib";
-      const role = "Admin PMB";
-      const email = "aufaarib197@gmail.com";
+      const email = "@Ghuroba_maa";
       setUser("");
       setPwd("");
       setIsLoading(false);
@@ -85,12 +85,12 @@ const Login = () => {
       // localStorage.setItem('TOKEN', JSON.stringify(token))
       // localStorage.setItem('VERIFIED', JSON.stringify(verified))
       localStorage.setItem("NAMA", nama);
-      localStorage.setItem("ROLE", role);
+      localStorage.setItem("ROLE", pwd);
       localStorage.setItem("EMAIL", email);
       // setSuccess(true);
       // navigate(from, { replace: true});
-      if (role === "Admin PMB") {
-        navigate("/dashboard", { replace: true });
+      if (pwd === "Admin PMB") {
+        navigate("/admin/dashboard", { replace: true });
       } else {
         navigate("/pmb/tahapan-pmb", { replace: true });
       }
@@ -134,9 +134,9 @@ const Login = () => {
           <h2 className="text-center mt-7 mb-7">Silahkan Masuk</h2>
 
           {/* USER */}
-          <div className="relative block xl:w-480">
+          <div className="relative block xl:w-480 hidden">
             <label htmlFor="user" className="flex mt-4 mb-1 form-label">
-              E-mail
+              Nama
             </label>
             <input
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
@@ -146,22 +146,23 @@ const Login = () => {
               autoComplete="off"
               onChange={(e) => setUser(e.target.value)}
               value={user}
-              required
+              // required
             />
           </div>
 
           {/* PASSWORD */}
           <div className="relative block xl:w-480">
             <label htmlFor="password" className="flex mt-4 mb-1 form-label">
-              Kata Sandi
+              Role
             </label>
             <input
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-              type="password"
+              type="text"
               id="password"
               onChange={(e) => setPwd(e.target.value)}
               value={pwd}
               required
+              placeholder="Admin PMB / Orang Tua"
             />
           </div>
 

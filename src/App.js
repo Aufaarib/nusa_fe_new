@@ -60,6 +60,7 @@ const App = () => {
 
         {/* PROTECTED ROUTES */}
         <Route element={<RequireAuthAdmin />}>
+          <Route path="/admin/dashboard" element={<DashboardKeuangan />} />
           <Route path="/admin/pmb" element={<SetupPMB />} />
           <Route path="/admin/setup-pmb" element={<SetupPMB />} />
           <Route
@@ -154,7 +155,6 @@ const App = () => {
 
         {/* PROTECTED ROUTES */}
         <Route element={<RequireAuth />}>
-          <Route path="/dashboard" element={<DashboardKeuangan />} />
           <Route path="/pmb?verified=1" element={<TahapanPMB />} />
           <Route path="/pmb/tahapan-pmb?verified=1" element={<TahapanPMB />} />
           <Route path="/pmb" element={<TahapanPMB />} />

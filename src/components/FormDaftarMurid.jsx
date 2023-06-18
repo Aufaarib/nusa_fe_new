@@ -7,11 +7,18 @@ import TextInput from "./TextInput";
 import RadioInput from "./RadioInput";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
+import {
+  DropdownDatePickers,
+  DropdownListComponents,
+  DropdownRadioInputBloodType,
+  DropdownRadioInputGender,
+} from "./Dropdown";
 import axios from "../api/axios";
 
 import { useStateContext } from "../contexts/ContextProvider";
 
 import { dropdownData } from "../data/initData";
+import { DropdownBank, DropdownStatus } from "./Dropdown";
 
 const STUDENT_URL = "/api/pmb/student";
 
@@ -38,32 +45,6 @@ const FormDaftarMurid = ({ indexMurid }) => {
       // console.log("STUDENT DATA LENGTH === ", student)
     }
   }, [student]);
-
-  // const calledOnce = useRef(false);
-
-  // useEffect(() => {
-  //   if (calledOnce.current) {
-  //     return;
-  //   }
-
-  //   if (student == {}) {
-  //     setStudent(students[indexMurid]);
-  //     console.log('I run only once if student is {}.');
-  //     calledOnce.current = true;
-  //   }
-  //   console.log("STUDENT === ", student)
-  // }, [student]);
-
-  // const updateStudents = (index) => (e) => {
-  //   const newArray = students.map((item, i) => {
-  //     if (index === i) {
-  //       return { ...item, [e.target.id]: e.target.value };
-  //     } else {
-  //       return item;
-  //     }
-  //   });
-  //   setStudents(newArray);
-  // }
 
   const updateStudents = (e) => {
     const fieldName = e.target.id;
@@ -176,227 +157,153 @@ const FormDaftarMurid = ({ indexMurid }) => {
 
   return (
     <article>
-      <form
-        onSubmit={handleSubmit}
-        className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
-      >
-        {/* COL 1 */}
-        <section>
-          <TextInput
-            label="Nama Depan"
-            type="text"
-            id="nama_depan"
-            onChange={updateStudents}
-            value={student.nama_depan}
-            required={true}
-          />
+      <div style={{ maxWidth: "145vh", overflow: "auto" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", gap: "22px", padding: "20px" }}
+        >
+          <section>
+            <TextInput
+              label="Nama Depan"
+              type="text"
+              id="nama_depan"
+              onChange={updateStudents}
+              value={student.nama_depan}
+              required={true}
+            />
 
-          <TextInput
-            label="Nama Tengah"
-            type="text"
-            id="nama_tengah"
-            onChange={updateStudents}
-            value={student.nama_tengah}
-            required={false}
-          />
+            <TextInput
+              label="Nama Tengah"
+              type="text"
+              id="nama_tengah"
+              onChange={updateStudents}
+              value={student.nama_tengah}
+              required={false}
+            />
 
-          <TextInput
-            label="Nama Belakang"
-            type="text"
-            id="nama_belakang"
-            onChange={updateStudents}
-            value={student.nama_belakang}
-            required={true}
-          />
+            <TextInput
+              label="Nama Belakang"
+              type="text"
+              id="nama_belakang"
+              onChange={updateStudents}
+              value={student.nama_belakang}
+              required={true}
+            />
 
-          <div className="flex flex-wrap">
-            <label htmlFor="user" className="flex w-full mt-4 mb-1 form-label">
-              Status Anak<span className="ml-1 text-merah">*</span>
-            </label>
-            <DropDownListComponent
+            <DropdownListComponents
+              required={true}
+              label="Status Anak"
               placeholder=""
               id="status_anak"
               dataSource={dropdownData.statusAnak}
               fields={{ value: "text", text: "text" }}
               value={student.status_anak}
               change={updateStudentDropDownCal.bind(this)}
-              popupHeight="auto"
+              // popupHeight="auto"
             />
-          </div>
 
-          <TextInput
-            label="Anak ke"
-            type="number"
-            id="anak_ke"
-            onChange={updateStudents}
-            value={student.anak_ke}
-            required={true}
-            min="1"
-          />
+            <TextInput
+              label="Anak ke"
+              type="number"
+              id="anak_ke"
+              onChange={updateStudents}
+              value={student.anak_ke}
+              required={true}
+              min="1"
+            />
 
-          <TextInput
-            label="Tinggi Badan Anak (cm)"
-            type="number"
-            id="tinggi_badan_anak"
-            onChange={updateStudents}
-            value={student.tinggi_badan_anak}
-            required={true}
-            min="1"
-          />
+            <TextInput
+              label="Tinggi Badan Anak (cm)"
+              type="number"
+              id="tinggi_badan_anak"
+              onChange={updateStudents}
+              value={student.tinggi_badan_anak}
+              required={true}
+              min="1"
+            />
 
-          <div className="flex flex-wrap">
-            <label htmlFor="user" className="flex w-full mt-4 mb-1 form-label">
-              Tinggal Bersama<span className="ml-1 text-merah">*</span>
-            </label>
-            <DropDownListComponent
+            <DropdownListComponents
+              required={true}
+              label="Tinggal Bersama"
               placeholder=""
               id="tinggal_bersama"
               dataSource={dropdownData.tinggalBersama}
-              fields={{ value: "text", text: "text" }}
               value={student.tinggal_bersama}
               change={updateStudentDropDownCal.bind(this)}
-              popupHeight="auto"
             />
-          </div>
-        </section>
 
-        {/* COL 2 */}
-        <section>
-          <TextInput
-            label="Tempat Lahir"
-            type="text"
-            id="tempat_lahir"
-            onChange={updateStudents}
-            value={student.tempat_lahir}
-            required={true}
-          />
+            <TextInput
+              label="Tempat Lahir"
+              type="text"
+              id="tempat_lahir"
+              onChange={updateStudents}
+              value={student.tempat_lahir}
+              required={true}
+            />
 
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="tanggal_lahir"
-              className="flex w-full mt-4 mb-1 form-label"
-            >
-              Tanggal Lahir<span className="ml-1 text-merah">*</span>
-            </label>
-            <DatePickerComponent
+            <DropdownDatePickers
+              label="Tanggal Lahir"
               id="tanggal_lahir"
               value={student.tanggal_lahir}
               change={updateStudentCal.bind(this)}
-              format="dd MMMM yyyy"
             />
-          </div>
+            <DropdownRadioInputGender
+              required={true}
+              label="Jenis Kelamin"
+              value1="Perempuan"
+              value2="Laki-Laki"
+              label2="Perempuan"
+              label3="Laki-Laki"
+              onChange={updateStudentRadio}
+              checked={student.jenis_kelamin}
+            />
 
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="jenis_kelamin"
-              className="flex w-full mt-4 form-label"
-            >
-              Jenis Kelamin<span className="ml-1 text-merah">*</span>
-            </label>
-            <div className="flex gap-5 w-full mt-2.5 mb-2.5">
-              <RadioInput
-                value="Laki-laki"
-                label="Laki-laki"
-                name="jenis_kelamin"
-                onChange={updateStudentRadio}
-                checked={student.jenis_kelamin}
-              />
-              <RadioInput
-                value="Perempuan"
-                label="Perempuan"
-                name="jenis_kelamin"
-                onChange={updateStudentRadio}
-                checked={student.jenis_kelamin}
-              />
-            </div>
-          </div>
+            <DropdownRadioInputBloodType
+              required={true}
+              label="Golongan Darah"
+              onChange={updateStudentRadio}
+              checked={student.golongan_darah}
+            />
+          </section>
+          <section>
+            <TextInput
+              label="Hobi Anak"
+              type="text"
+              id="hobby_anak"
+              onChange={updateStudents}
+              value={student.hobby_anak}
+              required={true}
+            />
+            <TextInput
+              label="Berat Badan Anak (Kg)"
+              type="number"
+              id="berat_badan_anak"
+              onChange={updateStudents}
+              value={student.berat_badan_anak}
+              required={true}
+              min="1"
+            />
+            <TextInput
+              label="Nomor Kartu Keluarga"
+              type="text"
+              id="nomor_kartu_keluarga"
+              onChange={updateStudents}
+              value={student.nomor_kartu_keluarga}
+              required={true}
+            />
+            <TextInput
+              label="Jarak Rumah ke Sekolah (Km)"
+              type="number"
+              id="jarak_rumah_ke_sekolah"
+              onChange={updateStudents}
+              value={student.jarak_rumah_ke_sekolah}
+              required={false}
+              min="1"
+            />
 
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="golongan_darah"
-              className="flex w-full mt-4 form-label"
-            >
-              Golongan Darah<span className="ml-1 text-merah">*</span>
-            </label>
-            <div className="flex gap-5 w-full mt-2.5 mb-2.5">
-              <RadioInput
-                value="A"
-                label="A"
-                name="golongan_darah"
-                onChange={updateStudentRadio}
-                checked={student.golongan_darah}
-              />
-              <RadioInput
-                value="AB"
-                label="AB"
-                name="golongan_darah"
-                onChange={updateStudentRadio}
-                checked={student.golongan_darah}
-              />
-              <RadioInput
-                value="B"
-                label="B"
-                name="golongan_darah"
-                onChange={updateStudentRadio}
-                checked={student.golongan_darah}
-              />
-              <RadioInput
-                value="O"
-                label="O"
-                name="golongan_darah"
-                onChange={updateStudentRadio}
-                checked={student.golongan_darah}
-              />
-            </div>
-          </div>
-
-          <TextInput
-            label="Hobi Anak"
-            type="text"
-            id="hobby_anak"
-            onChange={updateStudents}
-            value={student.hobby_anak}
-            required={true}
-          />
-          <TextInput
-            label="Berat Badan Anak (Kg)"
-            type="number"
-            id="berat_badan_anak"
-            onChange={updateStudents}
-            value={student.berat_badan_anak}
-            required={true}
-            min="1"
-          />
-          <TextInput
-            label="Nomor Kartu Keluarga"
-            type="text"
-            id="nomor_kartu_keluarga"
-            onChange={updateStudents}
-            value={student.nomor_kartu_keluarga}
-            required={true}
-          />
-        </section>
-
-        {/* COL 3 */}
-        <section>
-          <TextInput
-            label="Jarak Rumah ke Sekolah (Km)"
-            type="number"
-            id="jarak_rumah_ke_sekolah"
-            onChange={updateStudents}
-            value={student.jarak_rumah_ke_sekolah}
-            required={false}
-            min="1"
-          />
-
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="transportasi_ke_sekolah"
-              className="flex w-full mt-4 mb-1 form-label"
-            >
-              Transportasi ke Sekolah<span className="ml-1 text-merah">*</span>
-            </label>
-            <DropDownListComponent
+            <DropdownListComponents
+              required={true}
+              label="Transportasi ke Sekolah"
               placeholder=""
               id="transportasi_ke_sekolah"
               dataSource={dropdownData.transportasiSekolah}
@@ -405,52 +312,52 @@ const FormDaftarMurid = ({ indexMurid }) => {
               change={updateStudentDropDownCal.bind(this)}
               popupHeight="auto"
             />
-          </div>
 
-          <TextInput
-            label="Kelas Pada Saat Mendaftar"
-            type="number"
-            id="kelas_saat_mendaftar"
-            onChange={updateStudents}
-            value={student.kelas_saat_mendaftar}
-            required={true}
-            min="1"
-            max="6"
-          />
-          <TextInput
-            label="Asal Sekolah"
-            type="text"
-            id="asal_sekolah"
-            onChange={updateStudents}
-            value={student.asal_sekolah}
-            required={true}
-          />
-          <TextInput
-            label="Sifat Dominan Anak"
-            type="text"
-            id="sifat_dominan_anak"
-            onChange={updateStudents}
-            value={student.sifat_dominan_anak}
-            required={true}
-          />
-          <TextInput
-            label="Penyakit Berat yang Pernah Diderita"
-            type="text"
-            id="penyakit_pernah_diderita"
-            onChange={updateStudents}
-            value={student.penyakit_pernah_diderita}
-            required={true}
-          />
-          <TextInput
-            label="Nomor Akta Lahir Anak"
-            type="text"
-            id="nomor_akta_lahir_anak"
-            onChange={updateStudents}
-            value={student.nomor_akta_lahir_anak}
-            required
-          />
-        </section>
-      </form>
+            <TextInput
+              label="Kelas Pada Saat Mendaftar"
+              type="number"
+              id="kelas_saat_mendaftar"
+              onChange={updateStudents}
+              value={student.kelas_saat_mendaftar}
+              required={true}
+              min="1"
+              max="6"
+            />
+            <TextInput
+              label="Asal Sekolah"
+              type="text"
+              id="asal_sekolah"
+              onChange={updateStudents}
+              value={student.asal_sekolah}
+              required={true}
+            />
+            <TextInput
+              label="Sifat Dominan Anak"
+              type="text"
+              id="sifat_dominan_anak"
+              onChange={updateStudents}
+              value={student.sifat_dominan_anak}
+              required={true}
+            />
+            <TextInput
+              label="Penyakit Berat yang Pernah Diderita"
+              type="text"
+              id="penyakit_pernah_diderita"
+              onChange={updateStudents}
+              value={student.penyakit_pernah_diderita}
+              required={true}
+            />
+            <TextInput
+              label="Nomor Akta Lahir Anak"
+              type="text"
+              id="nomor_akta_lahir_anak"
+              onChange={updateStudents}
+              value={student.nomor_akta_lahir_anak}
+              required
+            />
+          </section>
+        </form>
+      </div>
 
       <section className="flex mt-12">
         <button

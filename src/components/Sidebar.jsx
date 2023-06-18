@@ -117,10 +117,8 @@ const Sidebar = () => {
                       isActive ? activeLinkTitle : normalLinkTitle
                     }
                   >
-                    <span className="text-gray-300">{item.icon}</span>
-                    <span className="w-full text-gray-300 capitalize">
-                      {item.title}
-                    </span>
+                    <span>{item.icon}</span>
+                    <span className="w-full capitalize">{item.title}</span>
                   </NavLink>
                 )}
                 {item.links.length ? (

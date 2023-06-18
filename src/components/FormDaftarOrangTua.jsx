@@ -13,6 +13,7 @@ import axios from "../api/axios";
 import { useStateContext } from "../contexts/ContextProvider";
 
 import { dropdownData } from "../data/initData";
+import { DropdownDatePickers, DropdownListComponents } from "./Dropdown";
 
 const PARENTS_URL = "/api/pmb/parent";
 
@@ -232,11 +233,11 @@ const FormDaftarOrangTua = ({ indexMurid }) => {
   };
 
   return (
-    <article className="relative">
+    <article>
       {/* <h1>{JSON.stringify(parents[0].duplicate_data)}</h1> */}
 
       {/* {(!parents[indexMurid].duplicate_data && parents[indexMurid].ayah.nama_lengkap == "" ) && ( */}
-      {indexMurid > 0 && parents[0].ayah.nama_lengkap !== "" && (
+      {/* {indexMurid > 0 && parents[0].ayah.nama_lengkap !== "" && (
         <CheckBoxComponent
           label="Duplikat Data"
           data-name="duplicateDataOrtu"
@@ -245,7 +246,7 @@ const FormDaftarOrangTua = ({ indexMurid }) => {
           cssClass="e-danger absolute -top-[42px] right-0"
           change={handleCheckbox.bind(this)}
         />
-      )}
+      )} */}
 
       {/* {(indexMurid > 0 && parents[0].ayah.nama_lengkap !== "" ) && (
           <button className="w-auto btn-merah" onClick={handleSubmit}>
@@ -253,377 +254,323 @@ const FormDaftarOrangTua = ({ indexMurid }) => {
             Duplikat Data
           </button>
         )} */}
+      <div style={{ maxWidth: "140vh", overflow: "auto" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", gap: "22px", padding: "10px" }}
+        >
+          {/* AYAH */}
+          {/* COL 1 */}
+          <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
+            <h1 className="mt-3 text-merah">Pendataan Ayah</h1>
+            <p className="text-xs">
+              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
+              <span className="text-merah">*</span>) wajib diisi.
+            </p>
+          </section>
 
-      <form
-        onSubmit={handleSubmit}
-        className="relative grid mt-3 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-7"
-      >
-        {/* AYAH */}
-        {/* COL 1 */}
-        <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-          <h1 className="mt-3 text-merah">Pendataan Ayah</h1>
-          <p className="text-xs">
-            Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
-            <span className="text-merah">*</span>) wajib diisi.
-          </p>
-        </section>
+          {/* COL 2 */}
+          <section className="xs:col-span-3 lg:col-span-1 mt-5">
+            <TextInput
+              label="Nama Lengkap Ayah"
+              type="text"
+              name="ayah"
+              id="nama_lengkap"
+              onChange={updateParents}
+              value={parent.ayah.nama_lengkap}
+              required={true}
+            />
 
-        {/* COL 2 */}
-        <section className="xs:col-span-3 lg:col-span-1">
-          <TextInput
-            label="Nama Lengkap Ayah"
-            type="text"
-            name="ayah"
-            id="nama_lengkap"
-            onChange={updateParents}
-            value={parent.ayah.nama_lengkap}
-            required={true}
-          />
+            <TextInput
+              label="Nomor Ponsel Ayah"
+              type="text"
+              name="ayah"
+              id="nomor_ponsel"
+              onChange={updateParents}
+              value={parent.ayah.nomor_ponsel}
+              required={true}
+            />
 
-          <TextInput
-            label="Nomor Ponsel Ayah"
-            type="text"
-            name="ayah"
-            id="nomor_ponsel"
-            onChange={updateParents}
-            value={parent.ayah.nomor_ponsel}
-            required={true}
-          />
+            <TextInput
+              label="Alamat Tempat Tinggal Ayah"
+              type="text"
+              name="ayah"
+              id="alamat"
+              onChange={updateParents}
+              value={parent.ayah.alamat}
+              required={true}
+            />
 
-          <TextInput
-            label="Alamat Tempat Tinggal Ayah"
-            type="text"
-            name="ayah"
-            id="alamat"
-            onChange={updateParents}
-            value={parent.ayah.alamat}
-            required={true}
-          />
+            <TextInput
+              label="Tempat Lahir Ayah"
+              type="text"
+              name="ayah"
+              id="tempat_lahir"
+              onChange={updateParents}
+              value={parent.ayah.tempat_lahir}
+              required={true}
+            />
 
-          <TextInput
-            label="Tempat Lahir Ayah"
-            type="text"
-            name="ayah"
-            id="tempat_lahir"
-            onChange={updateParents}
-            value={parent.ayah.tempat_lahir}
-            required={true}
-          />
-
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="tanggal_lahir"
-              className="flex w-full mt-4 mb-1 form-label"
-            >
-              Tanggal Lahir Ayah<span className="ml-1 text-merah">*</span>
-            </label>
-            <DatePickerComponent
+            <DropdownDatePickers
+              label="Tanggal Lahir Ayah"
               name="ayah"
               id="tanggal_lahir"
               value={parent.ayah.tanggal_lahir}
               change={updateParentsDropDownCal.bind(this)}
-              format="dd MMMM yyyy"
             />
-          </div>
-        </section>
 
-        {/* COL 3 */}
-        <section className="xs:col-span-3 lg:col-span-1">
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="pendidikan_terakhir"
-              className="flex w-full mt-4 mb-1 form-label"
-            >
-              Pendidikan Terakhir<span className="ml-1 text-merah">*</span>
-            </label>
-            <DropDownListComponent
-              placeholder=""
+            <DropdownListComponents
+              required={true}
               name="ayah"
+              label="Pendidikan Terakhir"
+              placeholder=""
               id="pendidikan_terakhir"
               dataSource={dropdownData.pendidikanTerakhir}
               fields={{ value: "text", text: "text" }}
               value={parent.ayah.pendidikan_terakhir}
               change={updateParentsDropDownCal.bind(this)}
-              popupHeight="auto"
             />
-          </div>
 
-          <TextInput
-            label="Perusahaan Tempat Bekerja"
-            type="text"
-            name="ayah"
-            id="perusahaan_tempat_bekerja"
-            onChange={updateParents}
-            value={parent.ayah.perusahaan_tempat_bekerja}
-            required={true}
-          />
+            <TextInput
+              label="Perusahaan Tempat Bekerja"
+              type="text"
+              name="ayah"
+              id="perusahaan_tempat_bekerja"
+              onChange={updateParents}
+              value={parent.ayah.perusahaan_tempat_bekerja}
+              required={true}
+            />
 
-          <TextInput
-            label="Posisi/ Jabatan"
-            type="text"
-            name="ayah"
-            id="posisi_jabatan"
-            onChange={updateParents}
-            value={parent.ayah.posisi_jabatan}
-            required={true}
-          />
+            <TextInput
+              label="Posisi/ Jabatan"
+              type="text"
+              name="ayah"
+              id="posisi_jabatan"
+              onChange={updateParents}
+              value={parent.ayah.posisi_jabatan}
+              required={true}
+            />
 
-          <TextInput
-            label="Penghasilan Tiap Bulan"
-            type="number"
-            name="ayah"
-            id="penghasilan_per_bulan"
-            onChange={updateParents}
-            value={parent.ayah.penghasilan_per_bulan}
-            required={true}
-            min="1"
-          />
-        </section>
+            <TextInput
+              label="Penghasilan Tiap Bulan"
+              type="number"
+              name="ayah"
+              id="penghasilan_per_bulan"
+              onChange={updateParents}
+              value={parent.ayah.penghasilan_per_bulan}
+              required={true}
+              min="1"
+            />
+          </section>
 
-        {/* IBU */}
-        {/* COL 1 */}
-        <section className="mt-12 xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0 lg:mt-0">
-          <h1 className="mt-3 text-merah">Pendataan Ibu</h1>
-          <p className="text-xs">
-            Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
-            <span className="text-merah">*</span>) wajib diisi.
-          </p>
-        </section>
+          {/* IBU */}
+          {/* COL 1 */}
+          <section className="mt-12 xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0 lg:mt-0">
+            <h1 className="mt-3 text-merah">Pendataan Ibu</h1>
+            <p className="text-xs">
+              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
+              <span className="text-merah">*</span>) wajib diisi.
+            </p>
+          </section>
 
-        {/* COL 2 */}
-        <section className="xs:col-span-3 lg:col-span-1">
-          <TextInput
-            label="Nama Lengkap Ibu"
-            type="text"
-            name="ibu"
-            id="nama_lengkap"
-            onChange={updateParents}
-            value={parent.ibu.nama_lengkap}
-            required={true}
-          />
+          {/* COL 2 */}
+          <section className="xs:col-span-3 lg:col-span-1 mt-5">
+            <TextInput
+              label="Nama Lengkap Ibu"
+              type="text"
+              name="ibu"
+              id="nama_lengkap"
+              onChange={updateParents}
+              value={parent.ibu.nama_lengkap}
+              required={true}
+            />
 
-          <TextInput
-            label="Nomor Ponsel Ibu"
-            type="text"
-            name="ibu"
-            id="nomor_ponsel"
-            onChange={updateParents}
-            value={parent.ibu.nomor_ponsel}
-            required={true}
-          />
+            <TextInput
+              label="Nomor Ponsel Ibu"
+              type="text"
+              name="ibu"
+              id="nomor_ponsel"
+              onChange={updateParents}
+              value={parent.ibu.nomor_ponsel}
+              required={true}
+            />
 
-          <TextInput
-            label="Alamat Tempat Tinggal Ibu"
-            type="text"
-            name="ibu"
-            id="alamat"
-            onChange={updateParents}
-            value={parent.ibu.alamat}
-            required={true}
-          />
+            <TextInput
+              label="Alamat Tempat Tinggal Ibu"
+              type="text"
+              name="ibu"
+              id="alamat"
+              onChange={updateParents}
+              value={parent.ibu.alamat}
+              required={true}
+            />
 
-          <TextInput
-            label="Tempat Lahir Ibu"
-            type="text"
-            name="ibu"
-            id="tempat_lahir"
-            onChange={updateParents}
-            value={parent.ibu.tempat_lahir}
-            required={true}
-          />
+            <TextInput
+              label="Tempat Lahir Ibu"
+              type="text"
+              name="ibu"
+              id="tempat_lahir"
+              onChange={updateParents}
+              value={parent.ibu.tempat_lahir}
+              required={true}
+            />
 
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="tanggal_lahir"
-              className="flex w-full mt-4 mb-1 form-label"
-            >
-              Tanggal Lahir Ibu<span className="ml-1 text-merah">*</span>
-            </label>
-            <DatePickerComponent
+            <DropdownDatePickers
+              label="Tanggal Lahir Ibu"
               name="ibu"
               id="tanggal_lahir"
               value={parent.ibu.tanggal_lahir}
               change={updateParentsDropDownCal.bind(this)}
-              format="dd MMMM yyyy"
             />
-          </div>
-        </section>
 
-        {/* COL 3 */}
-        <section className="xs:col-span-3 lg:col-span-1">
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="pendidikan_terakhir"
-              className="flex w-full mt-4 mb-1 form-label"
-            >
-              Pendidikan Terakhir<span className="ml-1 text-merah">*</span>
-            </label>
-            <DropDownListComponent
-              placeholder=""
+            <DropdownListComponents
+              required={true}
               name="ibu"
+              label="Pendidikan Terakhir"
+              placeholder=""
               id="pendidikan_terakhir"
               dataSource={dropdownData.pendidikanTerakhir}
               fields={{ value: "text", text: "text" }}
               value={parent.ibu.pendidikan_terakhir}
               change={updateParentsDropDownCal.bind(this)}
-              popupHeight="auto"
             />
-          </div>
 
-          <TextInput
-            label="Perusahaan Tempat Bekerja"
-            type="text"
-            name="ibu"
-            id="perusahaan_tempat_bekerja"
-            onChange={updateParents}
-            value={parent.ibu.perusahaan_tempat_bekerja}
-            required={true}
-          />
+            <TextInput
+              label="Perusahaan Tempat Bekerja"
+              type="text"
+              name="ibu"
+              id="perusahaan_tempat_bekerja"
+              onChange={updateParents}
+              value={parent.ibu.perusahaan_tempat_bekerja}
+              required={true}
+            />
 
-          <TextInput
-            label="Posisi/ Jabatan"
-            type="text"
-            name="ibu"
-            id="posisi_jabatan"
-            onChange={updateParents}
-            value={parent.ibu.posisi_jabatan}
-            required={true}
-          />
+            <TextInput
+              label="Posisi/ Jabatan"
+              type="text"
+              name="ibu"
+              id="posisi_jabatan"
+              onChange={updateParents}
+              value={parent.ibu.posisi_jabatan}
+              required={true}
+            />
 
-          <TextInput
-            label="Penghasilan Tiap Bulan"
-            type="text"
-            name="ibu"
-            id="penghasilan_per_bulan"
-            onChange={updateParents}
-            value={parent.ibu.penghasilan_per_bulan}
-            required={true}
-            min="1"
-          />
-        </section>
+            <TextInput
+              label="Penghasilan Tiap Bulan"
+              type="text"
+              name="ibu"
+              id="penghasilan_per_bulan"
+              onChange={updateParents}
+              value={parent.ibu.penghasilan_per_bulan}
+              required={true}
+              min="1"
+            />
+          </section>
 
-        {/* WALI */}
-        {/* COL 1 */}
-        <section className="mt-12 xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0 lg:mt-0">
-          <h1 className="mt-3 text-merah">Pendataan Wali</h1>
-          <p className="text-xs">
-            Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
-            <span className="text-merah">*</span>) wajib diisi.
-          </p>
-        </section>
+          {/* WALI */}
+          {/* COL 1 */}
+          <section className="mt-12 xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0 lg:mt-0">
+            <h1 className="mt-3 text-merah">Pendataan Wali</h1>
+            <p className="text-xs">
+              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
+              <span className="text-merah">*</span>) wajib diisi.
+            </p>
+          </section>
 
-        {/* COL 2 */}
-        <section className="xs:col-span-3 lg:col-span-1">
-          <TextInput
-            label="Nama Lengkap Wali"
-            type="text"
-            name="wali"
-            id="nama_lengkap"
-            onChange={updateParents}
-            value={parent.wali.nama_lengkap}
-            required={true}
-          />
-
-          <TextInput
-            label="Nomor Ponsel Wali"
-            type="text"
-            name="wali"
-            id="nomor_ponsel"
-            onChange={updateParents}
-            value={parent.wali.nomor_ponsel}
-            required={true}
-          />
-
-          <TextInput
-            label="Alamat Tempat Tinggal Wali"
-            type="text"
-            name="wali"
-            id="alamat"
-            onChange={updateParents}
-            value={parent.wali.alamat}
-            required={true}
-          />
-
-          <TextInput
-            label="Tempat Lahir Wali"
-            type="text"
-            name="wali"
-            id="tempat_lahir"
-            onChange={updateParents}
-            value={parent.wali.tempat_lahir}
-            required={true}
-          />
-
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="tanggal_lahir"
-              className="flex w-full mt-4 mb-1 form-label"
-            >
-              Tanggal Lahir Wali<span className="ml-1 text-merah">*</span>
-            </label>
-            <DatePickerComponent
+          {/* COL 2 */}
+          <section className="xs:col-span-3 lg:col-span-1 mt-5">
+            <TextInput
+              label="Nama Lengkap Wali"
+              type="text"
               name="wali"
+              id="nama_lengkap"
+              onChange={updateParents}
+              value={parent.wali.nama_lengkap}
+              required={true}
+            />
+
+            <TextInput
+              label="Nomor Ponsel Wali"
+              type="text"
+              name="wali"
+              id="nomor_ponsel"
+              onChange={updateParents}
+              value={parent.wali.nomor_ponsel}
+              required={true}
+            />
+
+            <TextInput
+              label="Alamat Tempat Tinggal Wali"
+              type="text"
+              name="wali"
+              id="alamat"
+              onChange={updateParents}
+              value={parent.wali.alamat}
+              required={true}
+            />
+
+            <TextInput
+              label="Tempat Lahir Wali"
+              type="text"
+              name="wali"
+              id="tempat_lahir"
+              onChange={updateParents}
+              value={parent.wali.tempat_lahir}
+              required={true}
+            />
+
+            <DropdownDatePickers
+              label="Tanggal Lahir Wali"
               id="tanggal_lahir"
               value={parent.wali.tanggal_lahir}
               change={updateParentsDropDownCal.bind(this)}
-              format="dd MMMM yyyy"
             />
-          </div>
-        </section>
 
-        {/* COL 3 */}
-        <section className="xs:col-span-3 lg:col-span-1">
-          <div className="flex flex-wrap">
-            <label
-              htmlFor="pendidikan_terakhir"
-              className="flex w-full mt-4 mb-1 form-label"
-            >
-              Pendidikan Terakhir<span className="ml-1 text-merah">*</span>
-            </label>
-            <DropDownListComponent
-              placeholder=""
+            <DropdownListComponents
+              required={true}
               name="wali"
+              label="Pendidikan Terakhir"
+              placeholder=""
               id="pendidikan_terakhir"
               dataSource={dropdownData.pendidikanTerakhir}
               fields={{ value: "text", text: "text" }}
               value={parent.wali.pendidikan_terakhir}
               change={updateParentsDropDownCal.bind(this)}
-              popupHeight="auto"
             />
-          </div>
 
-          <TextInput
-            label="Perusahaan Tempat Bekerja"
-            type="text"
-            name="wali"
-            id="perusahaan_tempat_bekerja"
-            onChange={updateParents}
-            value={parent.wali.perusahaan_tempat_bekerja}
-            required={true}
-          />
+            <TextInput
+              label="Perusahaan Tempat Bekerja"
+              type="text"
+              name="wali"
+              id="perusahaan_tempat_bekerja"
+              onChange={updateParents}
+              value={parent.wali.perusahaan_tempat_bekerja}
+              required={true}
+            />
 
-          <TextInput
-            label="Posisi/ Jabatan"
-            type="text"
-            name="wali"
-            id="posisi_jabatan"
-            onChange={updateParents}
-            value={parent.wali.posisi_jabatan}
-            required={true}
-          />
+            <TextInput
+              label="Posisi/ Jabatan"
+              type="text"
+              name="wali"
+              id="posisi_jabatan"
+              onChange={updateParents}
+              value={parent.wali.posisi_jabatan}
+              required={true}
+            />
 
-          <TextInput
-            label="Penghasilan Tiap Bulan"
-            type="text"
-            name="wali"
-            id="penghasilan_per_bulan"
-            onChange={updateParents}
-            value={parent.wali.penghasilan_per_bulan}
-            required={true}
-            min="1"
-          />
-        </section>
-      </form>
+            <TextInput
+              label="Penghasilan Tiap Bulan"
+              type="text"
+              name="wali"
+              id="penghasilan_per_bulan"
+              onChange={updateParents}
+              value={parent.wali.penghasilan_per_bulan}
+              required={true}
+              min="1"
+            />
+          </section>
+        </form>
+      </div>
 
       <section className="flex mt-12">
         <button className="w-auto btn-merah" onClick={handleSubmit}>

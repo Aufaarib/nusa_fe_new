@@ -96,92 +96,92 @@ export const sidebarMenus = [
   //   links: [],
   // },
   // {
-  //   title: 'Keuangan',
-  //   path:`keuangan`,
+  //   title: "Keuangan",
+  //   path: `keuangan`,
   //   icon: <AiOutlineBarChart />,
   //   links: [
   //     {
-  //       name: 'Submenu 1',
-  //       path:`keuangan-1`,
+  //       name: "Submenu 1",
+  //       path: `keuangan-1`,
   //       icon: <FaWpforms />,
   //     },
   //     {
-  //       name: 'Submenu 2',
-  //       path:`keuangan-2`,
+  //       name: "Submenu 2",
+  //       path: `keuangan-2`,
   //       icon: <FaWpforms />,
   //     },
   //     {
-  //       name: 'Submenu 3',
-  //       path:`keuangan-3`,
+  //       name: "Submenu 3",
+  //       path: `keuangan-3`,
   //       icon: <FaWpforms />,
   //     },
   //   ],
   // },
 
   // {
-  //   title: 'KBM',
-  //   path:`kbm`,
+  //   title: "KBM",
+  //   path: `kbm`,
   //   icon: <AiOutlineSchedule />,
   //   links: [
   //     {
-  //       name: 'Submenu 1',
-  //       path:`kbm-1`,
+  //       name: "Submenu 1",
+  //       path: `kbm-1`,
   //       icon: <FaWpforms />,
   //     },
   //     {
-  //       name: 'Submenu 2',
-  //       path:`kbm-2`,
+  //       name: "Submenu 2",
+  //       path: `kbm-2`,
   //       icon: <FaWpforms />,
   //     },
   //     {
-  //       name: 'Submenu 3',
-  //       path:`kbm-3`,
+  //       name: "Submenu 3",
+  //       path: `kbm-3`,
   //       icon: <FaWpforms />,
   //     },
   //   ],
   // },
 
   // {
-  //   title: 'Administrasi',
-  //   path:`administrasi`,
+  //   title: "Administrasi",
+  //   path: `administrasi`,
   //   icon: <CgUserList />,
   //   links: [
   //     {
-  //       name: 'Submenu 1',
-  //       path:`administrasi-1`,
+  //       name: "Submenu 1",
+  //       path: `administrasi-1`,
   //       icon: <FaWpforms />,
   //     },
   //     {
-  //       name: 'Submenu 2',
-  //       path:`administrasi-2`,
+  //       name: "Submenu 2",
+  //       path: `administrasi-2`,
   //       icon: <FaWpforms />,
   //     },
   //     {
-  //       name: 'Submenu 3',
-  //       path:`administrasi-3`,
+  //       name: "Submenu 3",
+  //       path: `administrasi-3`,
   //       icon: <FaWpforms />,
   //     },
   //   ],
   // },
 
   // {
-  //   title: 'Syarat',
-  //   path:`syarat`,
+  //   title: "Syarat",
+  //   path: `syarat`,
   //   icon: <BsCardText />,
   //   links: [
   //     {
-  //       name: 'Submenu 1',
-  //       path:`syarat-1`,
+  //       name: "Submenu 1",
+  //       path: `syarat-1`,
   //       icon: <FaWpforms />,
   //     },
   //     {
-  //       name: 'Submenu 2',
-  //       path:`syarat-2`,
+  //       name: "Submenu 2",
+  //       path: `syarat-2`,
   //       icon: <FaWpforms />,
   //     },
   //     {
-  //       name: 'Submenu 3',
-  //       path:`syarat-3`,
+  //       name: "Submenu 3",
+  //       path: `syarat-3`,
   //       icon: <FaWpforms />,
   //     },
   //   ],
@@ -191,7 +191,7 @@ export const sidebarMenus = [
 export const sidebarMenusAdmin = [
   {
     title: "Dashboard",
-    path: `dashboard`,
+    path: `admin/dashboard`,
     icon: <AiOutlineBarChart />,
     links: [],
   },
