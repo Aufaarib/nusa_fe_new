@@ -10,12 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getPendaftaran } from "../../../api/Pendaftaran";
 import { postTransfer, postCash } from "../../../api/Transaction";
-import {
-  ModalEmpty,
-  ModalCostCenter,
-  ModalStatusCostCenter,
-  ModalStatusTambah,
-} from "../../../components/ModalPopUp";
+import { ModalCostCenter, AlertEmpty } from "../../../components/ModalPopUp";
 import {
   DropdownCostCenter,
   DropdownJenisTransaksi,
@@ -47,11 +42,13 @@ export default function TambahBiayaPendidikan() {
   const [catatan, setCatatan] = useState("");
   const [file_name, setFileName] = useState("");
   const [isOpenCostCenter, setisOpenCostCenter] = useState(false);
-  const [isOpenStatusCostCenter, setisOpenStatusCostCenter] = useState(false);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
+  // const [isOpenStatusCostCenter, setisOpenStatusCostCenter] = useState(false);
+  // const [isOpenStatus, setisOpenStatus] = useState(false);
+  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [status, setStatus] = useState(undefined);
   const created_by = localStorage.getItem("NAMA");
+  const navigate = useNavigate();
+  const path = "/admin/list-biaya-pendidikan";
 
   // fetch function
   const fetchCostCenter = async () => {
@@ -116,11 +113,11 @@ export default function TambahBiayaPendidikan() {
         file_name.length === 0 ||
         pendaftaran.length === 0
       ) {
-        setisOpenEmpty(true);
+        AlertEmpty();
       } else {
-        postTransfer(postDataTransfer, setStatus);
-        setisOpenStatus(true);
-        console.log(postDataTransfer);
+        postTransfer(setStatus, postDataTransfer, path);
+        // setisOpenStatus(true);
+        // AlertStatusTambah(status.type, navigate);
       }
     } else if (transactionTypeFilter === "Cash") {
       if (
@@ -130,13 +127,14 @@ export default function TambahBiayaPendidikan() {
         file_name.length === 0 ||
         pendaftaran.length === 0
       ) {
-        setisOpenEmpty(true);
+        AlertEmpty();
       } else {
-        postCash(postDataCash, setStatus);
-        setisOpenStatus(true);
+        postCash(setStatus, postDataCash, path);
+        // AlertStatusTambah(status.type, navigate);
+        // setisOpenStatus(true);
       }
     } else {
-      setisOpenEmpty(true);
+      AlertEmpty();
     }
   };
 
@@ -153,10 +151,11 @@ export default function TambahBiayaPendidikan() {
       item.length === 0 ||
       debitKredit.length === 0
     ) {
-      setisOpenEmpty(true);
+      AlertEmpty();
     } else {
       postCostCenter(
         setStatus,
+        path,
         code,
         group,
         sub_group,
@@ -164,7 +163,6 @@ export default function TambahBiayaPendidikan() {
         payment_type,
         created_by
       );
-      setisOpenStatus(true);
     }
   };
 
@@ -178,29 +176,27 @@ export default function TambahBiayaPendidikan() {
     setKelas(e.description);
   };
 
-  const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-  };
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-  };
+  // const closeModalEmpty = () => {
+  //   setisOpenEmpty(false);
+  // };
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  // };
   const closeModalCostCenter = () => {
     setisOpenCostCenter(false);
   };
-  const closeModalStatusCostCenter = () => {
-    setisOpenCostCenter(false);
-    setisOpenStatusCostCenter(false);
-  };
-
-  const navigate = useNavigate();
+  // const closeModalStatusCostCenter = () => {
+  //   setisOpenCostCenter(false);
+  //   setisOpenStatusCostCenter(false);
+  // };
 
   const navigateBiayaPendidikan = () => {
-    navigate("/admin/list-biaya-pendidikan");
+    navigate(path);
   };
 
-  const navigateCostCenter = () => {
-    navigate("/admin/list-cost-center");
-  };
+  // const navigateCostCenter = () => {
+  //   navigate("/admin/list-cost-center");
+  // };
 
   const handleInputChange = (event) => {
     let inputVal = event.target.value;
@@ -331,25 +327,25 @@ export default function TambahBiayaPendidikan() {
             </button>
           </div>
 
-          <ModalStatusCostCenter
+          {/* <ModalStatusCostCenter
             isOpenStatus={isOpenStatusCostCenter}
             closeModalStatus={() => closeModalStatusCostCenter()}
             status={status}
             navigate={navigateCostCenter}
-          />
+          /> */}
 
-          <ModalStatusTambah
+          {/* <ModalStatusTambah
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={status}
             navigate={navigateBiayaPendidikan}
-          />
+          /> */}
 
-          <ModalEmpty
+          {/* <ModalEmpty
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

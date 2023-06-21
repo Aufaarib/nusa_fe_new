@@ -3,7 +3,11 @@ import TextInput from "../../../components/TextInput";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { postTipeTransaksi } from "../../../api/TipeTransaksi";
-import { ModalEmpty, ModalStatusTambah } from "../../../components/ModalPopUp";
+import {
+  AlertEmpty,
+  ModalEmpty,
+  ModalStatusTambah,
+} from "../../../components/ModalPopUp";
 import { Header } from "../../../components";
 import {
   DropdownStatus,
@@ -13,10 +17,12 @@ import {
 export default function TambahTipeTransaksi() {
   const [descriptionVal, setDescVal] = useState("");
   const [statusVal, setStatus] = useState("");
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
+  // const [isOpenStatus, setisOpenStatus] = useState(false);
+  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
   const created_by = localStorage.getItem("NAMA");
+  const navigate = useNavigate();
+  const path = "/admin/list-tipe-transaksi";
 
   const postData = (e) => {
     e.preventDefault();
@@ -25,25 +31,23 @@ export default function TambahTipeTransaksi() {
     const description = descriptionVal.value;
 
     if (descriptionVal.length === 0 || statusVal.length === 0) {
-      setisOpenEmpty(true);
+      AlertEmpty();
     } else {
-      postTipeTransaksi(description, status, created_by, setSts);
-      setisOpenStatus(true);
+      postTipeTransaksi(setSts, description, status, created_by, path);
     }
   };
 
-  const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-  };
+  // const closeModalEmpty = () => {
+  //   setisOpenEmpty(false);
+  // };
 
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    setSts("");
-  };
-  const navigate = useNavigate();
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   setSts("");
+  // };
 
   const navigateListTipeTransaksi = () => {
-    navigate("/admin/list-tipe-transaksi");
+    navigate(path);
   };
 
   return (
@@ -91,17 +95,17 @@ export default function TambahTipeTransaksi() {
               Batal
             </button>
           </div>
-          <ModalStatusTambah
+          {/* <ModalStatusTambah
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={sts}
             navigate={navigateListTipeTransaksi}
-          />
-          <ModalEmpty
+          /> */}
+          {/* <ModalEmpty
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

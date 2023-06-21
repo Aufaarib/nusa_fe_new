@@ -1,33 +1,35 @@
 import axios from "./axios";
+import {
+  AlertStatusTambahSuccess,
+  AlertStatusTambahFailed,
+} from "../components/ModalPopUp";
 
-export function postTransfer(postDataTransfer, setStatus) {
-    axios
-    .post(process.env.REACT_APP_NUSA + '/transaction/create',
-        postDataTransfer
-    )
+export function postTransfer(setStatus, postDataTransfer, path) {
+  axios
+    .post(process.env.REACT_APP_NUSA + "/transaction/create", postDataTransfer)
     .then(() => {
-        setStatus({ type: 'success' });
-        // console.log(postDataTransfer);
+      setStatus({ type: "success" });
+      // console.log(postDataTransfer);
+      AlertStatusTambahSuccess(path);
     })
     .catch((error) => {
-        setStatus({ type: 'error', error });
-        console.log(error);
-        // console.log(postDataTransfer);
+      setStatus({ type: "error", error });
+      // console.log(error);
+      AlertStatusTambahFailed();
     });
 }
 
-export function postCash(postDataCash, setStatus) {
-    axios
-    .post(process.env.REACT_APP_NUSA + '/transaction/create',
-        postDataCash
-    )
+export function postCash(setStatus, postDataCash, path) {
+  axios
+    .post(process.env.REACT_APP_NUSA + "/transaction/create", postDataCash)
     .then(() => {
-        setStatus({ type: 'success' });
-        // console.log(postDataCash);
+      setStatus({ type: "success" });
+      // console.log(postDataCash);
+      AlertStatusTambahSuccess(path);
     })
     .catch((error) => {
-        setStatus({ type: 'error', error });
-        console.log(error);
-        // console.log(postDataCash);
+      setStatus({ type: "error", error });
+      console.log(error);
+      AlertStatusTambahFailed();
     });
 }
