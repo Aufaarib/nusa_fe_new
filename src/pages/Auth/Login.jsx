@@ -134,7 +134,7 @@ const Login = () => {
           <h2 className="text-center mt-7 mb-7">Silahkan Masuk</h2>
 
           {/* USER */}
-          <div className="relative block xl:w-480 hidden">
+          <div className="relative block xl:w-480">
             <label htmlFor="user" className="flex mt-4 mb-1 form-label">
               Nama
             </label>
@@ -153,7 +153,7 @@ const Login = () => {
           {/* PASSWORD */}
           <div className="relative block xl:w-480">
             <label htmlFor="password" className="flex mt-4 mb-1 form-label">
-              Role
+              Password
             </label>
             <input
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
@@ -162,7 +162,7 @@ const Login = () => {
               onChange={(e) => setPwd(e.target.value)}
               value={pwd}
               required
-              placeholder="Admin PMB / Orang Tua"
+              placeholder="Admin PMB"
             />
           </div>
 

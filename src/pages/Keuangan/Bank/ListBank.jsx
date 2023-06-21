@@ -16,7 +16,7 @@ export default function ListBank() {
   const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  const path = "/admin/list-tipe-transaksi";
+  const path = "/admin/tambah-list-bank";
 
   let filteredItems = data;
 
