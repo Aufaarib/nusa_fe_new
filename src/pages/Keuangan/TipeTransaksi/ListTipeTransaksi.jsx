@@ -4,20 +4,28 @@ import {
   deleteTipeTransaksi,
   updateTipeTransaksi,
 } from "../../../api/TipeTransaksi";
-import { CustomStylesStatus } from "../../../components/ModalPopUp";
-import { ModalStatusList } from "../../../components/ModalPopUp";
+import {
+  AlertDelete,
+  AlertUpdateStatus,
+  AlertUpdateStatusAktif,
+  AlertUpdateStatusNonAktif,
+  // CustomStylesStatus,
+} from "../../../components/ModalPopUp";
+// import { ModalStatusList } from "../../../components/ModalPopUp";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
+// import Modal from "react-modal";
 
 export default function ListTipeTransaksi() {
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("");
-  const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
-  const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
+  // const [status, setStatus] = useState("");
+  const statusAktif = "Aktif";
+  const statusNonAktif = "Tidak Aktif";
+  // const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
+  // const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
   // const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
+  // const [isOpenDelete, setisOpenDelete] = useState(false);
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
   const [desc, setDesc] = useState("");
@@ -38,46 +46,49 @@ export default function ListTipeTransaksi() {
   }, []);
 
   const handleNonActiveStatus = (id, description) => {
-    setisOpenUpdateTidakAktif(true);
-    setStatus("Aktif");
-    setDesc(description);
-    setUpdateId(id);
+    // setisOpenUpdateTidakAktif(true);
+    // setStatus("Aktif");
+    // setDesc(description);
+    // setUpdateId(id);
+    AlertUpdateStatusNonAktif(description, statusAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateTidakAktif = () => {
-    setisOpenUpdateTidakAktif(false);
-  };
+  // const closeModalUpdateTidakAktif = () => {
+  //   setisOpenUpdateTidakAktif(false);
+  // };
 
   const handleActiveStatus = (id, description) => {
-    setisOpenUpdateAktif(true);
-    setStatus("Tidak Aktif");
-    setDesc(description);
-    setUpdateId(id);
+    // setisOpenUpdateAktif(true);
+    // setStatus("Tidak Aktif");
+    // setDesc(description);
+    // setUpdateId(id);
+    AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateAktif = () => {
-    setisOpenUpdateAktif(false);
-  };
+  // const closeModalUpdateAktif = () => {
+  //   setisOpenUpdateAktif(false);
+  // };
 
   const openModalHapus = (id, description) => {
-    setisOpenDelete(true);
+    // setisOpenDelete(true);
     setDesc(description);
     setDeleteId(id);
+    AlertDelete(description, id, onDelete);
   };
 
-  const closeModalHapus = () => {
-    setisOpenDelete(false);
+  // const closeModalHapus = () => {
+  //   setisOpenDelete(false);
+  // };
+
+  const onUpdateStatus = (id, status) => {
+    updateTipeTransaksi(setSts, status, id, setData);
+    // closeModalUpdateAktif();
+    // closeModalUpdateTidakAktif();
   };
 
-  const onUpdateStatus = () => {
-    updateTipeTransaksi(setSts, status, updateId, setData);
-    closeModalUpdateAktif();
-    closeModalUpdateTidakAktif();
-  };
-
-  const onDelete = () => {
-    deleteTipeTransaksi(setSts, deleteId, setData);
-    closeModalHapus();
+  const onDelete = (id) => {
+    deleteTipeTransaksi(setSts, id, setData);
+    // closeModalHapus();
   };
 
   // const closeModalStatus = () => {
@@ -162,7 +173,7 @@ export default function ListTipeTransaksi() {
           onRequestClose={closeModalStatus}
           status={sts}
         /> */}
-        <Modal
+        {/* <Modal
           isOpen={isOpenUpdateTidakAktif}
           onRequestClose={closeModalUpdateTidakAktif}
           style={CustomStylesStatus}
@@ -215,8 +226,8 @@ export default function ListTipeTransaksi() {
               Batal
             </button>
           </div>
-        </Modal>
-        <Modal
+        </Modal> */}
+        {/* <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
           style={CustomStylesStatus}
@@ -236,7 +247,7 @@ export default function ListTipeTransaksi() {
               Batal
             </button>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );

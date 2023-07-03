@@ -14,6 +14,7 @@ import {
   ModalCostCenter,
   ModalStatusCostCenter,
   ModalStatusTambah,
+  AlertEmpty,
 } from "../../../components/ModalPopUp";
 import {
   DropdownCostCenter,
@@ -47,6 +48,10 @@ export default function TambahBiayaOperasional() {
   const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [status, setStatus] = useState(undefined);
   const created_by = localStorage.getItem("NAMA");
+
+  const navigate = useNavigate();
+
+  const path = "/admin/list-biaya-operasional";
 
   // fetch function
   const fetchCostCenter = async () => {
@@ -103,10 +108,10 @@ export default function TambahBiayaOperasional() {
         jumlah.length === 0 ||
         file_name.length === 0
       ) {
-        setisOpenEmpty(true);
+        AlertEmpty();
       } else {
-        postTransfer(postDataTransfer, setStatus);
-        setisOpenStatus(true);
+        postTransfer(setStatus, postDataTransfer, path);
+        // setisOpenStatus(true);
       }
     } else if (transactionTypeFilter === "Cash") {
       if (
@@ -115,13 +120,13 @@ export default function TambahBiayaOperasional() {
         jumlah.length === 0 ||
         file_name.length === 0
       ) {
-        setisOpenEmpty(true);
+        AlertEmpty();
       } else {
-        postCash(postDataCash, setStatus);
-        setisOpenStatus(true);
+        postCash(setStatus, postDataCash, path);
+        // setisOpenStatus(true);
       }
     } else {
-      setisOpenEmpty(true);
+      AlertEmpty();
     }
   };
 
@@ -133,12 +138,12 @@ export default function TambahBiayaOperasional() {
 
     if (
       code.length === 0 ||
-      group.length === 0 ||
+      groupVal.length === 0 ||
       sub_group.length === 0 ||
       item.length === 0 ||
       debitKredit.length === 0
     ) {
-      setisOpenEmpty(true);
+      AlertEmpty();
     } else {
       postCostCenter(
         setStatus,
@@ -158,23 +163,24 @@ export default function TambahBiayaOperasional() {
     setTransactionTypeFilter(e.description);
   };
 
-  const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-  };
+  // const closeModalEmpty = () => {
+  //   setisOpenEmpty(false);
+  // };
+
   const closeModalStatus = () => {
     setisOpenStatus(false);
   };
   const closeModalCostCenter = () => {
     setisOpenCostCenter(false);
   };
-  const closeModalStatusCostCenter = () => {
-    setisOpenCostCenter(false);
-    setisOpenStatusCostCenter(false);
-  };
-  const navigate = useNavigate();
+
+  // const closeModalStatusCostCenter = () => {
+  //   setisOpenCostCenter(false);
+  //   setisOpenStatusCostCenter(false);
+  // };
 
   const navigateBiayaOperasional = () => {
-    navigate("/admin/list-biaya-operasional");
+    navigate(path);
   };
 
   const handleInputChange = (event) => {
@@ -205,12 +211,22 @@ export default function TambahBiayaOperasional() {
     <div>
       <div style={{ marginBottom: "50px" }}>
         <Header
-          category="Admin Keuangan / Biaya Operasional / Tambah Biaya Operasional"
+          home="Admin Keuangan"
+          prev="Biaya Operasional"
+          navePrev={path}
+          at="Tambah Biaya Operasional"
           title="Tambah Biaya Operasional"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
           Form Tambah Biaya Operasional
         </p>
         <article>
@@ -227,7 +243,7 @@ export default function TambahBiayaOperasional() {
             post={postDataCostCenter}
           />
           <DropdownCostCenter
-            label="Cost Center"
+            label="Biaya Operasional"
             required={true}
             defaultValue={costCenter}
             // isClearable={true}
@@ -278,14 +294,14 @@ export default function TambahBiayaOperasional() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Simpan
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateBiayaOperasional}
             >
               Batal
@@ -306,11 +322,11 @@ export default function TambahBiayaOperasional() {
             navigate={navigateBiayaOperasional}
           />
 
-          <ModalEmpty
+          {/* <ModalEmpty
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

@@ -1,3 +1,11 @@
+import {
+  AlertStatusHapusFailed,
+  AlertStatusHapusSuccess,
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
+  AlertStatusUpdateDataSuccess,
+  AlertStatusUpdateFailed,
+} from "../components/ModalPopUp";
 import axios from "./axios";
 
 export function getJadwalMapel(setData, setSts) {
@@ -24,6 +32,7 @@ export function getJadwalMapel(setData, setSts) {
 
 export function updateJadwalMapel(
   setSts,
+  path,
   class_id,
   course_id,
   day,
@@ -41,14 +50,17 @@ export function updateJadwalMapel(
     })
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusUpdateDataSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
     });
 }
 
 export function postJadwalMapel(
   setSts,
+  path,
   class_id,
   course_id,
   day,
@@ -67,19 +79,24 @@ export function postJadwalMapel(
     })
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusTambahSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusTambahFailed();
     });
 }
 
-export function deleteJadwalMapel(setSts, deleteId) {
+export function deleteJadwalMapel(setSts, deleteId, setData) {
   axios
     .delete(process.env.REACT_APP_NUSA + `/course-schedule/delete/${deleteId}`)
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusHapusSuccess();
+      getJadwalMapel(setData, setSts);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusHapusFailed();
     });
 }

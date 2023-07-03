@@ -52,14 +52,26 @@ export default function UbahListBank() {
 
   return (
     <div>
-      <div style={{ marginBottom: "50px" }}>
+      <div style={{ marginBottom: "20px" }}>
         <Header
-          category="Admin Keuangan / Bank / Ubah List Bank"
+          home="Admin Keuangan"
+          prev="List Bank"
+          navePrev={path}
+          at="Ubah List Bank"
           title="Ubah List Bank"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-3xl mb-16 mt-5 font-bold">Form Ubah List Bank</p>
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
+          Form Ubah List Bank
+        </p>
         <article>
           <form
             className="grid mt-3 xs:grid-cols-1 
@@ -95,14 +107,14 @@ export default function UbahListBank() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Ubah
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateListBank}
             >
               Batal

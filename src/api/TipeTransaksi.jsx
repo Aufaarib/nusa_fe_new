@@ -3,6 +3,7 @@ import {
   AlertStatusHapusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
+  AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
 import axios from "./axios";
@@ -97,5 +98,6 @@ export function updateTipeTransaksi(setSts, status, id, setData) {
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
     });
 }

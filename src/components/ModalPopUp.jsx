@@ -206,9 +206,11 @@ export const ModalCostCenter = ({
 //   );
 // };
 
+// SA STYLING
 const styledSweetAlert = Swal.mixin({
   customClass: {
     confirmButton: "btn-merah",
+    cancelButton: "btn-putih",
   },
   padding: "30px",
   width: "auto",
@@ -295,6 +297,55 @@ export const AlertEmpty = () => {
     showConfirmButton: true,
     confirmButtonText: "Tutup",
   });
+};
+
+// SA MODAL DELETE
+export const AlertDelete = (desc, id, onDelete) => {
+  styledSweetAlert
+    .fire({
+      title: "Hapus",
+      text: desc + " ?",
+      showConfirmButton: true,
+      confirmButtonText: "Hapus",
+      showCancelButton: "Batal",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        onDelete(id);
+      }
+    });
+};
+
+export const AlertUpdateStatusAktif = (desc, status, id, onUpdateStatus) => {
+  styledSweetAlert
+    .fire({
+      title: "Non-Aktifkan",
+      text: desc + " ?",
+      showConfirmButton: true,
+      confirmButtonText: "Non-Aktifkan",
+      showCancelButton: "Batal",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        onUpdateStatus(id, status);
+      }
+    });
+};
+
+export const AlertUpdateStatusNonAktif = (desc, status, id, onUpdateStatus) => {
+  styledSweetAlert
+    .fire({
+      title: "Aktifkan",
+      text: desc + " ?",
+      showConfirmButton: true,
+      confirmButtonText: "Aktifkan",
+      showCancelButton: "Batal",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        onUpdateStatus(id, status);
+      }
+    });
 };
 
 // MODAL STATUS TAMBAH

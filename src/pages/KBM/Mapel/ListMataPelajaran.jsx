@@ -1,6 +1,11 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesModalHapus } from "../../../components/CustomStyles";
-import { CustomStylesStatus } from "../../../components/ModalPopUp";
+import {
+  AlertDelete,
+  AlertUpdateStatusAktif,
+  AlertUpdateStatusNonAktif,
+  CustomStylesStatus,
+} from "../../../components/ModalPopUp";
 import {
   getMapel,
   deleteMapel,
@@ -15,7 +20,9 @@ import { ModalStatusList } from "../../../components/ModalPopUp";
 
 export default function ListMataPelajaran() {
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("");
+  // const [status, setStatus] = useState("");
+  const statusAktif = "Aktif";
+  const statusNonAktif = "Tidak Aktif";
   const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
   const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
   const [isOpenStatus, setisOpenStatus] = useState(false);
@@ -26,6 +33,10 @@ export default function ListMataPelajaran() {
   const [desc, setDesc] = useState("");
   const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
+
+  const navigate = useNavigate();
+
+  const path = "/admin/tambah-mata-pelajaran";
 
   let filteredItems = data;
 
@@ -40,55 +51,58 @@ export default function ListMataPelajaran() {
   }, []);
 
   const handleNonActiveStatus = (id, course_name) => {
-    setisOpenUpdateTidakAktif(true);
-    setStatus("Aktif");
-    setDesc(course_name);
-    setUpdateId(id);
+    // setisOpenUpdateTidakAktif(true);
+    // setStatus("Aktif");
+    // setDesc(course_name);
+    // setUpdateId(id);
+    AlertUpdateStatusNonAktif(course_name, statusAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateTidakAktif = () => {
-    setisOpenUpdateTidakAktif(false);
-  };
+  // const closeModalUpdateTidakAktif = () => {
+  //   setisOpenUpdateTidakAktif(false);
+  // };
 
   const handleActiveStatus = (id, course_name) => {
-    setisOpenUpdateAktif(true);
-    setStatus("Tidak Aktif");
-    setDesc(course_name);
-    setUpdateId(id);
+    // setisOpenUpdateAktif(true);
+    // setStatus("Tidak Aktif");
+    // setDesc(course_name);
+    // setUpdateId(id);
+    AlertUpdateStatusAktif(course_name, statusNonAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateAktif = () => {
-    setisOpenUpdateAktif(false);
-  };
+  // const closeModalUpdateAktif = () => {
+  //   setisOpenUpdateAktif(false);
+  // };
 
-  const onUpdateStatus = () => {
-    updateStatusMapel(setSts, status, updateId);
-    closeModalUpdateAktif();
-    closeModalUpdateTidakAktif();
-    setisOpenStatus(true);
+  const onUpdateStatus = (id, status) => {
+    updateStatusMapel(setSts, status, id, setData);
+    // closeModalUpdateAktif();
+    // closeModalUpdateTidakAktif();
+    // setisOpenStatus(true);
   };
 
   const openModalHapus = (id, course_name) => {
-    setisOpenDelete(true);
+    // setisOpenDelete(true);
     setDesc_nama(course_name);
     setDeleteId(id);
+    AlertDelete(course_name, id, onDelete);
   };
 
-  const closeModalHapus = () => {
-    setisOpenDelete(false);
+  // const closeModalHapus = () => {
+  //   setisOpenDelete(false);
+  // };
+
+  const onDelete = (id) => {
+    deleteMapel(setSts, id, setData);
+    // closeModalHapus();
+    // setisOpenStatus(true);
   };
 
-  const onDelete = () => {
-    deleteMapel(setSts, deleteId);
-    closeModalHapus();
-    setisOpenStatus(true);
-  };
-
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    getMapel(setData, setSts);
-    setSts("");
-  };
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   getMapel(setData, setSts);
+  //   setSts("");
+  // };
 
   const columns = [
     {
@@ -176,10 +190,8 @@ export default function ListMataPelajaran() {
     },
   ];
 
-  const navigate = useNavigate();
-
   const navigateTambahMataPelajaran = () => {
-    navigate("/admin/tambah-mata-pelajaran");
+    navigate(path);
   };
 
   const navigateUbahMapel = (
@@ -215,12 +227,12 @@ export default function ListMataPelajaran() {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />
-        <ModalStatusList
+        {/* <ModalStatusList
           isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
           status={sts}
-        />
-        <Modal
+        /> */}
+        {/* <Modal
           isOpen={isOpenUpdateTidakAktif}
           onRequestClose={closeModalUpdateTidakAktif}
           style={CustomStylesStatus}
@@ -273,8 +285,8 @@ export default function ListMataPelajaran() {
               Batal
             </button>
           </div>
-        </Modal>
-        <Modal
+        </Modal> */}
+        {/* <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
           style={CustomStylesModalHapus}
@@ -294,7 +306,7 @@ export default function ListMataPelajaran() {
               Batal
             </button>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );

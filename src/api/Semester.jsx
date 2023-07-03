@@ -1,3 +1,12 @@
+import {
+  AlertStatusHapusFailed,
+  AlertStatusHapusSuccess,
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
+  AlertStatusUpdateDataSuccess,
+  AlertStatusUpdateFailed,
+  AlertStatusUpdateSuccess,
+} from "../components/ModalPopUp";
 import axios from "./axios";
 
 export function getSemester(setData, setSts) {
@@ -22,20 +31,23 @@ export function getSemester(setData, setSts) {
   //     });
 }
 
-export function updateStatusSemester(setSts, status, id) {
+export function updateStatusSemester(setSts, status, id, setData) {
   axios
     .post(process.env.REACT_APP_NUSA + `/semester/update/${id}`, {
       status,
     })
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusUpdateSuccess();
+      getSemester(setData, setSts);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
     });
 }
 
-export function updateSemester(setSts, name, description, status, id) {
+export function updateSemester(setSts, path, name, description, status, id) {
   axios
     .post(process.env.REACT_APP_NUSA + `/semester/update/${id}`, {
       name,
@@ -44,13 +56,15 @@ export function updateSemester(setSts, name, description, status, id) {
     })
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusUpdateDataSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
     });
 }
 
-export function postSemester(setSts, name, description, status) {
+export function postSemester(setSts, path, name, description, status) {
   axios
     .post(process.env.REACT_APP_NUSA + "/semester/create", {
       name,
@@ -59,19 +73,24 @@ export function postSemester(setSts, name, description, status) {
     })
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusTambahSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusTambahFailed();
     });
 }
 
-export function deleteSemester(setSts, deleteId) {
+export function deleteSemester(setSts, deleteId, setData) {
   axios
     .delete(process.env.REACT_APP_NUSA + `/semester/delete/${deleteId}`)
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusHapusSuccess();
+      getSemester(setData, setSts);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusHapusFailed();
     });
 }

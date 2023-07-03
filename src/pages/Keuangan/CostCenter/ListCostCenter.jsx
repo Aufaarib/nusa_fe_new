@@ -7,7 +7,8 @@ import {
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
-import { ModalStatusList } from "../../../components/ModalPopUp";
+import { AlertDelete, ModalStatusList } from "../../../components/ModalPopUp";
+import Swal from "sweetalert2";
 import Modal from "react-modal";
 
 export default function ListCostCenter() {
@@ -32,18 +33,18 @@ export default function ListCostCenter() {
   }, []);
 
   const openModalHapus = (id, item) => {
-    setisOpenDelete(true);
     setDesc(item);
     setDeleteId(id);
+    AlertDelete(item, id, onDelete);
   };
 
-  const closeModalHapus = () => {
-    setisOpenDelete(false);
-  };
+  // const closeModalHapus = () => {
+  //   setisOpenDelete(false);
+  // };
 
-  const onDelete = () => {
-    deleteCostCenter(setSts, deleteId, setData);
-    closeModalHapus();
+  const onDelete = (id) => {
+    deleteCostCenter(setSts, id, setData);
+    // closeModalHapus();
     // setisOpenStatus(true);
   };
 
@@ -128,6 +129,7 @@ export default function ListCostCenter() {
 
       <div style={{ marginTop: "50px" }}>
         <DataTables
+          status={sts}
           columns={columns}
           data={filteredItems}
           onClick={navigateTambahCostCenter}
@@ -139,7 +141,7 @@ export default function ListCostCenter() {
           onRequestClose={closeModalStatus}
           status={sts}
         /> */}
-        <Modal
+        {/* <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
           style={CustomStylesModalHapus}
@@ -159,7 +161,7 @@ export default function ListCostCenter() {
               Batal
             </button>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );

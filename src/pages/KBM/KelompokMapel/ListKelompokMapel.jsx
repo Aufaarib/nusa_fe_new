@@ -1,5 +1,10 @@
 import { DataTables } from "../../../components/DataTables";
-import { CustomStylesStatus } from "../../../components/ModalPopUp";
+import {
+  AlertDelete,
+  AlertUpdateStatusAktif,
+  AlertUpdateStatusNonAktif,
+  CustomStylesStatus,
+} from "../../../components/ModalPopUp";
 import {
   getKelompokMapel,
   updateStatusKelompokMapel,
@@ -13,11 +18,13 @@ import { ModalStatusList } from "../../../components/ModalPopUp";
 
 export default function ListKelompokMapel() {
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("");
+  // const [status, setStatus] = useState("");
+  const statusAktif = "Aktif";
+  const statusNonAktif = "Tidak Aktif";
   const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
   const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenDelete, setisOpenDelete] = useState(false);
+  // const [isOpenStatus, setisOpenStatus] = useState(false);
+  // const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
   const [updateId, setUpdateId] = useState("");
   const [deleteId, setDeleteId] = useState("");
@@ -38,55 +45,58 @@ export default function ListKelompokMapel() {
   }, []);
 
   const handleNonActiveStatus = (id, description) => {
-    setisOpenUpdateTidakAktif(true);
-    setStatus("Aktif");
-    setDesc(description);
-    setUpdateId(id);
+    // setisOpenUpdateTidakAktif(true);
+    // setStatus("Aktif");
+    // setDesc(description);
+    // setUpdateId(id);
+    AlertUpdateStatusNonAktif(description, statusAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateTidakAktif = () => {
-    setisOpenUpdateTidakAktif(false);
-  };
+  // const closeModalUpdateTidakAktif = () => {
+  //   setisOpenUpdateTidakAktif(false);
+  // };
 
   const handleActiveStatus = (id, description) => {
-    setisOpenUpdateAktif(true);
-    setStatus("Tidak Aktif");
-    setDesc(description);
-    setUpdateId(id);
+    // setisOpenUpdateAktif(true);
+    // setStatus("Tidak Aktif");
+    // setDesc(description);
+    // setUpdateId(id);
+    AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateAktif = () => {
-    setisOpenUpdateAktif(false);
-  };
+  // const closeModalUpdateAktif = () => {
+  //   setisOpenUpdateAktif(false);
+  // };
 
-  const onUpdateStatus = () => {
-    updateStatusKelompokMapel(setSts, status, updateId);
-    closeModalUpdateAktif();
-    closeModalUpdateTidakAktif();
-    setisOpenStatus(true);
+  const onUpdateStatus = (id, status) => {
+    updateStatusKelompokMapel(setSts, status, id, setData);
+    // closeModalUpdateAktif();
+    // closeModalUpdateTidakAktif();
+    // setisOpenStatus(true);
   };
 
   const openModalHapus = (id, name) => {
-    setisOpenDelete(true);
+    // setisOpenDelete(true);
     setDesc_nama(name);
     setDeleteId(id);
+    AlertDelete(name, id, onDelete);
   };
 
-  const closeModalHapus = () => {
-    setisOpenDelete(false);
+  // const closeModalHapus = () => {
+  //   setisOpenDelete(false);
+  // };
+
+  const onDelete = (id) => {
+    deleteKelompokMapel(setSts, id, setData);
+    // closeModalHapus();
+    // setisOpenStatus(true);
   };
 
-  const onDelete = () => {
-    deleteKelompokMapel(setSts, deleteId);
-    closeModalHapus();
-    setisOpenStatus(true);
-  };
-
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    getKelompokMapel(setData, setSts);
-    setSts("");
-  };
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   getKelompokMapel(setData, setSts);
+  //   setSts("");
+  // };
 
   const columns = [
     {
@@ -169,7 +179,6 @@ export default function ListKelompokMapel() {
         category="Admin KBM / Kelompok Mapel"
         title="List Kelompok Mata Pelajaran"
       />
-
       <div style={{ marginTop: "50px" }}>
         <DataTables
           columns={columns}
@@ -178,12 +187,12 @@ export default function ListKelompokMapel() {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />
-        <ModalStatusList
+        {/* <ModalStatusList
           isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
           status={sts}
-        />
-        <Modal
+        /> */}
+        {/* <Modal
           isOpen={isOpenUpdateTidakAktif}
           onRequestClose={closeModalUpdateTidakAktif}
           style={CustomStylesStatus}
@@ -236,8 +245,8 @@ export default function ListKelompokMapel() {
               Batal
             </button>
           </div>
-        </Modal>
-        <Modal
+        </Modal> */}
+        {/* <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
           style={CustomStylesStatus}
@@ -257,7 +266,7 @@ export default function ListKelompokMapel() {
               Batal
             </button>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );

@@ -1,5 +1,10 @@
 import { DataTables } from "../../../components/DataTables";
-import { CustomStylesStatus } from "../../../components/ModalPopUp";
+import {
+  AlertDelete,
+  AlertUpdateStatusAktif,
+  AlertUpdateStatusNonAktif,
+  CustomStylesStatus,
+} from "../../../components/ModalPopUp";
 import {
   getKurikulum,
   updateStatusKurikulum,
@@ -13,7 +18,9 @@ import { ModalStatusList } from "../../../components/ModalPopUp";
 
 export default function ListKurikulum() {
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("");
+  // const [status, setStatus] = useState("");
+  const statusAktif = "Aktif";
+  const statusNonAktif = "Tidak Aktif";
   const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
   const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
   const [isOpenStatus, setisOpenStatus] = useState(false);
@@ -24,6 +31,9 @@ export default function ListKurikulum() {
   const [desc, setDesc] = useState("");
   const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
+  const navigate = useNavigate();
+
+  const path = "/admin/tambah-kurikulum";
 
   let filteredItems = data;
 
@@ -38,48 +48,51 @@ export default function ListKurikulum() {
   }, []);
 
   const handleNonActiveStatus = (id, description) => {
-    setisOpenUpdateTidakAktif(true);
-    setStatus("Aktif");
-    setDesc(description);
-    setUpdateId(id);
+    // setisOpenUpdateTidakAktif(true);
+    // setStatus("Aktif");
+    // setDesc(description);
+    // setUpdateId(id);
+    AlertUpdateStatusNonAktif(description, statusAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateTidakAktif = () => {
-    setisOpenUpdateTidakAktif(false);
-  };
+  // const closeModalUpdateTidakAktif = () => {
+  //   setisOpenUpdateTidakAktif(false);
+  // };
 
   const handleActiveStatus = (id, description) => {
-    setisOpenUpdateAktif(true);
-    setStatus("Tidak Aktif");
-    setDesc(description);
-    setUpdateId(id);
+    // setisOpenUpdateAktif(true);
+    // setStatus("Tidak Aktif");
+    // setDesc(description);
+    // setUpdateId(id);
+    AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateAktif = () => {
-    setisOpenUpdateAktif(false);
-  };
+  // const closeModalUpdateAktif = () => {
+  //   setisOpenUpdateAktif(false);
+  // };
 
-  const onUpdateStatus = () => {
-    updateStatusKurikulum(setSts, status, updateId);
-    closeModalUpdateAktif();
-    closeModalUpdateTidakAktif();
-    setisOpenStatus(true);
+  const onUpdateStatus = (id, status) => {
+    updateStatusKurikulum(setSts, status, id, setData);
+    // closeModalUpdateAktif();
+    // closeModalUpdateTidakAktif();
+    // setisOpenStatus(true);
   };
 
   const openModalHapus = (id, name) => {
-    setisOpenDelete(true);
+    // setisOpenDelete(true);
     setDesc_nama(name);
     setDeleteId(id);
+    AlertDelete(name, id, onDelete);
   };
 
-  const closeModalHapus = () => {
-    setisOpenDelete(false);
-  };
+  // const closeModalHapus = () => {
+  //   setisOpenDelete(false);
+  // };
 
-  const onDelete = () => {
-    deleteKurikulum(setSts, deleteId);
-    closeModalHapus();
-    setisOpenStatus(true);
+  const onDelete = (id) => {
+    deleteKurikulum(setSts, id, setData);
+    // closeModalHapus();
+    // setisOpenStatus(true);
   };
 
   const closeModalStatus = () => {
@@ -174,10 +187,8 @@ export default function ListKurikulum() {
     },
   ];
 
-  const navigate = useNavigate();
-
   const navigateTambahKurikulum = () => {
-    navigate("/admin/tambah-kurikulum");
+    navigate(path);
   };
 
   const navigateUbahKurikulum = (id, code, name, description, semester_id) => {
@@ -204,7 +215,7 @@ export default function ListKurikulum() {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />
-        <ModalStatusList
+        {/* <ModalStatusList
           isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
           status={sts}
@@ -262,8 +273,8 @@ export default function ListKurikulum() {
               Batal
             </button>
           </div>
-        </Modal>
-        <Modal
+        </Modal> */}
+        {/* <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
           style={CustomStylesStatus}
@@ -283,7 +294,7 @@ export default function ListKurikulum() {
               Batal
             </button>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );

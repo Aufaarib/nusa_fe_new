@@ -4,7 +4,11 @@ import { DropdownJenisTransaksi } from "../../../components/Dropdown";
 import { getMapel } from "../../../api/MataPelajaran";
 import { getKelas } from "../../../api/Kelas";
 import { updateJadwalMapel } from "../../../api/JadwalMataPelajaran";
-import { ModalEmpty, ModalStatusTambah } from "../../../components/ModalPopUp";
+import {
+  AlertEmpty,
+  ModalEmpty,
+  ModalStatusTambah,
+} from "../../../components/ModalPopUp";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
@@ -26,6 +30,10 @@ export default function UbahJadwalMapel() {
   //   const [groupcourseData, setGroupCourseData] = useState([]);
   const [classData, setClassData] = useState([]);
   const [courseData, setCourseData] = useState([]);
+
+  const navigate = useNavigate();
+
+  const path = "/admin/list-jadwal-mata-pelajaran";
 
   // fetch function
   const fetchCourse = async () => {
@@ -61,10 +69,11 @@ export default function UbahJadwalMapel() {
       start_time.length === 0 ||
       end_time.length === 0
     ) {
-      setisOpenEmpty(true);
+      AlertEmpty();
     } else {
       updateJadwalMapel(
         setSts,
+        path,
         class_id,
         course_id,
         day,
@@ -72,23 +81,21 @@ export default function UbahJadwalMapel() {
         end_time,
         id
       );
-      setisOpenStatus(true);
+      // setisOpenStatus(true);
     }
   };
 
-  const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-  };
+  // const closeModalEmpty = () => {
+  //   setisOpenEmpty(false);
+  // };
 
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    setSts("");
-  };
-
-  const navigate = useNavigate();
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   setSts("");
+  // };
 
   const navigateJadwalMapel = () => {
-    navigate("/admin/list-jadwal-mata-pelajaran");
+    navigate(path);
   };
 
   const courseOptions = courseData.map((c) => ({
@@ -105,12 +112,22 @@ export default function UbahJadwalMapel() {
     <div>
       <div style={{ marginBottom: "50px" }}>
         <Header
-          category="Admin KBM / Jadwal Mata Pelajaran / Ubah Jadwal Mata Pelajaran"
-          title="Ubah Jadwal Mata Pelajaran"
+          home="Admin KBM"
+          prev="Jadwal Mata Pelajaran"
+          navePrev={path}
+          at="Tambah Jadwal Mata Pelajaran"
+          title="Tambah Jadwal Mata Pelajaran"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-3xl mb-16 mt-5 font-bold">
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
           Form Ubah Jadwal Mata Pelajaran
         </p>
         <article>
@@ -168,21 +185,21 @@ export default function UbahJadwalMapel() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Ubah
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateJadwalMapel}
             >
               Batal
             </button>
           </div>
 
-          <ModalStatusTambah
+          {/* <ModalStatusTambah
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={sts}
@@ -193,7 +210,7 @@ export default function UbahJadwalMapel() {
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

@@ -1,7 +1,11 @@
 import React from "react";
 import TextInput from "../../../components/TextInput";
 import { updateSemester } from "../../../api/Semester";
-import { ModalEmpty, ModalStatusTambah } from "../../../components/ModalPopUp";
+import {
+  AlertEmpty,
+  ModalEmpty,
+  ModalStatusTambah,
+} from "../../../components/ModalPopUp";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Header } from "../../../components";
@@ -14,44 +18,56 @@ export default function UbahSemester() {
   const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
   const location = useLocation();
+  const navigate = useNavigate();
+  const path = "/admin/list-semester";
 
   const postData = (e) => {
     e.preventDefault();
     const id = location.state.id;
 
     if (name.trim().length === 0 || description.trim().length === 0) {
-      setisOpenEmpty(true);
+      AlertEmpty();
     } else {
-      updateSemester(setSts, name, description, status, id);
-      setisOpenStatus(true);
+      updateSemester(setSts, path, name, description, status, id);
+      // setisOpenStatus(true);
     }
   };
 
-  const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-  };
+  // const closeModalEmpty = () => {
+  //   setisOpenEmpty(false);
+  // };
 
   const closeModalStatus = () => {
     setisOpenStatus(false);
     setSts("");
   };
 
-  const navigate = useNavigate();
-
   const navigateSemester = () => {
-    navigate("/admin/list-semester");
+    navigate(path);
   };
 
   return (
     <div>
-      <div style={{ marginBottom: "50px" }}>
+      <div style={{ marginBottom: "20px" }}>
         <Header
-          category="Admin KBM / Semester / Ubah Semester"
-          title="Ubah Semester"
+          home="Admin KBM"
+          prev="Semester"
+          navePrev={path}
+          at="Tambah Semester"
+          title="Tambah Semester"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-3xl mb-16 mt-5 font-bold">Form Ubah Semester</p>
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
+          Form Tambah Kelompok Mata Pelajaran
+        </p>
         <article>
           {/* COL 1 */}
           <section>
@@ -74,14 +90,14 @@ export default function UbahSemester() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Ubah
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateSemester}
             >
               Batal
@@ -95,11 +111,11 @@ export default function UbahSemester() {
             navigate={navigateSemester}
           />
 
-          <ModalEmpty
+          {/* <ModalEmpty
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

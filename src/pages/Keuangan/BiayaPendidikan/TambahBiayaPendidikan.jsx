@@ -146,7 +146,7 @@ export default function TambahBiayaPendidikan() {
 
     if (
       code.length === 0 ||
-      group.length === 0 ||
+      groupVal.length === 0 ||
       sub_group.length === 0 ||
       item.length === 0 ||
       debitKredit.length === 0
@@ -232,12 +232,22 @@ export default function TambahBiayaPendidikan() {
     <div>
       <div style={{ marginBottom: "50px" }}>
         <Header
-          category="Admin Keuangan  / Biaya Operasional / Tambah Biaya Pendidikan"
+          home="Admin Keuangan"
+          prev="Biaya Pendidikan"
+          navePrev={path}
+          at="Tambah Biaya Pendidikan"
           title="Tambah Biaya Pendidikan"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
           Form Tambah Biaya Pendidikan
         </p>
         <article>
@@ -313,14 +323,14 @@ export default function TambahBiayaPendidikan() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Simpan
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateBiayaPendidikan}
             >
               Batal

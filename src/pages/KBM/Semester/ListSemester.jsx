@@ -1,5 +1,10 @@
 import { DataTables } from "../../../components/DataTables";
-import { CustomStylesStatus } from "../../../components/ModalPopUp";
+import {
+  AlertDelete,
+  AlertUpdateStatusAktif,
+  AlertUpdateStatusNonAktif,
+  CustomStylesStatus,
+} from "../../../components/ModalPopUp";
 import {
   getSemester,
   updateStatusSemester,
@@ -13,7 +18,9 @@ import { ModalStatusList } from "../../../components/ModalPopUp";
 
 export default function ListSemester() {
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState(false);
+  // const [status, setStatus] = useState(false);
+  const statusAktif = "Aktif";
+  const statusNonAktif = "Tidak Aktif";
   const [isOpenUpdateTidakAktif, setisOpenUpdateTidakAktif] = useState(false);
   const [isOpenUpdateAktif, setisOpenUpdateAktif] = useState(false);
   const [isOpenStatus, setisOpenStatus] = useState(false);
@@ -38,55 +45,58 @@ export default function ListSemester() {
   }, []);
 
   const handleNonActiveStatus = (id, name) => {
-    setisOpenUpdateTidakAktif(true);
-    setStatus("Aktif");
-    setDesc(name);
-    setUpdateId(id);
+    // setisOpenUpdateTidakAktif(true);
+    // setStatus("Aktif");
+    // setDesc(name);
+    // setUpdateId(id);
+    AlertUpdateStatusNonAktif(name, statusAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateTidakAktif = () => {
-    setisOpenUpdateTidakAktif(false);
-  };
+  // const closeModalUpdateTidakAktif = () => {
+  //   setisOpenUpdateTidakAktif(false);
+  // };
 
   const handleActiveStatus = (id, name) => {
-    setisOpenUpdateAktif(true);
-    setStatus("Tidak Aktif");
-    setDesc(name);
-    setUpdateId(id);
+    // setisOpenUpdateAktif(true);
+    // setStatus("Tidak Aktif");
+    // setDesc(name);
+    // setUpdateId(id);
+    AlertUpdateStatusAktif(name, statusNonAktif, id, onUpdateStatus);
   };
 
-  const closeModalUpdateAktif = () => {
-    setisOpenUpdateAktif(false);
-  };
+  // const closeModalUpdateAktif = () => {
+  //   setisOpenUpdateAktif(false);
+  // };
 
-  const onUpdateStatus = () => {
-    updateStatusSemester(setSts, status, updateId);
-    closeModalUpdateAktif();
-    closeModalUpdateTidakAktif();
-    setisOpenStatus(true);
+  const onUpdateStatus = (id, status) => {
+    updateStatusSemester(setSts, status, id, setData);
+    // closeModalUpdateAktif();
+    // closeModalUpdateTidakAktif();
+    // setisOpenStatus(true);
   };
 
   const openModalHapus = (id, name) => {
-    setisOpenDelete(true);
+    // setisOpenDelete(true);
     setDesc_nama(name);
     setDeleteId(id);
+    AlertDelete(name, id, onDelete);
   };
 
-  const closeModalHapus = () => {
-    setisOpenDelete(false);
+  // const closeModalHapus = () => {
+  //   setisOpenDelete(false);
+  // };
+
+  const onDelete = (id) => {
+    deleteSemester(setSts, id, setData);
+    // closeModalHapus();
+    // setisOpenStatus(true);
   };
 
-  const onDelete = () => {
-    deleteSemester(setSts, deleteId);
-    closeModalHapus();
-    setisOpenStatus(true);
-  };
-
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    getSemester(setData, setSts);
-    setSts("");
-  };
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   getSemester(setData, setSts);
+  //   setSts("");
+  // };
 
   const columns = [
     {
@@ -184,12 +194,12 @@ export default function ListSemester() {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />
-        <ModalStatusList
+        {/* <ModalStatusList
           isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
           status={sts}
-        />
-        <Modal
+        /> */}
+        {/* <Modal
           isOpen={isOpenUpdateTidakAktif}
           onRequestClose={closeModalUpdateTidakAktif}
           style={CustomStylesStatus}
@@ -242,8 +252,8 @@ export default function ListSemester() {
               Batal
             </button>
           </div>
-        </Modal>
-        <Modal
+        </Modal> */}
+        {/* <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
           style={CustomStylesStatus}
@@ -263,7 +273,7 @@ export default function ListSemester() {
               Batal
             </button>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );

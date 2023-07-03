@@ -9,6 +9,7 @@ import {
   DropdownGroup,
 } from "../../../components/Dropdown";
 import { Header } from "../../../components";
+import { Typography } from "@mui/material";
 
 export default function TambahCostCenter() {
   const [code, setCode] = useState("");
@@ -31,10 +32,10 @@ export default function TambahCostCenter() {
 
     if (
       code.length === 0 ||
-      group.length === 0 ||
+      groupVal.length === 0 ||
       sub_group.length === 0 ||
       item.length === 0 ||
-      payment_type === ""
+      debitKredit.length === 0
     ) {
       AlertEmpty();
     } else {
@@ -68,17 +69,27 @@ export default function TambahCostCenter() {
 
   return (
     <div>
-      <div style={{ marginBottom: "50px" }}>
+      <div style={{ marginBottom: "20px" }}>
         <Header
-          category="Admin Keuangan  / Cost Center / Tambah Cost Center"
+          home="Admin Keuangan"
+          prev="Cost Center"
+          navePrev={path}
+          at="Tambah Cost Center"
           title="Tambah Cost Center"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">
-          Form Tambah Cost Center
-        </p>
         <article>
+          <p
+            style={{
+              fontSize: "24px",
+              marginBottom: "50px",
+              marginTop: "50px",
+            }}
+            className="ml-1 font-bold text-merah"
+          >
+            Form Tambah Cost Center
+          </p>
           <TextInput
             label="Code"
             type="number"
@@ -121,14 +132,14 @@ export default function TambahCostCenter() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Simpan
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateCostCenter}
             >
               Batal

@@ -1,6 +1,8 @@
 import {
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
 } from "../components/ModalPopUp";
@@ -54,6 +56,7 @@ export function updateBank(
 
 export function postBank(
   setStatus,
+  path,
   nama_bank,
   nomor_rekening,
   nama_pemilik,
@@ -68,18 +71,20 @@ export function postBank(
     })
     .then(() => {
       setStatus({ type: "success" });
+      AlertStatusTambahSuccess(path);
     })
     .catch((error) => {
       setStatus({ type: "error", error });
+      AlertStatusTambahFailed();
     });
 }
 
-export function deleteBank(setSts, deleteId, path, setData) {
+export function deleteBank(setSts, deleteId, setData) {
   axios
     .delete(process.env.REACT_APP_NUSA + `/bank/delete/${deleteId}`)
     .then(() => {
       setSts({ type: "success" });
-      AlertStatusHapusSuccess(path);
+      AlertStatusHapusSuccess();
       getBank(setData, setSts);
     })
     .catch((error) => {

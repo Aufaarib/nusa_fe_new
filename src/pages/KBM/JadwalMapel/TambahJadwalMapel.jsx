@@ -5,7 +5,11 @@ import { getMapel } from "../../../api/MataPelajaran";
 import { postJadwalMapel } from "../../../api/JadwalMataPelajaran";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { ModalEmpty, ModalStatusTambah } from "../../../components/ModalPopUp";
+import {
+  AlertEmpty,
+  ModalEmpty,
+  ModalStatusTambah,
+} from "../../../components/ModalPopUp";
 import { Header } from "../../../components";
 import { DropdownJenisTransaksi } from "../../../components/Dropdown";
 
@@ -26,6 +30,10 @@ export default function TambahJadwalMataPelajaran() {
   const [sts, setSts] = useState(undefined);
   const created_by = localStorage.getItem("NAMA");
   const date = moment(new Date()).format("yyyy-MM-DD");
+
+  const navigate = useNavigate();
+
+  const path = "/admin/list-jadwal-mata-pelajaran";
 
   // fetch function
   const fetchCourse = async () => {
@@ -60,10 +68,11 @@ export default function TambahJadwalMataPelajaran() {
       start_time.length === 0 ||
       end_time.length === 0
     ) {
-      setisOpenEmpty(true);
+      AlertEmpty();
     } else {
       postJadwalMapel(
         setSts,
+        path,
         class_id,
         course_id,
         day,
@@ -71,22 +80,21 @@ export default function TambahJadwalMataPelajaran() {
         end_time,
         created_by
       );
-      setisOpenStatus(true);
+      // setisOpenStatus(true);
     }
   };
 
-  const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-  };
+  // const closeModalEmpty = () => {
+  //   setisOpenEmpty(false);
+  // };
 
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    setSts("");
-  };
-  const navigate = useNavigate();
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   setSts("");
+  // };
 
   const navigateSemester = () => {
-    navigate("/admin/list-jadwal-mata-pelajaran");
+    navigate(path);
   };
 
   const courseOptions = courseData.map((c) => ({
@@ -101,14 +109,24 @@ export default function TambahJadwalMataPelajaran() {
 
   return (
     <div>
-      <div style={{ marginBottom: "50px" }}>
+      <div style={{ marginBottom: "20px" }}>
         <Header
-          category="Admin KBM / Jadwal Mata Pelajaran / Tambah Jadwal Mata Pelajaran"
+          home="Admin KBM"
+          prev="Jadwal Mata Pelajaran"
+          navePrev={path}
+          at="Tambah Jadwal Mata Pelajaran"
           title="Tambah Jadwal Mata Pelajaran"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
           Form Tambah Jadwal Mata Pelajaran
         </p>
         <article>
@@ -163,20 +181,20 @@ export default function TambahJadwalMataPelajaran() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Tambah
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateSemester}
             >
               Batal
             </button>
           </div>
-          <ModalStatusTambah
+          {/* <ModalStatusTambah
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={sts}
@@ -186,7 +204,7 @@ export default function TambahJadwalMataPelajaran() {
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

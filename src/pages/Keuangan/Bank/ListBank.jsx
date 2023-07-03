@@ -1,6 +1,6 @@
 import { DataTables } from "../../../components/DataTables";
 import { CustomStylesModalHapus } from "../../../components/CustomStyles";
-import { ModalStatusList } from "../../../components/ModalPopUp";
+import { AlertDelete, ModalStatusList } from "../../../components/ModalPopUp";
 import { getBank, deleteBank } from "../../../api/Bank";
 import { useState, useEffect } from "react";
 import { Header } from "../../../components";
@@ -16,7 +16,7 @@ export default function ListBank() {
   const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  const path = "/admin/tambah-list-bank";
+  const path = "/admin/list-bank";
 
   let filteredItems = data;
 
@@ -31,18 +31,19 @@ export default function ListBank() {
   }, []);
 
   const openModalHapus = (id, nama_pemilik) => {
-    setisOpenDelete(true);
+    // setisOpenDelete(true);
     setDesc_nama(nama_pemilik);
     setDeleteId(id);
+    AlertDelete(nama_pemilik, id, onDelete);
   };
 
-  const closeModalHapus = () => {
-    setisOpenDelete(false);
-  };
+  // const closeModalHapus = () => {
+  //   setisOpenDelete(false);
+  // };
 
-  const onDelete = () => {
-    deleteBank(setSts, deleteId, path, setData);
-    closeModalHapus();
+  const onDelete = (id) => {
+    deleteBank(setSts, id, setData);
+    // closeModalHapus();
     // setisOpenStatus(true);
   };
 
@@ -110,7 +111,7 @@ export default function ListBank() {
   ];
 
   const navigateTambahListBank = () => {
-    navigate(path);
+    navigate("/admin/tambah-list-bank");
   };
 
   const navigateUbahListBank = (
@@ -147,7 +148,7 @@ export default function ListBank() {
           status={sts}
         /> */}
 
-        <Modal
+        {/* <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
           style={CustomStylesModalHapus}
@@ -167,7 +168,7 @@ export default function ListBank() {
               Batal
             </button>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );

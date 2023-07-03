@@ -108,7 +108,7 @@ const RequireAuthAdmin = () => {
       className={currentMode === "Dark" ? "dark" : " min-h-screen bg-slate-500"}
     >
       <div className="relative flex min-h-screen dark:bg-gelap bg-slate-500">
-        <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
+        {/* <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
           <TooltipComponent content="Pengaturan" position="Top">
             <button
               type="button"
@@ -119,7 +119,7 @@ const RequireAuthAdmin = () => {
               <FiSettings />
             </button>
           </TooltipComponent>
-        </div>
+        </div> */}
 
         {activeMenu ? (
           <div className="fixed bg-white w-72 sidebar dark:bg-terang ">

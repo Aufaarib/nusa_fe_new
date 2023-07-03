@@ -52,14 +52,24 @@ export default function TambahTipeTransaksi() {
 
   return (
     <div>
-      <div style={{ marginBottom: "50px" }}>
+      <div style={{ marginBottom: "20px" }}>
         <Header
-          category="Admin Keuangan  / Tipe Transaksi / Tambah Tipe Transaksi"
+          home="Admin Keuangan"
+          prev="Tipe Transaksi"
+          navePrev={path}
+          at="Tambah Tipe Transaksi"
           title="Tambah Tipe Transaksi"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
           Form Tambah Tipe Transaksi
         </p>
         <article>
@@ -82,14 +92,14 @@ export default function TambahTipeTransaksi() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Simpan
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateListTipeTransaksi}
             >
               Batal

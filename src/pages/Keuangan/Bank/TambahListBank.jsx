@@ -1,102 +1,139 @@
-import React from 'react'
-import TextInput from '../../../components/TextInput'
-import { postBank } from '../../../api/Bank';
-import { ModalEmpty, ModalStatusTambah } from '../../../components/ModalPopUp';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Header } from '../../../components';
+import React from "react";
+import TextInput from "../../../components/TextInput";
+import { postBank } from "../../../api/Bank";
+import {
+  AlertEmpty,
+  ModalEmpty,
+  ModalStatusTambah,
+} from "../../../components/ModalPopUp";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Header } from "../../../components";
 
 export default function TambahListBank() {
+  const [nama_bank, setNamaBank] = useState("");
+  const [nomor_rekening, setNomorRekening] = useState("");
+  const [nama_pemilik, setNamaPemilik] = useState("");
+  //   const [isOpenStatus, setisOpenStatus] = useState(false);
+  //   const [isOpenEmpty, setisOpenEmpty] = useState(false);
+  const [status, setStatus] = useState(undefined);
+  const created_by = localStorage.getItem("NAMA");
+  const navigate = useNavigate();
 
-const [nama_bank, setNamaBank] = useState('');
-const [nomor_rekening, setNomorRekening] = useState('');
-const [nama_pemilik, setNamaPemilik] = useState('');
-const [isOpenStatus, setisOpenStatus] = useState(false);
-const [isOpenEmpty, setisOpenEmpty] = useState(false);
-const [status, setStatus] = useState(undefined);
-const created_by = localStorage.getItem("NAMA")
+  const path = "/admin/list-bank";
 
-const postData = (e) => {
+  const postData = (e) => {
     e.preventDefault();
 
-    if (nama_bank.trim().length === 0 || nomor_rekening.trim().length === 0 || nama_pemilik.trim().length === 0) {
-        setisOpenEmpty(true);
+    if (
+      nama_bank.trim().length === 0 ||
+      nomor_rekening.trim().length === 0 ||
+      nama_pemilik.trim().length === 0
+    ) {
+      AlertEmpty();
+    } else {
+      postBank(
+        setStatus,
+        path,
+        nama_bank,
+        nomor_rekening,
+        nama_pemilik,
+        created_by
+      );
+      //   setisOpenStatus(true);
     }
-    else {
-        postBank(setStatus, nama_bank, nomor_rekening, nama_pemilik, created_by);
-        setisOpenStatus(true);
-    }
-}
+  };
 
-const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-}
+  //   const closeModalEmpty = () => {
+  //     setisOpenEmpty(false);
+  //   };
 
-const closeModalStatus = () => {
-    setisOpenStatus(false);
-    setStatus('');
-}
+  //   const closeModalStatus = () => {
+  //     setisOpenStatus(false);
+  //     setStatus("");
+  //   };
 
-const navigate = useNavigate();
+  const navigateListBank = () => {
+    navigate(path);
+  };
 
-const navigateListBank = () => {
-    navigate('/admin/list-bank');
-};
-
-return (
+  return (
     <div>
-        <div style={{ marginBottom : "50px" }}>
-            <Header category="Admin Keuangan  / Bank / Tambah List Bank" title="Tambah List Bank" />
-        </div>
-        <div style={{ marginLeft : "60px" }}>
-            <p className="text-white-700 text-3xl mb-16 mt-5 font-bold">Form Tambah List Bank</p>
-            <article>
-                <TextInput
-                    label="Nama Bank"
-                    type="text"
-                    id="code"
-                    onChange={(e) => setNamaBank(e.target.value)}
-                    required={true}
-                />
-                <TextInput
-                    label="Nomor Rekening"
-                    type="number"
-                    id="code"
-                    onChange={(e) => setNomorRekening(e.target.value)}
-                    required={true}
-                />
-                <TextInput
-                    label="Nama Pemilik"
-                    type="text"
-                    id="group"
-                    onChange={(e) => setNamaPemilik(e.target.value)}
-                    required={true}
-                />
+      <div style={{ marginBottom: "20px" }}>
+        <Header
+          home="Admin Keuangan"
+          prev="Bank"
+          navePrev={path}
+          at="Tambah List Bank"
+          title="Tambah List Bank"
+        />
+      </div>
 
-                <div className='btn-form'>
-                    <button type="button" className="w-20 btn-hijau flex justify-center mb-5" onClick={postData}>
-                        Simpan
-                    </button>
-                    <button type="button" className="w-20 btn-merah flex justify-center mb-5"
-                    onClick={navigateListBank}>
-                        Batal
-                    </button>
-                </div>
+      <div style={{ marginLeft: "60px" }}>
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
+          Form Tambah List Bank
+        </p>
+        <article>
+          <TextInput
+            label="Nama Bank"
+            type="text"
+            id="code"
+            onChange={(e) => setNamaBank(e.target.value)}
+            required={true}
+          />
+          <TextInput
+            label="Nomor Rekening"
+            type="number"
+            id="code"
+            onChange={(e) => setNomorRekening(e.target.value)}
+            required={true}
+          />
+          <TextInput
+            label="Nama Pemilik"
+            type="text"
+            id="group"
+            onChange={(e) => setNamaPemilik(e.target.value)}
+            required={true}
+          />
 
-                <ModalStatusTambah
-                    isOpenStatus={isOpenStatus}
-                    closeModalStatus={closeModalStatus}
-                    status={status}
-                    navigate={navigateListBank}
-                />
+          <div className="btn-form">
+            <button
+              type="button"
+              className="w-20 btn-merah flex justify-center mb-5"
+              onClick={postData}
+            >
+              Simpan
+            </button>
+            <button
+              type="button"
+              className="w-20 btn-putih flex justify-center mb-5"
+              onClick={navigateListBank}
+            >
+              Batal
+            </button>
+          </div>
 
-                <ModalEmpty
-                    isOpenEmpty={isOpenEmpty}
-                    closeModalEmpty={closeModalEmpty}
-                    onRequestCloseEmpty={closeModalEmpty}
-                />
-            </article>
-        </div>
+          {/* <ModalStatusTambah
+            isOpenStatus={isOpenStatus}
+            closeModalStatus={closeModalStatus}
+            status={status}
+            navigate={navigateListBank}
+          />
+
+          <ModalEmpty
+            isOpenEmpty={isOpenEmpty}
+            closeModalEmpty={closeModalEmpty}
+            onRequestCloseEmpty={closeModalEmpty}
+          /> */}
+        </article>
+      </div>
     </div>
-)
+  );
 }

@@ -10,251 +10,250 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-    h1, h2, h3, h4, h5 {
-        @apply font-bold;
-    }
-    h1 {
-        @apply text-3xl;
-    }
-    h2 {
-        @apply text-2xl;
-    }
-    h3 {
-        @apply text-xl;
-    }
-    h4 {
-        @apply text-lg;
-    }
-    h5 {
-        @apply text-sm;
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-bold;
+  }
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+  h3 {
+    @apply text-xl;
+  }
+  h4 {
+    @apply text-lg;
+  }
+  h5 {
+    @apply text-sm;
+  }
 
-    a{
-        @apply text-ungu;
-        @apply text-sm;
-    }
+  a {
+    @apply text-ungu;
+    @apply text-sm;
+  }
 
-    a:hover {
-        @apply text-pink;
-        cursor: pointer;
-    }
+  a:hover {
+    @apply text-pink;
+    cursor: pointer;
+  }
 
-    ol{
-        list-style: decimal;
-        padding-left: 16px;
-    }
-    
-    .custom-date-picker {
-        background-color: #ffffff;
-        border: 1px solid #cccccc;
-        border-radius: 4px;
-        box-shadow: none;
-        color: #333333;
-        font-size: 14px;
-        padding: 10px;
-    }
-    
-    .custom-date-picker-calendar {
-        background-color: #ffffff;
-        border: 1px solid #cccccc;
-        border-radius: 4px;
-        box-shadow: none;
-        color: #333333;
-        font-size: 14px;
-        padding: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .react-datepicker__input-container input {
-        width: 100%;
-        height: 32px;
-        border: none;
-        outline: none;
-        font-size: 14px;
-        padding: 6px;
-        box-sizing: border-box;
-        border-radius: 4px;
-        background-color: #f8f8f8;
-        color: #333333;
-    }
-    
-    .react-datepicker__triangle {
-        display: none;
-    }
-    .btn-merah {
-        @apply flex;
-        @apply justify-center; 
-        @apply w-full;
-        @apply py-3;
-        @apply mt-6;
-        @apply mr-3;
-        @apply font-medium;
-        @apply leading-snug;
-        @apply text-white;
-        @apply text-base;
-        @apply transition;
-        @apply duration-150;
-        @apply ease-in-out;
-        @apply rounded;
-        @apply shadow-md;
-        @apply bg-merah;
-        @apply px-7;
-    }
-    .btn-merah:hover{
-        @apply bg-gelap;
-    }
+  ol {
+    list-style: decimal;
+    padding-left: 16px;
+  }
 
-    .btn-hijau {
-        @apply flex;
-        @apply justify-center; 
-        @apply w-full;
-        @apply py-3;
-        @apply mt-6;
-        @apply mr-3;
-        @apply font-medium;
-        @apply leading-snug;
-        @apply text-white;
-        @apply text-base;
-        @apply transition;
-        @apply duration-150;
-        @apply ease-in-out;
-        @apply rounded;
-        @apply shadow-md;
-        @apply bg-hijau;
-        @apply px-7;
-    }
-    .btn-hijau:hover{
-        @apply bg-gelap;
-    }
-    .btn-mrh {
-        /* @apply flex; */
-        @apply justify-center; 
-        width: 110px;
-        height: 30px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        padding-left: 5px;
-        padding-right: 5px;
-        @apply font-medium;
-        @apply leading-snug;
-        @apply text-white;
-        @apply transition;
-        @apply duration-150;
-        @apply ease-in-out;
-        @apply rounded;
-        @apply shadow-md;
-        @apply bg-merah;
-    }
-    .btn-mrh:hover{
-        @apply bg-gelap;
-    }
+  .custom-date-picker {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #333333;
+    font-size: 14px;
+    padding: 10px;
+  }
 
-    .btn-action-hijau {
-        @apply rounded;
-        @apply shadow-md;
-        @apply bg-hijau;
-        @apply w-20;
-        @apply font-medium;
-        @apply leading-snug;
-        @apply text-white;
-        @apply text-base;
+  .custom-date-picker-calendar {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #333333;
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
 
-    }
-    .btn-action-hijau:hover{
-        @apply bg-gelap;
-    }
+  .react-datepicker__input-container input {
+    width: 100%;
+    height: 32px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    color: #333333;
+  }
 
+  .react-datepicker__triangle {
+    display: none;
+  }
+  .btn-merah {
+    @apply flex;
+    @apply justify-center;
+    @apply w-full;
+    @apply py-3;
+    @apply mt-6;
+    @apply mr-3;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-merah;
+    @apply px-7;
+  }
+  .btn-merah:hover {
+    @apply bg-gelap;
+  }
 
-    .btn-action-ungu {
-        @apply rounded;
-        @apply shadow-md;
-        @apply bg-ungu;
-        @apply w-20;
-        @apply font-medium;
-        @apply leading-snug;
-        @apply text-white;
-        @apply text-base;
+  .btn-putih {
+    @apply flex;
+    @apply justify-center;
+    @apply w-full;
+    @apply py-3;
+    @apply mt-6;
+    @apply mr-3;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-merah;
+    @apply text-base;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-putih;
+    @apply px-7;
+    border: 1px solid #8f0d1e;
+  }
+  .btn-putih:hover {
+    @apply bg-gelap;
+  }
+  .btn-mrh {
+    /* @apply flex; */
+    @apply justify-center;
+    width: 110px;
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-merah;
+  }
+  .btn-mrh:hover {
+    @apply bg-gelap;
+  }
 
-    }
-    .btn-action-ungu:hover{
-        @apply bg-gelap;
-    }
+  .btn-action-hijau {
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-hijau;
+    @apply w-20;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+  }
+  .btn-action-hijau:hover {
+    @apply bg-gelap;
+  }
 
-    .btn-action-biru {
-        @apply rounded;
-        @apply shadow-md;
-        @apply bg-biru;
-        @apply w-20;
-        @apply font-medium;
-        @apply leading-snug;
-        @apply text-white;
-        @apply text-base;
+  .btn-action-ungu {
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-ungu;
+    @apply w-20;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+  }
+  .btn-action-ungu:hover {
+    @apply bg-gelap;
+  }
 
-    }
-    .btn-action-biru:hover{
-        @apply bg-gelap;
-    }
+  .btn-action-biru {
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-biru;
+    @apply w-20;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+  }
+  .btn-action-biru:hover {
+    @apply bg-gelap;
+  }
 
-    .btn-action-pink {
-        @apply rounded;
-        @apply shadow-md;
-        @apply bg-pink;
-        @apply w-20;
-        @apply font-medium;
-        @apply leading-snug;
-        @apply text-white;
-        @apply text-base;
-
-    }
-    .btn-action-pink:hover{
-        @apply bg-gelap;
-    }
-    .pmb-belum-mulai{
-        @apply bg-gray-100;
-        @apply text-gray-700;
-    }
-    /* .pmb-belum-mulai:hover{
+  .btn-action-pink {
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-pink;
+    @apply w-20;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+  }
+  .btn-action-pink:hover {
+    @apply bg-gelap;
+  }
+  .pmb-belum-mulai {
+    @apply bg-gray-100;
+    @apply text-gray-700;
+  }
+  /* .pmb-belum-mulai:hover{
         @apply bg-gray-200;
     } */
-    .pmb-belum-mulai .step{
-        @apply bg-gray-700;
-    }
-    .pmb-dalam-proses{
-        @apply bg-yellow-100;
-        @apply text-yellow-700;
-    }
-    /* .pmb-dalam-proses:hover{
+  .pmb-belum-mulai .step {
+    @apply bg-gray-700;
+  }
+  .pmb-dalam-proses {
+    @apply bg-yellow-100;
+    @apply text-yellow-700;
+  }
+  /* .pmb-dalam-proses:hover{
         @apply bg-yellow-200;
     } */
-    .pmb-dalam-proses .step{
-        @apply bg-yellow-700;
-    }
-    .pmb-berhasil{
-        @apply bg-green-100;
-        @apply text-green-700;
-    }
-    /* .pmb-berhasil:hover{
+  .pmb-dalam-proses .step {
+    @apply bg-yellow-700;
+  }
+  .pmb-berhasil {
+    @apply bg-green-100;
+    @apply text-green-700;
+  }
+  /* .pmb-berhasil:hover{
         @apply bg-green-200;
     } */
-    .pmb-berhasil .step{
-        @apply bg-green-700;
-    }
-    .pmb-gagal{
-        @apply bg-red-100;
-        @apply text-red-700;
-    }
-    /* .pmb-gagal:hover{
+  .pmb-berhasil .step {
+    @apply bg-green-700;
+  }
+  .pmb-gagal {
+    @apply bg-red-100;
+    @apply text-red-700;
+  }
+  /* .pmb-gagal:hover{
         @apply bg-red-200;
     } */
-    .pmb-proses .step{
-        @apply bg-red-700;
-    }
-    
-    .e-grid .e-icons:not(.e-btn-icon){
-        color: #ffffff !important;
-    }
+  .pmb-proses .step {
+    @apply bg-red-700;
+  }
 
-    /* focus:bg-gelap focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg */
+  .e-grid .e-icons:not(.e-btn-icon) {
+    color: #ffffff !important;
+  }
+
+  /* focus:bg-gelap focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg */
 }

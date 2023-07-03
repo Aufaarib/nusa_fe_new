@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 //Table Components
 export function DataTables({
   columns,
+  status,
   data = [],
   defaultSortFieldId,
   filterText,
@@ -108,21 +109,21 @@ export function DataTables({
         //     background-color: #8F0D1E;
         //     color: #fff;
         // }
-        .pagination li.disabled:hover{
-            background-color: transparent;
-        }
-        .pagination li.disabled:hover a{
-            background-color: transparent;
-            color: grey;
-        }
+        // .pagination li.disabled:hover{
+        //     background-color: transparent;
+        // }
+        // .pagination li.disabled:hover a{
+        //     background-color: transparent;
+        //     color: grey;
+        // }
         `;
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState("all");
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
-    // setCurrentPage(0);
+    setCurrentPage(0);
   };
 
   const handlePageClick = ({ selected }) => {
@@ -152,7 +153,7 @@ export function DataTables({
       />
       {data ? (
         <div>
-          {data.length === 0 ? (
+          {status == 0 ? (
             <div style={{ textAlign: "center" }}>
               <h1 style={{ fontSize: "24px" }}>Loading...</h1>
             </div>
@@ -287,28 +288,28 @@ export function DataTablesSaring({
             cursor: not-allowed;
             color: grey;
         }
-        .pagination li:hover{
-            background-color: #8F0D1E;
-        }
-        .pagination li:hover a{
-            background-color: #8F0D1E;
-            color: #fff;
-        }
-        .pagination li.disabled:hover{
-            background-color: transparent;
-        }
-        .pagination li.disabled:hover a{
-            background-color: transparent;
-            color: grey;
-        }
+        // .pagination li:hover{
+        //     background-color: #8F0D1E;
+        // }
+        // .pagination li:hover a{
+        //     background-color: #8F0D1E;
+        //     color: #fff;
+        // }
+        // .pagination li.disabled:hover{
+        //     background-color: transparent;
+        // }
+        // .pagination li.disabled:hover a{
+        //     background-color: transparent;
+        //     color: grey;
+        // }
         `;
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState("all");
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(event.target.value);
-    // setCurrentPage(0);
+    setCurrentPage(0);
   };
 
   const handlePageClick = ({ selected }) => {
@@ -364,8 +365,8 @@ export function DataTablesSaring({
             previousLabel={"<"}
             nextLabel={">"}
             breakLabel={"..."}
-            pageRangeDisplayed={5}
-            marginPagesDisplayed={2}
+            // pageRangeDisplayed={5}
+            // marginPagesDisplayed={2}
             forcePage={currentPage}
             pageCount={pageCount}
             onPageChange={handlePageClick}

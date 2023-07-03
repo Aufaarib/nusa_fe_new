@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { Header } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { ModalStatusList } from "../../../components/ModalPopUp";
+import { AlertDelete, ModalStatusList } from "../../../components/ModalPopUp";
 const moment = require("moment");
 
 export default function ListJadwalMataPelajaran() {
@@ -20,6 +20,10 @@ export default function ListJadwalMataPelajaran() {
   const [desc, setDesc] = useState("");
   const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
+
+  const navigate = useNavigate();
+
+  const path = "/admin/tambah-jadwal-mata-pelajaran";
 
   let filteredItems = data;
 
@@ -34,26 +38,27 @@ export default function ListJadwalMataPelajaran() {
   }, []);
 
   const openModalHapus = (id, day) => {
-    setisOpenDelete(true);
+    // setisOpenDelete(true);
     setDesc_nama(day);
     setDeleteId(id);
+    AlertDelete(day, id, onDelete);
   };
 
-  const closeModalHapus = () => {
-    setisOpenDelete(false);
+  // const closeModalHapus = () => {
+  //   setisOpenDelete(false);
+  // };
+
+  const onDelete = (id) => {
+    deleteJadwalMapel(setSts, id, setData);
+    // closeModalHapus();
+    // setisOpenStatus(true);
   };
 
-  const onDelete = () => {
-    deleteJadwalMapel(setSts, deleteId);
-    closeModalHapus();
-    setisOpenStatus(true);
-  };
-
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    getJadwalMapel(setData, setSts);
-    setSts("");
-  };
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   getJadwalMapel(setData, setSts);
+  //   setSts("");
+  // };
 
   const columns = [
     {
@@ -130,10 +135,8 @@ export default function ListJadwalMataPelajaran() {
     },
   ];
 
-  const navigate = useNavigate();
-
   const navigateTambahMataPelajaran = () => {
-    navigate("/admin/tambah-jadwal-mata-pelajaran");
+    navigate(path);
   };
 
   const navigateUbahJadwalMapel = (
@@ -174,12 +177,12 @@ export default function ListJadwalMataPelajaran() {
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
         />
-        <ModalStatusList
+        {/* <ModalStatusList
           isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
           status={sts}
-        />
-        <Modal
+        /> */}
+        {/* <Modal
           isOpen={isOpenDelete}
           onRequestClose={closeModalHapus}
           style={CustomStylesModalHapus}
@@ -199,7 +202,7 @@ export default function ListJadwalMataPelajaran() {
               Batal
             </button>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </>
   );
