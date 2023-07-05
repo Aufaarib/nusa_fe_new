@@ -59,10 +59,18 @@ const FormOrangTua = () => {
   return (
     <>
       <Header
+        home="PMB"
+        // prev="Bank"
+        // navePrev={path}
+        at="Pendataan Orang Tua"
+        title="Form Pendataan Orang Tua"
+      />
+
+      {/* <Header
         category="PMB"
         title="Form Pendataan Orang Tua"
         icon={<RiParentFill />}
-      />
+      /> */}
 
       {/* MESSAGES */}
       {/* <div

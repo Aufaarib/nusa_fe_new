@@ -41,10 +41,18 @@ const TahapanPMB = () => {
   return (
     <div id="target" className="relative">
       <Header
+        home="PMB"
+        // prev="Bank"
+        // navePrev={path}
+        at="Tahapan Penerimaan Murid Baru"
+        title="Tahapan Penerimaan Murid Baru"
+      />
+
+      {/* <Header
         category="PMB"
         title={`Tahapan Penerimaan Murid Baru`}
         icon={<BsBarChartSteps />}
-      />
+      /> */}
 
       {/* MESSAGES */}
       {/* <div className={stepsPMB.register.details.message ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative" : "hidden"} aria-live="assertive" role="alert">

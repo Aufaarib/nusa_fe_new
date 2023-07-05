@@ -332,7 +332,7 @@ export const AlertUpdateStatusAktif = (desc, status, id, onUpdateStatus) => {
     });
 };
 
-export const AlertUpdateStatusNonAktif = (desc, status, id, onUpdateStatus) => {
+export const AlertUpdateStatusNonAktif = (desc, code, onUpdateStatus) => {
   styledSweetAlert
     .fire({
       title: "Aktifkan",
@@ -343,7 +343,7 @@ export const AlertUpdateStatusNonAktif = (desc, status, id, onUpdateStatus) => {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        onUpdateStatus(id, status);
+        onUpdateStatus(code);
       }
     });
 };

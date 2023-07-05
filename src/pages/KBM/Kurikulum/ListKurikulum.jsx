@@ -47,32 +47,32 @@ export default function ListKurikulum() {
     getKurikulum(setData, setSts);
   }, []);
 
-  const handleNonActiveStatus = (id, description) => {
+  const handleStatus = (code, description) => {
     // setisOpenUpdateTidakAktif(true);
     // setStatus("Aktif");
     // setDesc(description);
     // setUpdateId(id);
-    AlertUpdateStatusNonAktif(description, statusAktif, id, onUpdateStatus);
+    AlertUpdateStatusNonAktif(description, code, onUpdateStatus);
   };
 
   // const closeModalUpdateTidakAktif = () => {
   //   setisOpenUpdateTidakAktif(false);
   // };
 
-  const handleActiveStatus = (id, description) => {
-    // setisOpenUpdateAktif(true);
-    // setStatus("Tidak Aktif");
-    // setDesc(description);
-    // setUpdateId(id);
-    AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
-  };
+  // const handleActiveStatus = (id, description) => {
+  //   // setisOpenUpdateAktif(true);
+  //   // setStatus("Tidak Aktif");
+  //   // setDesc(description);
+  //   // setUpdateId(id);
+  //   AlertUpdateStatusAktif(description, statusNonAktif, id, onUpdateStatus);
+  // };
 
   // const closeModalUpdateAktif = () => {
   //   setisOpenUpdateAktif(false);
   // };
 
-  const onUpdateStatus = (id, status) => {
-    updateStatusKurikulum(setSts, status, id, setData);
+  const onUpdateStatus = (code) => {
+    updateStatusKurikulum(setSts, code, setData);
     // closeModalUpdateAktif();
     // closeModalUpdateTidakAktif();
     // setisOpenStatus(true);
@@ -95,11 +95,11 @@ export default function ListKurikulum() {
     // setisOpenStatus(true);
   };
 
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    getKurikulum(setData, setSts);
-    setSts("");
-  };
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   getKurikulum(setData, setSts);
+  //   setSts("");
+  // };
 
   const columns = [
     {
@@ -125,16 +125,16 @@ export default function ListKurikulum() {
       cell: (data) => <div>{data.description}</div>,
       width: "auto",
     },
-    {
-      name: <div>Semester</div>,
-      selector: (data) => data.semester_id,
-      cell: (data) => <div>{data.semester_id}</div>,
-      width: "auto",
-    },
+    // {
+    //   name: <div>Semester</div>,
+    //   selector: (data) => data.semester_id,
+    //   cell: (data) => <div>{data.semester_id}</div>,
+    //   width: "auto",
+    // },
     {
       name: <div>Status</div>,
       selector: (data) => data.status,
-      cell: (data) => <div>{data.status}</div>,
+      cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
       width: "auto",
     },
     {
@@ -156,20 +156,20 @@ export default function ListKurikulum() {
           >
             <i className="fa fa-pencil"></i> Ubah
           </button>
-          {data?.status === "Aktif" && (
+          {data?.status === 1 && (
             <button
               className="btn-action-hijau ml-3 w-auto px-2"
-              onClick={() => handleActiveStatus(data.id, data.name)}
+              onClick={() => handleStatus(data.code, data.name)}
             >
-              <i className="fa fa-play"></i> {data.status}
+              <i className="fa fa-play"></i> Aktif
             </button>
           )}
-          {data?.status === "Tidak Aktif" && (
+          {data?.status === 0 && (
             <button
               className="btn-action-pink ml-3 w-auto px-2"
-              onClick={() => handleNonActiveStatus(data.id, data.name)}
+              onClick={() => handleStatus(data.code, data.name)}
             >
-              <i className="fa fa-pause"></i> {data.status}
+              <i className="fa fa-pause"></i> Tidak Aktif
             </button>
           )}
           <button
@@ -205,7 +205,13 @@ export default function ListKurikulum() {
 
   return (
     <>
-      <Header category="Admin KBM / Kurikulum" title="List Kurikulum" />
+      <Header
+        home="Admin KBM"
+        // prev="Bank"
+        // navePrev={path}
+        at="Kurikulum"
+        title="List Kurikulum"
+      />
 
       <div style={{ marginTop: "50px" }}>
         <DataTables

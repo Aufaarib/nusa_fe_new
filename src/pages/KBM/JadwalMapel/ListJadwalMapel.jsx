@@ -165,7 +165,10 @@ export default function ListJadwalMataPelajaran() {
   return (
     <>
       <Header
-        category="Admin KBM / Jadwal Mata Pelajaran"
+        home="Admin KBM"
+        // prev="Bank"
+        // navePrev={path}
+        at="Jadwal Mata Pelajaran"
         title="List Jadwal Mata Pelajaran"
       />
 

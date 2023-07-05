@@ -257,7 +257,7 @@ const FormDaftarOrangTua = ({ indexMurid }) => {
       <div style={{ maxWidth: "140vh", overflow: "auto" }}>
         <form
           onSubmit={handleSubmit}
-          style={{ display: "flex", gap: "22px", padding: "10px" }}
+          style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           {/* AYAH */}
           {/* COL 1 */}

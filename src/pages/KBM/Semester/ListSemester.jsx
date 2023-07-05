@@ -184,7 +184,13 @@ export default function ListSemester() {
 
   return (
     <>
-      <Header category="Admin KBM / Semester" title="List Semester" />
+      <Header
+        home="Admin KBM"
+        // prev="Bank"
+        // navePrev={path}
+        at="Semester"
+        title="List Semester"
+      />
 
       <div style={{ marginTop: "50px" }}>
         <DataTables

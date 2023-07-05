@@ -103,7 +103,7 @@ const RequireAuth = () => {
   //   });
   // }, [toastShow]);
 
-  return role !== "Admin PMB" ? (
+  return role === "USER" ? (
     <div
       className={currentMode === "Dark" ? "dark" : " min-h-screen bg-slate-500"}
     >
@@ -150,7 +150,7 @@ const RequireAuth = () => {
             <Outlet />
 
             {/* MESSAGES */}
-            <div
+            {/* <div
               className={
                 errMsg
                   ? "px-4 py-3 mt-3 rounded-md text-merah text-sm bg-red-100 relative"
@@ -180,7 +180,7 @@ const RequireAuth = () => {
               <p className="flex gap-2">
                 <FaRegCheckCircle className="my-1" /> {successMsg}
               </p>
-            </div>
+            </div> */}
 
             {/* <ToastComponent ref={(toast) => { toastObj = toast; }} id='toast_default' position={position} created={create.bind(this)} close={onclose.bind(this)} beforeOpen={onbeforeOpen.bind(this)}></ToastComponent> */}
           </div>

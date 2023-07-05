@@ -156,7 +156,10 @@ export default function ListTipeTransaksi() {
   return (
     <>
       <Header
-        category="Admin Keuangan / Tipe Transaksi"
+        home="Admin Keuangan"
+        // prev="Bank"
+        // navePrev={path}
+        at="Tipe Transaksi"
         title="List Tipe Transaksi"
       />
 

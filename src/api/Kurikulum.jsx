@@ -1,6 +1,8 @@
 import {
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -8,9 +10,12 @@ import axios from "./axios";
 
 export function getKurikulum(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_NUSA + "/curriculum/fetch")
+    .get(process.env.REACT_APP_BASE_URL + "/curriculum", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
     .then((res) => {
-      setData(res.data.data);
+      console.log(res.data.body);
+      setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
@@ -51,11 +56,15 @@ export function updateKurikulum(
     });
 }
 
-export function updateStatusKurikulum(setSts, status, updateId, setData) {
+export function updateStatusKurikulum(setSts, code, setData) {
   axios
-    .post(process.env.REACT_APP_NUSA + `/curriculum/update/${updateId}`, {
-      status,
-    })
+    .put(
+      process.env.REACT_APP_BASE_URL + `/curriculum/${code}/toggle-status`,
+      null,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
     .then(() => {
       setSts({ type: "success" });
       AlertStatusUpdateSuccess();
@@ -69,27 +78,34 @@ export function updateStatusKurikulum(setSts, status, updateId, setData) {
 
 export function postKurikulum(
   setSts,
-  code,
+  path,
+  // code,
   name,
-  status,
-  description,
-  semester_id,
-  created_by
+  // status,
+  description
+  // semester_id,
+  // created_by
 ) {
   axios
-    .post(process.env.REACT_APP_NUSA + "/curriculum/create", {
-      code,
-      name,
-      status,
-      description,
-      semester_id,
-      created_by,
-    })
+    .post(
+      process.env.REACT_APP_BASE_URL + "/curriculum",
+      {
+        // code,
+        name,
+        // status,
+        description,
+        // semester_id,
+        // created_by,
+      },
+      { headers: { authorization: localStorage.getItem("TOKEN") } }
+    )
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusTambahSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusTambahFailed();
     });
 }
 

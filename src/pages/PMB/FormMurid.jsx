@@ -61,10 +61,17 @@ const FormMurid = () => {
   return (
     <>
       <Header
+        home="PMB"
+        // prev="Bank"
+        // navePrev={path}
+        at="Pendaftaran Murid"
+        title="Form Pendaftaran Murid"
+      />
+      {/* <Header
         category="PMB"
         title="Form Pendaftaran Murid"
         icon={<FaChild />}
-      />
+      /> */}
 
       {/* MESSAGES */}
       {/* <div

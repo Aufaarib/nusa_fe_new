@@ -25,7 +25,7 @@ export default function TambahKurikulum() {
   const [isOpenStatus, setisOpenStatus] = useState(false);
   const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const created_by = localStorage.getItem("NAMA");
+  // const created_by = localStorage.getItem("NAMA");
 
   const navigate = useNavigate();
 
@@ -42,48 +42,49 @@ export default function TambahKurikulum() {
   const postData = (e) => {
     e.preventDefault();
 
-    const semester_id = parseInt(semester);
-    const status = statusVal.value;
+    // const semester_id = parseInt(semester);
+    // const status = statusVal.value;
 
     if (
-      code.length === 0 ||
+      // code.length === 0 ||
       name.length === 0 ||
-      description.length === 0 ||
-      statusVal.length === 0 ||
-      semester.length === 0
+      description.length === 0
+      // statusVal.length === 0
+      // semester.length === 0
     ) {
       AlertEmpty();
     } else {
       postKurikulum(
         setSts,
-        code,
+        path,
+        // code,
         name,
-        status,
-        description,
-        semester_id,
-        created_by
+        // status,
+        description
+        // semester_id,
+        // created_by
       );
       setisOpenStatus(true);
     }
   };
 
-  const closeModalEmpty = () => {
-    AlertEmpty();
-  };
+  // const closeModalEmpty = () => {
+  //   AlertEmpty();
+  // };
 
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    setSts("");
-  };
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   setSts("");
+  // };
 
-  const navigateSemester = () => {
+  const navigateKurikulum = () => {
     navigate(path);
   };
 
-  const SemesterOptions = semesterData.map((c) => ({
-    label: c.name + " - " + c.status,
-    value: c.id,
-  }));
+  // const SemesterOptions = semesterData.map((c) => ({
+  //   label: c.name + " - " + c.status,
+  //   value: c.id,
+  // }));
 
   return (
     <div>
@@ -108,14 +109,14 @@ export default function TambahKurikulum() {
           Form Tambah Kurikulum
         </p>
         <article>
-          <TextInput
+          {/* <TextInput
             label="Code"
             type="number"
             id="group"
             name="code"
             onChange={(e) => setCode(e.target.value)}
             required={true}
-          />
+          /> */}
           <TextInput
             label="Nama"
             type="text"
@@ -132,15 +133,15 @@ export default function TambahKurikulum() {
             onChange={(e) => setDescription(e.target.value)}
             required={true}
           />
-          <DropdownStatus
+          {/* <DropdownStatus
             label="Status"
             required={true}
             isClearable={true}
             defaultValue={statusVal}
             isSearchable={false}
             onChange={setStatus}
-          />
-          <DropdownJenisTransaksi
+          /> */}
+          {/* <DropdownJenisTransaksi
             label="Semester"
             required={true}
             defaultValue={semester}
@@ -148,7 +149,7 @@ export default function TambahKurikulum() {
             options={SemesterOptions}
             isSearchable={false}
             onChange={(e) => setSemester(e.value)}
-          />
+          /> */}
 
           <div className="btn-form">
             <button
@@ -161,22 +162,22 @@ export default function TambahKurikulum() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateSemester}
+              onClick={navigateKurikulum}
             >
               Batal
             </button>
           </div>
-          <ModalStatusTambah
+          {/* <ModalStatusTambah
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={sts}
-            navigate={navigateSemester}
+            navigate={navigateKurikulum}
           />
           <ModalEmpty
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

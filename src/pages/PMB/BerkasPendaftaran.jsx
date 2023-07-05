@@ -57,10 +57,18 @@ const BerkasPendaftaran = () => {
   return (
     <>
       <Header
+        home="PMB"
+        // prev="Bank"
+        // navePrev={path}
+        at="Berkas Pendaftaran"
+        title="Form Berkas Pendaftaran"
+      />
+      {/* 
+      <Header
         category="PMB"
         title="Form Berkas Pendaftaran"
         icon={<AiFillFileText />}
-      />
+      /> */}
 
       {/* MESSAGES */}
       {/* <div className={!verified ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative" : "hidden"} aria-live="assertive" role="alert">

@@ -53,10 +53,18 @@ const FormPernyataanOrangTua = () => {
   return (
     <>
       <Header
+        home="PMB"
+        // prev="Bank"
+        // navePrev={path}
+        at="Pernyataan Orang Tua"
+        title="Form Pernyataan Orang Tua"
+      />
+
+      {/* <Header
         category="PMB"
         title="Form Pernyataan Orang Tua"
         icon={<FaFileSignature />}
-      />
+      /> */}
 
       {/* MESSAGES */}
       {/* <div className={!verified ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative" : "hidden"} aria-live="assertive" role="alert">

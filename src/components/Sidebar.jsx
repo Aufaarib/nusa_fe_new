@@ -42,7 +42,7 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    if (role === "Admin PMB") {
+    if (role === "ADMIN") {
       setCurrentSidebarMenus(sidebarMenusAdmin);
     } else {
       getFormCheck();
@@ -89,7 +89,7 @@ const Sidebar = () => {
                 {formCheck[item.step] ||
                 item.step == "register_payment" ||
                 item.step == openForm ||
-                role == "Admin PMB" ? (
+                role == "ADMIN" ? (
                   <NavLink
                     to={`/${item.path}`}
                     key={item.title}
@@ -134,7 +134,7 @@ const Sidebar = () => {
                     link.step == "register_payment" ||
                     openForm == "" ||
                     link.step == openForm ||
-                    role == "Admin PMB" ? (
+                    role == "ADMIN" ? (
                       <NavLink
                         id=""
                         to={`/${link.path}`}

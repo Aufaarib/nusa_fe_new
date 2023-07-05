@@ -151,7 +151,7 @@ const FormPernyataan = ({ indexMurid }) => {
       <div style={{ maxWidth: "140vh", overflow: "auto" }}>
         <form
           onSubmit={handleSubmit}
-          style={{ display: "flex", gap: "22px", padding: "20px" }}
+          style={{ display: "block", gap: "22px", padding: "20px" }}
         >
           {/* COL 1 */}
           <section>

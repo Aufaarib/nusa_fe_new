@@ -103,7 +103,7 @@ const RequireAuthAdmin = () => {
   //   });
   // }, [toastShow]);
 
-  return role === "Admin PMB" ? (
+  return role === "ADMIN" ? (
     <div
       className={currentMode === "Dark" ? "dark" : " min-h-screen bg-slate-500"}
     >

@@ -25,7 +25,7 @@ const initialState = {
 };
 
 export const ContextProvider = ({ children }) => {
-  const token = JSON.parse(localStorage.getItem("TOKEN"));
+  const token = localStorage.getItem("TOKEN");
   const location = useLocation();
 
   const { auth, setAuth } = useAuth();

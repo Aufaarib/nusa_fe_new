@@ -115,7 +115,13 @@ export default function ListKelas() {
 
   return (
     <>
-      <Header category="Admin KBM / Kelas" title="List Kelas" />
+      <Header
+        home="Admin KBM"
+        // prev="Bank"
+        // navePrev={path}
+        at="Kelas"
+        title="List Kelas"
+      />
 
       <div style={{ marginTop: "50px" }}>
         <DataTables

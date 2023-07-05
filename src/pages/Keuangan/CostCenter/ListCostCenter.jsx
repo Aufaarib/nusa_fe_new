@@ -123,7 +123,10 @@ export default function ListCostCenter() {
   return (
     <>
       <Header
-        category="Admin Keuangan / Cost Center"
+        home="Admin Keuangan"
+        // prev="Bank"
+        // navePrev={path}
+        at="Cost Center"
         title="List Cost Center"
       />
 

@@ -71,9 +71,9 @@ const Register = () => {
     phoneRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    jumlahanakRef.current.focus();
-  }, []);
+  // useEffect(() => {
+  //   jumlahanakRef.current.focus();
+  // }, []);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -87,9 +87,9 @@ const Register = () => {
     setValidPhone(PHONE_REGEX.test(phone));
   }, [phone]);
 
-  useEffect(() => {
-    setValidJumlahAnak(ONLY_NUMBER_REGEX.test(jumlahanak));
-  }, [jumlahanak]);
+  // useEffect(() => {
+  //   setValidJumlahAnak(ONLY_NUMBER_REGEX.test(jumlahanak));
+  // }, [jumlahanak]);
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
@@ -119,29 +119,22 @@ const Register = () => {
       JSON.stringify({
         nama_lengkap: user,
         nomor_ponsel: phone,
-        jumlah_anak: jumlahanak,
+        // jumlah_anak: jumlahanak,
         email: email,
         password: pwd,
-        password_confirmation: matchPwd,
+        // password_confirmation: matchPwd,
       })
     );
     try {
       const response = await axios.post(
-        REGISTER_URL,
-        JSON.stringify({
-          nama_lengkap: user,
-          nomor_ponsel: phone,
-          email: email,
-          jumlah_anak: jumlahanak,
-          password: pwd,
-          password_confirmation: matchPwd,
-        }),
+        process.env.REACT_APP_BASE_URL + "/user/parent",
         {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
+          fullname: user,
+          phone: phone,
+          email: email,
+          // jumlah_anak: jumlahanak,
+          password: pwd,
+          // password_confirmation: matchPwd,
         }
       );
       console.log(response?.data);
@@ -218,7 +211,17 @@ const Register = () => {
                   <p>
                     Tidak menerima email? Periksa folder spam atau promosi Anda!
                   </p>
-                  {/* <p>Tidak menerima email? Periksa folder spam atau promosi Anda atau <a onClick={resendEmailVerification} className="font-bold cursor-pointer text-merah">Kirim ulang verifikasi</a>.</p> */}
+                  <p>
+                    Tidak menerima email? Periksa folder spam atau promosi Anda
+                    atau{" "}
+                    <a
+                      onClick={resendEmailVerification}
+                      className="font-bold cursor-pointer text-merah"
+                    >
+                      Kirim ulang verifikasi
+                    </a>
+                    .
+                  </p>
                 </div>
                 <Link to="/login" className="btn-merah">
                   Lewatkan ke{" "}
@@ -385,7 +388,7 @@ const Register = () => {
               </div>
 
               {/* JUMLAH ANAK */}
-              <div className="relative block xl:w-480">
+              {/* <div className="relative block xl:w-480">
                 <label
                   htmlFor="jumlahanak"
                   className="flex mt-4 mb-1 form-label"
@@ -431,7 +434,7 @@ const Register = () => {
                   <FaInfoCircle className="mr-1" />
                   <span>Harus berupa angka positif.</span>
                 </p>
-              </div>
+              </div> */}
 
               <div className="relative block xl:w-480">
                 <label htmlFor="password" className="flex mt-4 mb-1 form-label">

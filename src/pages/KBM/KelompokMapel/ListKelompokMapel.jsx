@@ -176,7 +176,10 @@ export default function ListKelompokMapel() {
   return (
     <>
       <Header
-        category="Admin KBM / Kelompok Mapel"
+        home="Admin KBM"
+        // prev="Bank"
+        // navePrev={path}
+        at="Kelompok Mapel"
         title="List Kelompok Mata Pelajaran"
       />
       <div style={{ marginTop: "50px" }}>

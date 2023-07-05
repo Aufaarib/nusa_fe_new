@@ -201,9 +201,16 @@ class DashboardKeuangan extends Component {
     return (
       <>
         <Header
-          category="Admin Keuangan / Dashboard / Keuangan"
+          home="Admin Keuangan"
+          // prev="Bank"
+          // navePrev={path}
+          at="Dashboard"
           title="Keuangan"
         />
+        {/* <Header
+          category="Admin Keuangan / Dashboard / Keuangan"
+          title="Keuangan"
+        /> */}
 
         <div style={{ display: "flex", marginTop: "35px" }}>
           <div

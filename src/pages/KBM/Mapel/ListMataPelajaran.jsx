@@ -215,7 +215,10 @@ export default function ListMataPelajaran() {
   return (
     <>
       <Header
-        category="Admin KBM / Mata Pelajaran"
+        home="Admin KBM"
+        // prev="Bank"
+        // navePrev={path}
+        at="Mata Pelajaran"
         title="List Mata Pelajaran"
       />
 

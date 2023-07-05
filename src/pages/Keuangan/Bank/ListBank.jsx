@@ -132,7 +132,13 @@ export default function ListBank() {
 
   return (
     <>
-      <Header category="Admin Keuangan / Bank" title="List Bank" />
+      <Header
+        home="Admin Keuangan"
+        // prev="Bank"
+        // navePrev={path}
+        at="Bank"
+        title="List Bank"
+      />
 
       <div style={{ marginTop: "50px" }}>
         <DataTables

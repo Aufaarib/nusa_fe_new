@@ -5,7 +5,7 @@ import assalamualaikum from "../../data/assalamualaikum.png";
 import { CgSpinner } from "react-icons/cg";
 import { FaTimesCircle } from "react-icons/fa";
 import { useStateContext } from "../../contexts/ContextProvider";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 
 // const LOGIN_URL = "/api/login";
@@ -13,22 +13,22 @@ import axios from "../../api/axios";
 const Login = () => {
   const { isLoading, setIsLoading } = useStateContext();
 
-  const { auth, setAuth } = useAuth();
+  // const { auth, setAuth } = useAuth();
   // const role = JSON.parse(localStorage.getItem('ROLE'));
-  const role = localStorage.getItem("ROLE");
+  // const role = localStorage.getItem("ROLE");
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from.pathname || "/";
+  // const location = useLocation();
+  // const from = location.state?.from.pathname || "/";
 
   const userRef = useRef();
   const errRef = useRef();
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [errMsgUser, setErrMsgUser] = useState("");
-  const [errMsgPwd, setErrMsgPwd] = useState("");
+  // const [errMsgUser, setErrMsgUser] = useState("");
+  // const [errMsgPwd, setErrMsgPwd] = useState("");
   // const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -53,46 +53,43 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // const response = await axios.post(LOGIN_URL,
-      //     JSON.stringify({
-      //       "username":user,
-      //       "password":pwd
-      //     }),
-      //     {
-      //       headers: {
-      //         'Accept': 'application/json',
-      //         'Content-Type': 'application/json'
-      //       },
-      //       withCredentials: true
-      //     }
-      // );
+      const response = await axios.post(
+        process.env.REACT_APP_BASE_URL + "/user/login",
+        {
+          email: user,
+          password: pwd,
+        }
+      );
       // console.log("RES ==== " + JSON.stringify(response?.data));
       // const nama = response?.data?.user.nama_lengkap;
-      // const role = response?.data?.user.role;
-      // const email = response?.data?.user.email;
+      const role = response?.data?.body.role;
+      const email = response?.data?.body.email;
       // const verified = response?.data?.user.email_verified_at;
-      // const token = response?.data?.bearer;
+      const token = response?.headers?.authorization;
       // setAuth({ nama, role, email, verified, token });
       // console.log("auth ==== " + JSON.stringify(verified));
-      const nama = "Muhammad Aufa Arib";
-      const email = "@Ghuroba_maa";
-      setUser("");
-      setPwd("");
+      const nama = response?.data?.body.fullname;
+      // const email = "@Ghuroba_maa";
+      // setUser("");
+      // setPwd("");
       setIsLoading(false);
       // localStorage.setItem('NAMA', JSON.stringify(nama))
       // localStorage.setItem('ROLE', JSON.stringify(role))
       // localStorage.setItem('EMAIL', JSON.stringify(email))
-      // localStorage.setItem('TOKEN', JSON.stringify(token))
+      localStorage.setItem("TOKEN", token);
       // localStorage.setItem('VERIFIED', JSON.stringify(verified))
       localStorage.setItem("NAMA", nama);
-      localStorage.setItem("ROLE", pwd);
+      localStorage.setItem("ROLE", role);
       localStorage.setItem("EMAIL", email);
       // setSuccess(true);
       // navigate(from, { replace: true});
-      if (pwd === "Admin PMB") {
-        navigate("/admin/dashboard", { replace: true });
-      } else {
-        navigate("/pmb/tahapan-pmb", { replace: true });
+      console.log(role);
+      if (response.status === 200) {
+        if (role === "ADMIN") {
+          navigate("/admin/dashboard", { replace: true });
+        } else {
+          navigate("/pmb/tahapan-pmb", { replace: true });
+        }
       }
     } catch (err) {
       // console.error("ERROR === ", err?.response?.data.errors)
@@ -136,7 +133,7 @@ const Login = () => {
           {/* USER */}
           <div className="relative block xl:w-480">
             <label htmlFor="user" className="flex mt-4 mb-1 form-label">
-              Nama
+              Email
             </label>
             <input
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
