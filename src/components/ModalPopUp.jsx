@@ -316,6 +316,39 @@ export const AlertDelete = (desc, id, onDelete) => {
     });
 };
 
+export const AlertUbahStatus = (desc, code, status, onUpdateStatus) => {
+  console.log(status);
+  if (status === 1) {
+    styledSweetAlert
+      .fire({
+        title: "Non-Aktifkan",
+        text: desc + " ?",
+        showConfirmButton: true,
+        confirmButtonText: "Non-Aktifkan",
+        showCancelButton: "Batal",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          onUpdateStatus(code);
+        }
+      });
+  } else {
+    styledSweetAlert
+      .fire({
+        title: "Aktifkan",
+        text: desc + " ?",
+        showConfirmButton: true,
+        confirmButtonText: "Aktifkan",
+        showCancelButton: "Batal",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          onUpdateStatus(code);
+        }
+      });
+  }
+};
+
 export const AlertUpdateStatusAktif = (desc, status, id, onUpdateStatus) => {
   styledSweetAlert
     .fire({
@@ -332,7 +365,7 @@ export const AlertUpdateStatusAktif = (desc, status, id, onUpdateStatus) => {
     });
 };
 
-export const AlertUpdateStatusNonAktif = (desc, code, onUpdateStatus) => {
+export const AlertUpdateStatusNonAktif = (desc, status, id, onUpdateStatus) => {
   styledSweetAlert
     .fire({
       title: "Aktifkan",
@@ -343,7 +376,7 @@ export const AlertUpdateStatusNonAktif = (desc, code, onUpdateStatus) => {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        onUpdateStatus(code);
+        onUpdateStatus(id, status);
       }
     });
 };

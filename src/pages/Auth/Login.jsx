@@ -143,7 +143,7 @@ const Login = () => {
               autoComplete="off"
               onChange={(e) => setUser(e.target.value)}
               value={user}
-              // required
+              required
             />
           </div>
 
@@ -159,7 +159,7 @@ const Login = () => {
               onChange={(e) => setPwd(e.target.value)}
               value={pwd}
               required
-              placeholder="Admin PMB"
+              // placeholder="Admin PMB"
             />
           </div>
 

@@ -23,7 +23,7 @@ import { DropdownBank, DropdownStatus } from "./Dropdown";
 const STUDENT_URL = "/api/pmb/student";
 
 const FormDaftarMurid = ({ indexMurid }) => {
-  const token = JSON.parse(localStorage.getItem("TOKEN"));
+  const token = localStorage.getItem("TOKEN");
   const {
     students,
     setStudents,

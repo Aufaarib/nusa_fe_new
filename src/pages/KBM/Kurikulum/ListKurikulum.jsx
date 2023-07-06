@@ -1,6 +1,7 @@
 import { DataTables } from "../../../components/DataTables";
 import {
   AlertDelete,
+  AlertUbahStatus,
   AlertUpdateStatusAktif,
   AlertUpdateStatusNonAktif,
   CustomStylesStatus,
@@ -47,12 +48,12 @@ export default function ListKurikulum() {
     getKurikulum(setData, setSts);
   }, []);
 
-  const handleStatus = (code, description) => {
+  const handleStatus = (code, description, status) => {
+    AlertUbahStatus(description, code, status, onUpdateStatus);
     // setisOpenUpdateTidakAktif(true);
     // setStatus("Aktif");
     // setDesc(description);
     // setUpdateId(id);
-    AlertUpdateStatusNonAktif(description, code, onUpdateStatus);
   };
 
   // const closeModalUpdateTidakAktif = () => {
@@ -159,7 +160,7 @@ export default function ListKurikulum() {
           {data?.status === 1 && (
             <button
               className="btn-action-hijau ml-3 w-auto px-2"
-              onClick={() => handleStatus(data.code, data.name)}
+              onClick={() => handleStatus(data.code, data.name, data.status)}
             >
               <i className="fa fa-play"></i> Aktif
             </button>
@@ -167,7 +168,7 @@ export default function ListKurikulum() {
           {data?.status === 0 && (
             <button
               className="btn-action-pink ml-3 w-auto px-2"
-              onClick={() => handleStatus(data.code, data.name)}
+              onClick={() => handleStatus(data.code, data.name, data.status)}
             >
               <i className="fa fa-pause"></i> Tidak Aktif
             </button>

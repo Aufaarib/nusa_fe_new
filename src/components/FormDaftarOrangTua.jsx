@@ -18,7 +18,7 @@ import { DropdownDatePickers, DropdownListComponents } from "./Dropdown";
 const PARENTS_URL = "/api/pmb/parent";
 
 const FormDaftarOrangTua = ({ indexMurid }) => {
-  const token = JSON.parse(localStorage.getItem("TOKEN"));
+  const token = localStorage.getItem("TOKEN");
   const {
     isLoading,
     setIsLoading,

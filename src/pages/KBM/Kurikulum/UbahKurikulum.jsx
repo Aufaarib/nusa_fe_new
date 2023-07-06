@@ -116,14 +116,14 @@ export default function UbahKurikulum() {
           <div className="btn-form">
             <button
               type="button"
-              className="w-20 btn-hijau flex justify-center mb-5"
+              className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
               Ubah
             </button>
             <button
               type="button"
-              className="w-20 btn-merah flex justify-center mb-5"
+              className="w-20 btn-putih flex justify-center mb-5"
               onClick={navigateKurikulum}
             >
               Batal

@@ -206,6 +206,11 @@ export const sidebarMenusAdmin = [
         icon: <FaWpforms />,
       },
       {
+        name: "View Data Registrasi",
+        path: `admin/konfirmasi-pembayaran`,
+        icon: <FaWpforms />,
+      },
+      {
         name: "Konfirmasi Pembayaran",
         path: `admin/konfirmasi-pembayaran`,
         icon: <FaWpforms />,

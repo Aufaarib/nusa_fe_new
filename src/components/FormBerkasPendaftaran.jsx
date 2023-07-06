@@ -18,7 +18,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const SUBMIT_URL = "/api/pmb/submit";
 
 const FormBerkasPendaftaran = ({ id, indexMurid }) => {
-  const token = JSON.parse(localStorage.getItem("TOKEN"));
+  const token = localStorage.getItem("TOKEN");
   const {
     documents,
     setDocuments,
