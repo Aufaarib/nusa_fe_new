@@ -33,6 +33,7 @@ import ListCostCenter from "./pages/Keuangan/CostCenter/ListCostCenter";
 import ListBiayaOperasional from "./pages/Keuangan/BiayaOperasional/ListBiayaOperasional";
 import ListTipeTransaksi from "./pages/Keuangan/TipeTransaksi/ListTipeTransaksi";
 import ListBiayaPendidikan from "./pages/Keuangan/BiayaPendidikan/ListBiayaPendidikan";
+import DataRegistrasi from "./pages/AdminPMB/DataRegistrasi";
 
 import TambahJadwalMataPelajaran from "./pages/KBM/JadwalMapel/TambahJadwalMapel";
 import TambahMataPelajaran from "./pages/KBM/Mapel/TambahMataPelajaran";
@@ -63,6 +64,10 @@ const App = () => {
           <Route path="/admin/dashboard" element={<DashboardKeuangan />} />
           <Route path="/admin/pmb" element={<SetupPMB />} />
           <Route path="/admin/setup-pmb" element={<SetupPMB />} />
+          <Route
+            path="/admin/list-data-registrasi"
+            element={<DataRegistrasi />}
+          />
           <Route
             path="/admin/konfirmasi-pembayaran"
             element={<KonfirmasiPembayaran />}

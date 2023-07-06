@@ -31,14 +31,12 @@ import { DataTables } from "../../components/DataTables";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const SUBMIT_URL = "/api/pmb/payment-register/";
 
-const HasilTes = () => {
+const DataRegistrasi = () => {
   const token = localStorage.getItem("TOKEN");
   const {
-    publishHasilTest,
     paymentUpload,
-    allHasilTest,
-    setAllHasilTest,
-    getAllHasilTest,
+    allPaymentRegister,
+    setAllPaymentRegister,
     getAllPaymentRegister,
     isLoading,
     setIsLoading,
@@ -48,41 +46,21 @@ const HasilTes = () => {
   } = useStateContext();
   const [isOpenModalMurid, setIsOpenModalMurid] = useState(false);
   const [isOpenModalStatus, setIsOpenModalStatus] = useState(false);
-  const [bulkPublish, setBulkPublish] = useImmer({ ids: [] });
-  const [murid, setMurid] = useState({});
-  const [hasilTes, setHasilTes] = useImmer({
+  const [murid, setMurid] = useState([{}]);
+  const [status, setStatus] = useImmer({
     id: null,
-    id_tahun_ajaran: null,
-    pendaftaran_id: null,
-    kategori: "",
-    hasil_akhir: "",
-    status: "",
-    pdf: null,
-    publish: false,
+    bukti: "",
+    tgl_bayar: "",
+    jenis_bayar: "",
+    total: null,
+    status_bukti: "",
+    jumlah_anak: null,
+    is_published: null,
+    user_id: null,
   });
   const [previewImageBukti, setPreviewImageBukti] = useState("");
 
   const customStyles = {
-    content: {
-      width: "65%",
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      border: "none",
-      cursor: "auto",
-      padding: "48px",
-    },
-    overlay: {
-      backgroundColor: "rgba(0,0,0,.5)",
-      cursor: "pointer",
-      zIndex: "999",
-    },
-  };
-
-  const customStylesMurid = {
     content: {
       width: "85%",
       top: "50%",
@@ -98,79 +76,58 @@ const HasilTes = () => {
     overlay: {
       backgroundColor: "rgba(0,0,0,.5)",
       cursor: "pointer",
-      zIndex: "999",
     },
   };
 
   useEffect(() => {
-    getAllHasilTest();
-    console.log("allHasilTest === ", allHasilTest);
+    getAllPaymentRegister();
+    console.log("allPaymentRegister === ", allPaymentRegister);
   }, []);
 
-  useEffect(() => {
-    console.log("bulkPublish === ", bulkPublish);
-  }, [bulkPublish]);
+  let subtitle;
 
-  let grid;
-  let gridMurid;
-
-  const toolbarOptions = [
-    { text: "Publish", prefixIcon: "e-eye", id: "publish", align: "Right" },
-  ];
-  const editSettings = { allowEditing: false };
-
+  const renderingMode = "Vertical";
+  const editOptions = { allowEditing: false, allowDeleting: false };
   const commands = [
-    // {
-    //   buttonOption: {iconCss: ' e-icons e-people', cssClass: 'e-outline', id: 'murid'},
-    //   title: "Lihat Calon Murid"
-    // },
+    {
+      buttonOption: {
+        iconCss: " e-icons e-people",
+        cssClass: "e-outline",
+        id: "murid",
+      },
+      title: "Lihat Murid",
+    },
     {
       buttonOption: {
         iconCss: " e-icons e-image",
         cssClass: "e-outline",
-        id: "hasil-tes",
+        id: "status-pembayaran",
       },
-      title: "Lihat Hasil Tes",
+      title: "Status Pembayaran",
     },
   ];
+
+  let grid;
+  const load = () => {
+    grid = document.getElementById("adaptivebrowser").ej2_instances[0];
+    grid.adaptiveDlgTarget =
+      document.getElementsByClassName("e-mobile-content")[0];
+  };
+
   const commandClick = (args) => {
-    const murid = args.rowData;
-    const hasil = args.rowData.hasil_test;
+    const murid = args.rowData.students;
+    const status = args.rowData.status_pembayaran;
 
     if (args.commandColumn.buttonOption.id == "murid") {
       console.log("args.rowData === ", args.rowData);
       setMurid(murid);
       setIsOpenModalMurid(true);
     }
-    if (args.commandColumn.buttonOption.id == "hasil-tes") {
+    if (args.commandColumn.buttonOption.id == "status-pembayaran") {
       console.log("args.rowData === ", args.rowData);
-      setHasilTes(hasil);
+      setStatus(status);
       setIsOpenModalStatus(true);
-      console.log("args.rowData hasil === ", hasilTes);
     }
-  };
-  const onToolbarClick = (args) => {
-    // console.log("onToolbarClick === ", args)
-    if (args.item.id == "publish") {
-      console.log("onToolbarClick bulkPublish === ", bulkPublish);
-      publishHasilTest(bulkPublish);
-      setBulkPublish((draft) => {
-        draft["ids"] = [];
-      });
-    }
-  };
-  const onActionBegin = (args) => {
-    // console.log('onActionBegin === ', args.rowData);
-  };
-  const onActionComplete = (args) => {
-    console.log("onActionComplete === ", args.rowData);
-  };
-  // ON ROW SELECTED
-  const onRowSelected = (args) => {
-    console.log("onRowSelected === ", args.data);
-    setBulkPublish((draft) => {
-      draft["ids"].push(args.data.hasil_test.id);
-    });
   };
 
   function closeModalMurid() {
@@ -198,8 +155,11 @@ const HasilTes = () => {
     dropContainerEle = element;
   };
   asyncSettings = {
-    saveUrl: BASE_URL + `/api/pmb/test-result`,
+    saveUrl: BASE_URL + `/api/pmb/payment-register/${status.user_id}`,
     removeUrl: "https://ej2.syncfusion.com/services/api/uploadbox/Remove",
+  };
+  const uploadAll = () => {
+    uploadObj.upload();
   };
   function onRemoveFile(args) {
     args.postRawFile = false;
@@ -207,12 +167,20 @@ const HasilTes = () => {
   function onFileUpload(args) {
     console.log("UPLOADING..");
     console.log("onFileUpload === ", args);
+
+    // const sizeInBytes = args.fileData.size;
+    // alert("File size is: " + uploadObj.bytesToSize(sizeInBytes));
+
     args.customFormData = [
-      { pendaftaran_id: hasilTes.pendaftaran_id },
-      { status: hasilTes.status },
-      // {kategori: hasilTes.kategori},
-      // {hasil_akhir: hasilTes.hasil_akhir},
-      // {pdf: hasilTes.pdf},
+      { id: status.id },
+      { bukti: status.bukti },
+      { tgl_bayar: status.tgl_bayar },
+      { jenis_bayar: status.jenis_bayar },
+      { total: status.total },
+      { status_bukti: status.status_bukti },
+      { jumlah_anak: status.jumlah_anak },
+      { publish: status.is_published },
+      { user_id: status.user_id },
     ];
     args.currentRequest.setRequestHeader("Authorization", `Bearer ${token}`);
 
@@ -221,8 +189,18 @@ const HasilTes = () => {
   function onSuccess(args) {
     // getDocumentsData();
     console.log("SUCCESS");
-    getAllHasilTest();
-    console.log("allHasilTest === ", allHasilTest);
+    getAllPaymentRegister();
+    console.log("AFTER UPLOAD: allPaymentRegister === ", allPaymentRegister);
+    // const newBukti = allPaymentRegister.map((item, index) => {
+    //   if(item.id == status.user_id){
+    //     return item.status_pembayaran.bukti
+    //   }
+    // })
+
+    // setStatus((draft) => {
+    //   const data = draft.find((data) => data.id === status.user_id);
+    //   status.bukti = data.status_pembayaran.bukti;
+    // });
   }
 
   let minFileSize = 1000;
@@ -260,7 +238,7 @@ const HasilTes = () => {
   const updateTextInput = (e) => {
     const fieldName = e.target.name;
     console.log("fieldName === ", fieldName);
-    setHasilTes((draft) => {
+    setStatus((draft) => {
       draft[fieldName] = e.target.value;
     });
   };
@@ -268,14 +246,14 @@ const HasilTes = () => {
   const updateDropDownCal = (e) => {
     const fieldName = e.element.ej2_instances[0].htmlattributes.name;
     console.log("fieldName ===> ", fieldName);
-    setHasilTes((draft) => {
+    setStatus((draft) => {
       draft[fieldName] = e.element.value;
     });
   };
 
   const handleCheckbox = (e) => {
     console.log(e.checked);
-    setHasilTes((draft) => {
+    setStatus((draft) => {
       draft["is_published"] = e.checked;
     });
   };
@@ -343,8 +321,8 @@ const HasilTes = () => {
         home="Admin PMB"
         // prev="Bank"
         // navePrev={path}
-        at="Hasil Test"
-        title="Hasil Test"
+        at="Data Registrasi"
+        title="Data Registrasi"
       />
 
       <div style={{ marginTop: "50px" }}>
@@ -386,4 +364,4 @@ const HasilTes = () => {
     </>
   );
 };
-export default HasilTes;
+export default DataRegistrasi;

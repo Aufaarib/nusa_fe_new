@@ -26,6 +26,7 @@ import { L10n } from "@syncfusion/ej2-base";
 import axios from "../../api/axios";
 import { useStateContext } from "../../contexts/ContextProviderAdminPMB";
 import { dropdownData } from "../../data/initData";
+import { DataTables } from "../../components/DataTables";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const SUBMIT_URL = "/api/pmb/payment-register/";
@@ -257,283 +258,109 @@ const KonfirmasiPembayaran = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    uploadAll();
-    // console.log("status === ", status)
-    // paymentUpload(status.user_id, status);
-  };
+  const columns = [
+    {
+      name: <div>No</div>,
+      selector: (_row, i) => i + 1,
+      width: "55px",
+    },
+    {
+      name: <div>Nama Bank</div>,
+      selector: (data) => data.nama_bank,
+      cell: (data) => <div>{data.nama_bank}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Nomor Rekening</div>,
+      selector: (data) => data.nomor_rekening,
+      cell: (data) => <div>{data.nomor_rekening}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Nama Pemilik</div>,
+      selector: (data) => data.nama_pemilik,
+      cell: (data) => <div>{data.nama_pemilik}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Aksi</div>,
+      cell: (data) => (
+        <div>
+          <button
+            style={{ fontSize: "14px" }}
+            // onClick={() =>
+            //   navigateUbahListBank(
+            //     data.id,
+            //     data.nama_bank,
+            //     data.nomor_rekening,
+            //     data.nama_pemilik
+            //   )
+            // }
+            className="btn-action-ungu"
+          >
+            <i className="fa fa-pencil"></i> Ubah
+          </button>
+          <button
+            style={{ fontSize: "14px" }}
+            // onClick={() => openModalHapus(data.id, data.nama_pemilik)}
+            className="btn-action-pink ml-3"
+          >
+            <i className="fa fa-trash"></i> Hapus
+          </button>
+        </div>
+      ),
+      ignoreRowClick: true,
+      button: true,
+      width: "360px",
+    },
+  ];
 
   return (
     <>
-      <Header category="Admin PMB" title="Konfirmasi Pembayaran" />
+      <Header
+        home="Admin PMB"
+        // prev="Bank"
+        // navePrev={path}
+        at="Data Pembayaran"
+        title="Data Pembayaran"
+      />
 
-      <article>
-        <GridComponent
-          id="adaptivebrowser"
-          dataSource={allPaymentRegister}
-          editSettings={editOptions}
-          rowHeight="50"
-          commandClick={commandClick}
-          enableAdaptiveUI={true}
-          rowRenderingMode={renderingMode}
-          ref={(g) => (grid = g)}
-        >
-          <ColumnsDirective>
-            <ColumnDirective
-              field="id"
-              headerText="ID"
-              width="40"
-              isPrimaryKey={true}
-              visible={false}
-            />
-            <ColumnDirective
-              field="nama_lengkap"
-              headerText="Name Lengkap"
-              width="40"
-            />
-            <ColumnDirective field="email" headerText="Email" width="200" />
-            <ColumnDirective
-              field="nomor_ponsel"
-              headerText="No. Ponsel"
-              width="120"
-            />
-            <ColumnDirective
-              field="status_pembayaran.status_bukti"
-              headerText="Status Bukti"
-              width="120"
-              textAlign="Center"
-            />
-            <ColumnDirective
-              field="status_pembayaran.is_published"
-              headerText="Publish"
-              width="60"
-              displayAsCheckBox={true}
-              editType="booleanedit"
-              textAlign="Center"
-            />
-            <ColumnDirective
-              headerText="Kelola"
-              width="120"
-              textAlign="Center"
-              commands={commands}
-            />
-          </ColumnsDirective>
-          <Inject services={[Edit, CommandColumn]} />
-        </GridComponent>
-
-        {/* MODAL MURID DETAIL */}
-        <Modal
-          isOpen={isOpenModalMurid}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModalMurid}
-          style={customStyles}
-          contentLabel="Modal Murid"
-        >
-          {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Data Murid</h2> */}
-          <h2 className="mb-3">Data Murid</h2>
-          {/* <button onClick={closeModalMurid}>close</button> */}
-
-          <GridComponent
-            dataSource={murid}
-            editSettings={editOptions}
-            rowHeight="50"
-            enableAdaptiveUI={true}
-            rowRenderingMode={renderingMode}
-          >
-            <ColumnsDirective>
-              <ColumnDirective
-                field="id"
-                headerText="ID"
-                width="30"
-                isPrimaryKey={true}
-                visible={false}
-              />
-              <ColumnDirective
-                field="nama_lengkap_anak"
-                headerText="Name Lengkap"
-                width="120"
-              />
-              <ColumnDirective
-                field="nomor_akta_lahir_anak"
-                headerText="No. Akta Lahir"
-                width="120"
-              />
-              <ColumnDirective
-                field="nama_ayah"
-                headerText="Nama Ayah"
-                width="120"
-              />
-              <ColumnDirective
-                field="alamat_ayah"
-                headerText="Alamat Ayah"
-                width="120"
-              />
-              <ColumnDirective
-                field="nama_ibu"
-                headerText="Nama Ibu"
-                width="120"
-              />
-              <ColumnDirective
-                field="alamat_ibu"
-                headerText="Alamat Ibu"
-                width="120"
-              />
-              <ColumnDirective
-                field="nama_wali"
-                headerText="Nama Wali"
-                width="120"
-              />
-              <ColumnDirective
-                field="alamat_wali"
-                headerText="Alamat Wali"
-                width="120"
-              />
-            </ColumnsDirective>
-            <Inject services={[Edit, CommandColumn]} />
-          </GridComponent>
-        </Modal>
-
-        <Modal
-          isOpen={isOpenModalStatus}
-          onAfterOpen={afterOpenModal}
+      <div style={{ marginTop: "50px" }}>
+        <DataTables
+          columns={columns}
+          // data={filteredItems}
+          // onClick={navigateTambahListBank}
+          // onFilter={(e) => setFilterText(e.target.value)}
+          // filterText={filterText}
+        />
+        {/* <ModalStatusList
+          isOpen={isOpenStatus}
           onRequestClose={closeModalStatus}
-          style={customStyles}
-          contentLabel="Modal Status"
+          status={sts}
+        /> */}
+
+        {/* <Modal
+          isOpen={isOpenDelete}
+          onRequestClose={closeModalHapus}
+          style={CustomStylesModalHapus}
+          contentLabel="Modal Hapus"
+          ariaHideApp={false}
         >
-          <h2 className="mb-3">Konfirmasi Pembayaran</h2>
-
-          {/* <p>STATUS: {JSON.stringify(status)}</p> */}
-
-          <form className="grid mt-3 xs:grid-cols-1 md:grid-cols-2 gap-7">
-            <section>
-              <TextInput
-                label="Total Bayar"
-                type="number"
-                name="total"
-                onChange={updateTextInput}
-                value={status.total}
-                required={true}
-                min="1"
-              />
-
-              <div className={`flex flex-wrap`}>
-                <label htmlFor="nominal_wakaf" className="mt-4 mb-1 form-label">
-                  Jenis Bayar <span className="ml-1 text-merah">*</span>
-                </label>
-                <DropDownListComponent
-                  placeholder=""
-                  name="jenis_bayar"
-                  dataSource={dropdownData.jenisBayar}
-                  fields={{ value: "text", text: "text" }}
-                  value={status.jenis_bayar}
-                  change={updateDropDownCal}
-                  popupHeight="auto"
-                />
-              </div>
-
-              <div className="flex flex-wrap">
-                <label
-                  htmlFor="tanggal_lahir"
-                  className="flex w-full mt-4 mb-1 form-label"
-                >
-                  Tanggal Bayar<span className="ml-1 text-merah">*</span>
-                </label>
-                <DatePickerComponent
-                  name="tgl_bayar"
-                  value={status.tgl_bayar}
-                  change={updateDropDownCal}
-                  format="dd MMMM yyyy"
-                />
-              </div>
-
-              <div className={`flex flex-wrap`}>
-                <label htmlFor="nominal_wakaf" className="mt-4 mb-1 form-label">
-                  Status Bukti <span className="ml-1 text-merah">*</span>
-                </label>
-                <DropDownListComponent
-                  placeholder=""
-                  name="status_bukti"
-                  dataSource={dropdownData.statusBukti}
-                  fields={{ value: "text", text: "text" }}
-                  value={status.status_bukti}
-                  change={updateDropDownCal}
-                  popupHeight="auto"
-                />
-              </div>
-            </section>
-
-            <section>
-              <label htmlFor="akte_kelahiran" className="block mt-4 mb-1">
-                Bukti Pembayaran{" "}
-                {!status.bukti ? (
-                  <span className="ml-1 text-merah">*</span>
-                ) : (
-                  <span>
-                    <MdVerified className="inline-block text-md text-green-600 ml-0.5 mb-1" />{" "}
-                    <strong className="text-green-600 text">
-                      Sudah Diunggah
-                    </strong>
-                  </span>
-                )}
-              </label>
-              <div className="w-full h-48 p-3 mb-3 text-center rounded-lg bg-soft">
-                <img src={status.bukti} className="h-full m-auto" />
-                {/* <img src={previewImageBukti ? previewImageBukti : status.bukti} className="h-full m-auto" /> */}
-              </div>
-              {/* {!status.is_published && */}
-              <>
-                <UploaderComponent
-                  id="bukti"
-                  type="file"
-                  ref={(upload) => {
-                    uploadObj = upload;
-                  }}
-                  asyncSettings={asyncSettings}
-                  removing={onRemoveFile.bind(this)}
-                  uploading={onFileUpload.bind(this)}
-                  success={onSuccess.bind(this)}
-                  locale="id-BAHASA"
-                  allowedExtensions=".jpg,.png,.jpeg"
-                  minFileSize={minFileSize}
-                  maxFileSize={maxFileSize}
-                  multiple={false}
-                  autoUpload={false}
-                  buttons={{
-                    browse: !status.bukti ? "Unggah Berkas" : "Ganti Berkas",
-                  }}
-                >
-                  {/* <FilesDirective>
-                    <UploadedFilesDirective name={name_foto} size={25000} type={foto_extension}></UploadedFilesDirective>
-                  </FilesDirective> */}
-                </UploaderComponent>
-                <small className="text-gray-400 ">
-                  <i>Jenis berkas: .jpg, .png</i>
-                </small>
-              </>
-              {/* } */}
-            </section>
-          </form>
-
-          <section className="mt-3">
-            <div className="mt-6">
-              <CheckBoxComponent
-                change={handleCheckbox.bind(this)}
-                label="Publish"
-                data-name="publish"
-                value={status.is_published}
-                checked={status.is_published}
-                cssClass="e-success"
-              />
-            </div>
-
-            {/* <button className="w-auto btn-merah" onClick={uploadAll}>
-              {isLoading ? <CgSpinner className="mr-2 text-xl animate-spin" /> : <AiOutlineSave className='mr-2 text-2xl' /> }
-              Update
-            </button> */}
-          </section>
-        </Modal>
-      </article>
+          <div style={{ textAlign: "center" }}>
+            <h2 className="mb-2">Hapus Data Bank</h2>
+            <h4 className="mb-3 text-merah">{desc_nama}?</h4>
+            <button className="btn-action-hijau w-20" onClick={onDelete}>
+              Hapus
+            </button>
+            <button
+              className="btn-action-pink w-20 ml-2"
+              onClick={closeModalHapus}
+            >
+              Batal
+            </button>
+          </div>
+        </Modal> */}
+      </div>
     </>
   );
 };

@@ -73,7 +73,7 @@ export default function ListBiayaPendidikan() {
       name: <div>Tanggal Transaksi</div>,
       selector: (data) => data.transaction_date,
       cell: (data) => (
-        <div>{moment(data.transaction_date).format("DD/MM/YYYY")}</div>
+        <div>{moment(data.transaction_date).format("DD/MM/YYYY hh:mm")}</div>
       ),
       width: "110px",
       sortable: true,
