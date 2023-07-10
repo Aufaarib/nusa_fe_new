@@ -176,7 +176,7 @@ export default function TambahGelombang() {
             onChange={(e) => setSemester(e.value)}
           /> */}
 
-          <div>
+          <div style={{ marginRight: "255px" }}>
             <button className="btn-merah" onClick={addField}>
               Tambah Form
             </button>
@@ -224,9 +224,14 @@ export default function TambahGelombang() {
                 onChange={(e) => setBirthDate(e.target.value)}
                 required={true}
               />
-              <button className="btn-putih" onClick={() => removeField(index)}>
-                Hapus Form
-              </button>
+              <div style={{ marginRight: "255px" }}>
+                <button
+                  className="btn-putih"
+                  onClick={() => removeField(index)}
+                >
+                  Hapus Form
+                </button>
+              </div>
             </div>
           ))}
 
