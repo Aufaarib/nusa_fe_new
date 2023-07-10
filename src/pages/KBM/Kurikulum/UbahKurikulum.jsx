@@ -22,6 +22,13 @@ export default function UbahKurikulum() {
   const [sts, setSts] = useState(undefined);
   const location = useLocation();
   const [semesterData, setSemesterData] = useState([]);
+  const navigate = useNavigate();
+
+  const path = "/admin/list-kurikulum";
+
+  const navigateKurikulum = () => {
+    navigate(path);
+  };
 
   const fetchSemester = async () => {
     getSemester(setSemesterData, setSts);
@@ -33,40 +40,34 @@ export default function UbahKurikulum() {
 
   const postData = (e) => {
     e.preventDefault();
-    const id = location.state.id;
+    const code = location.state.code;
 
     if (
-      code.trim().length === 0 ||
-      name.trim().length === 0 ||
-      description.trim().length === 0 ||
-      semester_id.length === 0
+      // code.trim().length === 0 ||
+      name.length === 0 ||
+      description.length === 0
+      // semester_id.length === 0
     ) {
       AlertEmpty();
     } else {
-      updateKurikulum(setSts, code, name, description, semester_id, id);
-      setisOpenStatus(true);
+      updateKurikulum(setSts, path, code, name, description);
+      // setisOpenStatus(true);
     }
   };
 
-  const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-  };
+  // const closeModalEmpty = () => {
+  //   setisOpenEmpty(false);
+  // };
 
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    setSts("");
-  };
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   setSts("");
+  // };
 
-  const navigate = useNavigate();
-
-  const navigateKurikulum = () => {
-    navigate("/admin/list-kurikulum");
-  };
-
-  const SemesterOptions = semesterData.map((c) => ({
-    label: c.name + " - " + c.status,
-    value: c.id,
-  }));
+  // const SemesterOptions = semesterData.map((c) => ({
+  //   label: c.name + " - " + c.status,
+  //   value: c.id,
+  // }));
 
   return (
     <div>
@@ -81,13 +82,13 @@ export default function UbahKurikulum() {
         <article>
           {/* COL 1 */}
           <section>
-            <TextInput
+            {/* <TextInput
               label="Code"
               type="text"
               placeholder={location.state.code}
               onChange={(e) => setCode(e.target.value)}
               required={true}
-            />
+            /> */}
             <TextInput
               label="Nama"
               type="text"
@@ -102,7 +103,7 @@ export default function UbahKurikulum() {
               onChange={(e) => setDescription(e.target.value)}
               required={true}
             />
-            <DropdownJenisTransaksi
+            {/* <DropdownJenisTransaksi
               label="Semester"
               required={true}
               defaultValue={semester_id}
@@ -110,7 +111,7 @@ export default function UbahKurikulum() {
               options={SemesterOptions}
               isSearchable={false}
               onChange={(e) => setSemesterId(e.value)}
-            />
+            /> */}
           </section>
 
           <div className="btn-form">
@@ -130,7 +131,7 @@ export default function UbahKurikulum() {
             </button>
           </div>
 
-          <ModalStatusTambah
+          {/* <ModalStatusTambah
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={sts}
@@ -141,7 +142,7 @@ export default function UbahKurikulum() {
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

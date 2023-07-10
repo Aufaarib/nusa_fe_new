@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getBank } from "../../api/Bank";
-import { Header } from "../../components";
-import { DataTablesPMB } from "../../components/DataTables";
-import { getAdmission } from "../../api/SetupPmb";
+import { getBank } from "../../../api/Bank";
+import { Header } from "../../../components";
+import { DataTablesPMB } from "../../../components/DataTables";
+import { getAdmission } from "../../../api/SetupPmb";
+import { getTahunAjaran } from "../../../api/TahunAjaran";
 
-const SetupPMB = () => {
+const TahunAjaran = () => {
   const [data, setData] = useState([]);
   const [isOpenStatus, setisOpenStatus] = useState(false);
   const [isOpenDelete, setisOpenDelete] = useState(false);
@@ -25,7 +26,7 @@ const SetupPMB = () => {
   }
 
   useEffect(() => {
-    getAdmission(setData, setSts);
+    getTahunAjaran(setData, setSts);
   }, []);
 
   const columns = [
@@ -35,73 +36,70 @@ const SetupPMB = () => {
       width: "55px",
     },
     {
-      name: <div>Siswa</div>,
+      name: <div>Code</div>,
       selector: (data) => data.code,
-      cell: (data) => <div>{data.nama_bank}</div>,
+      cell: (data) => <div>{data.code}</div>,
       width: "auto",
     },
     {
-      name: <div>Orang Tua</div>,
-      selector: (data) => data.academicYearId,
-      cell: (data) => <div>{data.academicYearId}</div>,
+      name: <div>Tahun</div>,
+      selector: (data) => data.year,
+      cell: (data) => <div>{data.year}</div>,
       width: "auto",
     },
     {
-      name: <div>Email</div>,
-      selector: (data) => data.status,
-      cell: (data) => <div>{data.status}</div>,
+      name: <div>Nama</div>,
+      selector: (data) => data.name,
+      cell: (data) => <div>{data.name}</div>,
       width: "auto",
     },
     {
-      name: <div>Approval</div>,
+      name: <div>Kurikulum Id</div>,
+      selector: (data) => data.curriculumId,
+      cell: (data) => <div>{data.curriculumId}</div>,
+      width: "auto",
+    },
+    {
+      name: <div>Aksi</div>,
       cell: (data) => (
-        <div>
-          <input type="checkbox"></input>
+        <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
+          <button
+            className="btn-action-merah ml-3 w-auto px-2"
+            title="Bukti Pembayaran"
+            onClick={() =>
+              navigateUbahTahunAjaran(
+                data.code,
+                data.name,
+                data.year,
+                data.curriculumId,
+                data.status
+              )
+            }
+          >
+            <i className="fa fa-pencil" /> Ubah
+          </button>
         </div>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "100px",
+      width: "300px",
     },
-    // {
-    //   name: <div>Aksi</div>,
-    //   cell: (data) => (
-    //     <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
-    //       <button
-    //         className="btn-action-merah ml-3 w-auto px-2"
-    //         title="Bukti Pembayaran"
-    //         // onClick={() => handleActiveStatus(data.id, data.name)}
-    //       >
-    //         <i className="fa fa-file-photo-o" /> Ubah
-    //       </button>
-    //       <button
-    //         className="btn-action-merah ml-3 w-auto px-2"
-    //         title="Detail Pembayaran"
-    //         // onClick={() => handleNonActiveStatus(data.id, data.name)}
-    //       >
-    //         <i className="fa fa-dollar" />
-    //       </button>
-    //       <button
-    //         // onClick={() => openModalHapus(data.id, data.name)}
-    //         className="btn-action-merah ml-3 w-auto px-2"
-    //         title="Status"
-    //       >
-    //         <i className="fa fa-warning" />
-    //       </button>
-    //     </div>
-    //   ),
-    //   ignoreRowClick: true,
-    //   button: true,
-    //   width: "300px",
-    // },
   ];
 
-  const navigateTambahGelombang = () => {
-    navigate("/admin/tambah-gelombang-pmb");
+  const navigateTambahTahunAjaran = () => {
+    navigate("/admin/tambah-tahun-ajaran");
   };
 
-  const navigateTambahPendaftaran = () => {
-    navigate("/admin/tambah-pendaftaran");
+  const navigateUbahTahunAjaran = (code, name, year, curriculumId, status) => {
+    navigate("/admin/ubah-tahun-ajaran", {
+      state: {
+        code: code,
+        name: name,
+        year: year,
+        curriculumId: curriculumId,
+        status: status,
+      },
+    });
   };
 
   return (
@@ -110,18 +108,18 @@ const SetupPMB = () => {
         home="Admin PMB"
         // prev="Bank"
         // navePrev={path}
-        at="Setup PMB"
-        title="Setup PMB"
+        at="Tahun Ajaran"
+        title="Tahun Ajaran"
       />
 
       <div style={{ marginTop: "50px" }}>
         <DataTablesPMB
           columns={columns}
           data={filteredItems}
-          onClick={navigateTambahGelombang}
+          onClick={navigateTambahTahunAjaran}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
-          buttontxt="Tambah Gelombang"
+          buttontxt="Tambah Tahun Ajaran"
         />
         {/* <ModalStatusList
           isOpen={isOpenStatus}
@@ -154,4 +152,4 @@ const SetupPMB = () => {
     </>
   );
 };
-export default SetupPMB;
+export default TahunAjaran;

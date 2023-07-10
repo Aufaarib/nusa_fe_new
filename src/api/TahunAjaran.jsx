@@ -9,9 +9,9 @@ import {
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
-export function getKurikulum(setData, setSts) {
+export function getTahunAjaran(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_BASE_URL + "/curriculum", {
+    .get(process.env.REACT_APP_BASE_URL + "/academic/year", {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
@@ -34,13 +34,23 @@ export function getKurikulum(setData, setSts) {
   //     });
 }
 
-export function updateKurikulum(setSts, path, code, name, description) {
+export function updateTahunAjaran(
+  setSts,
+  path,
+  year,
+  name,
+  status,
+  curriculumId,
+  code
+) {
   axios
     .put(
-      process.env.REACT_APP_BASE_URL + `/curriculum/${code}`,
+      process.env.REACT_APP_BASE_URL + `/academic/year/${code}`,
       {
+        year,
         name,
-        description,
+        status,
+        curriculumId,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
@@ -54,46 +64,42 @@ export function updateKurikulum(setSts, path, code, name, description) {
     });
 }
 
-export function updateStatusKurikulum(setSts, code, setData) {
-  axios
-    .put(
-      process.env.REACT_APP_BASE_URL + `/curriculum/${code}/toggle-status`,
-      null,
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusUpdateSuccess();
-      getKurikulum(setData, setSts);
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusUpdateFailed();
-    });
-}
+// export function updateStatusKurikulum(setSts, code, setData) {
+//   axios
+//     .put(
+//       process.env.REACT_APP_BASE_URL + `/curriculum/${code}/toggle-status`,
+//       null,
+//       {
+//         headers: { authorization: localStorage.getItem("TOKEN") },
+//       }
+//     )
+//     .then(() => {
+//       setSts({ type: "success" });
+//       AlertStatusUpdateSuccess();
+//       getKurikulum(setData, setSts);
+//     })
+//     .catch((error) => {
+//       setSts({ type: "error", error });
+//       AlertStatusUpdateFailed();
+//     });
+// }
 
-export function postKurikulum(
+export function postTahunAjaran(
   setSts,
   path,
-  // code,
+  year,
   name,
-  // status,
-  description
-  // semester_id,
-  // created_by
+  status,
+  curriculumId
 ) {
   axios
     .post(
-      process.env.REACT_APP_BASE_URL + "/curriculum",
+      process.env.REACT_APP_BASE_URL + "/academic/year",
       {
-        // code,
+        year,
         name,
-        // status,
-        description,
-        // semester_id,
-        // created_by,
+        status,
+        curriculumId,
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )
@@ -107,16 +113,16 @@ export function postKurikulum(
     });
 }
 
-export function deleteKurikulum(setSts, deleteId, setData) {
-  axios
-    .delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
-    .then(() => {
-      setSts({ type: "success" });
-      AlertStatusHapusSuccess();
-      getKurikulum(setData, setSts);
-    })
-    .catch((error) => {
-      setSts({ type: "error", error });
-      AlertStatusHapusFailed();
-    });
-}
+// export function deleteKurikulum(setSts, deleteId, setData) {
+//   axios
+//     .delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
+//     .then(() => {
+//       setSts({ type: "success" });
+//       AlertStatusHapusSuccess();
+//       getKurikulum(setData, setSts);
+//     })
+//     .catch((error) => {
+//       setSts({ type: "error", error });
+//       AlertStatusHapusFailed();
+//     });
+// }

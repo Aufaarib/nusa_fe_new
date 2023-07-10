@@ -16,73 +16,66 @@ import {
 } from "../../../components/Dropdown";
 
 export default function TambahMataPelajaran() {
-  const [code, setCode] = useState("");
-  const [course_name, setCourseName] = useState("");
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
   const [description, setDescription] = useState("");
-  const [group_course_id, setGroupCourseId] = useState("");
   const [statusVal, setStatus] = useState("");
 
-  const [groupcourseData, setGroupCourseData] = useState([]);
+  // const [groupcourseData, setGroupCourseData] = useState([]);
 
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
+  // const [isOpenStatus, setisOpenStatus] = useState(false);
+  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
-  const created_by = localStorage.getItem("NAMA");
+  // const created_by = localStorage.getItem("NAMA");
+  const navigate = useNavigate();
+
+  const path = "/admin/list-mata-pelajaran";
 
   // fetch function
-  const fetchGroupCourse = async () => {
-    getKelompokMapel(setGroupCourseData, setSts);
-  };
+  // const fetchGroupCourse = async () => {
+  //   getKelompokMapel(setGroupCourseData, setSts);
+  // };
 
-  useEffect(() => {
-    fetchGroupCourse();
-  }, []);
+  // useEffect(() => {
+  //   fetchGroupCourse();
+  // }, []);
 
   const postData = (e) => {
     e.preventDefault();
 
-    const status = statusVal.value;
+    // const status = statusVal.value;
 
     if (
-      code.length === 0 ||
-      course_name.length === 0 ||
+      name.length === 0 ||
       description.length === 0 ||
-      statusVal.length === 0 ||
-      group_course_id.length === 0
+      type.length === 0
+      // statusVal.length === 0 ||
+      // group_course_id.length === 0
     ) {
       AlertEmpty();
     } else {
-      postMapel(
-        setSts,
-        code,
-        course_name,
-        description,
-        group_course_id,
-        status,
-        created_by
-      );
-      setisOpenStatus(true);
+      postMapel(setSts, path, name, description, type);
+      // setisOpenStatus(true);
     }
   };
 
-  const closeModalEmpty = () => {
-    setisOpenEmpty(false);
-  };
+  // const closeModalEmpty = () => {
+  //   setisOpenEmpty(false);
+  // };
 
-  const closeModalStatus = () => {
-    setisOpenStatus(false);
-    setSts("");
-  };
-  const navigate = useNavigate();
+  // const closeModalStatus = () => {
+  //   setisOpenStatus(false);
+  //   setSts("");
+  // };
 
   const navigateSemester = () => {
-    navigate("/admin/list-mata-pelajaran");
+    navigate(path);
   };
 
-  const groupCourseOptions = groupcourseData.map((c) => ({
-    label: c.name + " - " + c.status,
-    value: c.id,
-  }));
+  // const groupCourseOptions = groupcourseData.map((c) => ({
+  //   label: c.name + " - " + c.status,
+  //   value: c.id,
+  // }));
 
   return (
     <div>
@@ -98,30 +91,24 @@ export default function TambahMataPelajaran() {
         </p>
         <article>
           <TextInput
-            label="Code"
-            type="number"
-            id="group"
-            name="code"
-            onChange={(e) => setCode(e.target.value)}
-            required={true}
-          />
-          <TextInput
-            label="Nama Mata Pelajaran"
+            label="Nama"
             type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setCourseName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             required={true}
           />
           <TextInput
             label="Deskripsi"
             type="text"
-            id="group"
-            name="code"
             onChange={(e) => setDescription(e.target.value)}
             required={true}
           />
-          <DropdownJenisTransaksi
+          <TextInput
+            label="Tipe"
+            type="text"
+            onChange={(e) => setType(e.target.value)}
+            required={true}
+          />
+          {/* <DropdownJenisTransaksi
             label="Kelompok Mata Pelajaran"
             required={true}
             defaultValue={group_course_id}
@@ -129,15 +116,15 @@ export default function TambahMataPelajaran() {
             options={groupCourseOptions}
             isSearchable={false}
             onChange={(e) => setGroupCourseId(e.value)}
-          />
-          <DropdownStatus
+          /> */}
+          {/* <DropdownStatus
             label="Status"
             required={true}
             isClearable={true}
             defaultValue={statusVal}
             isSearchable={false}
             onChange={setStatus}
-          />
+          /> */}
 
           <div className="btn-form">
             <button
@@ -155,7 +142,7 @@ export default function TambahMataPelajaran() {
               Batal
             </button>
           </div>
-          <ModalStatusTambah
+          {/* <ModalStatusTambah
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={sts}
@@ -165,7 +152,7 @@ export default function TambahMataPelajaran() {
             isOpenEmpty={isOpenEmpty}
             closeModalEmpty={closeModalEmpty}
             onRequestCloseEmpty={closeModalEmpty}
-          />
+          /> */}
         </article>
       </div>
     </div>

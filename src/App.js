@@ -49,6 +49,15 @@ import TambahListBank from "./pages/Keuangan/Bank/TambahListBank";
 
 import "./App.css";
 import UbahJadwalMapel from "./pages/KBM/JadwalMapel/UbahJadwalMapel";
+import GelombangPMB from "./components/admin-pmb/GelombangPMB";
+import ListGuru from "./pages/KBM/Guru/ListGuru";
+import TambahGuru from "./pages/KBM/Guru/TambahGuru";
+import UbahGuru from "./pages/KBM/Guru/UbahGuru";
+import TambahGelombang from "./pages/AdminPMB/TambahGelombang";
+import TambahPendaftaran from "./pages/AdminPMB/TambahPendaftaran";
+import TahunAjaran from "./pages/AdminPMB/TahunAjaran/TahunAjaran";
+import TambahTahunAjaran from "./pages/AdminPMB/TahunAjaran/TambahTahunAjaran";
+import UbahTahunAjaran from "./pages/AdminPMB/TahunAjaran/UbahTahunAjaran";
 
 const App = () => {
   return (
@@ -63,7 +72,9 @@ const App = () => {
         <Route element={<RequireAuthAdmin />}>
           <Route path="/admin/dashboard" element={<DashboardKeuangan />} />
           <Route path="/admin/pmb" element={<SetupPMB />} />
-          <Route path="/admin/setup-pmb" element={<SetupPMB />} />
+          <Route path="/admin/list-setup-pmb" element={<SetupPMB />} />
+          <Route path="/admin/list-tahun-ajaran" element={<TahunAjaran />} />
+          <Route path="/admin/list-guru" element={<ListGuru />} />
           <Route
             path="/admin/list-data-registrasi"
             element={<DataRegistrasi />}
@@ -123,7 +134,21 @@ const App = () => {
           />
           <Route path="/admin/ubah-kelas" element={<UbahKelas />} />
           <Route path="/admin/ubah-semester" element={<UbahSemester />} />
+          <Route path="/admin/ubah-guru" element={<UbahGuru />} />
+          <Route
+            path="/admin/ubah-tahun-ajaran"
+            element={<UbahTahunAjaran />}
+          />
           {/* tambah */}
+          <Route path="/admin/tambah-guru" element={<TambahGuru />} />
+          <Route
+            path="/admin/tambah-gelombang-pmb"
+            element={<TambahGelombang />}
+          />
+          <Route
+            path="/admin/tambah-pendaftaran"
+            element={<TambahPendaftaran />}
+          />
           <Route
             path="/admin/tambah-jadwal-mata-pelajaran"
             element={<TambahJadwalMataPelajaran />}
@@ -133,6 +158,10 @@ const App = () => {
             element={<TambahMataPelajaran />}
           />
           <Route path="/admin/tambah-kurikulum" element={<TambahKurikulum />} />
+          <Route
+            path="/admin/tambah-tahun-ajaran"
+            element={<TambahTahunAjaran />}
+          />
           <Route path="/admin/tambah-semester" element={<TambahSemester />} />
           <Route path="/admin/tambah-kelas" element={<TambahKelas />} />
           <Route

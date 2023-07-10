@@ -155,17 +155,17 @@
     @apply bg-gelap;
   }
 
-  .btn-action-hijau {
+  .btn-action-merah {
     @apply rounded;
     @apply shadow-md;
-    @apply bg-hijau;
+    @apply bg-merah;
     @apply w-20;
     @apply font-medium;
     @apply leading-snug;
     @apply text-white;
     @apply text-base;
   }
-  .btn-action-hijau:hover {
+  .btn-action-merah:hover {
     @apply bg-gelap;
   }
 

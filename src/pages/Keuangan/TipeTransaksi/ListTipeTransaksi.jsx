@@ -121,25 +121,25 @@ export default function ListTipeTransaksi() {
         <div>
           {data?.status === "Aktif" && (
             <button
-              className="btn-action-hijau ml-3 w-auto px-2"
+              className="btn-mrh ml-3 w-auto px-2"
               onClick={() => handleActiveStatus(data.id, data.description)}
             >
-              <i className="fa fa-play"></i> {data.status}
+              <i className="fa fa-play mt-1 mr-1"></i> {data.status}
             </button>
           )}
           {data?.status === "Tidak Aktif" && (
             <button
-              className="btn-action-pink ml-3 w-auto px-2"
+              className="btn-mrh ml-3 w-auto px-2 "
               onClick={() => handleNonActiveStatus(data.id, data.description)}
             >
-              <i className="fa fa-pause"></i> {data.status}
+              <i className="fa fa-pause mt-1 mr-1"></i> {data.status}
             </button>
           )}
           <button
             onClick={() => openModalHapus(data.id, data.description)}
-            className="btn-action-pink ml-3"
+            className="btn-mrh ml-3"
           >
-            <i className="fa fa-trash"></i> Hapus
+            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
           </button>
         </div>
       ),

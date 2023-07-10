@@ -3,6 +3,49 @@ import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import RadioInput from "./RadioInput";
 
+export const DropdownKurikulum = ({
+  label,
+  name,
+  onChange,
+  required,
+  options,
+  defaultValue,
+  isClearable,
+  handleOnClick,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div>
+          <Select
+            className="ml-20"
+            isClearable={isClearable}
+            defaultValue={defaultValue}
+            placeholder="Pilih Salah Satu..."
+            options={options}
+            onChange={onChange}
+          />
+          {/* <p>
+            <a
+              style={{ fontSize: "12px", borderBottom: "1px solid #8F0D1E" }}
+              className="block text-merah float-right"
+              onClick={handleOnClick}
+            >
+              Tambah Cost Center
+            </a>
+          </p> */}
+        </div>
+      </form>
+    </div>
+  );
+};
+
 export const DropdownStatus = ({
   isSearchable,
   label,

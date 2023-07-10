@@ -111,21 +111,9 @@ export default function ListMataPelajaran() {
       width: "55px",
     },
     {
-      name: <div>Code</div>,
-      selector: (data) => data.code,
-      cell: (data) => <div>{data.code}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>ID Kelompok Mapel</div>,
-      selector: (data) => data.group_course_id,
-      cell: (data) => <div>{data.group_course_id}</div>,
-      width: "auto",
-    },
-    {
-      name: <div>Nama Mapel</div>,
-      selector: (data) => data.course_name,
-      cell: (data) => <div>{data.course_name}</div>,
+      name: <div>Name</div>,
+      selector: (data) => data.name,
+      cell: (data) => <div>{data.name}</div>,
       width: "auto",
     },
     {
@@ -135,11 +123,23 @@ export default function ListMataPelajaran() {
       width: "auto",
     },
     {
-      name: <div>Status</div>,
-      selector: (data) => data.status,
-      cell: (data) => <div>{data.status}</div>,
+      name: <div>Tipe</div>,
+      selector: (data) => data.type,
+      cell: (data) => <div>{data.type}</div>,
       width: "auto",
     },
+    // {
+    //   name: <div>Deskripsi</div>,
+    //   selector: (data) => data.description,
+    //   cell: (data) => <div>{data.description}</div>,
+    //   width: "auto",
+    // },
+    // {
+    //   name: <div>Status</div>,
+    //   selector: (data) => data.status,
+    //   cell: (data) => <div>{data.status}</div>,
+    //   width: "auto",
+    // },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
@@ -148,39 +148,38 @@ export default function ListMataPelajaran() {
             style={{ fontSize: "14px" }}
             onClick={() =>
               navigateUbahMapel(
-                data.id,
-                data.course_name,
                 data.code,
-                data.group_course_id,
-                data.description
+                data.name,
+                data.description,
+                data.type
               )
             }
-            className="btn-action-ungu"
+            className="btn-mrh"
           >
-            <i className="fa fa-pencil"></i> Ubah
+            <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
           </button>
-          {data?.status === "Aktif" && (
+          {/* {data?.status === "Aktif" && (
             <button
-              className="btn-action-hijau ml-3 w-auto px-2"
+              className="btn-mrh ml-3 w-auto px-2"
               onClick={() => handleActiveStatus(data.id, data.course_name)}
             >
-              <i className="fa fa-play"></i> {data.status}
+              <i className="fa fa-play mt-1 mr-1"></i> {data.status}
             </button>
           )}
           {data?.status === "Tidak Aktif" && (
             <button
-              className="btn-action-pink ml-3 w-auto px-2"
+              className="btn-mrh ml-3 w-auto px-2"
               onClick={() => handleNonActiveStatus(data.id, data.course_name)}
             >
-              <i className="fa fa-pause"></i> {data.status}
+              <i className="fa fa-pause mt-1 mr-1"></i> {data.status}
             </button>
-          )}
+          )} */}
           <button
             style={{ fontSize: "14px" }}
             onClick={() => openModalHapus(data.id, data.course_name)}
-            className="btn-action-pink ml-3"
+            className="btn-mrh ml-3"
           >
-            <i className="fa fa-trash"></i> Hapus
+            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
           </button>
         </div>
       ),

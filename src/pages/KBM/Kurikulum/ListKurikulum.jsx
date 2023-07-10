@@ -79,12 +79,12 @@ export default function ListKurikulum() {
     // setisOpenStatus(true);
   };
 
-  const openModalHapus = (id, name) => {
-    // setisOpenDelete(true);
-    setDesc_nama(name);
-    setDeleteId(id);
-    AlertDelete(name, id, onDelete);
-  };
+  // const openModalHapus = (id, name) => {
+  //   // setisOpenDelete(true);
+  //   setDesc_nama(name);
+  //   setDeleteId(id);
+  //   AlertDelete(name, id, onDelete);
+  // };
 
   // const closeModalHapus = () => {
   //   setisOpenDelete(false);
@@ -153,33 +153,33 @@ export default function ListKurikulum() {
                 data.semester_id
               )
             }
-            className="btn-action-ungu"
+            className="btn-mrh"
           >
-            <i className="fa fa-pencil"></i> Ubah
+            <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
           </button>
           {data?.status === 1 && (
             <button
-              className="btn-action-hijau ml-3 w-auto px-2"
+              className="btn-mrh ml-3 w-auto px-2"
               onClick={() => handleStatus(data.code, data.name, data.status)}
             >
-              <i className="fa fa-play"></i> Aktif
+              <i className="fa fa-play mt-1 mr-1"></i> Aktif
             </button>
           )}
           {data?.status === 0 && (
             <button
-              className="btn-action-pink ml-3 w-auto px-2"
+              className="btn-mrh ml-3 w-auto px-2"
               onClick={() => handleStatus(data.code, data.name, data.status)}
             >
-              <i className="fa fa-pause"></i> Tidak Aktif
+              <i className="fa fa-pause mt-1 mr-1"></i> Tidak Aktif
             </button>
           )}
-          <button
+          {/* <button
             style={{ fontSize: "14px" }}
             onClick={() => openModalHapus(data.id, data.name)}
-            className="btn-action-pink ml-3"
+            className="btn-mrh ml-3"
           >
-            <i className="fa fa-trash"></i> Hapus
-          </button>
+            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
+          </button> */}
         </div>
       ),
       ignoreRowClick: true,

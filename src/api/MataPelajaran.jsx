@@ -1,6 +1,9 @@
 import {
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusTambahFailed,
+  AlertStatusTambahSuccess,
+  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -8,9 +11,9 @@ import axios from "./axios";
 
 export function getMapel(setData, setSts) {
   axios
-    .get(process.env.REACT_APP_NUSA + "/course/fetch")
+    .get(process.env.REACT_APP_BASE_URL + "/subject")
     .then((res) => {
-      setData(res.data.data);
+      setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
@@ -44,52 +47,41 @@ export function updateStatusMapel(setSts, status, id, setData) {
     });
 }
 
-export function updateMapel(
-  setSts,
-  code,
-  course_name,
-  description,
-  group_course_id,
-  id
-) {
+export function updateMapel(setSts, code, path, name, description, type) {
   axios
-    .post(process.env.REACT_APP_NUSA + `/course/update/${id}`, {
-      code,
-      course_name,
+    .post(process.env.REACT_APP_BASE_URL + `/subject/${code}`, {
+      name,
       description,
-      group_course_id,
+      type,
     })
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusUpdateDataSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
     });
 }
 
-export function postMapel(
-  setSts,
-  code,
-  course_name,
-  description,
-  group_course_id,
-  status,
-  created_by
-) {
+export function postMapel(setSts, path, name, description, type) {
   axios
-    .post(process.env.REACT_APP_NUSA + "/course/create", {
-      code,
-      course_name,
-      description,
-      group_course_id,
-      status,
-      created_by,
-    })
+    .post(
+      process.env.REACT_APP_BASE_URL + "/subject",
+      {
+        name,
+        description,
+        type,
+      },
+      { headers: { authorization: localStorage.getItem("TOKEN") } }
+    )
     .then(() => {
       setSts({ type: "success" });
+      AlertStatusTambahSuccess(path);
     })
     .catch((error) => {
       setSts({ type: "error", error });
+      AlertStatusTambahFailed();
     });
 }
 

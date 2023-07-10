@@ -1,49 +1,53 @@
 import React from "react";
 import TextInput from "../../../components/TextInput";
-import { DropdownJenisTransaksi } from "../../../components/Dropdown";
-import { getKelompokMapel } from "../../../api/KelompokMataPelajaran";
-import { updateMapel } from "../../../api/MataPelajaran";
+import { updateKelas } from "../../../api/Kelas";
 import {
   AlertEmpty,
   ModalEmpty,
   ModalStatusTambah,
 } from "../../../components/ModalPopUp";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Header } from "../../../components";
+import { updateGuru } from "../../../api/Guru";
 
-export default function UbahMataPelajaran() {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
-  const [description, setDescription] = useState("");
+export default function UbahGuru() {
+  const [fullname, setFullname] = useState("");
+  const [gender, setGender] = useState("");
+  const [religion, setReligion] = useState("");
+  const [birthPlace, setBirthPlace] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   // const [isOpenStatus, setisOpenStatus] = useState(false);
   // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
   const location = useLocation();
-
   const navigate = useNavigate();
 
-  const path = "/admin/list-mata-pelajaran";
-
-  // const [groupcourseData, setGroupCourseData] = useState([]);
-
-  // fetch function
-  // const fetchGroupCourse = async () => {
-  //   getKelompokMapel(setGroupCourseData, setSts);
-  // };
-
-  // useEffect(() => {
-  //   fetchGroupCourse();
-  // }, []);
+  const path = "/admin/list-guru";
 
   const postData = (e) => {
     e.preventDefault();
     const code = location.state.code;
 
-    if (name.length === 0 || description.length === 0 || type.length === 0) {
+    if (
+      fullname.length === 0 ||
+      gender.length === 0 ||
+      religion.length === 0 ||
+      birthPlace.length === 0 ||
+      birthDate.length === 0
+    ) {
       AlertEmpty();
     } else {
-      updateMapel(setSts, code, path, name, description, type);
+      updateGuru(
+        setSts,
+        path,
+        code,
+        fullname,
+        gender,
+        religion,
+        birthPlace,
+        birthDate
+      );
       // setisOpenStatus(true);
     }
   };
@@ -57,58 +61,68 @@ export default function UbahMataPelajaran() {
   //   setSts("");
   // };
 
-  const navigateMapel = () => {
+  const navigateKelas = () => {
     navigate(path);
   };
 
-  // const groupCourseOptions = groupcourseData.map((c) => ({
-  //   label: c.name + " - " + c.status,
-  //   value: c.id,
-  // }));
-
   return (
     <div>
-      <div style={{ marginBottom: "50px" }}>
+      <div style={{ marginBottom: "20px" }}>
         <Header
-          category="Admin KBM / Mata Pelajaran / Ubah Mata Pelajaran"
-          title="Ubah Mata Pelajaran"
+          home="Admin KBM"
+          prev="Guru"
+          navePrev={path}
+          at="Ubah Guru"
+          title="Ubah Guru"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
-        <p className="text-3xl mb-16 mt-5 font-bold">
-          Form Ubah Mata Pelajaran
+        <p
+          style={{
+            fontSize: "24px",
+            marginBottom: "50px",
+            marginTop: "50px",
+          }}
+          className="ml-1 font-bold text-merah"
+        >
+          Form Ubah Kelas
         </p>
         <article>
           {/* COL 1 */}
           <section>
             <TextInput
-              label="Name"
+              label="Nama Lengkap"
               type="text"
-              placeholder={location.state.code}
-              onChange={(e) => setName(e.target.value)}
+              placeholder={location.state.Fullname}
+              onChange={(e) => setFullname(e.target.value)}
               required={true}
             />
             <TextInput
-              label="Deskripsi"
+              label="Jenis Kelamin"
               type="text"
-              placeholder={location.state.course_name}
-              onChange={(e) => setDescription(e.target.value)}
+              placeholder={location.state.Gender}
+              onChange={(e) => setGender(e.target.value)}
               required={true}
             />
-            {/* <DropdownJenisTransaksi
-              label="Kelompok Mata Pelajaran"
-              required={true}
-              defaultValue={group_course_id}
-              isClearable={false}
-              options={groupCourseOptions}
-              isSearchable={false}
-              onChange={(e) => setGroupCourseId(e.value)}
-            /> */}
             <TextInput
-              label="Tipe"
+              label="Agama"
               type="text"
-              placeholder={location.state.type}
-              onChange={(e) => setType(e.target.value)}
+              placeholder={location.state.Religion}
+              onChange={(e) => setReligion(e.target.value)}
+              required={true}
+            />
+            <TextInput
+              label="Tempat Lahir"
+              type="text"
+              placeholder={location.state.BirthPlace}
+              onChange={(e) => setBirthPlace(e.target.value)}
+              required={true}
+            />
+            <TextInput
+              label="Tanggal Lahir"
+              type="text"
+              placeholder={location.state.BirthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
               required={true}
             />
           </section>
@@ -124,7 +138,7 @@ export default function UbahMataPelajaran() {
             <button
               type="button"
               className="w-20 btn-putih flex justify-center mb-5"
-              onClick={navigateMapel}
+              onClick={navigateKelas}
             >
               Batal
             </button>
@@ -134,7 +148,7 @@ export default function UbahMataPelajaran() {
             isOpenStatus={isOpenStatus}
             closeModalStatus={closeModalStatus}
             status={sts}
-            navigate={navigateMapel}
+            navigate={navigateKelas}
           />
 
           <ModalEmpty

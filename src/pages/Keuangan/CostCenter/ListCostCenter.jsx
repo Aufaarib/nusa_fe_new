@@ -102,9 +102,9 @@ export default function ListCostCenter() {
           <button
             style={{ fontSize: "14px", marginLeft: "5px" }}
             onClick={() => openModalHapus(data.id, data.item)}
-            className="btn-action-pink"
+            className="btn-mrh"
           >
-            <i className="fa fa-trash"></i> Hapus
+            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
           </button>
         </div>
       ),

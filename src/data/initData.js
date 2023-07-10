@@ -202,7 +202,7 @@ export const sidebarMenusAdmin = [
     links: [
       {
         name: "Setup PMB",
-        path: `admin/setup-pmb`,
+        path: `admin/list-setup-pmb`,
         icon: <FaWpforms />,
       },
       {
@@ -220,11 +220,11 @@ export const sidebarMenusAdmin = [
         path: `admin/hasil-tes`,
         icon: <FaWpforms />,
       },
-      // {
-      //   name: 'Preview',
-      //   path: `admin/preview`,
-      //   icon: <FaWpforms />,
-      // },
+      {
+        name: "Tahun Ajaran",
+        path: `admin/list-tahun-ajaran`,
+        icon: <FaWpforms />,
+      },
     ],
   },
   {
@@ -264,6 +264,11 @@ export const sidebarMenusAdmin = [
     path: `admin/kbm`,
     icon: <AiOutlineBarChart />,
     links: [
+      {
+        name: "Guru",
+        path: `admin/list-guru`,
+        icon: <FaWpforms />,
+      },
       {
         name: "Kelompok Mapel",
         path: `admin/list-kelompok-mapel`,

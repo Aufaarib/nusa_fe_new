@@ -116,16 +116,16 @@ export default function ListJadwalMataPelajaran() {
                 data.end_time
               )
             }
-            className="btn-action-ungu"
+            className="btn-mrh"
           >
-            <i className="fa fa-pencil"></i> Ubah
+            <i className="fa fa-pencil mt-1 mr-1"></i> Ubah
           </button>
           <button
             style={{ fontSize: "14px" }}
             onClick={() => openModalHapus(data.id, data.day)}
-            className="btn-action-pink ml-3"
+            className="btn-mrh ml-3"
           >
-            <i className="fa fa-trash"></i> Hapus
+            <i className="fa fa-trash mt-1 mr-1"></i> Hapus
           </button>
         </div>
       ),
