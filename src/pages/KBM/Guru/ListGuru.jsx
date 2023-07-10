@@ -21,7 +21,7 @@ const HasilTes = () => {
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
-      data.Fullname.toLowerCase().includes(filterText.toLowerCase())
+      data.fullname.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
@@ -31,20 +31,20 @@ const HasilTes = () => {
 
   const navigateUbahGuru = (
     code,
-    Fullname,
-    Gender,
-    Religion,
-    BirthPlace,
-    BirthDate
+    fullname,
+    gender,
+    religion,
+    birthPlace,
+    birthDate
   ) => {
     navigate("/admin/ubah-guru", {
       state: {
         code: code,
-        Fullname: Fullname,
-        Gender: Gender,
-        Religion: Religion,
-        BirthPlace: BirthPlace,
-        BirthDate: BirthDate,
+        fullname: fullname,
+        gender: gender,
+        religion: religion,
+        birthPlace: birthPlace,
+        birthDate: birthDate,
       },
     });
   };
@@ -57,38 +57,38 @@ const HasilTes = () => {
     },
     {
       name: <div>Nama</div>,
-      selector: (data) => data.Fullname,
-      cell: (data) => <div>{data.Fullname}</div>,
+      selector: (data) => data.fullname,
+      cell: (data) => <div>{data.fullname}</div>,
       width: "auto",
     },
     {
       name: <div>Jenis Kelamin</div>,
-      selector: (data) => data.Gender,
-      cell: (data) => <div>{data.Gender}</div>,
+      selector: (data) => data.gender,
+      cell: (data) => <div>{data.gender}</div>,
       width: "auto",
     },
     {
       name: <div>Agama</div>,
-      selector: (data) => data.Religion,
-      cell: (data) => <div>{data.Religion}</div>,
+      selector: (data) => data.religion,
+      cell: (data) => <div>{data.religion}</div>,
       width: "auto",
     },
     {
       name: <div>Tempat Lahir</div>,
-      selector: (data) => data.BirthPlace,
-      cell: (data) => <div>{data.BirthPlace}</div>,
+      selector: (data) => data.birthPlace,
+      cell: (data) => <div>{data.birthPlace}</div>,
       width: "auto",
     },
     {
       name: <div>Tanggal Lahir</div>,
-      selector: (data) => data.BirthDate,
-      cell: (data) => <div>{data.BirthDate}</div>,
+      selector: (data) => data.birthDate,
+      cell: (data) => <div>{data.birthDate}</div>,
       width: "auto",
     },
     {
       name: <div>Status</div>,
-      selector: (data) => data.Status,
-      cell: (data) => <div>{data.Status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
+      selector: (data) => data.status,
+      cell: (data) => <div>{data.status == 1 ? "Aktif" : "Tidak Aktif"}</div>,
       width: "auto",
     },
     {
@@ -101,11 +101,11 @@ const HasilTes = () => {
             onClick={() =>
               navigateUbahGuru(
                 data.code,
-                data.Fullname,
-                data.Gender,
-                data.Religion,
-                data.BirthPlace,
-                data.BirthDate
+                data.fullname,
+                data.gender,
+                data.religion,
+                data.birthPlace,
+                data.birthDate
               )
             }
           >

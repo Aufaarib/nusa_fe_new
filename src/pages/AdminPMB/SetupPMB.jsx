@@ -35,33 +35,22 @@ const SetupPMB = () => {
       width: "55px",
     },
     {
-      name: <div>Siswa</div>,
+      name: <div>Code</div>,
       selector: (data) => data.code,
-      cell: (data) => <div>{data.nama_bank}</div>,
+      cell: (data) => <div>{data.code}</div>,
       width: "auto",
     },
     {
-      name: <div>Orang Tua</div>,
-      selector: (data) => data.academicYearId,
-      cell: (data) => <div>{data.academicYearId}</div>,
+      name: <div>Tahun Ajaran</div>,
+      selector: (data) => data.academicYear.name,
+      cell: (data) => <div>{data.academicYear.name}</div>,
       width: "auto",
     },
     {
-      name: <div>Email</div>,
+      name: <div>Status</div>,
       selector: (data) => data.status,
       cell: (data) => <div>{data.status}</div>,
       width: "auto",
-    },
-    {
-      name: <div>Approval</div>,
-      cell: (data) => (
-        <div>
-          <input type="checkbox"></input>
-        </div>
-      ),
-      ignoreRowClick: true,
-      button: true,
-      width: "100px",
     },
     // {
     //   name: <div>Aksi</div>,

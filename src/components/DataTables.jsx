@@ -167,6 +167,54 @@ export function FilterComponentSaring({
   );
 }
 
+export const Date = ({
+  selectedStart,
+  onChangeStart,
+  selectedEnd,
+  onChangeEnd,
+}) => {
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <form className="grid-container">
+          <label htmlFor="custom-date-picker-input">
+            Tanggal Awal <span className="ml-1 text-merah">*</span>
+          </label>
+
+          <span>:</span>
+
+          <DatePicker
+            selected={selectedStart}
+            onChange={onChangeStart}
+            className="custom-date-picker" // Add custom class name
+            dateFormat="yyyy-MM-dd" // Set date format
+            calendarClassName="custom-date-picker-calendar" // Set calendar class name
+            popperPlacement="bottom" // Set calendar position
+          />
+        </form>
+      </div>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <form className="grid-container">
+          <label htmlFor="custom-date-picker-input">
+            Tanggal Akhir <span className="ml-1 text-merah">*</span>
+          </label>
+
+          <span>:</span>
+
+          <DatePicker
+            selected={selectedStart}
+            onChange={onChangeStart}
+            className="custom-date-picker" // Add custom class name
+            dateFormat="yyyy-MM-dd" // Set date format
+            calendarClassName="custom-date-picker-calendar" // Set calendar class name
+            popperPlacement="bottom" // Set calendar position
+          />
+        </form>
+      </div>
+    </div>
+  );
+};
+
 export const FilterDate = ({
   selectedStart,
   onChangeStart,

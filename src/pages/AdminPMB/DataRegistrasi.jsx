@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getBank } from "../../api/Bank";
 import { Header } from "../../components";
 import { DataTablesPMB } from "../../components/DataTables";
+import { getAdmissionRegistration } from "../../api/Registrasi";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
@@ -13,18 +14,18 @@ const DataRegistrasi = () => {
   const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  const path = "/admin/list-bank";
+  // const path = "/admin/list-bank";
 
   let filteredItems = data;
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
-      data.nama_pemilik.toLowerCase().includes(filterText.toLowerCase())
+      data.regNumber.toLowerCase().includes(filterText.toLowerCase())
     );
   }
 
   useEffect(() => {
-    getBank(setData, setSts);
+    getAdmissionRegistration(setData, setSts);
   }, []);
 
   const columns = [
@@ -34,21 +35,21 @@ const DataRegistrasi = () => {
       width: "55px",
     },
     {
-      name: <div>Siswa</div>,
-      selector: (data) => data.nama_bank,
-      cell: (data) => <div>{data.nama_bank}</div>,
+      name: <div>Nomor Registrasi</div>,
+      selector: (data) => data.regNumber,
+      cell: (data) => <div>{data.regNumber}</div>,
       width: "auto",
     },
     {
-      name: <div>Orang Tua</div>,
-      selector: (data) => data.nomor_rekening,
-      cell: (data) => <div>{data.nomor_rekening}</div>,
+      name: <div>User Id</div>,
+      selector: (data) => data.userId,
+      cell: (data) => <div>{data.userId}</div>,
       width: "auto",
     },
     {
-      name: <div>Email</div>,
-      selector: (data) => data.nama_pemilik,
-      cell: (data) => <div>{data.nama_pemilik}</div>,
+      name: <div>Admission Phase Id</div>,
+      selector: (data) => data.admissionPhaseId,
+      cell: (data) => <div>{data.admissionPhaseId}</div>,
       width: "auto",
     },
     {
@@ -116,7 +117,7 @@ const DataRegistrasi = () => {
           onClick={navigateTambahGelombang}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
-          buttontxt="Tambah Gelombang"
+          // buttontxt="Tambah Gelombang"
         />
         {/* <ModalStatusList
           isOpen={isOpenStatus}

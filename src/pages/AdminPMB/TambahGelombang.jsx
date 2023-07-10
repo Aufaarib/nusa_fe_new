@@ -4,18 +4,23 @@ import { postGuru } from "../../api/Guru";
 import { Header } from "../../components";
 import { AlertEmpty } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
+import { DropdownDatePickers } from "../../components/Dropdown";
+import DatePicker from "react-date-picker";
+import { Date } from "../../components/DataTables";
+import { postAdmissionPhase } from "../../api/Gelombang";
 
 export default function TambahGelombang() {
-  const [fullname, setFullname] = useState("");
-  const [gender, setGender] = useState("");
-  const [religion, setReligion] = useState("");
-  const [birthPlace, setBirthPlace] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [name, setName] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [amount, setAmount] = useState();
+  const [increment, setIncrement] = useState();
+  // const [birthDate, setBirthDate] = useState("");
 
-  const [semesterData, setSemesterData] = useState([]);
+  // const [semesterData, setSemesterData] = useState([]);
 
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
+  // const [isOpenStatus, setisOpenStatus] = useState(false);
+  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
   // const created_by = localStorage.getItem("NAMA");
 
@@ -38,15 +43,23 @@ export default function TambahGelombang() {
     // const status = statusVal.value;
 
     if (
-      fullname.length === 0 ||
-      gender.length === 0 ||
-      religion.length === 0 ||
-      birthPlace.length === 0 ||
-      birthDate.length === 0
+      name.length === 0
+      // gender.length === 0 ||
+      // religion.length === 0 ||
+      // birthPlace.length === 0 ||
+      // birthDate.length === 0
     ) {
       AlertEmpty();
     } else {
-      postGuru(setSts, path, fullname, gender, religion, birthPlace, birthDate);
+      postAdmissionPhase(
+        setSts,
+        path,
+        increment,
+        name,
+        startDate,
+        endDate,
+        amount
+      );
       //   setisOpenStatus(true);
     }
   };
@@ -82,6 +95,16 @@ export default function TambahGelombang() {
     setFormFields(updatedFields);
   };
 
+  const handleAmountChange = (e) => {
+    const value = parseInt(e.target.value);
+    setAmount(value);
+  };
+
+  const handleIncrementChange = (e) => {
+    const value = parseInt(e.target.value);
+    setIncrement(value);
+  };
+
   // const SemesterOptions = semesterData.map((c) => ({
   //   label: c.name + " - " + c.status,
   //   value: c.id,
@@ -110,52 +133,44 @@ export default function TambahGelombang() {
           Form Tambah Gelombang
         </p>
         <article>
-          {/* <TextInput
-            label="Code"
+          <TextInput
+            label="Increment"
             type="number"
-            id="group"
-            name="code"
-            onChange={(e) => setCode(e.target.value)}
-            required={true}
-          /> */}
-          <TextInput
-            label="Nama Lengkap"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setFullname(e.target.value)}
+            onChange={handleIncrementChange}
             required={true}
           />
+
           <TextInput
-            label="Jenis Kelamin"
+            label="Nama"
             type="text"
             id="group"
             name="code"
-            onChange={(e) => setGender(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             required={true}
           />
+
           <TextInput
-            label="Religion"
+            label="Mulai"
             type="text"
             id="group"
             name="code"
-            onChange={(e) => setReligion(e.target.value)}
+            onChange={(e) => setStartDate(e.target.value)}
             required={true}
           />
+
           <TextInput
-            label="Tempat Lahir"
+            label="Selesai"
             type="text"
             id="group"
             name="code"
-            onChange={(e) => setBirthPlace(e.target.value)}
+            onChange={(e) => setEndDate(e.target.value)}
             required={true}
           />
+
           <TextInput
-            label="Tanggal Lahir"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setBirthDate(e.target.value)}
+            label="Amount"
+            type="number"
+            onChange={handleAmountChange}
             required={true}
           />
           {/* <DropdownStatus
@@ -185,45 +200,34 @@ export default function TambahGelombang() {
           {formFields.map((field, index) => (
             <div style={{ marginTop: "20px" }} key={index}>
               <TextInput
-                label="Nama Lengkap"
+                label="Nama"
                 type="text"
                 id="group"
                 name="code"
-                onChange={(e) => setFullname(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 required={true}
               />
               <TextInput
-                label="Jenis Kelamin"
+                label="Mulai"
                 type="text"
-                id="group"
-                name="code"
-                onChange={(e) => setGender(e.target.value)}
+                onChange={(e) => setStartDate(e.target.value)}
                 required={true}
               />
+
               <TextInput
-                label="Religion"
+                label="Selesai"
                 type="text"
-                id="group"
-                name="code"
-                onChange={(e) => setReligion(e.target.value)}
+                onChange={(e) => setEndDate(e.target.value)}
                 required={true}
               />
+
               <TextInput
-                label="Tempat Lahir"
+                label="Amount"
                 type="text"
-                id="group"
-                name="code"
-                onChange={(e) => setBirthPlace(e.target.value)}
+                onChange={(e) => setAmount(e.target.value)}
                 required={true}
               />
-              <TextInput
-                label="Tanggal Lahir"
-                type="text"
-                id="group"
-                name="code"
-                onChange={(e) => setBirthDate(e.target.value)}
-                required={true}
-              />
+
               <div style={{ marginRight: "255px" }}>
                 <button
                   className="btn-putih"

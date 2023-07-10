@@ -77,6 +77,7 @@ const TahapanPMB = () => {
             </motion.div>
           ))}
         </article>
+
         <ModalTahapanPMB
           selected={selected.step}
           setSelected={setSelected}
