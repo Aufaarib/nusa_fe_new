@@ -7,6 +7,7 @@ import { FaTimesCircle } from "react-icons/fa";
 import { useStateContext } from "../../contexts/ContextProvider";
 // import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
+import { AlertEmpty, AlertLoginFailed } from "../../components/ModalPopUp";
 
 // const LOGIN_URL = "/api/login";
 
@@ -96,6 +97,7 @@ const Login = () => {
       // const errMsg = err?.response?.data.errors;
       // setErrMsg(errMsg);
       // errRef.current.focus();
+      AlertLoginFailed();
       setIsLoading(false);
     }
   };

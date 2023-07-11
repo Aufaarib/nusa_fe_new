@@ -500,14 +500,14 @@ export const DropdownRadioInputGender = ({
           <RadioInput
             value={value1}
             label={label2}
-            name="jenis_kelamin"
+            name="gender"
             onChange={onChange}
             checked={checked}
           />
           <RadioInput
             value={value2}
             label={label3}
-            name="jenis_kelamin"
+            name="gender"
             onChange={onChange}
             checked={checked}
           />
@@ -543,28 +543,28 @@ export const DropdownRadioInputBloodType = ({
           <RadioInput
             value="A"
             label="A"
-            name="golongan_darah"
+            name="bloodType"
             onChange={onChange}
             checked={checked}
           />
           <RadioInput
             value="AB"
             label="AB"
-            name="golongan_darah"
+            name="bloodType"
             onChange={onChange}
             checked={checked}
           />
           <RadioInput
             value="B"
             label="B"
-            name="golongan_darah"
+            name="bloodType"
             onChange={onChange}
             checked={checked}
           />
           <RadioInput
             value="O"
             label="O"
-            name="golongan_darah"
+            name="bloodType"
             onChange={onChange}
             checked={checked}
           />

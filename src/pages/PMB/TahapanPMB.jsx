@@ -26,7 +26,7 @@ const TahapanPMB = () => {
 
   const [selected, setSelected] = useState({
     step: "",
-    status: "Berhasil",
+    status: "",
     details: {},
   });
 
@@ -56,7 +56,7 @@ const TahapanPMB = () => {
       /> */}
 
       {/* MESSAGES */}
-      {/* <div
+      <div
         className={
           stepsPMB.register.details.message
             ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative"
@@ -68,7 +68,7 @@ const TahapanPMB = () => {
         <p className="flex gap-2">
           <FaTimesCircle className="my-1" /> {stepsPMB.register.details.message}
         </p>
-      </div> */}
+      </div>
 
       <div>
         <article className="grid grid-rows-3 gap-6 md:grid-flow-col xs:grid-cols-1 md:grid-cols-2 mt-7">

@@ -297,8 +297,8 @@ const ModalTahapanPMB = ({
                             <br />
                             <hr />
                             Tagihan :{/* {currencyFormat(details.tagihan)}  */}{" "}
-                            x {/* {details.jumlah_anak}  */}
-                            Anak
+                            {/* x {details.jumlah_anak}  */}
+                            {/* Anak */}
                             <hr />
                             <strong>
                               Total Tagihan :{" "}

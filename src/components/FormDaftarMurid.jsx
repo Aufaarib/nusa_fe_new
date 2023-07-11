@@ -48,14 +48,15 @@ const FormDaftarMurid = ({ indexMurid }) => {
 
   const updateStudents = (e) => {
     const fieldName = e.target.id;
-    // console.log("fieldName ===> ", fieldName)
+    console.log("fieldName ===> ", fieldName);
+    // console.log("existingValues ===> ", existingValues);
     setStudent((existingValues) => ({
       // Retain the existing values
       ...existingValues,
       // update the current field
       [fieldName]: e.target.value,
     }));
-    // console.log("STUDENT DATA === ", student)
+    console.log("STUDENT DATA === ", student);
   };
 
   const updateStudentDropDownCal = (e) => {
@@ -90,7 +91,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
     }));
   };
 
-  // console.log("STUDENTS DATA", students)
+  // console.log("STUDENTS DATA", students);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,59 +99,78 @@ const FormDaftarMurid = ({ indexMurid }) => {
     // console.log("STUDENT POST === ", student)
     setIsLoading(true);
 
-    const newArray = students.map((item, i) => {
-      if (indexMurid === i) {
-        return {
-          ...item,
-          id: student.id,
-          nama_depan: student.nama_depan,
-          nama_tengah: student.nama_tengah,
-          nama_belakang: student.nama_belakang,
-          status_anak: student.status_anak,
-          anak_ke: student.anak_ke,
-          tinggi_badan_anak: student.tinggi_badan_anak,
-          tinggal_bersama: student.tinggal_bersama,
-          tempat_lahir: student.tempat_lahir,
-          tanggal_lahir: student.tanggal_lahir,
-          jenis_kelamin: student.jenis_kelamin,
-          golongan_darah: student.golongan_darah,
-          hobby_anak: student.hobby_anak,
-          berat_badan_anak: student.berat_badan_anak,
-          nomor_kartu_keluarga: student.nomor_kartu_keluarga,
-          jarak_rumah_ke_sekolah: student.jarak_rumah_ke_sekolah,
-          transportasi_ke_sekolah: student.transportasi_ke_sekolah,
-          kelas_saat_mendaftar: student.kelas_saat_mendaftar,
-          asal_sekolah: student.asal_sekolah,
-          sifat_dominan_anak: student.sifat_dominan_anak,
-          penyakit_pernah_diderita: student.penyakit_pernah_diderita,
-          nomor_akta_lahir_anak: student.nomor_akta_lahir_anak,
-        };
-      } else {
-        return item;
-      }
-    });
-    setStudents(newArray);
+    // const newArray = () => {
+    //   return {
+    const firstName = student.firstName;
+    const middleName = student.middleName;
+    const religion = student.religion;
+    const lastName = student.lastName;
+    const childStatus = student.childStatus;
+    const childNumber = parseInt(student.childNumber);
+    const height = parseInt(student.height);
+    const birthPlace = student.birthPlace;
+    const birthDate = student.birthDate;
+    const gender = student.gender;
+    const bloodType = student.bloodType;
+    const hobby = student.hobby;
+    const weight = parseInt(student.weight);
+    const familyIdentityNumber = student.familyIdentityNumber;
+    const distanceFromHome = parseInt(student.distanceFromHome);
+    const transportation = student.transportation;
+    const schoolOriginClass = student.schoolOriginClass;
+    const schoolOriginName = student.schoolOriginName;
+    const characteristic = student.characteristic;
+    const healthRecord = student.healthRecord;
+    const identityNumber = student.identityNumber;
+    //   };
+    // };
+
+    console.log("HEIGHT === ", height);
+
+    // setStudents(newArray);
     // console.log("STUDENT newArray === ", newArray)
 
     try {
-      const response = await axios.post(STUDENT_URL, JSON.stringify(student), {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      axios.post(
+        process.env.REACT_APP_BASE_URL +
+          "/admission/registration/REG00001/applicant",
+        {
+          firstName,
+          middleName,
+          lastName,
+          childStatus,
+          childNumber,
+          height,
+          religion,
+          birthPlace,
+          birthDate,
+          gender,
+          bloodType,
+          hobby,
+          weight,
+          familyIdentityNumber,
+          distanceFromHome,
+          transportation,
+          schoolOriginClass,
+          schoolOriginName,
+          characteristic,
+          healthRecord,
+          identityNumber,
         },
-        withCredentials: true,
-      });
+        {
+          headers: { authorization: token },
+        }
+      );
       setIsLoading(false);
       setSuccessMsg("Data berhasil disimpan");
       setErrMsg("");
-      // console.log("RESPONSE ==== " + JSON.stringify(response?.data));
+      // console.log("RESPONSE ==== " + response?.data.body);
       getFormCheck();
       console.log("getFormCheck === ", formCheck);
     } catch (err) {
-      const errors = err?.response?.data.errors;
-      console.error("ERROR === ", errors);
-      setErrMsg(errors);
+      // const errors = err?.response?.data.errors;
+      // console.error("ERROR === ", errors);
+      // setErrMsg(errors);
       setIsLoading(false);
     }
   };
@@ -166,31 +186,49 @@ const FormDaftarMurid = ({ indexMurid }) => {
             <TextInput
               label="Nama Depan"
               type="text"
-              id="nama_depan"
+              id="firstName"
               onChange={updateStudents}
-              value={student.nama_depan}
+              value={student.firstName}
+              required={true}
+            />
+
+            <TextInput
+              label="Agama"
+              type="text"
+              id="religion"
+              onChange={updateStudents}
+              value={student.religion}
               required={true}
             />
 
             <TextInput
               label="Nama Tengah"
               type="text"
-              id="nama_tengah"
+              id="middleName"
               onChange={updateStudents}
-              value={student.nama_tengah}
+              value={student.middleName}
               required={false}
             />
 
             <TextInput
               label="Nama Belakang"
               type="text"
-              id="nama_belakang"
+              id="lastName"
               onChange={updateStudents}
-              value={student.nama_belakang}
+              value={student.lastName}
               required={true}
             />
 
-            <DropdownListComponents
+            <TextInput
+              label="Status Anak"
+              type="text"
+              id="childStatus"
+              onChange={updateStudents}
+              value={student.childStatus}
+              required={true}
+            />
+
+            {/* <DropdownListComponents
               required={true}
               label="Status Anak"
               placeholder=""
@@ -200,14 +238,14 @@ const FormDaftarMurid = ({ indexMurid }) => {
               value={student.status_anak}
               change={updateStudentDropDownCal.bind(this)}
               // popupHeight="auto"
-            />
+            /> */}
 
             <TextInput
               label="Anak ke"
               type="number"
-              id="anak_ke"
+              id="childNumber"
               onChange={updateStudents}
-              value={student.anak_ke}
+              value={student.childNumber}
               required={true}
               min="1"
             />
@@ -215,14 +253,14 @@ const FormDaftarMurid = ({ indexMurid }) => {
             <TextInput
               label="Tinggi Badan Anak (cm)"
               type="number"
-              id="tinggi_badan_anak"
+              id="height"
               onChange={updateStudents}
-              value={student.tinggi_badan_anak}
+              value={student.height}
               required={true}
               min="1"
             />
 
-            <DropdownListComponents
+            {/* <DropdownListComponents
               required={true}
               label="Tinggal Bersama"
               placeholder=""
@@ -230,73 +268,82 @@ const FormDaftarMurid = ({ indexMurid }) => {
               dataSource={dropdownData.tinggalBersama}
               value={student.tinggal_bersama}
               change={updateStudentDropDownCal.bind(this)}
-            />
+            /> */}
 
             <TextInput
               label="Tempat Lahir"
               type="text"
-              id="tempat_lahir"
+              id="birthPlace"
               onChange={updateStudents}
-              value={student.tempat_lahir}
+              value={student.birthPlace}
               required={true}
             />
 
-            <DropdownDatePickers
+            <TextInput
               label="Tanggal Lahir"
-              id="tanggal_lahir"
-              value={student.tanggal_lahir}
-              change={updateStudentCal.bind(this)}
+              type="text"
+              id="birthDate"
+              onChange={updateStudents}
+              value={student.birthDate}
+              required={true}
             />
+            {/* <DropdownDatePickers
+              label="Tanggal Lahir"
+              id="birthDate"
+              value={student.birthDate}
+              change={updateStudents}
+            /> */}
+
             <DropdownRadioInputGender
               required={true}
               label="Jenis Kelamin"
-              value1="Perempuan"
-              value2="Laki-Laki"
+              value1="female"
+              value2="male"
               label2="Perempuan"
               label3="Laki-Laki"
               onChange={updateStudentRadio}
-              checked={student.jenis_kelamin}
+              checked={student.gender}
             />
 
             <DropdownRadioInputBloodType
               required={true}
               label="Golongan Darah"
               onChange={updateStudentRadio}
-              checked={student.golongan_darah}
+              checked={student.bloodType}
             />
           </section>
           <section>
             <TextInput
               label="Hobi Anak"
               type="text"
-              id="hobby_anak"
+              id="hobby"
               onChange={updateStudents}
-              value={student.hobby_anak}
+              value={student.hobby}
               required={true}
             />
             <TextInput
               label="Berat Badan Anak (Kg)"
               type="number"
-              id="berat_badan_anak"
+              id="weight"
               onChange={updateStudents}
-              value={student.berat_badan_anak}
+              value={student.weight}
               required={true}
               min="1"
             />
             <TextInput
               label="Nomor Kartu Keluarga"
               type="text"
-              id="nomor_kartu_keluarga"
+              id="familyIdentityNumber"
               onChange={updateStudents}
-              value={student.nomor_kartu_keluarga}
+              value={student.familyIdentityNumber}
               required={true}
             />
             <TextInput
               label="Jarak Rumah ke Sekolah (Km)"
               type="number"
-              id="jarak_rumah_ke_sekolah"
+              id="distanceFromHome"
               onChange={updateStudents}
-              value={student.jarak_rumah_ke_sekolah}
+              value={student.distanceFromHome}
               required={false}
               min="1"
             />
@@ -305,10 +352,10 @@ const FormDaftarMurid = ({ indexMurid }) => {
               required={true}
               label="Transportasi ke Sekolah"
               placeholder=""
-              id="transportasi_ke_sekolah"
+              id="transportation"
               dataSource={dropdownData.transportasiSekolah}
-              fields={{ value: "text", text: "text" }}
-              value={student.transportasi_ke_sekolah}
+              // fields={{ value: "text", text: "text" }}
+              value={student.transportation}
               change={updateStudentDropDownCal.bind(this)}
               popupHeight="auto"
             />
@@ -316,9 +363,9 @@ const FormDaftarMurid = ({ indexMurid }) => {
             <TextInput
               label="Kelas Pada Saat Mendaftar"
               type="number"
-              id="kelas_saat_mendaftar"
+              id="schoolOriginClass"
               onChange={updateStudents}
-              value={student.kelas_saat_mendaftar}
+              value={student.schoolOriginClass}
               required={true}
               min="1"
               max="6"
@@ -326,34 +373,34 @@ const FormDaftarMurid = ({ indexMurid }) => {
             <TextInput
               label="Asal Sekolah"
               type="text"
-              id="asal_sekolah"
+              id="schoolOriginName"
               onChange={updateStudents}
-              value={student.asal_sekolah}
+              value={student.schoolOriginName}
               required={true}
             />
             <TextInput
               label="Sifat Dominan Anak"
               type="text"
-              id="sifat_dominan_anak"
+              id="characteristic"
               onChange={updateStudents}
-              value={student.sifat_dominan_anak}
+              value={student.characteristic}
               required={true}
             />
             <TextInput
               label="Penyakit Berat yang Pernah Diderita"
               type="text"
-              id="penyakit_pernah_diderita"
+              id="healthRecord"
               onChange={updateStudents}
-              value={student.penyakit_pernah_diderita}
+              value={student.healthRecord}
               required={true}
             />
             <TextInput
               label="Nomor Akta Lahir Anak"
               type="text"
-              id="nomor_akta_lahir_anak"
+              id="identityNumber"
               onChange={updateStudents}
-              value={student.nomor_akta_lahir_anak}
-              required
+              value={student.identityNumber}
+              required={true}
             />
           </section>
         </form>

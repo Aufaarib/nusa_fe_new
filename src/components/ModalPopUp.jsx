@@ -290,6 +290,14 @@ export const AlertStatusUpdateFailed = () => {
   });
 };
 
+export const AlertLoginFailed = () => {
+  styledSweetAlert.fire({
+    title: "Email atau Password Tidak Sesuai",
+    showConfirmButton: true,
+    confirmButtonText: "Tutup",
+  });
+};
+
 // SA EMPTY INPUT
 export const AlertEmpty = () => {
   styledSweetAlert.fire({
