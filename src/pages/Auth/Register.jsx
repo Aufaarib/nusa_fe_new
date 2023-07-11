@@ -122,7 +122,7 @@ const Register = () => {
         // jumlah_anak: jumlahanak,
         email: email,
         password: pwd,
-        // password_confirmation: matchPwd,
+        password_confirmation: matchPwd,
       })
     );
     try {
@@ -134,7 +134,7 @@ const Register = () => {
           email: email,
           // jumlah_anak: jumlahanak,
           password: pwd,
-          // password_confirmation: matchPwd,
+          password_confirmation: matchPwd,
         }
       );
       console.log(response?.data);
@@ -207,6 +207,15 @@ const Register = () => {
                     Kami telah mengirimkan email verifikasi ke{" "}
                     <span className="font-bold text-merah">{emailVerify}</span>
                   </p>
+                  <br />
+                  <input
+                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
+                    type="number"
+                    // ref={userRef}
+                    // onChange={(e) => setUser(e.target.value)}
+                    // value={user}
+                    required
+                  />
                   <br />
                   <p>
                     Tidak menerima email? Periksa folder spam atau promosi Anda!

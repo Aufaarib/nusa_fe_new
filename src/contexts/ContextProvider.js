@@ -68,15 +68,15 @@ export const ContextProvider = ({ children }) => {
       status: "Berhasil",
       details: {
         message: "",
-        verified: false,
+        verified: true,
       },
     },
     register_payment: {
-      status: "",
+      status: "Berhasil",
       details: {
         message: "",
         nama_lengkap: "",
-        status_pembayaran: "Berhasil",
+        status_pembayaran: "",
         jumlah_anak: null,
         tagihan: null,
         total_tagihan: null,
@@ -101,11 +101,12 @@ export const ContextProvider = ({ children }) => {
       },
     },
     fill_form: {
-      status: "",
+      status: "Berhasil",
       details: { message: "" },
     },
-    test: { status: "", details: { message: "" } },
-    payment_education: { status: "", details: { message: "" } },
+    test: { status: "Berhasil", details: { message: "" } },
+    re_registration: { status: "Berhasil", details: { message: "" } },
+    payment_education: { status: "Berhasil", details: { message: "" } },
   });
   const [students, setStudents] = useState([
     {

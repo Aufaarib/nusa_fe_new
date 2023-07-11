@@ -5,6 +5,7 @@ import { Header } from "../../components";
 import InfoTahapanPMB from "../../components/InfoTahapanPMB";
 import ModalTahapanPMB from "../../components/ModalTahapanPMB";
 import { useStateContext } from "../../contexts/ContextProvider";
+import { FaTimesCircle } from "react-icons/fa";
 
 const TahapanPMB = () => {
   const {
@@ -55,8 +56,18 @@ const TahapanPMB = () => {
       /> */}
 
       {/* MESSAGES */}
-      {/* <div className={stepsPMB.register.details.message ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative" : "hidden"} aria-live="assertive" role="alert">
-        <p className="flex gap-2"><FaTimesCircle className='my-1' /> {stepsPMB.register.details.message}</p>
+      {/* <div
+        className={
+          stepsPMB.register.details.message
+            ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative"
+            : "hidden"
+        }
+        aria-live="assertive"
+        role="alert"
+      >
+        <p className="flex gap-2">
+          <FaTimesCircle className="my-1" /> {stepsPMB.register.details.message}
+        </p>
       </div> */}
 
       <div>
@@ -72,7 +83,7 @@ const TahapanPMB = () => {
                   );
                 }}
                 step={index + 1}
-                status="Berhasil"
+                status={stepsPMB[keyName].status}
               />
             </motion.div>
           ))}
