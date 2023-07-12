@@ -160,7 +160,7 @@ const Login = () => {
               id="password"
               onChange={(e) => setPwd(e.target.value)}
               value={pwd}
-              required
+              required={true}
               // placeholder="Admin PMB"
             />
           </div>

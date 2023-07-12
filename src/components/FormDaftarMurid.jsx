@@ -133,7 +133,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
     try {
       axios.post(
         process.env.REACT_APP_BASE_URL +
-          "/admission/registration/REG00001/applicant",
+          "/admission/registration/REG00002/applicant",
         {
           firstName,
           middleName,

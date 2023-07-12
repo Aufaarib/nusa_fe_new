@@ -58,6 +58,7 @@ import TambahPendaftaran from "./pages/AdminPMB/TambahPendaftaran";
 import TahunAjaran from "./pages/AdminPMB/TahunAjaran/TahunAjaran";
 import TambahTahunAjaran from "./pages/AdminPMB/TahunAjaran/TambahTahunAjaran";
 import UbahTahunAjaran from "./pages/AdminPMB/TahunAjaran/UbahTahunAjaran";
+import FormDaftarOrangTuaIbu from "./components/FormDataOrangTuaIbu";
 
 const App = () => {
   return (
@@ -194,7 +195,18 @@ const App = () => {
           <Route path="/pmb" element={<TahapanPMB />} />
           <Route path="/pmb/tahapan-pmb" element={<TahapanPMB />} />
           <Route path="/pmb/form-data-murid" element={<FormMurid />} />
-          <Route path="/pmb/form-data-orang-tua" element={<FormOrangTua />} />
+          <Route
+            path="/pmb/form-data-orang-tua-ayah"
+            element={<FormOrangTua />}
+          />
+          <Route
+            path="/pmb/form-data-orang-tua-ibu"
+            element={<FormDaftarOrangTuaIbu />}
+          />
+          <Route
+            path="/pmb/form-data-orang-tua-wali"
+            element={<FormOrangTua />}
+          />
           <Route
             path="/pmb/form-pernyataan"
             element={<FormPernyataanOrangTua />}

@@ -116,7 +116,7 @@ const ModalTahapanPMB = ({
                   <h5>
                     {step}
                     {step == 1 && ". Pendaftaran Akun"}
-                    {step == 2 && ". Pembayaran Registrasi"}
+                    {step == 2 && ". Pembayaran Pendaftaran"}
                     {step == 3 && ". Pengisian Formulir"}
                     {step == 4 && ". Hasil Tes"}
                     {step == 5 && ". Daftar Ulang"}
@@ -156,7 +156,7 @@ const ModalTahapanPMB = ({
                 <div className="p-7">
                   <h4>
                     {step == 1 && "Pendaftaran Akun"}
-                    {step == 2 && "Pembayaran Registrasi"}
+                    {step == 2 && "Pembayaran Pendaftaran"}
                     {step == 3 && "Pengisian Formulir"}
                     {step == 4 && "Hasil Tes"}
                     {step == 5 && "Daftar Ulang"}
@@ -277,10 +277,10 @@ const ModalTahapanPMB = ({
                       <p>
                         Nama Lengkap :{" "}
                         <strong className="capitalize">
-                          {details.nama_lengkap}
+                          {/* {details.nama_lengkap} */}
                         </strong>
-                        <br />
-                        Status Pembayaran Registrasi Calon Murid :{" "}
+                        {/* <br /> */}
+                        {/* Status Pembayaran Registrasi Calon Murid :{" "} */}
                         <strong>
                           {status == "Dalam Proses" ? (
                             <span className="text-red-600 uppercase">
@@ -288,7 +288,7 @@ const ModalTahapanPMB = ({
                             </span>
                           ) : (
                             <span className="text-green-600 uppercase">
-                              {details.status_pembayaran}
+                              {/* {details.status_pembayaran} */}
                             </span>
                           )}
                         </strong>
@@ -296,7 +296,8 @@ const ModalTahapanPMB = ({
                           <>
                             <br />
                             <hr />
-                            Tagihan :{/* {currencyFormat(details.tagihan)}  */}{" "}
+                            Batas Akhir Pembayaran :
+                            {/* {currencyFormat(details.tagihan)}  */}{" "}
                             {/* x {details.jumlah_anak}  */}
                             {/* Anak */}
                             <hr />
@@ -306,23 +307,22 @@ const ModalTahapanPMB = ({
                             </strong>
                             <hr />
                             <br />
-                            Transfer ke no. rekening:{" "}
+                            Silahkan lakukan transfer sebesar{" "}
                             <strong>
-                              {/* {details.banks[0].nama_bank}{" "}
-                              {details.banks[0].nomor_rekening} */}
+                              {/* {currencyFormat(details.total_tagihan)} */}
                             </strong>{" "}
-                            a.n
-                            {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
+                            ke rekening berikut :
                             <br />
-                            Konfirmasi pembayaran via{" "}
-                            <strong>
-                              WhatsApp
-                              {/* {details.whatsapp_admin[0].nama_lengkap} */}
-                            </strong>{" "}
-                            ke nomor{" "}
-                            <strong>
-                              {/* {details.whatsapp_admin[0].nomor_ponsel} */}
-                            </strong>
+                            {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
+                            Bank DKI Syariah cabang Pondok Indah
+                            <br />
+                            Nomor Rekening : 71021590003
+                            <br />
+                            <br />
+                            Untuk informasi lebih lanjut dan konfirmasi setelah
+                            melakukan transfer, silahkan hubungi No
+                            <strong> Whatsapp </strong>
+                            08129801108 (Ibu Hanny).
                           </>
                         )}
                       </p>
@@ -438,15 +438,18 @@ const ModalTahapanPMB = ({
 
                   {step == 6 && status == "Berhasil" && (
                     <div>
+                      <p>Ini merupakan notifikasi pembayaran otomatis</p>
+                      <br />
                       <p>
-                        Alhamdulillah, Ayah/ Bunda sudah melakukan persetujuan
-                        daftar ulang.
+                        Assalamualaikum Warrahmatullahi Wabarakatuh
+                        Bismillahirrahmanirrahim Semoga Ayah/Bunda senantiasa
+                        dalam lindungan Allah SWT.
                       </p>
                       <br />
                       <p>
-                        Mohon melakukan pembayaran biaya pendidikan dengan sbb:
+                        Kami dari bagian keuangan Sekolah Adab Insan Mulia,
+                        menyampaikan informasi kewajiban keuangan ananda
                       </p>
-                      <br />
                       {/* <hr className="my-1" />
                       <div>
                         {details.education_fees.map((item, i) => (
@@ -461,9 +464,8 @@ const ModalTahapanPMB = ({
                           </div>
                         ))}
                       </div> */}
-                      <hr className="my-1" />
                       <div className="grid grid-cols-3 gap-1">
-                        <p className="font-bold">Sub Total:</p>
+                        <p className="font-bold">NIS:</p>
                         <p className="font-bold">
                           {/* {currencyFormat(details.total_biaya)} */}
                         </p>
@@ -471,23 +473,46 @@ const ModalTahapanPMB = ({
                           {/* x {details.jumlah_anak_lulus} Anak */}
                         </p>
                       </div>
-                      <hr className="my-1" />
                       <div className="grid grid-cols-3 gap-1">
-                        <p className="font-bold">Total:</p>
+                        <p className="font-bold">Nama Siswa:</p>
                         <p className="font-bold">
                           {/* {currencyFormat(
                             details.total_biaya * details.jumlah_anak_lulus
                           )} */}
                         </p>
-                        <p></p>
                       </div>
-                      <hr className="my-1" />
+                      <br />
+                      <p>Berikut rincian kewajiban keuangan ananda</p>
+                      ***detail_tagihan_siswa***
+                      <p className="font-bold">Total Rp</p>
+                      <p className="font-bold">
+                        {/* {currencyFormat(details.total_biaya)} */}
+                      </p>
                       <br />
                       <p>
-                        Untuk proses selanjutnya, klik link persetujuan berikut:
+                        Mohon Ayah/Bunda dapat segera menyelesaikan kewajiban
+                        keuangannya. Semoga Allah SWT mudahkan dan lancarkan
+                        rezekinya.
                       </p>
+                      <br />
+                      Pembayaran dapat dilakukan dengan cara:
+                      <br />
+                      Transfer ke :
+                      <br />
+                      {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
+                      Bank DKI Syariah cabang Pondok Indah
+                      <br />
+                      Nomor Rekening : 71021590003
+                      <br />
+                      Atas Nama : Yayasan Adab Insan Mulia
+                      <br />
+                      <br />
+                      Untuk informasi lebih lanjut dan konfirmasi setelah
+                      melakukan transfer, silahkan hubungi No
+                      <strong> Whatsapp </strong>
+                      08129801108 (Ibu Hanny).
                       {/* ERROR MSG */}
-                      <div
+                      {/* <div
                         className={
                           errMsgSendVerify
                             ? "px-4 py-3 mt-3 rounded-md text-merah text-sm bg-red-100 relative"
@@ -503,10 +528,10 @@ const ModalTahapanPMB = ({
                                 <FaTimesCircle className="my-1" /> {fieldError}
                               </p>
                             ))
-                        )}
-                      </div>
+                        )} */}
+                      {/* </div> */}
                       {/* SUCCESS MSG */}
-                      <div
+                      {/* <div
                         className={
                           successMsgSendVerify
                             ? "px-4 py-3 mt-3 rounded-md text-green-700 text-sm bg-green-100 relative"
@@ -519,13 +544,13 @@ const ModalTahapanPMB = ({
                           <FaRegCheckCircle className="my-1" />
                           {successMsgSendVerify}
                         </p>
-                      </div>
-                      <Link
+                      </div> */}
+                      {/* <Link
                         onClick={paymentAgreement}
                         className="mt-3 btn-merah"
                       >
                         Persetujuan Pembayaran
-                      </Link>
+                      </Link> */}
                     </div>
                   )}
 

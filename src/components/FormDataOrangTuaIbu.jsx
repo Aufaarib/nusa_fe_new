@@ -7,13 +7,13 @@ import axios from "../api/axios";
 import TextInput from "./TextInput";
 
 import { useStateContext } from "../contexts/ContextProvider";
-import Header from "./Header";
 
-// import { DropdownDatePickers } from "./Dropdown";
+import { DropdownDatePickers } from "./Dropdown";
+import Header from "./Header";
 
 // const PARENTS_URL = "/api/pmb/parent";
 
-const FormDaftarOrangTua = ({ indexOrtu }) => {
+const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
   const token = localStorage.getItem("TOKEN");
   const {
     isLoading,
@@ -28,7 +28,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
     getFormCheck,
   } = useStateContext();
   const [parent, setParent] = useState({});
-  // const [duplicateData, setDuplicateData] = useState(false);
+  const [duplicateData, setDuplicateData] = useState(false);
 
   useEffect(() => {
     // console.log("PARENT DATA === ", parent);
@@ -69,14 +69,14 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
     console.log("PARENTS DATA === ", parent);
   };
 
-  // const updateParentsDropDownCal = (e) => {
-  //   // console.log("fieldName ===> ", e)
-  //   const fieldParent = e.element.ej2_instances[0].htmlattributes.name;
-  //   const fieldName = e.element.id;
-  //   setParent((draft) => {
-  //     draft[fieldParent][fieldName] = e.element.value;
-  //   });
-  // };
+  const updateParentsDropDownCal = (e) => {
+    // console.log("fieldName ===> ", e)
+    const fieldParent = e.element.ej2_instances[0].htmlattributes.name;
+    const fieldName = e.element.id;
+    setParent((draft) => {
+      draft[fieldParent][fieldName] = e.element.value;
+    });
+  };
 
   // console.log("AYAH === ", parent.ayah)
   // console.log("IBU === ", parent.ibu)
@@ -172,7 +172,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Ayah</h1>
+            <h1 className="mt-3 text-merah">Pendataan Ibu</h1>
             <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
@@ -396,14 +396,14 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
 
         <div className="flex justify-end w-full">
           <Link
-            to={"/pmb/form-data-murid"}
+            to={"/pmb/form-data-orang-tua-ayah"}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
           >
             <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
           </Link>
 
           <Link
-            to={"/pmb/form-data-orang-tua-ibu"}
+            to={"/pmb/form-pernyataan"}
             className={`${
               openForm == "form_ortu_identitas" &&
               "pointer-events-none text-gray-300"
@@ -416,4 +416,4 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
     </article>
   );
 };
-export default FormDaftarOrangTua;
+export default FormDaftarOrangTuaIbu;

@@ -52,58 +52,15 @@ const FormOrangTua = () => {
     setErrMsg("");
   };
 
-  const verified = stepsPMB.register.details.verified;
-  const status = stepsPMB.register_payment.status;
-  const message = stepsPMB.register.details.message;
+  // const verified = stepsPMB.register.details.verified;
+  // const status = stepsPMB.register_payment.status;
+  // const message = stepsPMB.register.details.message;
 
   return (
     <>
-      <Header
-        home="PMB"
-        // prev="Bank"
-        // navePrev={path}
-        at="Pendataan Orang Tua"
-        title="Form Pendataan Orang Tua"
-      />
-
-      {/* <Header
-        category="PMB"
-        title="Form Pendataan Orang Tua"
-        icon={<RiParentFill />}
-      /> */}
-
-      {/* MESSAGES */}
-      {/* <div
-        className={
-          !verified
-            ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative"
-            : "hidden"
-        }
-        aria-live="assertive"
-        role="alert"
-      >
-        <p className="flex gap-2">
-          <FiAlertTriangle className="my-1" />
-          {message}
-        </p>
-      </div>
-
-      <div
-        className={
-          errStep
-            ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative"
-            : "hidden"
-        }
-        aria-live="assertive"
-        role="alert"
-      >
-        <p className="flex gap-2">
-          <FiAlertTriangle className="my-1" /> {errStep}
-        </p>
-      </div> */}
-
+      <FormDaftarOrangTua key={indexMurid} indexMurid={indexMurid} />
       {/* {verified && status == "Berhasil" ? */}
-      <TabComponent heightAdjustMode="None" selected={tabSelected}>
+      {/* <TabComponent heightAdjustMode="None" selected={tabSelected}>
         <TabItemsDirective>
           {parents?.map(({ id }, index) => (
             <TabItemDirective
@@ -113,10 +70,7 @@ const FormOrangTua = () => {
             />
           ))}
         </TabItemsDirective>
-      </TabComponent>
-      {/* :
-        <></>
-      } */}
+      </TabComponent> */}
     </>
   );
 };

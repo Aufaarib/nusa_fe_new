@@ -42,7 +42,7 @@ export const sidebarMenus = [
       },
       {
         name: "Form Data Orang Tua",
-        path: `pmb/form-data-orang-tua`,
+        path: `pmb/form-data-orang-tua-ayah`,
         icon: <FaWpforms />,
         step: "form_ortu_identitas",
       },
