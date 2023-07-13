@@ -6,14 +6,22 @@ import { Link } from "react-router-dom";
 import axios from "../api/axios";
 import TextInput from "./TextInput";
 
+import { dropdownData } from "../data/initData";
 import { useStateContext } from "../contexts/ContextProvider";
 
-import { DropdownDatePickers } from "./Dropdown";
+import {
+  DropdownDatePickers,
+  DropdownListComponents,
+  DropdownRadioInputBiological,
+  DropdownRadioInputGender,
+  DropdownRadioInputisOneHouse,
+} from "./Dropdown";
 import Header from "./Header";
+import { getAdmissionRegistrationParentsWali } from "../api/Registrasi";
 
 // const PARENTS_URL = "/api/pmb/parent";
 
-const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
+const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
   const token = localStorage.getItem("TOKEN");
   const {
     isLoading,
@@ -27,13 +35,19 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
     formCheck,
     getFormCheck,
   } = useStateContext();
+  const [admissionParentsData, setAdmissionParents] = useState({});
+  const [sts, setSts] = useState(false);
   const [parent, setParent] = useState({});
   const [duplicateData, setDuplicateData] = useState(false);
 
+  const fetchAdmissonParents = async () => {
+    getAdmissionRegistrationParentsWali(setAdmissionParents, setSts);
+  };
+
   useEffect(() => {
     // console.log("PARENT DATA === ", parent);
-    console.log("PARENTS DATA FROM CONTEXT === ", parents);
-
+    // console.log("PARENTS DATA FROM CONTEXT === ", parents);
+    fetchAdmissonParents();
     if (parent.id == "" && parents[indexOrtu].id !== "") {
       setParent(parents[indexOrtu]);
     }
@@ -69,14 +83,35 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
     console.log("PARENTS DATA === ", parent);
   };
 
-  const updateParentsDropDownCal = (e) => {
-    // console.log("fieldName ===> ", e)
-    const fieldParent = e.element.ej2_instances[0].htmlattributes.name;
-    const fieldName = e.element.id;
-    setParent((draft) => {
-      draft[fieldParent][fieldName] = e.element.value;
-    });
+  const updateParentsRadio = (e) => {
+    const fieldName = e.target.name;
+    setParent((existingValues) => ({
+      // Retain the existing values
+      ...existingValues,
+      // update the current field
+      [fieldName]: e.target.value,
+    }));
   };
+
+  const updateParentsDropDownCal = (e) => {
+    const fieldName = e.element.id;
+    // console.log("fieldName ===> ", e)
+    setParent((existingValues) => ({
+      // Retain the existing values
+      ...existingValues,
+      // update the current field
+      [fieldName]: e.value,
+    }));
+  };
+
+  // const updateParentsDropDownCal = (e) => {
+  //   // console.log("fieldName ===> ", e)
+  //   // const fieldParent = e.element.ej2_instances[0].htmlattributes.name;
+  //   const fieldName = e.element.id;
+  //   setParent((draft) => {
+  //     draft[fieldParent][fieldName] = e.element.value;
+  //   });
+  // };
 
   // console.log("AYAH === ", parent.ayah)
   // console.log("IBU === ", parent.ibu)
@@ -161,9 +196,9 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
     <article>
       <Header
         home="PMB"
-        // prev="Bank"
+        prev="Pendataan Orang Tua"
         // navePrev={path}
-        at="Pendataan Orang Tua"
+        at="Pendataan Wali"
         title="Form Pendataan Orang Tua"
       />
       <div style={{ maxWidth: "140vh", overflow: "auto" }}>
@@ -172,7 +207,7 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Ibu</h1>
+            <h1 className="mt-3 text-merah">Pendataan Wali</h1>
             <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
@@ -187,6 +222,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="fullName"
               onChange={updateParents}
               value={parent.fullName}
+              placeholder={admissionParentsData.fullName}
+              disable={true}
               required={true}
             />
 
@@ -196,55 +233,104 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="familyIdentityNumber"
               onChange={updateParents}
               value={parent.familyIdentityNumber}
+              placeholder={admissionParentsData.familyIdentityNumber}
+              disable={true}
               required={true}
             />
             <TextInput
-              label="Nomor Identitas "
+              label="Nomor Identitas"
               type="number"
               id="identityNumber"
               onChange={updateParents}
               value={parent.identityNumber}
+              placeholder={admissionParentsData.identityNumber}
+              disable={true}
               required={true}
             />
-            <TextInput
-              label="Jenis Kelamin "
-              type="text"
-              id="gender"
-              onChange={updateParents}
-              value={parent.gender}
-              required={true}
-            />
-            <TextInput
-              label="Hubungan"
-              type="text"
-              id="relationship"
-              onChange={updateParents}
-              value={parent.relationship}
-              required={true}
-            />
-            <TextInput
-              label="Status"
-              type="number"
-              id="isBiological"
-              onChange={updateParents}
-              value={parent.isBiological}
-              required={true}
-            />
-            <TextInput
-              label="Tinggal Bersama"
-              type="number"
-              id="isOneHouse"
-              onChange={updateParents}
-              value={parent.isOneHouse}
-              required={true}
-            />
-
+            <br />
+            {sts !== 200 && (
+              <DropdownRadioInputGender
+                required={true}
+                label="Jenis Kelamin"
+                value1="male"
+                value2="female"
+                label2="Laki-Laki"
+                label3="Perempuan"
+                onChange={updateParentsRadio}
+                checked={parent.gender}
+              />
+            )}
+            {sts === 200 && (
+              <TextInput
+                label="Jenis Kelamin"
+                type="text"
+                id="gender"
+                onChange={updateParents}
+                value={parent.gender}
+                placeholder={admissionParentsData.gender}
+                disable={true}
+                required={true}
+              />
+            )}
+            <br />
+            {sts === 200 && (
+              <TextInput
+                label="Hubungan Wali"
+                type="text"
+                id="isBiological"
+                onChange={updateParents}
+                value={parent.isBiological}
+                placeholder={admissionParentsData.isBiological}
+                disable={true}
+                required={true}
+              />
+            )}
+            {sts !== 200 && (
+              <DropdownRadioInputBiological
+                required={true}
+                label="Hubungan Wali"
+                value1="1"
+                value2="0"
+                label2="Kandung"
+                label3="Tiri"
+                onChange={updateParentsRadio}
+                checked={parent.isBiological}
+              />
+            )}
+            <br />
+            {sts === 200 && (
+              <TextInput
+                label="Tinggal Bersama"
+                type="text"
+                id="isOneHouse"
+                onChange={updateParents}
+                value={parent.isOneHouse}
+                placeholder={admissionParentsData.isOneHouse}
+                disable={true}
+                required={true}
+              />
+            )}
+            {sts !== 200 && (
+              <DropdownRadioInputisOneHouse
+                required={true}
+                label="Tinggal Bersama"
+                value1="1"
+                value2="0"
+                label2="Ya"
+                label3="Tidak"
+                onChange={updateParentsRadio}
+                checked={parent.isOneHouse}
+              />
+            )}
+            <br />
             <TextInput
               label="Nomor Ponsel 1"
               type="number"
               id="phoneNumber1"
               onChange={updateParents}
               value={parent.phoneNumber1}
+              placeholder={admissionParentsData.phoneNumber_1}
+              disable={true}
               required={true}
             />
             <TextInput
@@ -253,6 +339,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="phoneNumber2"
               onChange={updateParents}
               value={parent.phoneNumber2}
+              placeholder={admissionParentsData.phoneNumber_2}
+              disable={true}
               required={true}
             />
             <TextInput
@@ -261,6 +349,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="province"
               onChange={updateParents}
               value={parent.province}
+              placeholder={admissionParentsData.province}
+              disable={true}
               required={true}
             />
             <TextInput
@@ -269,6 +359,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="city"
               onChange={updateParents}
               value={parent.city}
+              placeholder={admissionParentsData.city}
+              disable={true}
               required={true}
             />
 
@@ -278,6 +370,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="subDistrict"
               onChange={updateParents}
               value={parent.subDistrict}
+              placeholder={admissionParentsData.subDistrict}
+              disable={true}
               required={true}
             />
 
@@ -287,6 +381,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="village"
               onChange={updateParents}
               value={parent.village}
+              placeholder={admissionParentsData.village}
+              disable={true}
               required={true}
             />
 
@@ -296,6 +392,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="address"
               onChange={updateParents}
               value={parent.address}
+              placeholder={admissionParentsData.address}
+              disable={true}
               required={true}
             />
 
@@ -305,6 +403,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="postalCode"
               onChange={updateParents}
               value={parent.postalCode}
+              placeholder={admissionParentsData.postalCode}
+              disable={true}
               required={true}
             />
 
@@ -314,6 +414,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="birthPlace"
               onChange={updateParents}
               value={parent.birthPlace}
+              placeholder={admissionParentsData.birthPlace}
+              disable={true}
               required={true}
             />
 
@@ -323,6 +425,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="birthDate"
               onChange={updateParents}
               value={parent.birthDate}
+              placeholder={admissionParentsData.birthDate}
+              disable={true}
               required={true}
             />
 
@@ -350,6 +454,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="lastEducation"
               onChange={updateParents}
               value={parent.lastEducation}
+              placeholder={admissionParentsData.lastEducation}
+              disable={true}
               required={true}
             />
 
@@ -359,6 +465,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="placeOfWork"
               onChange={updateParents}
               value={parent.placeOfWork}
+              placeholder={admissionParentsData.placeOfWork}
+              disable={true}
               required={true}
             />
 
@@ -368,6 +476,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="occupation"
               onChange={updateParents}
               value={parent.occupation}
+              placeholder={admissionParentsData.occupation}
+              disable={true}
               required={true}
             />
 
@@ -377,6 +487,8 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="incomeGrade"
               onChange={updateParents}
               value={parent.incomeGrade}
+              placeholder={admissionParentsData.incomeGrade}
+              disable={true}
               required={true}
               min="1"
             />
@@ -385,21 +497,32 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
       </div>
 
       <section className="flex mt-12">
-        <button className="w-auto btn-merah" onClick={handleSubmit}>
-          {isLoading ? (
-            <CgSpinner className="mr-2 text-xl animate-spin" />
-          ) : (
-            <AiOutlineSave className="mr-2 text-2xl" />
-          )}
-          Simpan
-        </button>
+        {sts !== 200 && (
+          <button
+            type="button"
+            className="w-auto btn-merah"
+            onClick={handleSubmit}
+          >
+            {isLoading ? (
+              <CgSpinner className="mr-2 text-xl animate-spin" />
+            ) : (
+              <AiOutlineSave className="mr-2 text-2xl" />
+            )}
+            Simpan
+          </button>
+        )}
+        {sts === 200 && (
+          <button type="button" className="w-auto btn-disabled" disabled={true}>
+            Data Orang Tua Sudah Didaftarkan
+          </button>
+        )}
 
         <div className="flex justify-end w-full">
           <Link
-            to={"/pmb/form-data-orang-tua-ayah"}
+            to={"/pmb/form-data-orang-tua-ibu"}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
           >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
+            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendataan Ibu
           </Link>
 
           <Link
@@ -409,11 +532,11 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               "pointer-events-none text-gray-300"
             } w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap`}
           >
-            Selanjutnya <BsChevronRight className="text-xl ml-2 mt-0.5" />
+            Form Pernyataan <BsChevronRight className="text-xl ml-2 mt-0.5" />
           </Link>
         </div>
       </section>
     </article>
   );
 };
-export default FormDaftarOrangTuaIbu;
+export default FormDaftarOrangTuaWali;

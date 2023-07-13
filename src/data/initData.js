@@ -381,11 +381,12 @@ export const dropdownData = {
     { id: "3", text: "Adopsi" },
     { id: "4", text: "Lainnya" },
   ],
-  tinggalBersama: [
-    { id: "1", text: "Orang Tua Kandung" },
-    { id: "2", text: "Nenek dan Kakek" },
-    { id: "3", text: "Paman dan Bibi" },
-    { id: "4", text: "Lainnya" },
+  hubungan: [
+    { id: "1", text: "Nenek" },
+    { id: "2", text: "Kakek" },
+    { id: "3", text: "Paman" },
+    { id: "4", text: "Bibi" },
+    { id: "5", text: "Perwalian" },
   ],
   transportasiSekolah: [
     { id: "1", text: "Sepeda" },

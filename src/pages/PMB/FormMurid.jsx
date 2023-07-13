@@ -31,28 +31,28 @@ const FormMurid = () => {
     console.log("getFormCheck === ", formCheck);
   }, []);
 
-  let headertext;
+  // let headertext;
   // Mapping Tab items Header property
-  headertext = [
-    { text: "Murid 1" },
-    { text: "Murid 2" },
-    { text: "Murid 3" },
-    { text: "Murid 4" },
-    { text: "Murid 5" },
-    { text: "Murid 6" },
-    { text: "Murid 7" },
-  ];
+  // headertext = [
+  //   { text: "Murid 1" },
+  //   { text: "Murid 2" },
+  //   { text: "Murid 3" },
+  //   { text: "Murid 4" },
+  //   { text: "Murid 5" },
+  //   { text: "Murid 6" },
+  //   { text: "Murid 7" },
+  // ];
 
-  const tabContent = () => {
-    return (
-      <FormDaftarMurid key={indexMurid.toString()} indexMurid={indexMurid} />
-    );
-  };
+  // const tabContent = () => {
+  //   return (
+  //     <FormDaftarMurid key={indexMurid.toString()} indexMurid={indexMurid} />
+  //   );
+  // };
 
-  const tabSelected = (e) => {
-    setIndexMurid(e.selectedIndex);
-    setErrMsg("");
-  };
+  // const tabSelected = (e) => {
+  //   setIndexMurid(e.selectedIndex);
+  //   setErrMsg("");
+  // };
 
   // const verified = stepsPMB.register.details.verified;
   // const status = stepsPMB.register_payment.status;
@@ -60,13 +60,7 @@ const FormMurid = () => {
 
   return (
     <>
-      <Header
-        home="PMB"
-        // prev="Bank"
-        // navePrev={path}
-        at="Pendaftaran Murid"
-        title="Form Pendaftaran Murid"
-      />
+      <FormDaftarMurid key={indexMurid.toString()} indexMurid={indexMurid} />
       {/* <Header
         category="PMB"
         title="Form Pendaftaran Murid"
@@ -104,7 +98,7 @@ const FormMurid = () => {
       </div> */}
 
       {/* {verified && status == "Berhasil" ? */}
-      <TabComponent heightAdjustMode="None" selected={tabSelected}>
+      {/* <TabComponent heightAdjustMode="None" selected={tabSelected}>
         <TabItemsDirective>
           {students.map(({ id }, index) => (
             <TabItemDirective
@@ -114,7 +108,7 @@ const FormMurid = () => {
             />
           ))}
         </TabItemsDirective>
-      </TabComponent>
+      </TabComponent> */}
       {/* :
         <></> 
       } */}

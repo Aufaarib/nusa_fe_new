@@ -14,23 +14,118 @@ export function getAdmissionRegistration(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log(res.data.body);
+      console.log("ADMISSION REGISTRATION === ", res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
       setSts({ type: "error", error });
     });
+}
 
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
+export function getMyAdmission(setData, setSts) {
+  axios
+    .get(process.env.REACT_APP_BASE_URL + "/user/admission", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      console.log("My Admission === ", res.data.body);
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
+}
+
+export function getAdmissionRegistrationApplicant(setData, setSts, regId) {
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL +
+        "/admission/registration/REG00001/applicant",
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      console.log("REGISTRATION APLICANT === ", res.data.body.applicant);
+      setData(res.data.body.applicant);
+      setSts(res.data.code);
+    })
+    .catch((error) => {
+      setSts(error.data.code);
+    });
+}
+
+export function getAdmissionRegistrationParentsAyah(setData, setSts) {
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL +
+        "/admission/registration/REG00001/parent",
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      for (const i of res.data.body.parents) {
+        switch (i.relationship) {
+          case "ayah":
+            console.log("REGISTRATION PARENTS AYAH === ", i);
+            setData(i);
+            setSts(res.data.code);
+        }
+      }
+    })
+    .catch((error) => {
+      setSts(error.data.code);
+    });
+}
+export function getAdmissionRegistrationParentsIbu(setData, setSts) {
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL +
+        "/admission/registration/REG00001/parent",
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      for (const i of res.data.body.parents) {
+        switch (i.relationship) {
+          case "ibu":
+            console.log("REGISTRATION PARENTS IBU === ", i);
+            setData(i);
+            setSts(res.data.code);
+        }
+      }
+    })
+    .catch((error) => {
+      setSts(error.data.code);
+    });
+}
+
+export function getAdmissionRegistrationParentsWali(setData, setSts) {
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL +
+        "/admission/registration/REG00001/parent",
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      for (const i of res.data.body.parents) {
+        switch (i.relationship) {
+          case "perwalian":
+            console.log("REGISTRATION PARENTS WALI === ", i);
+            setData(i);
+            setSts(res.data.code);
+        }
+      }
+    })
+    .catch((error) => {
+      setSts(error.data.code);
+    });
 }
 
 // export function updateGuru(

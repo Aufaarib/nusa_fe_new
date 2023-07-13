@@ -239,10 +239,10 @@ const FormPernyataan = ({ indexMurid }) => {
 
         <div className="flex justify-end w-full">
           <Link
-            to={"/pmb/form-data-orang-tua"}
+            to={"/pmb/form-data-orang-tua-wali"}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
           >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
+            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendataan Wali
           </Link>
 
           <Link
@@ -252,7 +252,7 @@ const FormPernyataan = ({ indexMurid }) => {
               "pointer-events-none text-gray-300"
             } w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap`}
           >
-            Selanjutnya
+            Berkas Pendaftaran
             <BsChevronRight className="text-xl ml-2 mt-0.5" />
           </Link>
         </div>

@@ -63,6 +63,11 @@ export const ContextProvider = ({ children }) => {
   ]);
   const [notificationNew, setNotificationNew] = useState(false);
   const [notificationUnreadLength, setNotificationUnreadLength] = useState(0);
+
+  const [dataIbu, setDataIbu] = useState({});
+  const [dataAyah, setDataAyah] = useState({});
+  const [dataWali, setDataWali] = useState({});
+
   const [stepsPMB, setStepsPMB] = useState({
     register: {
       status: "Berhasil",
@@ -472,6 +477,12 @@ export const ContextProvider = ({ children }) => {
   return (
     <StateContext.Provider
       value={{
+        dataIbu,
+        setDataIbu,
+        dataAyah,
+        setDataAyah,
+        dataWali,
+        setDataWali,
         daftarUlangAgreement,
         openForm,
         setOpenForm,

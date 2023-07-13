@@ -86,6 +86,26 @@
   .react-datepicker__triangle {
     display: none;
   }
+  .btn-disabled {
+    @apply flex;
+    @apply justify-center;
+    @apply w-full;
+    @apply py-3;
+    @apply mt-6;
+    @apply mr-3;
+    @apply font-medium;
+    @apply leading-snug;
+    @apply text-white;
+    @apply text-base;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    @apply rounded;
+    @apply shadow-md;
+    @apply bg-abu;
+    @apply px-7;
+  }
+
   .btn-merah {
     @apply flex;
     @apply justify-center;

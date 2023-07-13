@@ -7,23 +7,21 @@ import axios from "../api/axios";
 import TextInput from "./TextInput";
 
 import { useStateContext } from "../contexts/ContextProvider";
-import Header from "./Header";
+
 import {
+  DropdownDatePickers,
   DropdownRadioInputBiological,
-  DropdownRadioInputGender,
-  DropdownRadioInputYesNo,
   DropdownRadioInputisOneHouse,
 } from "./Dropdown";
+import Header from "./Header";
 import {
   getAdmissionRegistrationParents,
-  getAdmissionRegistrationParentsAyah,
+  getAdmissionRegistrationParentsIbu,
 } from "../api/Registrasi";
-
-// import { DropdownDatePickers } from "./Dropdown";
 
 // const PARENTS_URL = "/api/pmb/parent";
 
-const FormDaftarOrangTua = ({ indexOrtu }) => {
+const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
   const token = localStorage.getItem("TOKEN");
   const {
     isLoading,
@@ -37,20 +35,19 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
     formCheck,
     getFormCheck,
   } = useStateContext();
+  const [parent, setParent] = useState({});
   const [admissionParentsData, setAdmissionParents] = useState({});
   const [sts, setSts] = useState(false);
-  const [parent, setParent] = useState({});
   // const [duplicateData, setDuplicateData] = useState(false);
 
   const fetchAdmissonParents = async () => {
-    getAdmissionRegistrationParentsAyah(setAdmissionParents, setSts);
+    getAdmissionRegistrationParentsIbu(setAdmissionParents, setSts);
   };
 
   useEffect(() => {
-    // console.log("PARENT DATA === ", admissionParentsData);
+    // console.log("PARENT DATA === ", parent);
     // console.log("PARENTS DATA FROM CONTEXT === ", parents);
     fetchAdmissonParents();
-
     if (parent.id == "" && parents[indexOrtu].id !== "") {
       setParent(parents[indexOrtu]);
     }
@@ -104,8 +101,8 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
     const fullName = parent.fullName;
     const familyIdentityNumber = parent.familyIdentityNumber;
     const identityNumber = parent.identityNumber;
-    const gender = "male";
-    const relationship = "ayah";
+    const gender = "female";
+    const relationship = "ibu";
     const isBiological = parseInt(parent.isBiological);
     const isOneHouse = parseInt(parent.isOneHouse);
     const phoneNumber1 = parent.phoneNumber1;
@@ -177,7 +174,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
         home="PMB"
         prev="Pendataan Orang Tua"
         // navePrev={path}
-        at="Pendataan Ayah"
+        at="Pendataan Ibu"
         title="Form Pendataan Orang Tua"
       />
       <div style={{ maxWidth: "140vh", overflow: "auto" }}>
@@ -186,7 +183,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Ayah</h1>
+            <h1 className="mt-3 text-merah">Pendataan Ibu</h1>
             <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
@@ -245,7 +242,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
             <br />
             {sts === 200 && (
               <TextInput
-                label="Hubungan Ayah"
+                label="Hubungan Ibu"
                 type="text"
                 id="isBiological"
                 onChange={updateParents}
@@ -258,7 +255,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
             {sts !== 200 && (
               <DropdownRadioInputBiological
                 required={true}
-                label="Hubungan Ayah"
+                label="Hubungan Ibu"
                 value1="1"
                 value2="0"
                 label2="Kandung"
@@ -489,25 +486,24 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
 
         <div className="flex justify-end w-full">
           <Link
-            to={"/pmb/form-data-murid"}
+            to={"/pmb/form-data-orang-tua-ayah"}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
           >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendataan
-            Murid
+            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendataan Ayah
           </Link>
 
           <Link
-            to={"/pmb/form-data-orang-tua-ibu"}
+            to={"/pmb/form-data-orang-tua-wali"}
             className={`${
               openForm == "form_ortu_identitas" &&
               "pointer-events-none text-gray-300"
             } w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap`}
           >
-            Pendataan Ibu <BsChevronRight className="text-xl ml-2 mt-0.5" />
+            Pendataan Wali <BsChevronRight className="text-xl ml-2 mt-0.5" />
           </Link>
         </div>
       </section>
     </article>
   );
 };
-export default FormDaftarOrangTua;
+export default FormDaftarOrangTuaIbu;

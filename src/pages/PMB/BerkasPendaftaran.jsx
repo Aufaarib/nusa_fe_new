@@ -438,7 +438,8 @@ const BerkasPendaftaran = () => {
               to={"/pmb/form-pernyataan"}
               className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
             >
-              <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Kembali
+              <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Form
+              Pernyataan
             </Link>
 
             {/* <Link to={"/berkas-pendaftaran"} className="w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap">

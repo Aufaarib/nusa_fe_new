@@ -471,6 +471,98 @@ export const DropdownDatePickers = ({
   );
 };
 
+export const DropdownRadioInputisOneHouse = ({
+  onChange,
+  label,
+  label2,
+  label3,
+  checked,
+  id,
+  name,
+  fields,
+  value1,
+  value2,
+  change,
+  required,
+  defaultValue,
+  isClearable,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div className="flex gap-5 w-full ml-20">
+          <RadioInput
+            value={value1}
+            label={label2}
+            name="isOneHouse"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value={value2}
+            label={label3}
+            name="isOneHouse"
+            onChange={onChange}
+            checked={checked}
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export const DropdownRadioInputBiological = ({
+  onChange,
+  label,
+  label2,
+  label3,
+  checked,
+  id,
+  name,
+  fields,
+  value1,
+  value2,
+  change,
+  required,
+  defaultValue,
+  isClearable,
+}) => {
+  return (
+    <div>
+      <form className="grid-container">
+        {label && (
+          <label htmlFor={name}>
+            {label} {required && <span className="ml-1 text-merah">*</span>}
+          </label>
+        )}
+        <span>:</span>
+        <div className="flex gap-5 w-full ml-20">
+          <RadioInput
+            value={value1}
+            label={label2}
+            name="isBiological"
+            onChange={onChange}
+            checked={checked}
+          />
+          <RadioInput
+            value={value2}
+            label={label3}
+            name="isBiological"
+            onChange={onChange}
+            checked={checked}
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
+
 export const DropdownRadioInputGender = ({
   onChange,
   label,
