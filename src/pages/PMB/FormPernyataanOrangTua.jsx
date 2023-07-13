@@ -31,9 +31,9 @@ const FormPernyataanOrangTua = () => {
     console.log("getFormCheck === ", formCheck);
   }, []);
 
-  let headertext;
+  // let headertext;
   // Mapping Tab items Header property
-  headertext = [{ text: "Murid 1" }, { text: "Murid 2" }, { text: "Murid 3" }];
+  // headertext = [{ text: "Murid 1" }, { text: "Murid 2" }, { text: "Murid 3" }];
 
   const tabContent = () => {
     return (
@@ -41,25 +41,17 @@ const FormPernyataanOrangTua = () => {
     );
   };
 
-  const tabSelected = (e) => {
-    setIndexMurid(e.selectedIndex);
-    setErrMsg("");
-  };
+  // const tabSelected = (e) => {
+  //   setIndexMurid(e.selectedIndex);
+  //   setErrMsg("");
+  // };
 
-  const verified = stepsPMB.register.details.verified;
-  const status = stepsPMB.register_payment.status;
-  const message = stepsPMB.register.details.message;
+  // const verified = stepsPMB.register.details.verified;
+  // const status = stepsPMB.register_payment.status;
+  // const message = stepsPMB.register.details.message;
 
   return (
     <>
-      <Header
-        home="PMB"
-        // prev="Bank"
-        // navePrev={path}
-        at="Pernyataan Orang Tua"
-        title="Form Pernyataan Orang Tua"
-      />
-
       {/* <Header
         category="PMB"
         title="Form Pernyataan Orang Tua"
@@ -76,7 +68,8 @@ const FormPernyataanOrangTua = () => {
       </div> */}
 
       {/* {verified && status == "Berhasil" ? */}
-      <TabComponent heightAdjustMode="None" selected={tabSelected}>
+      <FormPernyataan key={indexMurid.toString()} indexMurid={indexMurid} />
+      {/* <TabComponent heightAdjustMode="None" selected={tabSelected}>
         <TabItemsDirective>
           {parents?.map(({ id }, index) => (
             <TabItemDirective
@@ -86,7 +79,7 @@ const FormPernyataanOrangTua = () => {
             />
           ))}
         </TabItemsDirective>
-      </TabComponent>
+      </TabComponent> */}
       {/* :
         <></>
       } */}

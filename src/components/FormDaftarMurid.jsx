@@ -33,9 +33,9 @@ const FormDaftarMurid = ({ indexMurid }) => {
     getFormCheck,
   } = useStateContext();
   const [admissionApplicantData, setAdmissionApplicant] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [sts, setSts] = useState(false);
   const [student, setStudent] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAdmissonApplicant = async () => {
     getAdmissionRegistrationApplicant(setAdmissionApplicant, setSts);

@@ -8,6 +8,21 @@ import {
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
+export function getAdmissionStatement(setData, setSts) {
+  axios
+    .get(process.env.REACT_APP_BASE_URL + "/admission/statement", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      console.log("ADMISSION STATEMENT === ", res.data.body);
+      setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
+}
+
 export function getAdmissionRegistration(setData, setSts) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/admission/registration", {
@@ -22,6 +37,21 @@ export function getAdmissionRegistration(setData, setSts) {
       setSts({ type: "error", error });
     });
 }
+
+// export function getAdmissionRegistration(setData, setSts) {
+//   axios
+//     .get(process.env.REACT_APP_BASE_URL + "/admission/registration", {
+//       headers: { authorization: localStorage.getItem("TOKEN") },
+//     })
+//     .then((res) => {
+//       console.log("ADMISSION REGISTRATION === ", res.data.body);
+//       setData(res.data.body);
+//       setSts({ type: "success" });
+//     })
+//     .catch((error) => {
+//       setSts({ type: "error", error });
+//     });
+// }
 
 export function getMyAdmission(setData, setSts) {
   axios
@@ -128,57 +158,33 @@ export function getAdmissionRegistrationParentsWali(setData, setSts) {
     });
 }
 
-// export function updateGuru(
-//   setSts,
-//   path,
-//   code,
-//   Fullname,
-//   Gender,
-//   Religion,
-//   BirthPlace,
-//   BirthDate
-// ) {
-//   axios
-//     .put(
-//       process.env.REACT_APP_BASE_URL + `/teacher/${code}`,
-//       {
-//         Fullname,
-//         Gender,
-//         Religion,
-//         BirthPlace,
-//         BirthDate,
-//       },
-//       { headers: { authorization: localStorage.getItem("TOKEN") } }
-//     )
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusUpdateSuccess(path);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusUpdateFailed();
-//     });
-// }
-
-// export function updateStatusKurikulum(setSts, code, setData) {
-//   axios
-//     .put(
-//       process.env.REACT_APP_BASE_URL + `/curriculum/${code}/toggle-status`,
-//       null,
-//       {
-//         headers: { authorization: localStorage.getItem("TOKEN") },
-//       }
-//     )
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusUpdateSuccess();
-//       getKurikulum(setData, setSts);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusUpdateFailed();
-//     });
-// }
+export function postAdmissionAnswer(
+  setSts,
+  // path,
+  code,
+  name,
+  questionId,
+  answer,
+  amount
+) {
+  axios
+    .post(
+      process.env.REACT_APP_BASE_URL + `registration/REG00001/statement`,
+      {
+        questionId,
+        answer,
+      },
+      { headers: { authorization: localStorage.getItem("TOKEN") } }
+    )
+    .then(() => {
+      setSts({ type: "success" });
+      // AlertStatusTambahSuccess(path);
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      // AlertStatusTambahFailed();
+    });
+}
 
 export function postAdmissionRegistration(
   setSts,
@@ -209,17 +215,3 @@ export function postAdmissionRegistration(
       AlertStatusTambahFailed();
     });
 }
-
-// export function deleteKurikulum(setSts, deleteId, setData) {
-//   axios
-//     .delete(process.env.REACT_APP_NUSA + `/curriculum/delete/${deleteId}`)
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusHapusSuccess();
-//       getKurikulum(setData, setSts);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusHapusFailed();
-//     });
-// }
