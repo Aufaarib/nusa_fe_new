@@ -126,7 +126,8 @@
     @apply px-7;
   }
   .btn-merah:hover {
-    @apply bg-gelap;
+    @apply bg-putih;
+    @apply text-merah;
   }
 
   .btn-putih {
@@ -150,7 +151,7 @@
     border: 1px solid #8f0d1e;
   }
   .btn-putih:hover {
-    @apply bg-gelap;
+    @apply bg-merah;
   }
   .btn-mrh {
     /* @apply flex; */
@@ -172,7 +173,8 @@
     @apply bg-merah;
   }
   .btn-mrh:hover {
-    @apply bg-gelap;
+    @apply bg-putih;
+    @apply text-merah;
   }
 
   .btn-action-merah {
@@ -186,7 +188,8 @@
     @apply text-base;
   }
   .btn-action-merah:hover {
-    @apply bg-gelap;
+    @apply bg-putih;
+    @apply text-merah;
   }
 
   .btn-action-ungu {
@@ -200,7 +203,7 @@
     @apply text-base;
   }
   .btn-action-ungu:hover {
-    @apply bg-gelap;
+    @apply bg-putih;
   }
 
   .btn-action-biru {
