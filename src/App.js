@@ -60,6 +60,7 @@ import TambahTahunAjaran from "./pages/AdminPMB/TahunAjaran/TambahTahunAjaran";
 import UbahTahunAjaran from "./pages/AdminPMB/TahunAjaran/UbahTahunAjaran";
 import FormDaftarOrangTuaIbu from "./components/FormDaftarOrangTuaIbu";
 import FormDaftarOrangTuaWali from "./components/FormDaftarOrangTuaWali";
+import BerkasPembayaran from "./pages/PMB/BerkasPembayaran";
 
 const App = () => {
   return (
@@ -216,6 +217,7 @@ const App = () => {
             path="/pmb/berkas-pendaftaran"
             element={<BerkasPendaftaran />}
           />
+          <Route path="/pmb/berkas-pembayaran" element={<BerkasPembayaran />} />
         </Route>
       </Route>
     </Routes>

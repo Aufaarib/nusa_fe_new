@@ -207,7 +207,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Wali</h1>
+            <h1 className="mt-3 text-merah">Pendaftaran Wali</h1>
             <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
@@ -522,7 +522,8 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
             to={"/pmb/form-data-orang-tua-ibu"}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
           >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendataan Ibu
+            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendaftaran
+            Ibu
           </Link>
 
           <Link

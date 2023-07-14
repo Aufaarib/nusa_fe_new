@@ -60,7 +60,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
       // update the current field
       [fieldName]: e.target.value,
     }));
-    // console.log("STUDENT DATA === ", student);
+    console.log("STUDENT DATA === ", student);
   };
 
   const updateStudentDropDownCal = (e) => {
@@ -193,7 +193,15 @@ const FormDaftarMurid = ({ indexMurid }) => {
           onSubmit={handleSubmit}
           style={{ display: "block", gap: "22px", padding: "20px" }}
         >
-          <section>
+          <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
+            <h1 className="mt-3 text-merah">Pendaftaran Murid</h1>
+            <p className="text-xs">
+              Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
+              <span className="text-merah">*</span>) wajib diisi.
+            </p>
+          </section>
+
+          <section className="xs:col-span-3 lg:col-span-1 mt-5">
             <TextInput
               label="Nama Depan"
               type="text"
@@ -521,7 +529,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
               openForm == "form_murid" && "pointer-events-none text-gray-300"
             } w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap`}
           >
-            Pendataan Ayah <BsChevronRight className="text-xl ml-2 mt-0.5" />
+            Pendaftaran Ayah <BsChevronRight className="text-xl ml-2 mt-0.5" />
           </Link>
         </div>
       </section>

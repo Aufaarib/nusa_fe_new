@@ -186,7 +186,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
           style={{ display: "block", gap: "22px", padding: "10px" }}
         >
           <section className="xs:col-span-3 lg:col-span-1 xs:mb-3 lg:mb-0">
-            <h1 className="mt-3 text-merah">Pendataan Ayah</h1>
+            <h1 className="mt-3 text-merah">Pendaftaran Ayah</h1>
             <p className="text-xs">
               Catatan : Untuk pertanyaan yang terdapat tanda bintang merah (
               <span className="text-merah">*</span>) wajib diisi.
@@ -492,7 +492,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
             to={"/pmb/form-data-murid"}
             className="w-auto pl-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap"
           >
-            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendataan
+            <BsChevronLeft className="text-xl m-0 mr-2 mt-0.5" /> Pendaftaran
             Murid
           </Link>
 
@@ -503,7 +503,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               "pointer-events-none text-gray-300"
             } w-auto pr-0 mx-0 bg-transparent shadow-none btn-merah hover:bg-transparent text-merah hover:text-gelap`}
           >
-            Pendataan Ibu <BsChevronRight className="text-xl ml-2 mt-0.5" />
+            Pendaftaran Ibu <BsChevronRight className="text-xl ml-2 mt-0.5" />
           </Link>
         </div>
       </section>

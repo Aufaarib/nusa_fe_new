@@ -23,6 +23,25 @@ export function getAdmissionStatement(setData, setSts) {
     });
 }
 
+export function getAdmissionAnswer(setData, setSts) {
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL +
+        "/admission/registration/REG00001/statement",
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      console.log("ADMISSION STATEMENT ANSWER === ", res.data.body);
+      setData(res.data.body.statements);
+      setSts(res.data.code);
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
+}
+
 export function getAdmissionRegistration(setData, setSts) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/admission/registration", {
@@ -81,10 +100,10 @@ export function getAdmissionRegistrationApplicant(setData, setSts, regId) {
       console.log("REGISTRATION APLICANT === ", res.data.body.applicant);
       setData(res.data.body.applicant);
       setSts(res.data.code);
-    })
-    .catch((error) => {
-      setSts(error.data.code);
     });
+  // .catch((res) => {
+  //   setSts(res.data.code);
+  // });
 }
 
 export function getAdmissionRegistrationParentsAyah(setData, setSts) {
@@ -100,7 +119,6 @@ export function getAdmissionRegistrationParentsAyah(setData, setSts) {
       for (const i of res.data.body.parents) {
         switch (i.relationship) {
           case "ayah":
-            console.log("REGISTRATION PARENTS AYAH === ", i);
             setData(i);
             setSts(res.data.code);
         }

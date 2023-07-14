@@ -316,13 +316,18 @@ const ModalTahapanPMB = ({
                             {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
                             Bank DKI Syariah cabang Pondok Indah
                             <br />
-                            Nomor Rekening : 71021590003
+                            Nomor Rekening :<strong> 71021590003</strong>
                             <br />
                             <br />
                             Untuk informasi lebih lanjut dan konfirmasi setelah
-                            melakukan transfer, silahkan hubungi No
-                            <strong> Whatsapp </strong>
-                            08129801108 (Ibu Hanny).
+                            melakukan transfer, silahkan hubungi No Whatsapp
+                            <strong> 08129801108 </strong> (Ibu Hanny).
+                            <Link
+                              to={"/pmb/berkas-pembayaran"}
+                              className="mt-7 btn-merah"
+                            >
+                              Upload Bukti Pembayaran Registrasi
+                            </Link>
                           </>
                         )}
                       </p>
@@ -502,15 +507,21 @@ const ModalTahapanPMB = ({
                       {/* <strong>{details.banks[0].nama_pemilik}</strong> */}
                       Bank DKI Syariah cabang Pondok Indah
                       <br />
-                      Nomor Rekening : 71021590003
+                      Nomor Rekening : <strong> 71021590003 </strong>
                       <br />
-                      Atas Nama : Yayasan Adab Insan Mulia
+                      Atas Nama : <strong> Yayasan Adab Insan Mulia </strong>
                       <br />
                       <br />
                       Untuk informasi lebih lanjut dan konfirmasi setelah
-                      melakukan transfer, silahkan hubungi No
-                      <strong> Whatsapp </strong>
-                      08129801108 (Ibu Hanny).
+                      melakukan transfer, silahkan hubungi No Whatsapp
+                      <strong> 08129801108 </strong>
+                      (Ibu Hanny).
+                      <Link
+                        to={"/pmb/berkas-pembayaran"}
+                        className="mt-7 btn-merah"
+                      >
+                        Upload Bukti Pembayaran Pendidikan
+                      </Link>
                       {/* ERROR MSG */}
                       {/* <div
                         className={
