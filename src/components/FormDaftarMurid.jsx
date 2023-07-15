@@ -4,6 +4,7 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
+import moment from "moment/moment";
 
 import {
   DropdownListComponents,
@@ -280,7 +281,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
               id="height"
               onChange={updateStudents}
               value={student.height}
-              placeholder={admissionApplicantData.height}
+              placeholder={admissionApplicantData.height + " cm"}
               disable={sts == 200}
               required={true}
               min="1"
@@ -310,7 +311,9 @@ const FormDaftarMurid = ({ indexMurid }) => {
               id="birthDate"
               onChange={updateStudents}
               value={student.birthDate}
-              placeholder={admissionApplicantData.birthDate}
+              placeholder={moment(admissionApplicantData.birthDate).format(
+                "DD-MM-YYYY"
+              )}
               disable={sts == 200}
               required={true}
             />
@@ -320,18 +323,30 @@ const FormDaftarMurid = ({ indexMurid }) => {
               value={student.birthDate}
               change={updateStudents}
             /> */}
-            {sts === 200 && (
-              <TextInput
-                label="Jenis Kelamin"
-                type="text"
-                id="gender"
-                onChange={updateStudents}
-                value={student.gender}
-                placeholder={admissionApplicantData.gender}
-                disable={true}
-                required={true}
-              />
-            )}
+            {sts === 200 &&
+              (admissionApplicantData.gender === "male" ? (
+                <TextInput
+                  label="Jenis Kelamin"
+                  type="text"
+                  id="gender"
+                  onChange={updateStudents}
+                  value={student.gender}
+                  placeholder="Laki-Laki"
+                  disable={true}
+                  required={true}
+                />
+              ) : (
+                <TextInput
+                  label="Jenis Kelamin"
+                  type="text"
+                  id="gender"
+                  onChange={updateStudents}
+                  value={student.gender}
+                  placeholder="Perempuan"
+                  disable={true}
+                  required={true}
+                />
+              ))}
             {sts !== 200 && (
               <DropdownRadioInputGender
                 required={true}
@@ -405,7 +420,7 @@ const FormDaftarMurid = ({ indexMurid }) => {
               id="distanceFromHome"
               onChange={updateStudents}
               value={student.distanceFromHome}
-              placeholder={admissionApplicantData.distanceFromHome}
+              placeholder={admissionApplicantData.distanceFromHome + " Km"}
               disable={sts == 200}
               required={false}
               min="1"

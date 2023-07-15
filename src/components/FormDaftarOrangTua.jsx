@@ -193,7 +193,6 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
               <span className="text-merah">*</span>) wajib diisi.
             </p>
           </section>
-
           {/* COL 2 */}
           <section className="xs:col-span-3 lg:col-span-1 mt-5">
             <TextInput

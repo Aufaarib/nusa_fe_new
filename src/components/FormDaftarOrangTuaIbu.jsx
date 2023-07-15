@@ -5,6 +5,7 @@ import { CgSpinner } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
 import TextInput from "./TextInput";
+import moment from "moment/moment";
 
 import { useStateContext } from "../contexts/ContextProvider";
 
@@ -240,18 +241,30 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               required={true}
             /> */}
             <br />
-            {sts === 200 && (
-              <TextInput
-                label="Hubungan Ibu"
-                type="text"
-                id="isBiological"
-                onChange={updateParents}
-                value={parent.isBiological}
-                placeholder={admissionParentsData.isBiological}
-                disable={sts == 200}
-                required={true}
-              />
-            )}
+            {sts === 200 &&
+              (admissionParentsData.isBiological === 1 ? (
+                <TextInput
+                  label="Hubungan Ibu"
+                  type="text"
+                  id="isBiological"
+                  onChange={updateParents}
+                  // value="Kandung"
+                  placeholder="Kandung"
+                  disable={sts == 200}
+                  required={true}
+                />
+              ) : (
+                <TextInput
+                  label="Hubungan Ibu"
+                  type="text"
+                  id="isBiological"
+                  onChange={updateParents}
+                  // value="Tiri"
+                  placeholder="Tiri"
+                  disable={sts == 200}
+                  required={true}
+                />
+              ))}
             {sts !== 200 && (
               <DropdownRadioInputBiological
                 required={true}
@@ -265,18 +278,30 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               />
             )}
             <br />
-            {sts === 200 && (
-              <TextInput
-                label="Tinggal Bersama"
-                type="text"
-                id="isOneHouse"
-                onChange={updateParents}
-                value={parent.isOneHouse}
-                placeholder={admissionParentsData.isOneHouse}
-                disable={sts == 200}
-                required={true}
-              />
-            )}
+            {sts === 200 &&
+              (admissionParentsData.isOneHouse === 1 ? (
+                <TextInput
+                  label="Tinggal Bersama"
+                  type="text"
+                  id="isOneHouse"
+                  onChange={updateParents}
+                  // value="Kandung"
+                  placeholder="Ya"
+                  disable={sts == 200}
+                  required={true}
+                />
+              ) : (
+                <TextInput
+                  label="Tinggal Bersama"
+                  type="text"
+                  id="isOneHouse"
+                  onChange={updateParents}
+                  // value="Tiri"
+                  placeholder="Tidak"
+                  disable={sts == 200}
+                  required={true}
+                />
+              ))}
             {sts !== 200 && (
               <DropdownRadioInputisOneHouse
                 required={true}
@@ -392,7 +417,9 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="birthDate"
               onChange={updateParents}
               value={parent.birthDate}
-              placeholder={admissionParentsData.birthDate}
+              placeholder={moment(admissionParentsData.birthDate).format(
+                "DD-MM-YYYY"
+              )}
               disable={sts == 200}
               required={true}
             />

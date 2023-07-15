@@ -5,6 +5,7 @@ import { CgSpinner } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
 import TextInput from "./TextInput";
+import moment from "moment/moment";
 
 import { dropdownData } from "../data/initData";
 import { useStateContext } from "../contexts/ContextProvider";
@@ -248,43 +249,67 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               required={true}
             />
             <br />
+            {sts === 200 &&
+              (admissionParentsData.gender === "male" ? (
+                <TextInput
+                  label="Jenis Kelamin"
+                  type="text"
+                  id="gender"
+                  onChange={updateParents}
+                  value={parent.gender}
+                  placeholder="Laki-Laki"
+                  disable={true}
+                  required={true}
+                />
+              ) : (
+                <TextInput
+                  label="Jenis Kelamin"
+                  type="text"
+                  id="gender"
+                  onChange={updateParents}
+                  value={parent.gender}
+                  placeholder="Perempuan"
+                  disable={true}
+                  required={true}
+                />
+              ))}
             {sts !== 200 && (
               <DropdownRadioInputGender
                 required={true}
                 label="Jenis Kelamin"
-                value1="male"
-                value2="female"
-                label2="Laki-Laki"
-                label3="Perempuan"
+                value1="female"
+                value2="male"
+                label2="Perempuan"
+                label3="Laki-Laki"
                 onChange={updateParentsRadio}
+                placeholder={admissionParentsData.gender}
                 checked={parent.gender}
               />
             )}
-            {sts === 200 && (
-              <TextInput
-                label="Jenis Kelamin"
-                type="text"
-                id="gender"
-                onChange={updateParents}
-                value={parent.gender}
-                placeholder={admissionParentsData.gender}
-                disable={true}
-                required={true}
-              />
-            )}
-            <br />
-            {sts === 200 && (
-              <TextInput
-                label="Hubungan Wali"
-                type="text"
-                id="isBiological"
-                onChange={updateParents}
-                value={parent.isBiological}
-                placeholder={admissionParentsData.isBiological}
-                disable={true}
-                required={true}
-              />
-            )}
+            {sts === 200 &&
+              (admissionParentsData.isBiological === 1 ? (
+                <TextInput
+                  label="Hubungan Wali"
+                  type="text"
+                  id="isBiological"
+                  onChange={updateParents}
+                  // value="Kandung"
+                  placeholder="Kandung"
+                  disable={sts == 200}
+                  required={true}
+                />
+              ) : (
+                <TextInput
+                  label="Hubungan Wali"
+                  type="text"
+                  id="isBiological"
+                  onChange={updateParents}
+                  // value="Tiri"
+                  placeholder="Tiri"
+                  disable={sts == 200}
+                  required={true}
+                />
+              ))}
             {sts !== 200 && (
               <DropdownRadioInputBiological
                 required={true}
@@ -298,18 +323,30 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               />
             )}
             <br />
-            {sts === 200 && (
-              <TextInput
-                label="Tinggal Bersama"
-                type="text"
-                id="isOneHouse"
-                onChange={updateParents}
-                value={parent.isOneHouse}
-                placeholder={admissionParentsData.isOneHouse}
-                disable={true}
-                required={true}
-              />
-            )}
+            {sts === 200 &&
+              (admissionParentsData.isOneHouse === 1 ? (
+                <TextInput
+                  label="Tinggal Bersama"
+                  type="text"
+                  id="isOneHouse"
+                  onChange={updateParents}
+                  // value="Kandung"
+                  placeholder="Ya"
+                  disable={sts == 200}
+                  required={true}
+                />
+              ) : (
+                <TextInput
+                  label="Tinggal Bersama"
+                  type="text"
+                  id="isOneHouse"
+                  onChange={updateParents}
+                  // value="Tiri"
+                  placeholder="Tidak"
+                  disable={sts == 200}
+                  required={true}
+                />
+              ))}
             {sts !== 200 && (
               <DropdownRadioInputisOneHouse
                 required={true}
@@ -425,7 +462,9 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               id="birthDate"
               onChange={updateParents}
               value={parent.birthDate}
-              placeholder={admissionParentsData.birthDate}
+              placeholder={moment(admissionParentsData.birthDate).format(
+                "DD-MM-YYYY"
+              )}
               disable={true}
               required={true}
             />
