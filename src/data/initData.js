@@ -210,16 +210,16 @@ export const sidebarMenusAdmin = [
         path: `admin/list-data-registrasi`,
         icon: <FaWpforms />,
       },
-      {
-        name: "Data Pembayaran",
-        path: `admin/konfirmasi-pembayaran`,
-        icon: <FaWpforms />,
-      },
-      {
-        name: "Hasil Tes",
-        path: `admin/hasil-tes`,
-        icon: <FaWpforms />,
-      },
+      // {
+      //   name: "Data Pembayaran",
+      //   path: `admin/konfirmasi-pembayaran`,
+      //   icon: <FaWpforms />,
+      // },
+      // {
+      //   name: "Hasil Tes",
+      //   path: `admin/hasil-tes`,
+      //   icon: <FaWpforms />,
+      // },
       {
         name: "Tahun Ajaran",
         path: `admin/list-tahun-ajaran`,

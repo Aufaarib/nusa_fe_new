@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getBank } from "../../api/Bank";
 import { Header } from "../../components";
-import { DataTablesPMB } from "../../components/DataTables";
-import { getAdmissionRegistration } from "../../api/Registrasi";
+import {
+  DataTablesPMB,
+  DataTablesPMBWithoutButton,
+} from "../../components/DataTables";
+import {
+  ApprovedRegistration,
+  getAdmissionRegistration,
+} from "../../api/Registrasi";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
@@ -14,15 +20,19 @@ const DataRegistrasi = () => {
   const [desc_nama, setDesc_nama] = useState("");
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
-  // const path = "/admin/list-bank";
+  // const path = "/admin/admission/registration";
 
   let filteredItems = data;
+
+  // console.log("KAKAAAAA === ", data[0].isValidated);
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
       data.regNumber.toLowerCase().includes(filterText.toLowerCase())
     );
   }
+
+  const ApproveRegistrasi = () => {};
 
   useEffect(() => {
     getAdmissionRegistration(setData, setSts);
@@ -54,45 +64,42 @@ const DataRegistrasi = () => {
     },
     {
       name: <div>Approval</div>,
+      selector: (data) => data.isValidated,
       cell: (data) => (
-        <div>
-          <input type="checkbox"></input>
-        </div>
+        <div>{data.isValidated == 1 ? "Validated" : "Un-validated"}</div>
       ),
-      ignoreRowClick: true,
-      button: true,
-      width: "100px",
+      width: "auto",
     },
     {
       name: <div>Aksi</div>,
       cell: (data) => (
         <div style={{ display: "flex", flexDirection: "row", gap: "1px" }}>
           <button
-            className="btn-action-merah ml-3 w-auto px-2"
+            className="btn-mrh ml-3 w-auto px-2"
             title="Bukti Pembayaran"
-            // onClick={() => handleActiveStatus(data.id, data.name)}
+            onClick={() => ApproveRegistrasi(data.regNumber)}
           >
-            <i className="fa fa-file-photo-o" />
+            <i className="fa fa-check"> Approve</i>
           </button>
           <button
-            className="btn-action-merah ml-3 w-auto px-2"
+            className="btn-mrh ml-3 w-auto px-2"
             title="Detail Pembayaran"
             // onClick={() => handleNonActiveStatus(data.id, data.name)}
           >
-            <i className="fa fa-dollar" />
+            <i className="fa fa-dollar"> Detail Pembayaran</i>
           </button>
           <button
             // onClick={() => openModalHapus(data.id, data.name)}
-            className="btn-action-merah ml-3 w-auto px-2"
+            className="btn-mrh ml-3 w-auto px-2"
             title="Status"
           >
-            <i className="fa fa-warning" />
+            <i className="fa fa-warning"> Upload Nilai Hasil Test</i>
           </button>
         </div>
       ),
       ignoreRowClick: true,
       button: true,
-      width: "300px",
+      width: "450px",
     },
   ];
 
@@ -111,13 +118,11 @@ const DataRegistrasi = () => {
       />
 
       <div style={{ marginTop: "50px" }}>
-        <DataTablesPMB
+        <DataTablesPMBWithoutButton
           columns={columns}
           data={filteredItems}
-          onClick={navigateTambahGelombang}
           onFilter={(e) => setFilterText(e.target.value)}
           filterText={filterText}
-          // buttontxt="Tambah Gelombang"
         />
         {/* <ModalStatusList
           isOpen={isOpenStatus}

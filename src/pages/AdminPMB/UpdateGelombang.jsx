@@ -7,29 +7,29 @@ import TextInput from "../../components/TextInput";
 import { DropdownDatePickers } from "../../components/Dropdown";
 import DatePicker from "react-date-picker";
 import { Date } from "../../components/DataTables";
-import { postAdmissionPhase } from "../../api/Gelombang";
+import { postAdmissionPhase, updateAdmissionPhase } from "../../api/Gelombang";
 
-export default function TambahGelombang() {
+export default function UbahGelombang() {
   const [name, setName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [amount, setAmount] = useState();
   const [increment, setIncrement] = useState();
-  // const [birthDate, setBirthDate] = useState("");
-  // const [semesterData, setSemesterData] = useState([]);
-  // const [isOpenStatus, setisOpenStatus] = useState(false);
-  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   // const created_by = localStorage.getItem("NAMA");
   const [sts, setSts] = useState(undefined);
   const location = useLocation();
   const navigate = useNavigate();
   const path = "/admin/list-setup-pmb";
+  const id = location.state.id;
   const code = location.state.code;
 
   console.log(code);
 
   const postData = (e) => {
     e.preventDefault();
+
+    // const semester_id = parseInt(semester);
+    // const status = statusVal.value;
 
     if (
       name.length === 0 ||
@@ -40,9 +40,10 @@ export default function TambahGelombang() {
     ) {
       AlertEmpty();
     } else {
-      postAdmissionPhase(
+      updateAdmissionPhase(
         setSts,
         path,
+        id,
         code,
         increment,
         name,
@@ -50,7 +51,6 @@ export default function TambahGelombang() {
         endDate,
         amount
       );
-      //   setisOpenStatus(true);
     }
   };
 
@@ -100,10 +100,10 @@ export default function TambahGelombang() {
       <div style={{ marginBottom: "20px" }}>
         <Header
           home="Admin PMB"
-          prev="Setup PMB"
+          prev="Admission Details"
           navePrev={path}
           at="Gelombang"
-          title="Tambah Gelombang"
+          title="Ubah Gelombang"
         />
       </div>
       <div style={{ marginLeft: "60px" }}>
@@ -115,12 +115,13 @@ export default function TambahGelombang() {
           }}
           className="ml-1 font-bold text-merah"
         >
-          Form Tambah Gelombang
+          Form Ubah Gelombang
         </p>
         <article>
           <TextInput
             label="Gelombang Ke"
             type="number"
+            placeholder={location.state.increment}
             onChange={handleIncrementChange}
             required={true}
           />
@@ -128,8 +129,7 @@ export default function TambahGelombang() {
           <TextInput
             label="Nama"
             type="text"
-            id="group"
-            name="code"
+            placeholder={location.state.name}
             onChange={(e) => setName(e.target.value)}
             required={true}
           />
@@ -137,8 +137,7 @@ export default function TambahGelombang() {
           <TextInput
             label="Tanggal Mulai"
             type="text"
-            id="group"
-            name="code"
+            placeholder={location.state.startDate}
             onChange={(e) => setStartDate(e.target.value)}
             required={true}
           />
@@ -146,8 +145,7 @@ export default function TambahGelombang() {
           <TextInput
             label="Tanggal Selesai"
             type="text"
-            id="group"
-            name="code"
+            placeholder={location.state.endDate}
             onChange={(e) => setEndDate(e.target.value)}
             required={true}
           />
@@ -155,6 +153,7 @@ export default function TambahGelombang() {
           <TextInput
             label="Amount"
             type="number"
+            placeholder={location.state.amount}
             onChange={handleAmountChange}
             required={true}
           />
@@ -165,7 +164,7 @@ export default function TambahGelombang() {
               className="w-20 btn-merah flex justify-center mb-5"
               onClick={postData}
             >
-              Tambah
+              Ubah
             </button>
             <button
               type="button"

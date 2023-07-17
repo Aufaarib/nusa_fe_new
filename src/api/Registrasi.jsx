@@ -3,6 +3,7 @@ import {
   AlertStatusHapusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
+  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -14,7 +15,7 @@ export function getAdmissionStatement(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log("ADMISSION STATEMENT === ", res.data.body);
+      // console.log("ADMISSION STATEMENT === ", res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
@@ -33,7 +34,7 @@ export function getAdmissionAnswer(setData, setSts) {
       }
     )
     .then((res) => {
-      console.log("ADMISSION STATEMENT ANSWER === ", res.data.body);
+      // console.log("ADMISSION STATEMENT ANSWER === ", res.data.body);
       setData(res.data.body.statements);
       setSts(res.data.code);
     })
@@ -48,7 +49,7 @@ export function getAdmissionRegistration(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log("ADMISSION REGISTRATION === ", res.data.body);
+      // console.log("ADMISSION REGISTRATION === ", res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
@@ -78,13 +79,31 @@ export function getMyAdmission(setData, setSts) {
       headers: { authorization: localStorage.getItem("TOKEN") },
     })
     .then((res) => {
-      console.log("My Admission === ", res.data.body);
+      // console.log("My Admission === ", res.data.body);
       setData(res.data.body);
       setSts({ type: "success" });
     })
     .catch((error) => {
       setSts({ type: "error", error });
     });
+}
+
+export function getAdmissionSteps(setData, setSts) {
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL + "/admission/registration/REG00001/steps",
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      // console.log("REGISTRATION STEPS === ", res.data.body);
+      setData(res.data.body);
+      setSts(res.data.code);
+    });
+  // .catch((res) => {
+  //   setSts(res.data.code);
+  // });
 }
 
 export function getAdmissionRegistrationApplicant(setData, setSts, regId) {
@@ -97,7 +116,7 @@ export function getAdmissionRegistrationApplicant(setData, setSts, regId) {
       }
     )
     .then((res) => {
-      console.log("REGISTRATION APLICANT === ", res.data.body.applicant);
+      // console.log("REGISTRATION APLICANT === ", res.data.body.applicant);
       setData(res.data.body.applicant);
       setSts(res.data.code);
     });
@@ -141,7 +160,7 @@ export function getAdmissionRegistrationParentsIbu(setData, setSts) {
       for (const i of res.data.body.parents) {
         switch (i.relationship) {
           case "ibu":
-            console.log("REGISTRATION PARENTS IBU === ", i);
+            // console.log("REGISTRATION PARENTS IBU === ", i);
             setData(i);
             setSts(res.data.code);
         }
@@ -165,7 +184,7 @@ export function getAdmissionRegistrationParentsWali(setData, setSts) {
       for (const i of res.data.body.parents) {
         switch (i.relationship) {
           case "perwalian":
-            console.log("REGISTRATION PARENTS WALI === ", i);
+            // console.log("REGISTRATION PARENTS WALI === ", i);
             setData(i);
             setSts(res.data.code);
         }
@@ -231,5 +250,26 @@ export function postAdmissionRegistration(
     .catch((error) => {
       setSts({ type: "error", error });
       AlertStatusTambahFailed();
+    });
+}
+
+export function ApprovedRegistration(setData, setSts, code) {
+  axios
+    .put(
+      process.env.REACT_APP_BASE_URL +
+        `/admission/registration/${code}/aproved/registration`,
+      {},
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then(() => {
+      setSts({ type: "success" });
+      AlertStatusUpdateSuccess();
+      getAdmissionRegistration(setData, setSts);
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
     });
 }

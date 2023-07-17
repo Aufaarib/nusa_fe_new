@@ -3,6 +3,7 @@ import {
   AlertStatusHapusSuccess,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
+  AlertStatusUpdateDataSuccess,
   AlertStatusUpdateFailed,
   AlertStatusUpdateSuccess,
 } from "../components/ModalPopUp";
@@ -65,29 +66,43 @@ import axios from "./axios";
 //     });
 // }
 
-// export function updateStatusKurikulum(setSts, code, setData) {
-//   axios
-//     .put(
-//       process.env.REACT_APP_BASE_URL + `/curriculum/${code}/toggle-status`,
-//       null,
-//       {
-//         headers: { authorization: localStorage.getItem("TOKEN") },
-//       }
-//     )
-//     .then(() => {
-//       setSts({ type: "success" });
-//       AlertStatusUpdateSuccess();
-//       getKurikulum(setData, setSts);
-//     })
-//     .catch((error) => {
-//       setSts({ type: "error", error });
-//       AlertStatusUpdateFailed();
-//     });
-// }
+export function updateAdmissionPhase(
+  setSts,
+  path,
+  id,
+  code,
+  increment,
+  name,
+  startDate,
+  endDate,
+  amount
+) {
+  axios
+    .put(
+      process.env.REACT_APP_BASE_URL + `/admission/${code}/phase/${id}`,
+      {
+        increment,
+        name,
+        startDate,
+        endDate,
+        amount,
+      },
+      { headers: { authorization: localStorage.getItem("TOKEN") } }
+    )
+    .then(() => {
+      setSts({ type: "success" });
+      AlertStatusUpdateDataSuccess(path);
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
+    });
+}
 
 export function postAdmissionPhase(
   setSts,
   path,
+  code,
   increment,
   name,
   startDate,
@@ -96,7 +111,7 @@ export function postAdmissionPhase(
 ) {
   axios
     .post(
-      process.env.REACT_APP_BASE_URL + "/admission/ADMISSION_2024_2025/phase",
+      process.env.REACT_APP_BASE_URL + `/admission/${code}/phase`,
       {
         increment,
         name,

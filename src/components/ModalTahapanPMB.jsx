@@ -18,6 +18,13 @@ import { BiEdit } from "react-icons/bi";
 import { GoChecklist } from "react-icons/go";
 import useAuth from "../hooks/useAuth";
 import { useStateContext } from "../contexts/ContextProvider";
+import { useEffect, useState } from "react";
+import {
+  getAdmissionRegistrationApplicant,
+  getAdmissionRegistrationParentsAyah,
+  getAdmissionRegistrationParentsIbu,
+  getAdmissionRegistrationParentsWali,
+} from "../api/Registrasi";
 
 const ModalTahapanPMB = ({
   status,
@@ -38,12 +45,7 @@ const ModalTahapanPMB = ({
     errMsgSendVerify,
     isLoading,
   } = useStateContext();
-
-  console.log(status);
-
-  function currencyFormat(num) {
-    return "Rp " + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-  }
+  const Nama = localStorage.getItem("NAMA");
 
   return (
     <>
@@ -276,9 +278,7 @@ const ModalTahapanPMB = ({
 
                       <p>
                         Nama Lengkap :{" "}
-                        <strong className="capitalize">
-                          {/* {details.nama_lengkap} */}
-                        </strong>
+                        <strong className="capitalize">{Nama}</strong>
                         {/* <br /> */}
                         {/* Status Pembayaran Registrasi Calon Murid :{" "} */}
                         <strong>
@@ -334,6 +334,7 @@ const ModalTahapanPMB = ({
                     </>
                   )}
 
+                  {/* pengisian formulir */}
                   {step == 3 && status == "Berhasil" && (
                     <div>
                       <p>
@@ -342,6 +343,14 @@ const ModalTahapanPMB = ({
                       </p>
                       <br />
                       <p>Silahkan melanjutkan ke tahapan berikutnya.</p>
+                    </div>
+                  )}
+
+                  {step == 3 && status !== "Berhasil" && (
+                    <div>
+                      <p>Pengisian Form Belum Lengkap</p>
+                      <br />
+                      <p>Silahkan Lengkapi Pengisian Form.</p>
                     </div>
                   )}
 
@@ -512,8 +521,7 @@ const ModalTahapanPMB = ({
                       Atas Nama : <strong> Yayasan Adab Insan Mulia </strong>
                       <br />
                       <br />
-                      Untuk informasi lebih lanjut dan konfirmasi setelah
-                      melakukan transfer, silahkan hubungi No Whatsapp
+                      Untuk informasi lebih lanjut, silahkan hubungi No Whatsapp
                       <strong> 08129801108 </strong>
                       (Ibu Hanny).
                       <Link

@@ -11,17 +11,17 @@ const TahapanPMB = () => {
   const {
     stepsPMB,
     setStepsPMB,
-    getStepsPMBData,
+    // getStepsPMBData,
     errStep,
-    formCheck,
-    getFormCheck,
+    // formCheck,
+    // getFormCheck,
   } = useStateContext();
 
   useEffect(() => {
-    getStepsPMBData();
-    console.log("STEPS PMB DATA FROM CONTEXT === ", stepsPMB);
-    getFormCheck();
-    console.log("getFormCheck === ", formCheck);
+    // getStepsPMBData();
+    // console.log("STEPS PMB DATA FROM CONTEXT === ", stepsPMB);
+    // getFormCheck();
+    // console.log("getFormCheck === ", formCheck);
   }, []);
 
   const [selected, setSelected] = useState({
@@ -31,7 +31,7 @@ const TahapanPMB = () => {
   });
 
   const handleSelected = (index, keyName, details) => {
-    console.log("DETAILS === ", details);
+    // console.log("DETAILS === ", details);
     setSelected({
       step: index,
       status: keyName,
@@ -49,14 +49,8 @@ const TahapanPMB = () => {
         title="Tahapan Penerimaan Murid Baru"
       />
 
-      {/* <Header
-        category="PMB"
-        title={`Tahapan Penerimaan Murid Baru`}
-        icon={<BsBarChartSteps />}
-      /> */}
-
       {/* MESSAGES */}
-      <div
+      {/* <div
         className={
           stepsPMB.register.details.message
             ? "px-4 py-3 mb-3 rounded-md text-merah text-sm bg-red-100 relative"
@@ -68,7 +62,7 @@ const TahapanPMB = () => {
         <p className="flex gap-2">
           <FaTimesCircle className="my-1" /> {stepsPMB.register.details.message}
         </p>
-      </div>
+      </div> */}
 
       <div>
         <article className="grid grid-rows-3 gap-6 md:grid-flow-col xs:grid-cols-1 md:grid-cols-2 mt-7">

@@ -152,6 +152,7 @@
   }
   .btn-putih:hover {
     @apply bg-merah;
+    @apply text-putih;
   }
   .btn-mrh {
     /* @apply flex; */

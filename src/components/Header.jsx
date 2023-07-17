@@ -14,7 +14,7 @@ const Header = ({ home, prev, at, navHome, navePrev, title, icon }) => (
           </Link>
         )}
         {at && (
-          <Typography fontSize="14px" color="gray">
+          <Typography fontSize="14px" color="red">
             {at}
           </Typography>
         )}

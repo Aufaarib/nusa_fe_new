@@ -22,16 +22,21 @@ export function getAdmission(setData, setSts) {
     .catch((error) => {
       setSts({ type: "error", error });
     });
+}
 
-  // axios
-  //     .get("https://63e1c25ff59c591411a61021.mockapi.io/nusa-list-bank")
-  //     .then((res) => {
-  //     setData(res.data);
-  //     setSts({ type: 'success' });
-  //     })
-  //     .catch((error) => {
-  //     setSts({ type: 'error', error });
-  //     });
+export function getAdmissionDetails(setData, setSts, code) {
+  axios
+    .get(process.env.REACT_APP_BASE_URL + `/admission/${code}`, {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      console.log(res.data.body.phases);
+      setData(res.data.body.phases);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
 }
 
 //   export function updateKurikulum(setSts, path, code, name, description) {
@@ -54,46 +59,50 @@ export function getAdmission(setData, setSts) {
 //       });
 //   }
 
-//   export function updateStatusKurikulum(setSts, code, setData) {
-//     axios
-//       .put(
-//         process.env.REACT_APP_BASE_URL + `/curriculum/${code}/toggle-status`,
-//         null,
-//         {
-//           headers: { authorization: localStorage.getItem("TOKEN") },
-//         }
-//       )
-//       .then(() => {
-//         setSts({ type: "success" });
-//         AlertStatusUpdateSuccess();
-//         getKurikulum(setData, setSts);
-//       })
-//       .catch((error) => {
-//         setSts({ type: "error", error });
-//         AlertStatusUpdateFailed();
-//       });
-//   }
+export function updateStatusAdmission(setSts, code, setData) {
+  axios
+    .put(
+      process.env.REACT_APP_BASE_URL + `/admission/${code}/toggle-status`,
+      null,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then(() => {
+      setSts({ type: "success" });
+      AlertStatusUpdateSuccess();
+      getAdmission(setData, setSts);
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+      AlertStatusUpdateFailed();
+    });
+}
 
-export function postKurikulum(
+export function postAdmission(
   setSts,
   path,
-  // code,
+  academicYearId,
   name,
-  // status,
-  description
-  // semester_id,
-  // created_by
+  increment,
+  startDate,
+  endDate,
+  amount
 ) {
   axios
     .post(
-      process.env.REACT_APP_BASE_URL + "/curriculum",
+      process.env.REACT_APP_BASE_URL + "/admission",
       {
-        // code,
-        name,
-        // status,
-        description,
-        // semester_id,
-        // created_by,
+        academicYearId: academicYearId,
+        phases: [
+          {
+            increment: increment,
+            name: name,
+            startDate: startDate,
+            endDate: endDate,
+            amount: amount,
+          },
+        ],
       },
       { headers: { authorization: localStorage.getItem("TOKEN") } }
     )

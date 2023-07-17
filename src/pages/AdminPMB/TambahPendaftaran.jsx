@@ -1,73 +1,143 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postGuru } from "../../api/Guru";
 import { Header } from "../../components";
 import { AlertEmpty } from "../../components/ModalPopUp";
 import TextInput from "../../components/TextInput";
+import { DropdownSiswa } from "../../components/Dropdown";
+import { getTahunAjaran } from "../../api/TahunAjaran";
+import { postAdmission } from "../../api/SetupPmb";
+import { BsHandIndexThumbFill } from "react-icons/bs";
 
 export default function TambahPendaftaran() {
-  const [fullname, setFullname] = useState("");
-  const [gender, setGender] = useState("");
-  const [religion, setReligion] = useState("");
-  const [birthPlace, setBirthPlace] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-
-  const [semesterData, setSemesterData] = useState([]);
-
-  const [isOpenStatus, setisOpenStatus] = useState(false);
-  const [isOpenEmpty, setisOpenEmpty] = useState(false);
   const [sts, setSts] = useState(undefined);
+  const [formFields, setFormFields] = useState([
+    {
+      name: "",
+      increment: 0,
+      startDate: "",
+      endDate: "",
+      amount: 0,
+    },
+  ]);
+  const [academicYearData, setAcademicYearData] = useState([]);
+  const [academicYearId, setacAdemicYearId] = useState("");
+  const [name, setName] = useState("");
+  const [increment, setIncrement] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [amount, setAmount] = useState("");
+  // const [academicYear, setAcademicYear] = useState("");
+
+  // const [isOpenEmpty, setisOpenEmpty] = useState(false);
   // const created_by = localStorage.getItem("NAMA");
 
   const navigate = useNavigate();
 
+  const fetchAcademicYear = () => {
+    getTahunAjaran(setAcademicYearData, setSts);
+  };
+
+  console.log("KAKAAAAAAAA", formFields);
+
+  useEffect(() => {
+    fetchAcademicYear();
+  }, []);
+
+  // const handleChange = (index, field, value) => {
+  //   const updatedFields = [...formFields];
+  //   const intFields = ["increment", "amount"];
+
+  //   if (intFields.includes(field)) {
+  //     updatedFields[index][field] = parseInt(value, 0);
+  //   } else {
+  //     updatedFields[index][field] = value;
+  //   }
+  //   setFormFields(updatedFields);
+  // };
+
+  // const addField = () => {
+  //   setFormFields([
+  //     ...formFields,
+  //     {
+  //       name: "",
+  //       increment: 0,
+  //       startDate: "",
+  //       endDate: "",
+  //       amount: 0,
+  //     },
+  //   ]);
+  // };
+
+  // const removeField = (index) => {
+  //   const updatedFields = formFields.filter((field, i) => i !== index);
+  //   setFormFields(updatedFields);
+  // };
+
+  const academicYearOptions = academicYearData.map((c) => ({
+    label: `${c.name} : ${c.curriculum.code}`,
+    value: c.id,
+  }));
+
   const path = "/admin/list-setup-pmb";
-
-  //   const fetchSemester = async () => {
-  //     getSemester(setSemesterData, setSts);
-  //   };
-
-  //   useEffect(() => {
-  //     fetchSemester();
-  //   }, []);
 
   const postData = (e) => {
     e.preventDefault();
 
-    // const semester_id = parseInt(semester);
-    // const status = statusVal.value;
+    // formFields.forEach((field) => {
+    // const { name, increment, startDate, endDate, amount } = field;
+
+    const gelombang_ke = parseInt(increment);
+    const jumlah = parseInt(amount);
 
     if (
-      fullname.length === 0 ||
-      gender.length === 0 ||
-      religion.length === 0 ||
-      birthPlace.length === 0 ||
-      birthDate.length === 0
+      academicYearId === 0 ||
+      name === "" ||
+      gelombang_ke === 0 ||
+      startDate === "" ||
+      endDate === "" ||
+      jumlah === 0
     ) {
       AlertEmpty();
     } else {
-      postGuru(setSts, path, fullname, gender, religion, birthPlace, birthDate);
+      // console.log("academicYearId:", academicYearId);
+      // console.log("name:", name);
+      // console.log("increment:", increment);
+      // console.log("startDate:", startDate);
+      // console.log("endDate:", endDate);
+      // console.log("amount:", amount);
+      postAdmission(
+        setSts,
+        path,
+        academicYearId,
+        name,
+        gelombang_ke,
+        startDate,
+        endDate,
+        jumlah
+      );
       //   setisOpenStatus(true);
     }
+    // });
   };
-
-  // const closeModalEmpty = () => {
-  //   AlertEmpty();
-  // };
-
-  // const closeModalStatus = () => {
-  //   setisOpenStatus(false);
-  //   setSts("");
-  // };
 
   const navigateKurikulum = () => {
     navigate(path);
   };
 
-  // const SemesterOptions = semesterData.map((c) => ({
-  //   label: c.name + " - " + c.status,
-  //   value: c.id,
-  // }));
+  // const handleAmountChange = (e) => {
+  //   const value = parseInt(e.target.value);
+  //   setAmount(value);
+  // };
+
+  // const handleIncrementChange = (e) => {
+  //   const value = parseInt(e.target.value);
+  //   setIncrement(value);
+  // };
+
+  // const onAcademicYearChange = (index, e) => {
+  //   setAcademicYear(e.value);
+  // };
 
   return (
     <div>
@@ -92,71 +162,112 @@ export default function TambahPendaftaran() {
           Form Tambah Pendaftaran
         </p>
         <article>
-          {/* <TextInput
-            label="Code"
-            type="number"
-            id="group"
-            name="code"
-            onChange={(e) => setCode(e.target.value)}
+          <DropdownSiswa
+            label="Tahun Ajaran"
             required={true}
-          /> */}
-          <TextInput
-            label="Nama Lengkap"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setFullname(e.target.value)}
-            required={true}
-          />
-          <TextInput
-            label="Jenis Kelamin"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setGender(e.target.value)}
-            required={true}
-          />
-          <TextInput
-            label="Religion"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setReligion(e.target.value)}
-            required={true}
-          />
-          <TextInput
-            label="Tempat Lahir"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setBirthPlace(e.target.value)}
-            required={true}
-          />
-          <TextInput
-            label="Tanggal Lahir"
-            type="text"
-            id="group"
-            name="code"
-            onChange={(e) => setBirthDate(e.target.value)}
-            required={true}
-          />
-          {/* <DropdownStatus
-            label="Status"
-            required={true}
-            isClearable={true}
-            defaultValue={statusVal}
-            isSearchable={false}
-            onChange={setStatus}
-          /> */}
-          {/* <DropdownJenisTransaksi
-            label="Semester"
-            required={true}
-            defaultValue={semester}
+            defaultValue={academicYearId}
             isClearable={false}
-            options={SemesterOptions}
+            options={academicYearOptions}
             isSearchable={false}
-            onChange={(e) => setSemester(e.value)}
-          /> */}
+            onChange={(e) => setacAdemicYearId(e.value)}
+          />
+
+          <TextInput
+            label="Gelombang Ke"
+            type="number"
+            onChange={(e) => setIncrement(e.target.value)}
+            required={true}
+          />
+          <TextInput
+            label="Nama Gelombang"
+            type="text"
+            onChange={(e) => setName(e.target.value)}
+            required={true}
+          />
+          <TextInput
+            label="Tanggal Mulai"
+            type="text"
+            id="group"
+            name="code"
+            onChange={(e) => setStartDate(e.target.value)}
+            required={true}
+          />
+          <TextInput
+            label="Tanggal Selesai"
+            type="text"
+            id="group"
+            name="code"
+            onChange={(e) => setEndDate(e.target.value)}
+            required={true}
+          />
+          <TextInput
+            label="Amount"
+            type="text"
+            id="group"
+            name="code"
+            onChange={(e) => setAmount(e.target.value)}
+            required={true}
+          />
+          {/* {formFields.map((field, index) => (
+            <div style={{ marginTop: "20px" }} key={index}>
+              <TextInput
+                label="Gelombang Ke"
+                type="number"
+                onChange={(e) =>
+                  handleChange(index, "increment", e.target.value)
+                }
+                required={true}
+              />
+              <TextInput
+                label="Nama Gelombang"
+                type="text"
+                id="group"
+                name="code"
+                onChange={(e) => handleChange(index, "name", e.target.value)}
+                required={true}
+              />
+              <TextInput
+                label="Tanggal Mulai"
+                type="text"
+                id="group"
+                name="code"
+                onChange={(e) =>
+                  handleChange(index, "startDate", e.target.value)
+                }
+                required={true}
+              />
+              <TextInput
+                label="Tanggal Selesai"
+                type="text"
+                id="group"
+                name="code"
+                onChange={(e) => handleChange(index, "endDate", e.target.value)}
+                required={true}
+              />
+              <TextInput
+                label="Amount"
+                type="text"
+                id="group"
+                name="code"
+                onChange={(e) => handleChange(index, "amount", e.target.value)}
+                required={true}
+              />
+
+              <div style={{ marginRight: "255px" }}>
+                <button
+                  className="btn-putih"
+                  onClick={() => removeField(index)}
+                >
+                  Hapus Form
+                </button>
+              </div>
+            </div>
+          ))}
+          <div style={{ marginRight: "255px" }}>
+            <button className="btn-merah" onClick={addField}>
+              Tambah Form
+            </button>
+          </div> */}
 
           <div className="btn-form">
             <button

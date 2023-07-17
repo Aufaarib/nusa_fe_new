@@ -61,6 +61,8 @@ import UbahTahunAjaran from "./pages/AdminPMB/TahunAjaran/UbahTahunAjaran";
 import FormDaftarOrangTuaIbu from "./components/FormDaftarOrangTuaIbu";
 import FormDaftarOrangTuaWali from "./components/FormDaftarOrangTuaWali";
 import BerkasPembayaran from "./pages/PMB/BerkasPembayaran";
+import AdmissionDetails from "./pages/AdminPMB/AdmissionDetails";
+import UbahGelombang from "./pages/AdminPMB/UpdateGelombang";
 
 const App = () => {
   return (
@@ -78,6 +80,10 @@ const App = () => {
           <Route path="/admin/list-setup-pmb" element={<SetupPMB />} />
           <Route path="/admin/list-tahun-ajaran" element={<TahunAjaran />} />
           <Route path="/admin/list-guru" element={<ListGuru />} />
+          <Route
+            path="/admin/admission-detail"
+            element={<AdmissionDetails />}
+          />
           <Route
             path="/admin/list-data-registrasi"
             element={<DataRegistrasi />}
@@ -121,6 +127,7 @@ const App = () => {
             element={<ListBiayaPendidikan />}
           />
           {/* ubah */}
+          <Route path="/admin/ubah-gelombang" element={<UbahGelombang />} />
           <Route
             path="/admin/ubah-mata-pelajaran"
             element={<UbahMataPelajaran />}

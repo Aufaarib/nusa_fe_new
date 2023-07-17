@@ -4,6 +4,14 @@ import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
+import {
+  getAdmissionRegistrationApplicant,
+  getAdmissionRegistrationParentsAyah,
+  getAdmissionRegistrationParentsIbu,
+  getAdmissionRegistrationParentsWali,
+  getAdmissionSteps,
+} from "../api/Registrasi";
+import { useCallback } from "react";
 
 const RESEND_URL = "/api/email/verification-notification";
 const PAYMENT_AGREEMENT_URL = "/api/pmb/parent-agreement-education-fee";
@@ -68,6 +76,39 @@ export const ContextProvider = ({ children }) => {
   const [dataAyah, setDataAyah] = useState({});
   const [dataWali, setDataWali] = useState({});
 
+  // const [ayahForm, setAyahForm] = useState([]);
+  // const [stsAyah, setStsAyah] = useState("");
+  // const [ibuForm, setIbuForm] = useState([]);
+  // const [stsIbu, setStsIbu] = useState("");
+  // const [waliForm, setWaliForm] = useState([]);
+  // const [stsWali, setStsWali] = useState("");
+  // function currencyFormat(num) {
+  //   return "Rp " + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+  // }
+
+  // const fetchAyahForm = () => {
+  //   getAdmissionRegistrationParentsAyah(setAyahForm, setStsAyah);
+  // };
+  // const fetchIbuForm = () => {
+  //   getAdmissionRegistrationParentsIbu(setIbuForm, setStsIbu);
+  // };
+  // const fetchWaliForm = () => {
+  //   getAdmissionRegistrationParentsWali(setWaliForm, setStsWali);
+  // };
+
+  // console.log("APPLICANT FORM ", stsApplicant);
+  // console.log("AYAH FORM ", ayahForm);
+  // console.log("IBU FORM ", ibuForm);
+  // console.log("WALI FORM ", waliForm);
+
+  // if (applicantForm.length !== 0) {
+  //   console.log("LAH KAGA KOOOSONG DIAAA MAAHH");
+  // } else {
+  //   console.log("LAH KOOOSONG DIAAA MAAHH");
+  // }
+
+  // Variable containing the new status value
+
   const [stepsPMB, setStepsPMB] = useState({
     register: {
       status: "Berhasil",
@@ -106,13 +147,44 @@ export const ContextProvider = ({ children }) => {
       },
     },
     fill_form: {
-      status: "Berhasil",
+      status: "",
       details: { message: "" },
     },
     test: { status: "Berhasil", details: { message: "" } },
     re_registration: { status: "Berhasil", details: { message: "" } },
     payment_education: { status: "Berhasil", details: { message: "" } },
   });
+
+  const [admissionSteps, setAdmissionSteps] = useState([]);
+  const [stsAdmissionSteps, setStsAdmissionSteps] = useState("");
+
+  // To update the status value later:
+  const updateStatus = useCallback((admissionSteps) => {
+    setStepsPMB((prevState) => {
+      const status =
+        admissionSteps.dataApplicant === 1 &&
+        admissionSteps.dataParent === 1 &&
+        admissionSteps.dataStatement === 0
+          ? "Berhasil"
+          : "Dalam Proses";
+      return {
+        ...prevState,
+        fill_form: {
+          ...prevState.fill_form,
+          status: status,
+        },
+      };
+    });
+  }, []);
+
+  useEffect(() => {
+    getAdmissionSteps(setAdmissionSteps, setStsAdmissionSteps);
+  }, []);
+
+  useEffect(() => {
+    updateStatus(admissionSteps);
+  }, [admissionSteps, updateStatus]);
+
   const [students, setStudents] = useState([
     {
       firstName: "",
@@ -174,9 +246,9 @@ export const ContextProvider = ({ children }) => {
   const [documents, setDocuments] = useState([]);
 
   const [errMsg, setErrMsg] = useState("");
-  useEffect(() => {
-    setErrMsg("");
-  }, [students, location]);
+  // useEffect(() => {
+  //   setErrMsg("");
+  // }, [students, location]);
 
   const setMode = (e) => {
     setCurrentMode(e.target.value);
@@ -191,28 +263,28 @@ export const ContextProvider = ({ children }) => {
   const handleClick = (clicked) =>
     setIsClicked({ ...initialState, [clicked]: true });
 
-  // GET STEPS PMB DATA
+  // // GET STEPS PMB DATA
   const getStepsPMBData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(STEPS_PMB_URL, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const stepsPMB = response?.data?.steps;
-      setStepsPMB(stepsPMB);
-      // setAuth({...auth, verified: stepsPMB.register.details.verified })
-      localStorage.setItem("VERIFIED", stepsPMB.register.details.verified);
+      // const response = await axios.get(STEPS_PMB_URL, {
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // const stepsPMB = response?.data?.steps;
+      // setStepsPMB(stepsPMB);
+      // // setAuth({...auth, verified: stepsPMB.register.details.verified })
+      // localStorage.setItem("VERIFIED", stepsPMB.register.details.verified);
       // console.log("INFO TAHAPAN PMB ==== " + JSON.stringify(stepsPMB));
       // console.log("AUTH ==== " + JSON.stringify(auth));
       setIsLoading(false);
     } catch (err) {
-      const errors = err?.response?.data.message;
-      console.error("ERROR === ", errors);
-      setErrStep(errors);
+      // const errors = err?.response?.data.message;
+      // console.error("ERROR === ", errors);
+      // setErrStep(errors);
       setIsLoading(false);
     }
   };
@@ -221,22 +293,22 @@ export const ContextProvider = ({ children }) => {
   const getStudentsData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(STUDENTS_URL, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response?.data?.students;
-      setStudents(data);
-      console.log("GET STUDENTS DATA CONTEXT ==== ", JSON.stringify(data));
-      console.log("AUTH ==== ", JSON.stringify(auth));
+      // const response = await axios.get(STUDENTS_URL, {
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // const data = response?.data?.students;
+      // setStudents(data);
+      // console.log("GET STUDENTS DATA CONTEXT ==== ", JSON.stringify(data));
+      // console.log("AUTH ==== ", JSON.stringify(auth));
       setIsLoading(false);
     } catch (err) {
-      const errors = err?.response?.data.message;
-      console.error("ERROR === ", errors);
-      setErrStep(errors);
+      // const errors = err?.response?.data.message;
+      // console.error("ERROR === ", errors);
+      // setErrStep(errors);
       setIsLoading(false);
     }
   };
@@ -245,21 +317,21 @@ export const ContextProvider = ({ children }) => {
   const getParentsData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(PARENTS_URL, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response?.data?.students;
-      setParents(data);
+      // const response = await axios.get(PARENTS_URL, {
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // const data = response?.data?.students;
+      // setParents(data);
       // console.log("GET PARENTS DATA CONTEXT ==== ", JSON.stringify(data));
       setIsLoading(false);
     } catch (err) {
-      const errors = err?.response?.data.message;
-      console.error("ERROR === ", errors);
-      setErrStep(errors);
+      // const errors = err?.response?.data.message;
+      // console.error("ERROR === ", errors);
+      // setErrStep(errors);
       setIsLoading(false);
     }
   };
@@ -268,21 +340,21 @@ export const ContextProvider = ({ children }) => {
   const getDocumentsData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(DOCUMENTS_URL, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response?.data?.students;
-      setDocuments(data);
-      console.log("GET DOCUMENTS DATA CONTEXT ==== ", data);
+      // const response = await axios.get(DOCUMENTS_URL, {
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // const data = response?.data?.students;
+      // setDocuments(data);
+      // console.log("GET DOCUMENTS DATA CONTEXT ==== ", data);
       setIsLoading(false);
     } catch (err) {
-      const errors = err?.response?.data.message;
-      console.error("ERROR === ", errors);
-      setErrStep(errors);
+      // const errors = err?.response?.data.message;
+      // console.error("ERROR === ", errors);
+      // setErrStep(errors);
       setIsLoading(false);
     }
   };
@@ -292,29 +364,29 @@ export const ContextProvider = ({ children }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        RESEND_URL,
-        {
-          current_route: "pmb/tahapan-pmb",
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        }
-      );
-      console.log("RES ==== " + JSON.stringify(response?.data));
-      setSuccessMsgSendVerify(
-        "Link verifikasi berhasil terkirim. Cek email Anda!"
-      );
+      // const response = await axios.post(
+      //   RESEND_URL,
+      //   {
+      //     current_route: "pmb/tahapan-pmb",
+      //   },
+      //   {
+      //     headers: {
+      //       Accept: "application/json",
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //     withCredentials: true,
+      //   }
+      // );
+      // // console.log("RES ==== " + JSON.stringify(response?.data));
+      // setSuccessMsgSendVerify(
+      //   "Link verifikasi berhasil terkirim. Cek email Anda!"
+      // );
       setIsLoading(false);
     } catch (err) {
-      console.error("ERROR === ", err?.response?.data.errors);
-      const errMsg = err?.response?.data.errors;
-      setErrMsgSendVerify(errMsg);
+      // console.error("ERROR === ", err?.response?.data.errors);
+      // const errMsg = err?.response?.data.errors;
+      // setErrMsgSendVerify(errMsg);
       setIsLoading(false);
     }
   };
@@ -324,20 +396,20 @@ export const ContextProvider = ({ children }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(DAFTAR_ULANG_AGREEMENT_URL, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
-      console.log("RES ==== " + JSON.stringify(response?.data));
-      setSuccessMsgSendVerify("Persetujuan berhasil dikirim.");
+      // const response = await axios.post(DAFTAR_ULANG_AGREEMENT_URL, null, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   withCredentials: true,
+      // });
+      // // console.log("RES ==== " + JSON.stringify(response?.data));
+      // setSuccessMsgSendVerify("Persetujuan berhasil dikirim.");
       setIsLoading(false);
-      getStepsPMBData();
+      // getStepsPMBData();
     } catch (err) {
-      console.error("ERROR === ", err?.response?.data.errors);
-      const errMsg = err?.response?.data.errors;
-      setErrMsgSendVerify(errMsg);
+      // console.error("ERROR === ", err?.response?.data.errors);
+      // const errMsg = err?.response?.data.errors;
+      // setErrMsgSendVerify(errMsg);
       setIsLoading(false);
     }
   };
@@ -347,20 +419,20 @@ export const ContextProvider = ({ children }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(PAYMENT_AGREEMENT_URL, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
-      console.log("RES ==== " + JSON.stringify(response?.data));
-      setSuccessMsgSendVerify("Persetujuan berhasil dikirim.");
+      // const response = await axios.post(PAYMENT_AGREEMENT_URL, null, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   withCredentials: true,
+      // });
+      // // console.log("RES ==== " + JSON.stringify(response?.data));
+      // setSuccessMsgSendVerify("Persetujuan berhasil dikirim.");
       setIsLoading(false);
-      getStepsPMBData();
+      // getStepsPMBData();
     } catch (err) {
-      console.error("ERROR === ", err?.response?.data.errors);
-      const errMsg = err?.response?.data.errors;
-      setErrMsgSendVerify(errMsg);
+      // console.error("ERROR === ", err?.response?.data.errors);
+      // const errMsg = err?.response?.data.errors;
+      // setErrMsgSendVerify(errMsg);
       setIsLoading(false);
     }
   };
@@ -369,34 +441,34 @@ export const ContextProvider = ({ children }) => {
   const getFormCheck = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(FORM_CHECK_URL, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response?.data;
-      setFormCheck(data);
+      // const response = await axios.get(FORM_CHECK_URL, {
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // const data = response?.data;
+      // setFormCheck(data);
       // console.log("GET FORM CHECK DATA CONTEXT ==== ", data);
       setIsLoading(false);
 
-      if (stepsPMB.fill_form.status == "Dalam Proses") {
-        setOpenForm("form_murid");
-      }
-      if (data.form_murid) {
-        setOpenForm("form_ortu_identitas");
-      }
-      if (data.form_ortu_identitas) {
-        setOpenForm("form_ortu_pernyataan");
-      }
-      if (data.form_ortu_pernyataan) {
-        setOpenForm("form_berkas");
-      }
+      // if (stepsPMB.fill_form.status == "Dalam Proses") {
+      //   setOpenForm("form_murid");
+      // }
+      // if (data.form_murid) {
+      //   setOpenForm("form_ortu_identitas");
+      // }
+      // if (data.form_ortu_identitas) {
+      //   setOpenForm("form_ortu_pernyataan");
+      // }
+      // if (data.form_ortu_pernyataan) {
+      //   setOpenForm("form_berkas");
+      // }
     } catch (err) {
-      const errors = err?.response?.data.message;
-      console.error("ERROR === ", errors);
-      setErrMsg(errMsg);
+      // const errors = err?.response?.data.message;
+      // console.error("ERROR === ", errors);
+      // setErrMsg(errMsg);
       setIsLoading(false);
     }
   };
@@ -406,29 +478,29 @@ export const ContextProvider = ({ children }) => {
     markUnread = markUnread !== 1 ? 0 : 1;
     setIsLoading(true);
     try {
-      const response = await axios.get(NOTIFICATIONS, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          mark_all_read: markUnread,
-        },
-      });
-      const data = response?.data;
-      setNotifications(data.data);
-      const notifUnread = data.data.filter(
-        (notification) => notification.read_at === null
-      );
-      // console.log("GET NOTIFICATIONS DATA CONTEXT ==== ", notifUnread);
-      setNotificationNew(notifUnread.length ? true : false);
-      setNotificationUnreadLength(notifUnread.length ? notifUnread.length : 0);
+      // const response = await axios.get(NOTIFICATIONS, {
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   params: {
+      //     mark_all_read: markUnread,
+      //   },
+      // });
+      // const data = response?.data;
+      // setNotifications(data.data);
+      // const notifUnread = data.data.filter(
+      //   (notification) => notification.read_at === null
+      // );
+      // // console.log("GET NOTIFICATIONS DATA CONTEXT ==== ", notifUnread);
+      // setNotificationNew(notifUnread.length ? true : false);
+      // setNotificationUnreadLength(notifUnread.length ? notifUnread.length : 0);
       setIsLoading(false);
     } catch (err) {
-      const errors = err?.response?.data.message;
-      console.error("ERROR === ", errors);
-      setErrMsg(errMsg);
+      // const errors = err?.response?.data.message;
+      // console.error("ERROR === ", errors);
+      // setErrMsg(errMsg);
       setIsLoading(false);
     }
   };
@@ -436,40 +508,37 @@ export const ContextProvider = ({ children }) => {
   // LISTEN BROADCAST
   const listenBroadcast = async () => {
     try {
-      const response = await axios.get(GET_USER, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response?.data;
-
-      window.Pusher = Pusher;
-
-      window.Echo = new Echo({
-        broadcaster: "pusher",
-        key: process.env.REACT_APP_PUSHER_KEY,
-        cluster: "ap1",
-        forceTLS: true,
-        authEndpoint: process.env.REACT_APP_BASE_URL + BROADCAST_AUTH,
-        auth: {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      });
-
-      window.Echo.private("App.Models.User." + data.id).notification(
-        (notification) => {
-          getNotifications();
-        }
-      );
+      // const response = await axios.get(GET_USER, {
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // const data = response?.data;
+      // window.Pusher = Pusher;
+      // window.Echo = new Echo({
+      //   broadcaster: "pusher",
+      //   key: process.env.REACT_APP_PUSHER_KEY,
+      //   cluster: "ap1",
+      //   forceTLS: true,
+      //   authEndpoint: process.env.REACT_APP_BASE_URL + BROADCAST_AUTH,
+      //   auth: {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   },
+      // });
+      // window.Echo.private("App.Models.User." + data.id).notification(
+      //   (notification) => {
+      //     getNotifications();
+      //   }
+      // );
     } catch (err) {
-      console.error("ERROR === ", err);
-      const errors = err?.response?.data.message;
-      console.error("ERROR === ", errors);
-      setErrMsg(errMsg);
+      // console.error("ERROR === ", err);
+      // const errors = err?.response?.data.message;
+      // console.error("ERROR === ", errors);
+      // setErrMsg(errMsg);
       setIsLoading(false);
     }
   };
