@@ -63,6 +63,7 @@ import FormDaftarOrangTuaWali from "./components/FormDaftarOrangTuaWali";
 import BerkasPembayaran from "./pages/PMB/BerkasPembayaran";
 import AdmissionDetails from "./pages/AdminPMB/AdmissionDetails";
 import UbahGelombang from "./pages/AdminPMB/UpdateGelombang";
+import UserVerification from "./pages/Auth/UserVerification";
 
 const App = () => {
   return (
@@ -72,6 +73,7 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verify" element={<UserVerification />} />
 
         {/* PROTECTED ROUTES */}
         <Route element={<RequireAuthAdmin />}>

@@ -61,11 +61,10 @@ const Login = () => {
           password: pwd,
         }
       );
-      // console.log("RES ==== " + JSON.stringify(response?.data));
       // const nama = response?.data?.user.nama_lengkap;
       const role = response?.data?.body.role;
       const email = response?.data?.body.email;
-      // const verified = response?.data?.user.email_verified_at;
+      const verified = response?.data?.body.status;
       const token = response?.headers?.authorization;
       // setAuth({ nama, role, email, verified, token });
       // console.log("auth ==== " + JSON.stringify(verified));
@@ -86,10 +85,16 @@ const Login = () => {
       // navigate(from, { replace: true});
       console.log(role);
       if (response.status === 200) {
-        if (role === "ADMIN") {
+        if (role === "ADMIN" && verified === 1) {
           navigate("/admin/dashboard", { replace: true });
-        } else {
+        } else if (role === "USER" && verified === 1) {
           navigate("/pmb/tahapan-pmb", { replace: true });
+        } else {
+          navigate("/verify", {
+            state: {
+              email: email,
+            },
+          });
         }
       }
     } catch (err) {

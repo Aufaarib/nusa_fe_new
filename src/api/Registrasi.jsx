@@ -9,6 +9,24 @@ import {
 } from "../components/ModalPopUp";
 import axios from "./axios";
 
+export function validateEmail(setSts, otp) {
+  axios
+    .post(
+      process.env.REACT_APP_BASE_URL + "/user/verification",
+      { otp },
+      { headers: { authorization: localStorage.getItem("TOKEN") } }
+    )
+    .then((res) => {
+      // console.log("ADMISSION STATEMENT === ", otp);
+      // setData(res.data.body);
+      setSts({ type: "success" });
+    })
+    .catch((error) => {
+      console.log("ADMISSION STATEMENT === ", otp);
+      setSts({ type: "error", error });
+    });
+}
+
 export function getAdmissionStatement(setData, setSts) {
   axios
     .get(process.env.REACT_APP_BASE_URL + "/admission/statement", {
@@ -253,7 +271,47 @@ export function postAdmissionRegistration(
     });
 }
 
-export function ApprovedRegistration(setData, setSts, code) {
+export function getPaymentInvoice(setData, setSts, code) {
+  axios
+    .get(
+      process.env.REACT_APP_BASE_URL +
+        `/admission/registration/${code}/payment`,
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then((res) => {
+      for (const i of res.data.body) {
+        console.log("OAAAAAAA === ", i);
+        setData(i);
+        setSts({ type: "success" });
+      }
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
+}
+
+export function uploadHasilTest(setData, setSts, code) {
+  axios
+    .post(
+      process.env.REACT_APP_BASE_URL +
+        `/admission/registration/${code}/aproved/registration`,
+      {},
+      {
+        headers: { authorization: localStorage.getItem("TOKEN") },
+      }
+    )
+    .then(() => {
+      setSts({ type: "success" });
+      setData();
+    })
+    .catch((error) => {
+      setSts({ type: "error", error });
+    });
+}
+
+export function approvedRegistration(setData, setSts, code) {
   axios
     .put(
       process.env.REACT_APP_BASE_URL +

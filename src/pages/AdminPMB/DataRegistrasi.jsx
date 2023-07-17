@@ -8,11 +8,15 @@ import {
 } from "../../components/DataTables";
 import {
   ApprovedRegistration,
+  approvedRegistration,
   getAdmissionRegistration,
+  getPaymentInvoice,
 } from "../../api/Registrasi";
+import { AlertValidateRegistration } from "../../components/ModalPopUp";
 
 const DataRegistrasi = () => {
   const [data, setData] = useState([]);
+  const [dataInvoice, setDataInvoice] = useState([]);
   const [isOpenStatus, setisOpenStatus] = useState(false);
   const [isOpenDelete, setisOpenDelete] = useState(false);
   const [sts, setSts] = useState(undefined);
@@ -21,10 +25,10 @@ const DataRegistrasi = () => {
   const [filterText, setFilterText] = useState("");
   const navigate = useNavigate();
   // const path = "/admin/admission/registration";
-
   let filteredItems = data;
 
   // console.log("KAKAAAAA === ", data[0].isValidated);
+  const domain = process.env.REACT_APP_BASE_STATIC_FILE;
 
   if (data !== null) {
     filteredItems = data.filter((data) =>
@@ -32,7 +36,16 @@ const DataRegistrasi = () => {
     );
   }
 
-  const ApproveRegistrasi = () => {};
+  const ApproveRegistrasi = (code) => {
+    // const url = dataInvoice.paymentRecipt;
+    // console.
+    // getPaymentInvoice(setDataInvoice, setSts, code);
+    AlertValidateRegistration(code, onValidate);
+  };
+
+  const onValidate = (code) => {
+    approvedRegistration(setData, setSts, code);
+  };
 
   useEffect(() => {
     getAdmissionRegistration(setData, setSts);
