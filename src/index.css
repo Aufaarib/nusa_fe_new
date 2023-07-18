@@ -128,6 +128,7 @@
   .btn-merah:hover {
     @apply bg-putih;
     @apply text-merah;
+    border: 1px solid #8f0d1e;
   }
 
   .btn-putih {

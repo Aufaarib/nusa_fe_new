@@ -1,6 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaCheckCircle, FaTimesCircle, FaInfoCircle } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaTimesCircle,
+  FaInfoCircle,
+  FaLowVision,
+  FaEye,
+} from "react-icons/fa";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
 import logoSaim from "../../data/logo-saim.png";
@@ -11,6 +17,7 @@ import useAuth from "../../hooks/useAuth";
 
 import axios from "../../api/axios";
 import { validateEmail } from "../../api/Registrasi";
+import { IconButton, Input, InputAdornment } from "@mui/material";
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const USER_REGEX = /^[A-z]{3}/;
@@ -66,6 +73,19 @@ const Register = () => {
   const [otp, setOtp] = useState(false);
   const [sts, setSts] = useState("");
   const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    password: "",
+    showPassword: false,
+  });
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const navigateLogin = () => {
+    navigate("/login");
+  };
 
   const verifiedEmail = () => {
     validateEmail(setSts, otp);
@@ -354,62 +374,13 @@ const Register = () => {
               </p>
             </div>
 
-            {/* JUMLAH ANAK */}
-            {/* <div className="relative block xl:w-480">
-                <label
-                  htmlFor="jumlahanak"
-                  className="flex mt-4 mb-1 form-label"
-                >
-                  Jumlah Anak yang Ingin Didaftarkan
-                </label>
-                <input
-                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-                  type="number"
-                  id="jumlahanak"
-                  ref={jumlahanakRef}
-                  autoComplete="on"
-                  onChange={(e) => setJumlahAnak(e.target.value)}
-                  value={jumlahanak}
-                  required
-                  aria-invalid={validJumlahAnak ? "false" : "true"}
-                  aria-describedby="jumlahanaknote"
-                  onFocus={() => setJumlahAnakFocus(true)}
-                  onBlur={() => setJumlahAnakFocus(false)}
-                />
-                <FaCheckCircle
-                  className={
-                    validJumlahAnak
-                      ? "valid absolute top-10 right-2 text-green-600"
-                      : "hidden"
-                  }
-                />
-                <FaTimesCircle
-                  className={
-                    validJumlahAnak || !jumlahanak
-                      ? "hidden"
-                      : "invalid absolute top-10 right-2 text-red-600"
-                  }
-                />
-                <p
-                  id="jumlahanaknote"
-                  className={
-                    jumlahAnakFocus && jumlahanak && !validJumlahAnak
-                      ? "instructions italic text-xs flex items-center py-1"
-                      : "hidden"
-                  }
-                >
-                  <FaInfoCircle className="mr-1" />
-                  <span>Harus berupa angka positif.</span>
-                </p>
-              </div> */}
-
             <div className="relative block xl:w-480">
               <label htmlFor="password" className="flex mt-4 mb-1 form-label">
                 Kata Sandi
               </label>
-              <input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-                type="password"
+              <Input
+                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0"
+                type={values.showPassword ? "text" : "password"}
                 id="password"
                 onChange={(e) => setPwd(e.target.value)}
                 // value={"B!5millah"}
@@ -419,6 +390,16 @@ const Register = () => {
                 aria-describedby="pwdnote"
                 onFocus={() => setPwdFocus(true)}
                 onBlur={() => setPwdFocus(false)}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <IconButton
+                      onClick={handleClickShowPassword}
+                      // onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <FaLowVision /> : <FaEye />}
+                    </IconButton>
+                  </InputAdornment>
+                }
               />
               <FaCheckCircle
                 className={
@@ -457,9 +438,9 @@ const Register = () => {
               >
                 Ulangi Kata Sandi
               </label>
-              <input
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-                type="password"
+              <Input
+                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0"
+                type={values.showPassword ? "text" : "password"}
                 id="confirm_pwd"
                 onChange={(e) => setMatchPwd(e.target.value)}
                 // value={"B!5millah"}
@@ -469,6 +450,16 @@ const Register = () => {
                 aria-describedby="confirmnote"
                 onFocus={() => setMatchFocus(true)}
                 onBlur={() => setMatchFocus(false)}
+                // startAdornment={
+                //   <InputAdornment position="start">
+                //     <IconButton
+                //       onClick={handleClickShowPassword}
+                //       // onMouseDown={handleMouseDownPassword}
+                //     >
+                //       {values.showPassword ? <FaLowVision /> : <FaEye />}
+                //     </IconButton>
+                //   </InputAdornment>
+                // }
               />
               <FaCheckCircle
                 className={
@@ -537,13 +528,19 @@ const Register = () => {
               )}
             </button>
 
+            <button className="btn-putih" onClick={navigateLogin}>
+              Kembali Ke Login
+            </button>
+
             {/* onClick={() => setSuccess(true)} */}
-            <Link to={"/login"} className="block mb-16">
+            {/* <Link to={"/login"} className="block mb-16">
               Sudah mendaftar?{" "}
               <span className="ml-1 underline line text-merah">Log In</span>
-            </Link>
+            </Link> */}
 
-            {/* <p className="text-sm text-center lg:hidden mt-7 text-merah">Copyright 2022. PT. Nafisha Universal Network</p> */}
+            {/* <p className="text-sm text-center lg:hidden mt-7 text-merah">
+              Copyright 2022. PT. Nafisha Universal Network
+            </p> */}
           </form>
           {/* )} */}
         </section>

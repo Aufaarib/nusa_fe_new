@@ -273,6 +273,45 @@ export const AlertStatusUpdateDataSuccess = (path) => {
     });
 };
 
+export const AlertStatusVerified = (navigateLogin) => {
+  styledSweetAlert
+    .fire({
+      title: "Akun Telah Terverifikasi, Silahkan Kembali Login",
+      showConfirmButton: true,
+      confirmButtonText: "Kembali",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        navigateLogin();
+      }
+    });
+};
+
+export const AlertStatusReVerified = () => {
+  styledSweetAlert.fire({
+    title:
+      "Kode Verifikasi Telah Kami Kirim Ulang. Silahkan Cek Email Anda Kembali",
+    showConfirmButton: true,
+    confirmButtonText: "Tutup",
+  });
+};
+
+export const AlertStatusReVerifiedFailed = () => {
+  styledSweetAlert.fire({
+    title: "Gagal",
+    showConfirmButton: true,
+    confirmButtonText: "Tutup",
+  });
+};
+
+export const AlertStatusVerifiedFailed = () => {
+  styledSweetAlert.fire({
+    title: "Kode Verifikasi Kosong atau Tidak Sesuai",
+    showConfirmButton: true,
+    confirmButtonText: "Tutup",
+  });
+};
+
 // SA STATUS UPDATE
 export const AlertStatusUpdateSuccess = () => {
   styledSweetAlert.fire({

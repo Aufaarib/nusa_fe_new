@@ -3,21 +3,30 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import logoSaim from "../../data/logo-saim.png";
 import assalamualaikum from "../../data/assalamualaikum.png";
 import { CgSpinner } from "react-icons/cg";
-import { FaTimesCircle } from "react-icons/fa";
+import { FaEye, FaInvision, FaLowVision, FaTimesCircle } from "react-icons/fa";
 import { useStateContext } from "../../contexts/ContextProvider";
 // import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import { AlertEmpty, AlertLoginFailed } from "../../components/ModalPopUp";
+import { IconButton, Input, InputAdornment } from "@mui/material";
 
 // const LOGIN_URL = "/api/login";
 
 const Login = () => {
   const { isLoading, setIsLoading } = useStateContext();
+  const navigate = useNavigate();
+  const [values, setValues] = useState({
+    password: "",
+    showPassword: false,
+  });
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
 
   // const { auth, setAuth } = useAuth();
   // const role = JSON.parse(localStorage.getItem('ROLE'));
   // const role = localStorage.getItem("ROLE");
-  const navigate = useNavigate();
   // const location = useLocation();
   // const from = location.state?.from.pathname || "/";
 
@@ -26,8 +35,8 @@ const Login = () => {
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
-  // const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  // const [email, setEmail] = useState("");
   // const [errMsgUser, setErrMsgUser] = useState("");
   // const [errMsgPwd, setErrMsgPwd] = useState("");
   // const [success, setSuccess] = useState(false);
@@ -39,6 +48,10 @@ const Login = () => {
   useEffect(() => {
     setErrMsg("");
   }, [user, pwd]);
+
+  const navigateRegister = () => {
+    navigate("/register");
+  };
 
   // useEffect(() => {
   //   navigate("/pmb", { replace: true });
@@ -89,10 +102,11 @@ const Login = () => {
           navigate("/admin/dashboard", { replace: true });
         } else if (role === "USER" && verified === 1) {
           navigate("/pmb/tahapan-pmb", { replace: true });
-        } else {
+        } else if (verified !== 1) {
           navigate("/verify", {
             state: {
               email: email,
+              // token: token,
             },
           });
         }
@@ -142,7 +156,7 @@ const Login = () => {
             <label htmlFor="user" className="flex mt-4 mb-1 form-label">
               Email
             </label>
-            <input
+            <Input
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
               type="text"
               id="user"
@@ -159,14 +173,23 @@ const Login = () => {
             <label htmlFor="password" className="flex mt-4 mb-1 form-label">
               Password
             </label>
-            <input
+            <Input
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
-              type="password"
+              type={values.showPassword ? "text" : "password"}
               id="password"
               onChange={(e) => setPwd(e.target.value)}
               value={pwd}
               required={true}
-              // placeholder="Admin PMB"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowPassword}
+                    // onMouseDown={handleMouseDownPassword}
+                  >
+                    {values.showPassword ? <FaLowVision /> : <FaEye />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           </div>
 
@@ -190,7 +213,7 @@ const Login = () => {
             )}
           </div>
 
-          <button className="flex justify-center w-full py-3 my-6 mr-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out rounded shadow-md disabled:bg-krem disabled:text-abu bg-merah px-7 hover:bg-gelap hover:shadow-lg focus:bg-merah focus:shadow-lg focus:outline-none focus:ring-0 active:bg-merah active:shadow-lg">
+          <button className="btn-merah">
             Masuk{" "}
             {isLoading ? (
               <CgSpinner className="ml-2 text-lg animate-spin" />
@@ -198,11 +221,14 @@ const Login = () => {
               ""
             )}
           </button>
+          <button className="btn-putih" onClick={navigateRegister}>
+            Daftar Akun Baru
+          </button>
 
-          <Link to={"/register"} className="block mb-16">
-            Belum mempunyai akun?{" "}
-            <span className="ml-1 underline line text-merah">Daftar</span>
-          </Link>
+          {/* <Link to={"/register"} className="block mb-16">
+            
+            <span className="ml-1 underline line text-merah"></span>
+          </Link> */}
         </form>
       </section>
 

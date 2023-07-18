@@ -1,6 +1,8 @@
 import {
   AlertStatusHapusFailed,
   AlertStatusHapusSuccess,
+  AlertStatusReVerified,
+  AlertStatusReVerifiedFailed,
   AlertStatusTambahFailed,
   AlertStatusTambahSuccess,
   AlertStatusUpdateDataSuccess,
@@ -22,8 +24,26 @@ export function validateEmail(setSts, otp) {
       setSts({ type: "success" });
     })
     .catch((error) => {
-      console.log("ADMISSION STATEMENT === ", otp);
+      // console.log("ADMISSION STATEMENT === ", otp);
       setSts({ type: "error", error });
+    });
+}
+
+export function revalidateEmail(setSts, otp) {
+  axios
+    .get(process.env.REACT_APP_BASE_URL + "/user/verification", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
+    .then((res) => {
+      // console.log("ADMISSION STATEMENT === ", otp);
+      // setData(res.data.body);
+      setSts({ type: "success" });
+      AlertStatusReVerified();
+    })
+    .catch((error) => {
+      // console.log("ADMISSION STATEMENT === ", otp);
+      setSts({ type: "error", error });
+      AlertStatusReVerifiedFailed();
     });
 }
 

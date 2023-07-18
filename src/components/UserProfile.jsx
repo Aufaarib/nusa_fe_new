@@ -1,20 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { MdOutlineCancel, MdVerified } from 'react-icons/md';
-import { Button } from '.';
-import { userProfileData } from '../data/initData';
-import { useStateContext } from '../contexts/ContextProvider';
-import avatar from '../data/product1.jpg';
-import logoSaim from '../data/logo-saim.png';
-import useAuth from '../hooks/useAuth';
+import React from "react";
+import { Link } from "react-router-dom";
+import { MdOutlineCancel, MdVerified } from "react-icons/md";
+import { Button } from ".";
+import { userProfileData } from "../data/initData";
+import { useStateContext } from "../contexts/ContextProvider";
+import avatar from "../data/product1.jpg";
+import logoSaim from "../data/logo-saim.png";
+import useAuth from "../hooks/useAuth";
 
 const UserProfile = () => {
   const { auth, setAuth } = useAuth();
-  const verified = JSON.parse(localStorage.getItem('VERIFIED'));
-  const { setIsClicked, initialState, setIsLoading, setErr, setErrStep, setErrMsg, setOpenForm  } = useStateContext();
+  const verified = JSON.parse(localStorage.getItem("VERIFIED"));
+  const {
+    setIsClicked,
+    initialState,
+    setIsLoading,
+    setErr,
+    setErrStep,
+    setErrMsg,
+    setOpenForm,
+  } = useStateContext();
 
   const handleLogout = async () => {
-    console.log("LOG OUT")
+    console.log("LOG OUT");
     localStorage.clear();
     setAuth("");
     setIsClicked(initialState);
@@ -22,7 +30,7 @@ const UserProfile = () => {
     setErrMsg("");
     setErrStep("");
     setOpenForm("");
-  }
+  };
 
   return (
     <div className="nav-item absolute right-6 top-16 bg-white dark:bg-[#42464D] p-7 rounded-lg w-320 drop-shadow-2xl">
@@ -44,16 +52,28 @@ const UserProfile = () => {
           alt="user-profile"
         />
         <div>
-          <p className="text-sm font-bold capitalize break-all dark:text-gray-200">{auth.nama}</p>
-          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">{auth.role}</p>
-          <p className="flex text-xs text-gray-500 break-all dark:text-gray-400">{auth.email} 
-            <MdVerified className={`text-green text-md ${!verified ? 'text-gray-500': 'text-green-500'} ml-0.5`} />
+          <p className="text-sm font-bold capitalize break-all dark:text-gray-200">
+            {auth.nama}
+          </p>
+          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">
+            {auth.role}
+          </p>
+          <p className="flex text-xs text-gray-500 break-all dark:text-gray-400">
+            {auth.email}
+            <MdVerified
+              className={`text-green text-md ${
+                !verified ? "text-gray-500" : "text-green-500"
+              } ml-0.5`}
+            />
           </p>
         </div>
       </div>
       <div>
         {userProfileData.map((item, index) => (
-          <div key={index} className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]">
+          <div
+            key={index}
+            className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]"
+          >
             <button
               type="button"
               style={{ color: item.iconColor, backgroundColor: item.iconBg }}
@@ -64,7 +84,10 @@ const UserProfile = () => {
 
             <div>
               <p className="font-semibold dark:text-gray-200 ">{item.title}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400"> {item.desc} </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {" "}
+                {item.desc}{" "}
+              </p>
             </div>
           </div>
         ))}
@@ -73,7 +96,6 @@ const UserProfile = () => {
         Log Out
       </Link>
     </div>
-
   );
 };
 

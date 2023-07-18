@@ -1,7 +1,10 @@
 import { useRef, useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaCheckCircle, FaTimesCircle, FaInfoCircle } from "react-icons/fa";
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import {
+  HiOutlineArrowCircleLeft,
+  HiOutlineArrowNarrowRight,
+} from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
 import logoSaim from "../../data/logo-saim.png";
 import assalamualaikum from "../../data/assalamualaikum.png";
@@ -10,7 +13,12 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import useAuth from "../../hooks/useAuth";
 
 import axios from "../../api/axios";
-import { validateEmail } from "../../api/Registrasi";
+import { revalidateEmail, validateEmail } from "../../api/Registrasi";
+import {
+  AlertStatusVerified,
+  AlertStatusVerifiedFailed,
+} from "../../components/ModalPopUp";
+import Countdown from "react-countdown";
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const USER_REGEX = /^[A-z]{3}/;
@@ -63,14 +71,45 @@ const UserVerification = () => {
   const [errMsgPwd, setErrMsgPwd] = useState("");
   const [errMsgMatchPwd, setErrMsgMatchPwd] = useState("");
   const [success, setSuccess] = useState(false);
-  const [otp, setOtp] = useState(false);
+  const [otp, setOtp] = useState("");
   const [sts, setSts] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log("OTP === ", otp);
 
   const verifiedEmail = () => {
-    validateEmail(setSts, otp);
+    if (otp !== "") {
+      validateEmail(setSts, otp);
+      AlertStatusVerified(navigateLogin);
+    } else {
+      AlertStatusVerifiedFailed();
+    }
   };
 
+  const navigateLogin = () => {
+    navigate("/login");
+  };
+
+  const reverifiedEmail = () => {
+    revalidateEmail(setSts);
+    <Countdown date={Date.now() + 300000} renderer={renderer} />;
+  };
+
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      // return <Completionist />
+      console.log("DONE!!!");
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          {minutes}:{seconds}
+        </span>
+      );
+    }
+  };
   //   useEffect(() => {
   //     userRef.current.focus();
   //   }, []);
@@ -87,81 +126,30 @@ const UserVerification = () => {
   //     emailRef.current.focus();
   //   }, []);
 
-  useEffect(() => {
-    setValidName(USER_REGEX.test(user));
-  }, [user]);
-
-  useEffect(() => {
-    setValidPhone(PHONE_REGEX.test(phone));
-  }, [phone]);
+  // useEffect(() => {
+  //   setValidName(USER_REGEX.test(user));
+  // }, [user]);
 
   // useEffect(() => {
-  //   setValidJumlahAnak(ONLY_NUMBER_REGEX.test(jumlahanak));
-  // }, [jumlahanak]);
+  //   setValidPhone(PHONE_REGEX.test(phone));
+  // }, [phone]);
 
-  useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email));
-  }, [email]);
+  // // useEffect(() => {
+  // //   setValidJumlahAnak(ONLY_NUMBER_REGEX.test(jumlahanak));
+  // // }, [jumlahanak]);
 
-  useEffect(() => {
-    setValidPwd(PWD_REGEX.test(pwd));
-    setValidMatch(pwd === matchPwd);
-  }, [pwd, matchPwd]);
+  // useEffect(() => {
+  //   setValidEmail(EMAIL_REGEX.test(email));
+  // }, [email]);
 
-  useEffect(() => {
-    setErrMsg("");
-  }, [user, phone, jumlahanak, email, pwd, matchPwd]);
+  // useEffect(() => {
+  //   setValidPwd(PWD_REGEX.test(pwd));
+  //   setValidMatch(pwd === matchPwd);
+  // }, [pwd, matchPwd]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    // if button enabled with JS hack
-    const v1 = USER_REGEX.test(user);
-    const v2 = PWD_REGEX.test(pwd);
-    if (!v1 || !v2) {
-      setErrMsg("Invalid Entry");
-      return;
-    }
-    console.log({
-      nama_lengkap: user,
-      nomor_ponsel: phone,
-      // jumlah_anak: jumlahanak,
-      email: email,
-      password: pwd,
-      password_confirmation: matchPwd,
-    });
-    try {
-      axios
-        .post(process.env.REACT_APP_BASE_URL + "/user/parent", {
-          fullname: user,
-          phone: phone,
-          email: email,
-          // jumlah_anak: jumlahanak,
-          password: pwd,
-          password_confirmation: matchPwd,
-        })
-        .then((res) => {
-          console.log(res?.headers?.authorization);
-          setSuccess(true);
-          localStorage.setItem("TOKEN", res?.headers?.authorization);
-          // setUser("");
-          // setPhone("");
-          // setJumlahAnak("");
-          // setEmail("");
-          setEmailVerify(email);
-          // setPwd("");
-          // setMatchPwd("");
-          setIsLoading(false);
-        });
-    } catch (err) {
-      // console.error("ERROR === ", err?.response?.data.errors);
-      // const errMsg = err?.response?.data.errors;
-      // setErrMsg(errMsg);
-      // errRef.current.focus();
-      setIsLoading(false);
-    }
-  };
+  // useEffect(() => {
+  //   setErrMsg("");
+  // }, [user, phone, jumlahanak, email, pwd, matchPwd]);
 
   return (
     <>
@@ -188,55 +176,70 @@ const UserVerification = () => {
               src={assalamualaikum}
               alt="Assalamuálaikum"
             />
-            <h4>
-              Selamat Datang <br />
-              di Web Penerimaan Murid Baru
-            </h4>
-            <h5 className=" text-merah">
-              Silahkan isi form dibawah ini untuk memulai
-            </h5>
-            <section className="rounded-lg bg-krem p-7 m-7">
+            <section
+              style={{
+                display: "flex",
+                justifyContent: "center", // Center items horizontally
+                alignItems: "center", // Center items vertically
+                flexDirection: "column", // Stack items vertically
+              }}
+              className="rounded-lg bg-krem p-7 m-7"
+            >
               <div>
                 <h2 className="text-center">Verifikasi Email Anda</h2>
                 <br />
                 <p>
-                  Kami telah mengirimkan email verifikasi ke{" "}
+                  Kami telah mengirimkan kode verifikasi ke{" "}
                   <span className="font-bold text-merah">
                     {location.state.email}
                   </span>
                 </p>
                 <br />
                 <input
-                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-merah focus:outline-none"
+                  className="text-gray-700 bg-white bg-clip-padding border border-solid border-merah rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:outline-none"
+                  style={{
+                    margin: "auto",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    padding: "10px",
+                    width: "60%",
+                    textAlign: "center", // Center the text within the input field
+                    WebkitAppearance: "none" /* Chrome, Safari, Edge */,
+                  }}
                   type="number"
                   onChange={(e) => setOtp(e.target.value)}
                   value={otp}
+                  placeholder="Masukkan Kode Verifikasi Disini"
                   required
                 />
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    justifyContent: "center",
+                  }}
+                  className="font-bold text-merah"
+                >
+                  <p>Input Sebelum :</p>
+                  <Countdown date={Date.now() + 300000} renderer={renderer} />
+                </div>
+                <button className="btn-putih" onClick={verifiedEmail}>
+                  {" "}
+                  Verifikasi Akun
+                </button>
                 <br />
                 <p>
-                  Tidak menerima email? Periksa folder spam atau promosi Anda!
-                </p>
-                <p>
                   Tidak menerima email? Periksa folder spam atau promosi Anda
-                  atau{" "}
-                  <a
-                    onClick={resendEmailVerification}
-                    className="font-bold cursor-pointer text-merah"
-                  >
-                    Kirim ulang verifikasi
-                  </a>
-                  .
+                  atau :
                 </p>
               </div>
-              <button className="btn-merah" onClick={verifiedEmail}>
+              <button className="w-auto btn-merah" onClick={reverifiedEmail}>
                 {" "}
-                Kirim
+                Kirim Ulang Kode
               </button>
-              <Link to="/login" className="btn-merah">
-                Lewatkan ke{" "}
-                <HiOutlineArrowNarrowRight className="mx-2 text-xl" /> Log In{" "}
-              </Link>
+              {/* <Link to="/login" className="btn-merah">
+                Kembali ke Halaman Log-In
+              </Link> */}
             </section>
           </div>
         </section>

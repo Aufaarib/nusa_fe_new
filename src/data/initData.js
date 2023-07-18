@@ -338,13 +338,13 @@ export const userProfileData = [
     iconColor: "#03C9D7",
     iconBg: "#E5FAFB",
   },
-  {
-    icon: <BsMailbox />,
-    title: "Pesan",
-    desc: "Pesan & Email",
-    iconColor: "rgb(0, 194, 146)",
-    iconBg: "rgb(235, 250, 242)",
-  },
+  // {
+  //   icon: <BsMailbox />,
+  //   title: "Pesan",
+  //   desc: "Pesan & Email",
+  //   iconColor: "rgb(0, 194, 146)",
+  //   iconBg: "rgb(235, 250, 242)",
+  // },
 ];
 
 export const notifData = [
