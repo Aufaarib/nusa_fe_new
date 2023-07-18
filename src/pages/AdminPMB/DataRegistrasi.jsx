@@ -92,7 +92,11 @@ const DataRegistrasi = () => {
             title="Bukti Pembayaran"
             onClick={() => ApproveRegistrasi(data.regNumber)}
           >
-            <i className="fa fa-check"> Approve</i>
+            {data.isValidated == 1 ? (
+              <i className="fa fa-times"> Cancel Approve</i>
+            ) : (
+              <i className="fa fa-check"> Approve</i>
+            )}
           </button>
           <button
             className="btn-mrh ml-3 w-auto px-2"

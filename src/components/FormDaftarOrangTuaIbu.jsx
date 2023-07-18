@@ -125,8 +125,7 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
 
     try {
       axios.post(
-        process.env.REACT_APP_BASE_URL +
-          "/admission/registration/REG00001/parent",
+        process.env.REACT_APP_BASE_URL + "/user/parent",
         {
           fullName,
           familyIdentityNumber,
@@ -417,9 +416,11 @@ const FormDaftarOrangTuaIbu = ({ indexOrtu }) => {
               id="birthDate"
               onChange={updateParents}
               value={parent.birthDate}
-              placeholder={moment(admissionParentsData.birthDate).format(
-                "DD-MM-YYYY"
-              )}
+              placeholder={
+                sts == 200
+                  ? moment(admissionParentsData.birthDate).format("DD-MM-YYYY")
+                  : ""
+              }
               disable={sts == 200}
               required={true}
             />

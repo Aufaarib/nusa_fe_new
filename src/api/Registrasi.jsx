@@ -165,15 +165,11 @@ export function getAdmissionRegistrationApplicant(setData, setSts, regId) {
 
 export function getAdmissionRegistrationParentsAyah(setData, setSts) {
   axios
-    .get(
-      process.env.REACT_APP_BASE_URL +
-        "/admission/registration/REG00001/parent",
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
+    .get(process.env.REACT_APP_BASE_URL + "/user/parent", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
     .then((res) => {
-      for (const i of res.data.body.parents) {
+      for (const i of res.data.body) {
         switch (i.relationship) {
           case "ayah":
             setData(i);
@@ -182,20 +178,16 @@ export function getAdmissionRegistrationParentsAyah(setData, setSts) {
       }
     })
     .catch((error) => {
-      setSts(error.data.code);
+      // setSts(error.data.code);
     });
 }
 export function getAdmissionRegistrationParentsIbu(setData, setSts) {
   axios
-    .get(
-      process.env.REACT_APP_BASE_URL +
-        "/admission/registration/REG00001/parent",
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
+    .get(process.env.REACT_APP_BASE_URL + "/user/parent", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
     .then((res) => {
-      for (const i of res.data.body.parents) {
+      for (const i of res.data.body) {
         switch (i.relationship) {
           case "ibu":
             // console.log("REGISTRATION PARENTS IBU === ", i);
@@ -211,15 +203,11 @@ export function getAdmissionRegistrationParentsIbu(setData, setSts) {
 
 export function getAdmissionRegistrationParentsWali(setData, setSts) {
   axios
-    .get(
-      process.env.REACT_APP_BASE_URL +
-        "/admission/registration/REG00001/parent",
-      {
-        headers: { authorization: localStorage.getItem("TOKEN") },
-      }
-    )
+    .get(process.env.REACT_APP_BASE_URL + "/user/parent", {
+      headers: { authorization: localStorage.getItem("TOKEN") },
+    })
     .then((res) => {
-      for (const i of res.data.body.parents) {
+      for (const i of res.data.body) {
         switch (i.relationship) {
           case "perwalian":
             // console.log("REGISTRATION PARENTS WALI === ", i);

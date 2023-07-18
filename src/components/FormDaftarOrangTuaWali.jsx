@@ -52,7 +52,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
     if (parent.id == "" && parents[indexOrtu].id !== "") {
       setParent(parents[indexOrtu]);
     }
-  }, [parent]);
+  }, []);
 
   // useEffect(() => {
   //   setParent(draft => {
@@ -149,8 +149,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
 
     try {
       axios.post(
-        process.env.REACT_APP_BASE_URL +
-          "/admission/registration/REG00001/parent",
+        process.env.REACT_APP_BASE_URL + "/user/parent",
         {
           fullName,
           familyIdentityNumber,
@@ -224,7 +223,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.fullName}
               placeholder={admissionParentsData.fullName}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -235,7 +234,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.familyIdentityNumber}
               placeholder={admissionParentsData.familyIdentityNumber}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
             <TextInput
@@ -245,7 +244,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.identityNumber}
               placeholder={admissionParentsData.identityNumber}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
             <br />
@@ -258,7 +257,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                   onChange={updateParents}
                   value={parent.gender}
                   placeholder="Laki-Laki"
-                  disable={true}
+                  disable={sts === 200}
                   required={true}
                 />
               ) : (
@@ -269,7 +268,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
                   onChange={updateParents}
                   value={parent.gender}
                   placeholder="Perempuan"
-                  disable={true}
+                  disable={sts === 200}
                   required={true}
                 />
               ))}
@@ -367,7 +366,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.phoneNumber1}
               placeholder={admissionParentsData.phoneNumber_1}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
             <TextInput
@@ -377,7 +376,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.phoneNumber2}
               placeholder={admissionParentsData.phoneNumber_2}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
             <TextInput
@@ -387,7 +386,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.province}
               placeholder={admissionParentsData.province}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
             <TextInput
@@ -397,7 +396,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.city}
               placeholder={admissionParentsData.city}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -408,7 +407,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.subDistrict}
               placeholder={admissionParentsData.subDistrict}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -419,7 +418,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.village}
               placeholder={admissionParentsData.village}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -430,7 +429,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.address}
               placeholder={admissionParentsData.address}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -441,7 +440,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.postalCode}
               placeholder={admissionParentsData.postalCode}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -452,7 +451,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.birthPlace}
               placeholder={admissionParentsData.birthPlace}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -462,10 +461,12 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               id="birthDate"
               onChange={updateParents}
               value={parent.birthDate}
-              placeholder={moment(admissionParentsData.birthDate).format(
-                "DD-MM-YYYY"
-              )}
-              disable={true}
+              placeholder={
+                sts == 200
+                  ? moment(admissionParentsData.birthDate).format("DD-MM-YYYY")
+                  : ""
+              }
+              disable={sts === 200}
               required={true}
             />
 
@@ -494,7 +495,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.lastEducation}
               placeholder={admissionParentsData.lastEducation}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -505,7 +506,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.placeOfWork}
               placeholder={admissionParentsData.placeOfWork}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -516,7 +517,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.occupation}
               placeholder={admissionParentsData.occupation}
-              disable={true}
+              disable={sts === 200}
               required={true}
             />
 
@@ -527,7 +528,7 @@ const FormDaftarOrangTuaWali = ({ indexOrtu }) => {
               onChange={updateParents}
               value={parent.incomeGrade}
               placeholder={admissionParentsData.incomeGrade}
-              disable={true}
+              disable={sts === 200}
               required={true}
               min="1"
             />

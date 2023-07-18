@@ -47,6 +47,8 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
     getAdmissionRegistrationParentsAyah(setAdmissionParents, setSts);
   };
 
+  console.log("KAKAKAKAKAKAKAKKAK === ", admissionParentsData.fullName);
+
   useEffect(() => {
     // console.log("PARENT DATA === ", admissionParentsData);
     // console.log("PARENTS DATA FROM CONTEXT === ", parents);
@@ -128,8 +130,7 @@ const FormDaftarOrangTua = ({ indexOrtu }) => {
 
     try {
       axios.post(
-        process.env.REACT_APP_BASE_URL +
-          "/admission/registration/REG00001/parent",
+        process.env.REACT_APP_BASE_URL + "/user/parent",
         {
           fullName,
           familyIdentityNumber,

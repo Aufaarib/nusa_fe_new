@@ -152,7 +152,7 @@ const Register = () => {
     });
     try {
       axios
-        .post(process.env.REACT_APP_BASE_URL + "/user/parent", {
+        .post(process.env.REACT_APP_BASE_URL + "/user/register/parent", {
           fullname: user,
           phone: phone,
           email: email,

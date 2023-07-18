@@ -8,6 +8,7 @@ import { DropdownDatePickers } from "../../components/Dropdown";
 import DatePicker from "react-date-picker";
 import { Date } from "../../components/DataTables";
 import { postAdmissionPhase } from "../../api/Gelombang";
+import moment from "moment/moment";
 
 export default function TambahGelombang() {
   const [name, setName] = useState("");
@@ -26,10 +27,10 @@ export default function TambahGelombang() {
   const path = "/admin/list-setup-pmb";
   const code = location.state.code;
 
-  console.log(code);
-
   const postData = (e) => {
     e.preventDefault();
+
+    const jumlah = parseInt(amount.replace(/\./g, ""), 10);
 
     if (
       name.length === 0 ||
@@ -48,7 +49,7 @@ export default function TambahGelombang() {
         name,
         startDate,
         endDate,
-        amount
+        jumlah
       );
       //   setisOpenStatus(true);
     }
@@ -64,26 +65,21 @@ export default function TambahGelombang() {
 
   const [formFields, setFormFields] = useState([]);
 
-  const addField = () => {
-    setFormFields([...formFields, ""]);
-  };
+  // const addField = () => {
+  //   setFormFields([...formFields, ""]);
+  // };
 
-  const removeField = (index) => {
-    const updatedFields = [...formFields];
-    updatedFields.splice(index, 1);
-    setFormFields(updatedFields);
-  };
+  // const removeField = (index) => {
+  //   const updatedFields = [...formFields];
+  //   updatedFields.splice(index, 1);
+  //   setFormFields(updatedFields);
+  // };
 
-  const handleChange = (index, value) => {
-    const updatedFields = [...formFields];
-    updatedFields[index] = value;
-    setFormFields(updatedFields);
-  };
-
-  const handleAmountChange = (e) => {
-    const value = parseInt(e.target.value);
-    setAmount(value);
-  };
+  // const handleChange = (index, value) => {
+  //   const updatedFields = [...formFields];
+  //   updatedFields[index] = value;
+  //   setFormFields(updatedFields);
+  // };
 
   const handleIncrementChange = (e) => {
     const value = parseInt(e.target.value);
@@ -94,6 +90,14 @@ export default function TambahGelombang() {
   //   label: c.name + " - " + c.status,
   //   value: c.id,
   // }));
+
+  const handleInputChange = (event) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    // const value = parseInt(inputVal);
+    setAmount(inputVal);
+  };
 
   return (
     <div>
@@ -137,8 +141,7 @@ export default function TambahGelombang() {
           <TextInput
             label="Tanggal Mulai"
             type="text"
-            id="group"
-            name="code"
+            placeholder="Format YYYY-MM-DD"
             onChange={(e) => setStartDate(e.target.value)}
             required={true}
           />
@@ -146,16 +149,16 @@ export default function TambahGelombang() {
           <TextInput
             label="Tanggal Selesai"
             type="text"
-            id="group"
-            name="code"
+            placeholder="Format YYYY-MM-DD"
             onChange={(e) => setEndDate(e.target.value)}
             required={true}
           />
 
           <TextInput
             label="Amount"
-            type="number"
-            onChange={handleAmountChange}
+            type="text"
+            onChange={handleInputChange}
+            value={amount}
             required={true}
           />
 

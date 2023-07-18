@@ -209,7 +209,7 @@ const UserVerification = () => {
                   type="number"
                   onChange={(e) => setOtp(e.target.value)}
                   value={otp}
-                  placeholder="Masukkan Kode Verifikasi Disini"
+                  placeholder="Masukkan Kode"
                   required
                 />
                 <div

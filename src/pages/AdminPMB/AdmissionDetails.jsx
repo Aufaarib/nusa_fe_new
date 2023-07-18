@@ -65,7 +65,16 @@ const AdmissionDetails = () => {
     {
       name: <div>Amount</div>,
       selector: (data) => data.amount,
-      cell: (data) => <div>{data.amount}</div>,
+      cell: (data) => (
+        <div>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(data.amount)}
+        </div>
+      ),
+
       width: "auto",
     },
     {
